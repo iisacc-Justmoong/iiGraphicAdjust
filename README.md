@@ -1,8 +1,17 @@
 # iiGraphicAdjust
 
-Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.1.0**. The public API and implementation use only the C++ standard library. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency, including transitive dependencies.
+Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.2.0**. The public API and implementation use only the C++ standard library. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency, including transitive dependencies.
 
 ## Features
+
+Version 0.2.0 adds APIs corresponding to the 22 classic Photoshop/PhotoCraft adjustment categories and three automatic corrections. This is independent processing with documented numeric contracts, not Photoshop binary or pixel compatibility.
+
+- Tone: Brightness/Contrast, per-channel Levels and Curves, Exposure with offset/gamma, Shadows/Highlights, Invert, Posterize, Threshold, Equalize, Auto Levels/Auto Tone, Auto Contrast and Auto Color.
+- Color: targeted Hue/Saturation and colorize, Vibrance, tone-range Color Balance, six-color Black & White, Photo Filter, Channel Mixer, nine-range Selective Color, Desaturate, Replace Color and reference-image Match Color.
+- Mapping: Gradient Map and Color Lookup with 1D/3D `.cube` parsing, trilinear/tetrahedral interpolation and optional ordered dither.
+- HDR Toning: linear HDR input above one, ExposureGamma and HighlightCompression, normalized sRGB output.
+
+The original operations remain available with their 0.1 semantics:
 
 - Color adjustment: linear-light exposure, relative temperature/tint, brightness, contrast, saturation, gamma and opacity.
 - Gaussian blur with linear-light premultiplied-alpha filtering, and unsharp-mask sharpening.
@@ -37,7 +46,7 @@ Builds, staged packages, consumer checks and generated examples stay under `buil
 ## Consume the installed package
 
 ```cmake
-find_package(iiGraphicAdjust 0.1 CONFIG REQUIRED)
+find_package(iiGraphicAdjust 0.2 CONFIG REQUIRED)
 target_link_libraries(my_app PRIVATE iiGraphicAdjust::iiGraphicAdjust)
 ```
 
@@ -79,8 +88,10 @@ The example writes a real 256×128 adjusted RGB gradient as binary PPM using sta
 
 ## Scope
 
-This release processes normalized sRGB images on the CPU. Premultiplied input, HDR/wide-gamut/ICC conversion, image decoding, GPU execution, vector geometry and text shaping are outside its contract. Temperature/tint are relative channel gains, not calibrated photographic white balance. Noise modes are Uniform and Gaussian; no blue-noise claim is made.
+This release processes normalized sRGB images on the CPU. A separate HdrImageView accepts linear HDR radiance for tone mapping. Premultiplied input, wide-gamut/ICC conversion, image decoding, GPU execution, vector geometry and text shaping remain outside the contract. Temperature/tint are relative channel gains, not calibrated photographic white balance. Noise modes are Uniform and Gaussian; no blue-noise claim is made.
 
 The module is ready for a caller to use through its installed CMake package. Dreamscapes and existing SDK processing paths are not migrated by creating this package. Cross-platform source portability does not imply a verified Windows, Linux, iOS or Android build.
 
-See [API contract](docs/API.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).
+See the original [API contract](docs/API.md), new [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md) contracts, the [reference coverage and attribution](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).
+
+Version 0.2 uses shared-library ABI series 0.2 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.2 for the new operations; existing 0.1 function behavior is preserved.
