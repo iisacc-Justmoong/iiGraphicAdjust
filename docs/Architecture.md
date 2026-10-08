@@ -14,6 +14,19 @@
 | `Color.h/.cpp` | Color-range operations and reference statistics |
 | `Mapping.h/.cpp` | Gradient mapping, LUT tables and strict Cube parsing |
 | `Hdr.h/.cpp` | Separate linear HDR input and normalized tone-mapped output |
+| `BlurFilters.h/.cpp` | Menu blur/sharpen and typed Blur Gallery pins/paths |
+| `DistortionFilters.h/.cpp` | Inverse mapping, displacement maps and border handling |
+| `UtilityFilters.h/.cpp` | Menu noise, morphology, convolution, video and box-guided kernels |
+| `PixelFilters.h/.cpp` | Pixelate and Stylize algorithms |
+| `RenderFilters.h/.cpp` | Procedural noise/light/Flame/Tree/Frame raster processing |
+| `GalleryFilters.h/.cpp` | 47 named artistic effects and typed ordered Gallery stack |
+| `LensFilter.h/.cpp` | PhotoCraft encoded Lens Correction, profiles and auto scale |
+| `CameraRawFilter.h/.cpp` | Separate relative-WB rendered Camera Raw pipeline |
+| `MeshFilters.h/.cpp` | Liquify fields, constrained projections, ARAP and metric planes |
+| `LightcraftFilters.h/.cpp` | 22 look/41 preset recipes and four linear-premultiplied resamplers |
+| `RetouchFilters.h/.cpp` | Clone/Heal/Remove, eye repair, spot visualization and dust detection |
+| `DiagnosticFilters.h/.cpp` | Selection/mask previews and explicit proof-space gamut warning overlays |
+| `FilterInternal.h`, `PixelRenderInternal.h` | Private encoded-space sampling, windows and procedural helpers |
 | `Internal.h` | Private validation, allocation handling and transfer functions |
 | `DevelopTone.h/.cpp` | Rendered-image white balance, Light, auto estimation and cubic/parametric curves |
 | `DevelopColor.h/.cpp` | Perceptual eight-band color, grading, Point Color and calibration |
@@ -42,3 +55,7 @@ No existing product or SDK adapter is rewritten in this release. Integrating a h
 Automatic corrections sort visible samples and cost O(N log N); Equalize uses fixed-bin histograms. Match Color computes alpha-weighted statistics without storing borrowed views. LUT interpolation uses fixed per-pixel working arrays; 1D LUTs retain direct tables. Upstream reference attribution is installed with the package and adds no library dependency.
 
 Development spatial windows use double precision and alpha-weighted statistics. Small Gaussian radii use exact separable convolution; sigma >= 3 uses three variance-matched box passes with O(N) work. Guided filters reuse these window primitives. Defringe uses O(N) sliding extrema. The measured 4K Light operation retained about 1.18 GiB peak resident memory; this CPU reference implementation has no low-memory or real-time guarantee. Local masks borrow coverage synchronously, accumulate settings without retaining pointers, and have explicit per-call bounds. Geometric operations document their separate alpha-resampling contract. `develop()` is explicit SDR stage composition, not a hidden RAW scene pipeline.
+
+Filter families are split by their source algorithms and reasons to change, with explicit value options instead of command-name/string dispatch. Header-only private math is shared only where actual repeated sampling/alpha requirements exist. Geometry helper outputs let an editor inspect a real solved mesh without making the leaf SDK depend on a product. There is no plugin or application history abstraction in this SDK.
+
+Filter inventories are pinned to actual upstream commits and are distributed as `docs/filter-catalog.json`. Smart-object aliases share an implementation; 47 Gallery functions are not collapsed into a single style switch. Resampling uses linear premultiplied RGB with antialiasing widened kernels, whereas PhotoCraft artistic/menu filters use encoded sRGB. Those working-space distinctions are explicit API contracts.

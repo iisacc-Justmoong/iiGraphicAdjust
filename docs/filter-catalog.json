@@ -1,0 +1,1474 @@
+{
+  "reference_commit": "5896f0b63e6f342e0311920b4d2a0ea5a94330fc",
+  "entries": [
+    {
+      "command": "edit.perspectiveWarp",
+      "name": "Perspective Warp",
+      "params": "{\"planes\":[{\"src\":[[x,y]×4],\"dst\":[[x,y]×4]}…] (corners clockwise from top-left; corners that coincide in src are linked),\"straighten\":\"horizontal|vertical|auto\"?,\"interpolation\":\"bicubic|bilinear|nearest\",\"layer\":id?}",
+      "file": "crates/engine/src/distort_cmds.rs",
+      "line": 402,
+      "api": "perspectiveWarp",
+      "header": "MeshFilters.h",
+      "kind": "edit"
+    },
+    {
+      "command": "edit.puppetWarp",
+      "name": "Puppet Warp",
+      "params": "{\"pins\":[{\"src\":[x,y],\"dst\":[x,y],\"rotate\":deg?,\"depth\":n?}…],\"mode\":\"rigid|normal|distort\"=\"normal\",\"density\":\"fewer|normal|more\"=\"normal\",\"expansion\":px=2,\"interpolation\":\"bicubic|bilinear|nearest\",\"layer\":id?} — mesh over the opaque region, as-rigid-as-possible; on a smart object it becomes a smart filter",
+      "file": "crates/engine/src/distort_cmds.rs",
+      "line": 382,
+      "api": "puppetWarp",
+      "header": "MeshFilters.h",
+      "kind": "edit"
+    },
+    {
+      "command": "filter.adaptiveWideAngle",
+      "name": "Adaptive Wide Angle…",
+      "params": "{\"model\":\"auto|fisheye|perspective|fullSpherical\",\"focalLength\":0..200=0,\"cropFactor\":0.1..10=1,\"scale\":50..150=100,\"constraints\":[{\"a\":[x,y],\"b\":[x,y],\"orientation\":\"free|horizontal|vertical\"}]}",
+      "file": "crates/engine/src/lens_cmds.rs",
+      "line": 401,
+      "api": "adaptiveWideAngle",
+      "header": "MeshFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blur.average",
+      "name": "Average",
+      "params": "alpha-weighted mean of selection or layer",
+      "file": "crates/engine/src/extra_cmds.rs",
+      "line": 742,
+      "api": "average",
+      "header": "UtilityFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blur.blur",
+      "name": "Blur",
+      "params": "{}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 276,
+      "api": "blur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blur.blurMore",
+      "name": "Blur More",
+      "params": "{}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 277,
+      "api": "blurMore",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blur.boxBlur",
+      "name": "Box Blur…",
+      "params": "{\"radius\":1..2000=1}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 282,
+      "api": "boxBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blur.gaussianBlur",
+      "name": "Gaussian Blur…",
+      "params": "{\"radius\":0.1..1000=1}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 275,
+      "api": "filterGaussianBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blur.lensBlur",
+      "name": "Lens Blur…",
+      "params": "{\"radius\":0..100=15,\"shape\":\"hexagon|triangle|square|pentagon|heptagon|octagon\",\"bladeCurvature\":0..100=0,\"rotation\":0..360=0,\"depthMap\":\"none|transparency|layerMask\",\"focalDistance\":0..255=0,\"invert\":bool,\"brightness\":0..100=0,\"threshold\":0..255=255,\"noise\":0..100=0,\"distribution\":\"uniform|gaussian\",\"monochromatic\":bool,\"seed\":u32=0}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 626,
+      "api": "lensBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blur.motionBlur",
+      "name": "Motion Blur…",
+      "params": "{\"angle\":-360..360=0,\"distance\":1..2000=10}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 283,
+      "api": "motionBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blur.radialBlur",
+      "name": "Radial Blur…",
+      "params": "{\"amount\":1..100=10,\"method\":\"spin|zoom\",\"centerX\":0..1=0.5,\"centerY\":0..1=0.5}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 284,
+      "api": "radialBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blur.shapeBlur",
+      "name": "Shape Blur…",
+      "params": "{\"radius\":5..1000=10,\"shape\":\"circle|ring|square|diamond|triangle|hexagon|star|heart|cross\"}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 632,
+      "api": "shapeBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blur.smartBlur",
+      "name": "Smart Blur…",
+      "params": "{\"radius\":0.1..100=3,\"threshold\":0.1..100=25,\"quality\":\"high|medium|low\",\"mode\":\"normal|edgeOnly|overlayEdge\"}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 620,
+      "api": "smartBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blur.surfaceBlur",
+      "name": "Surface Blur…",
+      "params": "{\"radius\":1..100=5,\"threshold\":2..255=15}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 290,
+      "api": "surfaceBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blurGallery.fieldBlur",
+      "name": "Field Blur…",
+      "params": "{\"blur\":0..500=15,\"centerX\":0..1=0.5,\"centerY\":0..1=0.5,\"pins\":json}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 651,
+      "api": "fieldBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blurGallery.irisBlur",
+      "name": "Iris Blur…",
+      "params": "{\"blur\":0..500=15,\"centerX\":0..1=0.5,\"centerY\":0..1=0.5,\"radiusX\":0.01..1=0.35,\"radiusY\":0.01..1=0.25,\"angle\":-180..180=0,\"roundness\":0..100=0,\"feather\":0..0.99=0.5,\"pins\":json}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 645,
+      "api": "irisBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blurGallery.pathBlur",
+      "name": "Path Blur…",
+      "params": "{\"speed\":0..500=50,\"taper\":0..100=0,\"startX\":0..1=0.2,\"startY\":0..1=0.5,\"endX\":0..1=0.8,\"endY\":0..1=0.5,\"paths\":json}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 663,
+      "api": "pathBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blurGallery.spinBlur",
+      "name": "Spin Blur…",
+      "params": "{\"blurAngle\":0..360=15,\"centerX\":0..1=0.5,\"centerY\":0..1=0.5,\"radiusX\":0.01..1=0.3,\"radiusY\":0.01..1=0.3,\"angle\":-180..180=0,\"pins\":json}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 657,
+      "api": "spinBlur",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.blurGallery.tiltShift",
+      "name": "Tilt-Shift…",
+      "params": "{\"blur\":0..500=15,\"centerX\":0..1=0.5,\"centerY\":0..1=0.5,\"angle\":-90..90=0,\"focus\":0..1=0.1,\"transition\":0.01..1=0.15}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 639,
+      "api": "tiltShift",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.cameraRaw",
+      "name": "Camera Raw Filter…",
+      "params": "{\"temperature\":-100..100=0,\"tint\":-100..100=0,\"exposure\":-5..5=0,\"contrast\":-100..100=0,\"highlights\":-100..100=0,\"shadows\":-100..100=0,\"whites\":-100..100=0,\"blacks\":-100..100=0,\"texture\":-100..100=0,\"clarity\":-100..100=0,\"dehaze\":-100..100=0,\"vibrance\":-100..100=0,\"saturation\":-100..100=0,\"curveHighlights\":-100..100=0,\"curveLights\":-100..100=0,\"curveDarks\":-100..100=0,\"curveShadows\":-100..100=0,\"curveSplits\":[25,50,75],\"pointCurve\":[[in,out]],\"pointCurveRed\":[[in,out]],\"pointCurveGreen\":[[in,out]],\"pointCurveBlue\":[[in,out]],\"hslHue\":[8],\"hslSat\":[8],\"hslLum\":[8],\"gradeShadows\":{\"hue\":deg,\"sat\":0..100,\"lum\":-100..100},\"gradeMidtones\":{},\"gradeHighlights\":{},\"gradeGlobal\":{},\"gradeBlending\":0..100=50,\"gradeBalance\":-100..100=0,\"sharpenAmount\":0..150=0,\"sharpenRadius\":0.5..3=1,\"sharpenDetail\":0..100=25,\"sharpenMasking\":0..100=0,\"noiseLuminance\":0..100=0,\"noiseLuminanceDetail\":0..100=50,\"noiseColor\":0..100=0,\"noiseColorDetail\":0..100=50,\"grainAmount\":0..100=0,\"grainSize\":0..100=25,\"grainRoughness\":0..100=50,\"vignetteAmount\":-100..100=0,\"vignetteMidpoint\":0..100=50,\"vignetteRoundness\":-100..100=0,\"vignetteFeather\":0..100=50,\"vignetteHighlights\":0..100=0,\"vignetteStyle\":\"highlightPriority|colorPriority|paintOverlay\",\"seed\":u32=0}",
+      "file": "crates/engine/src/lens_cmds.rs",
+      "line": 411,
+      "api": "cameraRawFilter",
+      "header": "CameraRawFilter.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.distort.displace",
+      "name": "Displace…",
+      "params": "{\"horizontal\":-999..999=10,\"vertical\":-999..999=10,\"fit\":\"stretch|tile\",\"undefinedAreas\":\"repeat|wrap\",\"mapDocument\":doc,\"mapPath\":text,\"mapLayer\":json}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 570,
+      "api": "displace",
+      "header": "DistortionFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.distort.pinch",
+      "name": "Pinch…",
+      "params": "{\"amount\":-100..100=50}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 316,
+      "api": "pinch",
+      "header": "DistortionFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.distort.polarCoordinates",
+      "name": "Polar Coordinates…",
+      "params": "{\"mode\":\"rectangularToPolar|polarToRectangular\"}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 325,
+      "api": "polarCoordinates",
+      "header": "DistortionFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.distort.ripple",
+      "name": "Ripple…",
+      "params": "{\"amount\":-999..999=100,\"size\":\"small|medium|large\"}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 324,
+      "api": "ripple",
+      "header": "DistortionFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.distort.shear",
+      "name": "Shear…",
+      "params": "{\"amount\":-100..100=0,\"undefinedAreas\":\"wrap|repeat\",\"points\":json}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 576,
+      "api": "shear",
+      "header": "DistortionFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.distort.spherize",
+      "name": "Spherize…",
+      "params": "{\"amount\":-100..100=100,\"mode\":\"normal|horizontalOnly|verticalOnly\"}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 317,
+      "api": "spherize",
+      "header": "DistortionFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.distort.twirl",
+      "name": "Twirl…",
+      "params": "{\"angle\":-999..999=50}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 315,
+      "api": "twirl",
+      "header": "DistortionFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.distort.wave",
+      "name": "Wave…",
+      "params": "{\"generators\":1..999=5,\"wavelengthMin\":1..998=10,\"wavelengthMax\":2..999=120,\"amplitudeMin\":1..998=5,\"amplitudeMax\":1..999=35,\"type\":\"sine|triangle|square\",\"undefinedAreas\":\"wrap|repeat\",\"seed\":u32=0}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 318,
+      "api": "wave",
+      "header": "DistortionFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.distort.zigZag",
+      "name": "ZigZag…",
+      "params": "{\"amount\":-100..100=10,\"ridges\":0..20=5,\"style\":\"pondRipples|outFromCenter|aroundCenter\"}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 577,
+      "api": "zigZag",
+      "header": "DistortionFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.accentedEdges",
+      "name": "Accented Edges",
+      "category": "Brush Strokes",
+      "params": "{\"edgeWidth\":1..14=2,\"edgeBrightness\":0..50=38,\"smoothness\":1..15=5}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 56,
+      "api": "accentedEdges",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.angledStrokes",
+      "name": "Angled Strokes",
+      "category": "Brush Strokes",
+      "params": "{\"directionBalance\":0..100=50,\"strokeLength\":3..50=15,\"sharpness\":0..10=3}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 57,
+      "api": "angledStrokes",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.basRelief",
+      "name": "Bas Relief",
+      "category": "Sketch",
+      "params": "{\"detail\":1..15=13,\"smoothness\":1..15=3,\"light\":\"bottom|bottomLeft|left|topLeft|top|topRight|right|bottomRight\",\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 69,
+      "api": "basRelief",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.chalkCharcoal",
+      "name": "Chalk & Charcoal",
+      "category": "Sketch",
+      "params": "{\"charcoalArea\":0..20=6,\"chalkArea\":0..20=6,\"strokePressure\":0..5=1,\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 70,
+      "api": "chalkCharcoal",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.charcoal",
+      "name": "Charcoal",
+      "category": "Sketch",
+      "params": "{\"charcoalThickness\":1..7=1,\"detail\":0..5=5,\"lightDarkBalance\":0..100=50,\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 71,
+      "api": "charcoal",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.chrome",
+      "name": "Chrome",
+      "category": "Sketch",
+      "params": "{\"detail\":0..10=4,\"smoothness\":0..10=7}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 72,
+      "api": "chrome",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.coloredPencil",
+      "name": "Colored Pencil",
+      "category": "Artistic",
+      "params": "{\"pencilWidth\":1..24=4,\"strokePressure\":0..15=8,\"paperBrightness\":0..50=25}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 40,
+      "api": "coloredPencil",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.conteCrayon",
+      "name": "Conté Crayon",
+      "category": "Sketch",
+      "params": "{\"foregroundLevel\":1..15=11,\"backgroundLevel\":1..15=7,\"texture\":\"canvas|brick|burlap|sandstone\",\"scaling\":50..200=100,\"relief\":0..50=4,\"light\":\"top|topRight|right|bottomRight|bottom|bottomLeft|left|topLeft\",\"invert\":bool,\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 73,
+      "api": "conteCrayon",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.craquelure",
+      "name": "Craquelure",
+      "category": "Texture",
+      "params": "{\"crackSpacing\":2..100=15,\"crackDepth\":0..10=6,\"crackBrightness\":0..10=9}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 86,
+      "api": "craquelure",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.crosshatch",
+      "name": "Crosshatch",
+      "category": "Brush Strokes",
+      "params": "{\"strokeLength\":3..50=9,\"sharpness\":0..20=6,\"strength\":1..3=1}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 58,
+      "api": "crosshatch",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.cutout",
+      "name": "Cutout",
+      "category": "Artistic",
+      "params": "{\"numberOfLevels\":2..8=4,\"edgeSimplicity\":0..10=4,\"edgeFidelity\":1..3=2}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 41,
+      "api": "cutout",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.darkStrokes",
+      "name": "Dark Strokes",
+      "category": "Brush Strokes",
+      "params": "{\"balance\":0..10=5,\"blackIntensity\":0..10=6,\"whiteIntensity\":0..10=2}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 59,
+      "api": "darkStrokes",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.diffuseGlow",
+      "name": "Diffuse Glow",
+      "category": "Distort",
+      "params": "{\"graininess\":0..10=6,\"glowAmount\":0..20=10,\"clearAmount\":0..20=15,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 65,
+      "api": "diffuseGlow",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.dryBrush",
+      "name": "Dry Brush",
+      "category": "Artistic",
+      "params": "{\"brushSize\":0..10=2,\"brushDetail\":0..10=8,\"texture\":1..3=1}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 42,
+      "api": "dryBrush",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.filmGrain",
+      "name": "Film Grain",
+      "category": "Artistic",
+      "params": "{\"grain\":0..20=4,\"highlightArea\":0..20=0,\"intensity\":0..10=10}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 43,
+      "api": "galleryFilmGrain",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.fresco",
+      "name": "Fresco",
+      "category": "Artistic",
+      "params": "{\"brushSize\":0..10=2,\"brushDetail\":0..10=8,\"texture\":1..3=1}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 44,
+      "api": "fresco",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.glass",
+      "name": "Glass",
+      "category": "Distort",
+      "params": "{\"distortion\":0..20=5,\"smoothness\":1..15=3,\"texture\":\"frosted|blocks|canvas|tinyLens\",\"scaling\":50..200=100,\"invert\":bool}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 66,
+      "api": "glass",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.glowingEdges",
+      "name": "Glowing Edges",
+      "category": "Stylize",
+      "params": "{\"edgeWidth\":1..14=2,\"edgeBrightness\":0..20=6,\"smoothness\":1..15=5}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 84,
+      "api": "glowingEdges",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.grain",
+      "name": "Grain",
+      "category": "Texture",
+      "params": "{\"intensity\":0..100=40,\"contrast\":0..100=50,\"grainType\":\"regular|soft|sprinkles|clumped|contrasty|enlarged|stippled|horizontal|vertical|speckle\",\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 87,
+      "api": "grain",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.graphicPen",
+      "name": "Graphic Pen",
+      "category": "Sketch",
+      "params": "{\"strokeLength\":1..15=15,\"lightDarkBalance\":0..100=50,\"strokeDirection\":\"rightDiagonal|horizontal|leftDiagonal|vertical\",\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 74,
+      "api": "graphicPen",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.halftonePattern",
+      "name": "Halftone Pattern",
+      "category": "Sketch",
+      "params": "{\"size\":1..12=1,\"contrast\":0..50=5,\"patternType\":\"dot|circle|line\",\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 75,
+      "api": "halftonePattern",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.inkOutlines",
+      "name": "Ink Outlines",
+      "category": "Brush Strokes",
+      "params": "{\"strokeLength\":1..50=4,\"darkIntensity\":0..50=20,\"lightIntensity\":0..50=10}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 60,
+      "api": "inkOutlines",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.mosaicTiles",
+      "name": "Mosaic Tiles",
+      "category": "Texture",
+      "params": "{\"tileSize\":2..100=12,\"groutWidth\":1..15=3,\"lightenGrout\":0..10=9}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 88,
+      "api": "mosaicTiles",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.neonGlow",
+      "name": "Neon Glow",
+      "category": "Artistic",
+      "params": "{\"glowSize\":-24..24=5,\"glowBrightness\":0..50=15,\"glowColor\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 45,
+      "api": "neonGlow",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.notePaper",
+      "name": "Note Paper",
+      "category": "Sketch",
+      "params": "{\"imageBalance\":0..50=25,\"graininess\":0..20=10,\"relief\":0..25=11,\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 76,
+      "api": "notePaper",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.oceanRipple",
+      "name": "Ocean Ripple",
+      "category": "Distort",
+      "params": "{\"rippleSize\":1..15=9,\"rippleMagnitude\":0..20=9}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 67,
+      "api": "oceanRipple",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.paintDaubs",
+      "name": "Paint Daubs",
+      "category": "Artistic",
+      "params": "{\"brushSize\":1..50=8,\"sharpness\":0..40=7,\"brushType\":\"simple|lightRough|darkRough|wideSharp|wideBlurry|sparkle\"}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 46,
+      "api": "paintDaubs",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.paletteKnife",
+      "name": "Palette Knife",
+      "category": "Artistic",
+      "params": "{\"strokeSize\":1..50=25,\"strokeDetail\":1..3=3,\"softness\":0..10=0}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 47,
+      "api": "paletteKnife",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.patchwork",
+      "name": "Patchwork",
+      "category": "Texture",
+      "params": "{\"squareSize\":0..10=4,\"relief\":0..25=8}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 89,
+      "api": "patchwork",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.photocopy",
+      "name": "Photocopy",
+      "category": "Sketch",
+      "params": "{\"detail\":1..24=7,\"darkness\":1..50=8,\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 77,
+      "api": "photocopy",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.plaster",
+      "name": "Plaster",
+      "category": "Sketch",
+      "params": "{\"imageBalance\":0..50=20,\"smoothness\":1..15=2,\"light\":\"top|topRight|right|bottomRight|bottom|bottomLeft|left|topLeft\",\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 78,
+      "api": "plaster",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.plasticWrap",
+      "name": "Plastic Wrap",
+      "category": "Artistic",
+      "params": "{\"highlightStrength\":0..20=15,\"detail\":1..15=9,\"smoothness\":1..15=7}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 48,
+      "api": "plasticWrap",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.posterEdges",
+      "name": "Poster Edges",
+      "category": "Artistic",
+      "params": "{\"edgeThickness\":0..10=2,\"edgeIntensity\":0..10=1,\"posterization\":0..6=2}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 49,
+      "api": "posterEdges",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.reticulation",
+      "name": "Reticulation",
+      "category": "Sketch",
+      "params": "{\"density\":0..50=12,\"foregroundLevel\":0..50=40,\"backgroundLevel\":0..50=5,\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 79,
+      "api": "reticulation",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.roughPastels",
+      "name": "Rough Pastels",
+      "category": "Artistic",
+      "params": "{\"strokeLength\":0..40=6,\"strokeDetail\":1..20=4,\"texture\":\"canvas|brick|burlap|sandstone\",\"scaling\":50..200=100,\"relief\":0..50=20,\"light\":\"bottom|bottomLeft|left|topLeft|top|topRight|right|bottomRight\",\"invert\":bool}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 50,
+      "api": "roughPastels",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.smudgeStick",
+      "name": "Smudge Stick",
+      "category": "Artistic",
+      "params": "{\"strokeLength\":0..10=2,\"highlightArea\":0..20=0,\"intensity\":0..10=10}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 51,
+      "api": "smudgeStick",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.spatter",
+      "name": "Spatter",
+      "category": "Brush Strokes",
+      "params": "{\"sprayRadius\":0..25=10,\"smoothness\":1..15=5}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 61,
+      "api": "spatter",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.sponge",
+      "name": "Sponge",
+      "category": "Artistic",
+      "params": "{\"brushSize\":0..10=2,\"definition\":0..25=12,\"smoothness\":1..15=5}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 52,
+      "api": "sponge",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.sprayedStrokes",
+      "name": "Sprayed Strokes",
+      "category": "Brush Strokes",
+      "params": "{\"strokeLength\":0..20=12,\"sprayRadius\":0..25=7,\"strokeDirection\":\"rightDiagonal|horizontal|leftDiagonal|vertical\"}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 62,
+      "api": "sprayedStrokes",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.stainedGlass",
+      "name": "Stained Glass",
+      "category": "Texture",
+      "params": "{\"cellSize\":2..50=10,\"borderThickness\":1..20=4,\"lightIntensity\":0..10=3,\"foreground\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 90,
+      "api": "stainedGlass",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.stamp",
+      "name": "Stamp",
+      "category": "Sketch",
+      "params": "{\"lightDarkBalance\":0..50=25,\"smoothness\":1..50=5,\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 80,
+      "api": "stamp",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.sumiE",
+      "name": "Sumi-e",
+      "category": "Brush Strokes",
+      "params": "{\"strokeWidth\":3..15=10,\"strokePressure\":0..15=2,\"contrast\":0..40=16}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 63,
+      "api": "sumiE",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.texturizer",
+      "name": "Texturizer",
+      "category": "Texture",
+      "params": "{\"texture\":\"canvas|brick|burlap|sandstone\",\"scaling\":50..200=100,\"relief\":0..50=4,\"light\":\"top|topRight|right|bottomRight|bottom|bottomLeft|left|topLeft\",\"invert\":bool}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 91,
+      "api": "texturizer",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.tornEdges",
+      "name": "Torn Edges",
+      "category": "Sketch",
+      "params": "{\"imageBalance\":0..50=25,\"smoothness\":1..15=11,\"contrast\":1..25=17,\"foreground\":json,\"background\":json}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 81,
+      "api": "tornEdges",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.underpainting",
+      "name": "Underpainting",
+      "category": "Artistic",
+      "params": "{\"brushSize\":0..40=6,\"textureCoverage\":0..40=16,\"texture\":\"canvas|brick|burlap|sandstone\",\"scaling\":50..200=100,\"relief\":0..50=4,\"light\":\"top|topRight|right|bottomRight|bottom|bottomLeft|left|topLeft\",\"invert\":bool}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 53,
+      "api": "underpainting",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.waterPaper",
+      "name": "Water Paper",
+      "category": "Sketch",
+      "params": "{\"fiberLength\":3..50=15,\"brightness\":0..100=60,\"contrast\":0..100=80}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 82,
+      "api": "waterPaper",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.gallery.watercolor",
+      "name": "Watercolor",
+      "category": "Artistic",
+      "params": "{\"brushDetail\":1..14=9,\"shadowIntensity\":0..10=1,\"texture\":1..3=1}",
+      "file": "crates/algo/src/artistic.rs",
+      "line": 54,
+      "api": "watercolor",
+      "header": "GalleryFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.lensCorrection",
+      "name": "Lens Correction…",
+      "params": "{\"profile\":\"none|auto|generic\",\"focalLength\":mm=0,\"correctDistortion\":bool=true,\"correctVignette\":bool=true,\"correctCA\":bool=true,\"autoScale\":bool=false,\"distortion\":-100..100=0,\"redCyan\":-100..100=0,\"blueYellow\":-100..100=0,\"vignetteAmount\":-100..100=0,\"vignetteMidpoint\":0..100=50,\"vertical\":-100..100=0,\"horizontal\":-100..100=0,\"angle\":-180..180=0,\"scale\":50..150=100,\"edge\":\"transparency|edgeExtension|black|white\",\"straighten\":[[x,y],[x,y]]?}",
+      "file": "crates/engine/src/lens_cmds.rs",
+      "line": 391,
+      "api": "lensCorrection",
+      "header": "LensFilter.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.liquify",
+      "name": "Liquify…",
+      "params": "{\"strokes\":[{\"tool\":\"forwardWarp|reconstruct|smooth|twirlCw|twirlCcw|pucker|bloat|pushLeft|freeze|thaw|lassoMask|reconstructAll\",\"size\":px=100,\"density\":0-100=50,\"pressure\":0-100=100,\"rate\":0-100=80,\"points\":[[x,y,pressure?]…],\"amount\":%? (reconstructAll; lassoMask: 1 freezes the polygon in points, 0 thaws it)}…],\"meshSize\":px? (field resolution, px per node; default 2, or 4 above 4 MP),\"layer\":id?} — strokes replay in order on a fresh field; a selection limits the effect; on a smart object it becomes a smart filter",
+      "file": "crates/engine/src/distort_cmds.rs",
+      "line": 372,
+      "api": "liquify",
+      "header": "MeshFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.noise.addNoise",
+      "name": "Add Noise…",
+      "params": "{\"amount\":0.1..400=12.5,\"distribution\":\"uniform|gaussian\",\"monochromatic\":bool,\"seed\":u32=0}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 303,
+      "api": "filterAddNoise",
+      "header": "UtilityFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.noise.despeckle",
+      "name": "Despeckle",
+      "params": "{}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 281,
+      "api": "despeckle",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.noise.dustAndScratches",
+      "name": "Dust & Scratches…",
+      "params": "{\"radius\":1..500=1,\"threshold\":0..255=0}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 310,
+      "api": "dustAndScratches",
+      "header": "UtilityFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.noise.median",
+      "name": "Median…",
+      "params": "{\"radius\":1..500=1}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 309,
+      "api": "median",
+      "header": "UtilityFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.noise.reduceNoise",
+      "name": "Reduce Noise…",
+      "params": "{\"strength\":0..10=6,\"preserveDetails\":0..100=60,\"reduceColorNoise\":0..100=45,\"sharpenDetails\":0..100=25,\"removeJpegArtifact\":bool}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 613,
+      "api": "reduceNoise",
+      "header": "UtilityFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.other.custom",
+      "name": "Custom…",
+      "params": "{\"kernel\":int[25],\"scale\":1..9999=1,\"offset\":-9999..9999=0}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 670,
+      "api": "customFilter",
+      "header": "UtilityFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.other.highPass",
+      "name": "High Pass…",
+      "params": "{\"radius\":0.1..1000=10}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 326,
+      "api": "highPass",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.other.hsbHsl",
+      "name": "HSB/HSL",
+      "params": "{\"inputMode\":\"rgb|hsb|hsl\",\"rowOrder\":\"hsb|hsl|rgb\"}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 671,
+      "api": "hsbHsl",
+      "header": "UtilityFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.other.maximum",
+      "name": "Maximum…",
+      "params": "{\"radius\":0.2..500=1,\"preserve\":\"squareness|roundness\"}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 328,
+      "api": "maximum",
+      "header": "UtilityFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.other.minimum",
+      "name": "Minimum…",
+      "params": "{\"radius\":0.2..500=1,\"preserve\":\"squareness|roundness\"}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 327,
+      "api": "minimum",
+      "header": "UtilityFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.other.offset",
+      "name": "Offset…",
+      "params": "{\"horizontal\":px=0,\"vertical\":px=0,\"undefinedAreas\":\"wrap|repeat|transparent\"}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 329,
+      "api": "offset",
+      "header": "DistortionFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.pixelate.colorHalftone",
+      "name": "Color Halftone…",
+      "params": "{\"maxRadius\":4..127=8,\"channel1\":-360..360=108,\"channel2\":-360..360=162,\"channel3\":-360..360=90,\"channel4\":-360..360=45}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 531,
+      "api": "colorHalftone",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.pixelate.crystallize",
+      "name": "Crystallize…",
+      "params": "{\"cellSize\":3..300=10,\"seed\":u32=0}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 537,
+      "api": "crystallize",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.pixelate.facet",
+      "name": "Facet",
+      "params": "{}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 538,
+      "api": "facet",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.pixelate.fragment",
+      "name": "Fragment",
+      "params": "{}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 539,
+      "api": "fragment",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.pixelate.mezzotint",
+      "name": "Mezzotint…",
+      "params": "{\"type\":\"fineDots|mediumDots|grainyDots|coarseDots|shortLines|mediumLines|longLines|shortStrokes|mediumStrokes|longStrokes\",\"seed\":u32=0}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 540,
+      "api": "mezzotint",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.pixelate.mosaic",
+      "name": "Mosaic…",
+      "params": "{\"cellSize\":2..200=10}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 311,
+      "api": "mosaic",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.pixelate.pointillize",
+      "name": "Pointillize…",
+      "params": "{\"cellSize\":3..300=5,\"seed\":u32=0,\"background\":json}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 546,
+      "api": "pointillize",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.render.clouds",
+      "name": "Clouds",
+      "params": "foreground/background,seed u32",
+      "file": "crates/engine/src/extra_cmds.rs",
+      "line": 743,
+      "api": "clouds",
+      "header": "RenderFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.render.differenceClouds",
+      "name": "Difference Clouds",
+      "params": "foreground/background,seed u32",
+      "file": "crates/engine/src/extra_cmds.rs",
+      "line": 744,
+      "api": "differenceClouds",
+      "header": "RenderFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.render.fibers",
+      "name": "Fibers…",
+      "params": "{\"variance\":1..64=16,\"strength\":1..64=4,\"seed\":u32=0,\"foreground\":json,\"background\":json}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 584,
+      "api": "fibers",
+      "header": "RenderFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.render.flame",
+      "name": "Flame…",
+      "params": "{\"flameType\":\"oneFlameAlongPath|multipleFlamesAlongPath|multipleFlamesPathDirections|multipleFlamesVariousLength|candleLight|multipleFlamesOneDirection\",\"length\":1..1000=150,\"randomizeLength\":bool,\"width\":1..1000=40,\"angle\":-180..180=0,\"interval\":1..1000=60,\"adjustIntervalForLoops\":bool=true,\"useCustomColor\":bool,\"color\":color,\"turbulent\":0..100=25,\"jag\":0..100=25,\"opacity\":0..100=75,\"flameLines\":1..100=20,\"flameBottomAlignment\":0..100=20,\"flameStyle\":\"normal|violent|flat\",\"flameShape\":\"parallel|toCenter|spread|oval|pointed\",\"randomizeShapes\":bool,\"seed\":u32=0,\"quality\":\"draft|low|medium|high|fine\",\"path\":text,\"newLayer\":bool} → {layer,newLayer,bounds,primitives,usedPath}",
+      "file": "crates/engine/src/render_cmds.rs",
+      "line": 187,
+      "api": "flame",
+      "header": "RenderFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.render.lensFlare",
+      "name": "Lens Flare…",
+      "params": "{\"brightness\":10..300=100,\"centerX\":0..1=0.5,\"centerY\":0..1=0.5,\"lens\":\"zoom|prime35|prime105|moviePrime\"}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 590,
+      "api": "lensFlare",
+      "header": "RenderFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.render.lightingEffects",
+      "name": "Lighting Effects…",
+      "params": "{\"lightType\":\"spot|point|infinite\",\"intensity\":-100..100=75,\"lightX\":0..1=0.25,\"lightY\":0..1=0.2,\"lightZ\":0..2=0.6,\"targetX\":0..1=0.5,\"targetY\":0..1=0.55,\"cone\":1..89=45,\"hotspot\":0..100=50,\"angle\":-180..180=135,\"elevation\":0..90=45,\"gloss\":-100..100=0,\"metallic\":-100..100=0,\"exposure\":-100..100=0,\"ambience\":-100..100=8,\"texture\":\"none|red|green|blue|alpha|luminance\",\"height\":0..100=50,\"whiteIsHigh\":bool=true,\"lights\":json}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 596,
+      "api": "lightingEffects",
+      "header": "RenderFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.render.pictureFrame",
+      "name": "Picture Frame…",
+      "params": "{\"frame\":\"vineWithFlowers|vineWithLeaves|ivy|roses|daisies|berries|bamboo|waves|zigzag|dots|rope|scallops|doubleLine|snowflakes|stars|hearts\",\"margin\":0..30=4,\"size\":1..100=50,\"arrangement\":1..100=50,\"lines\":1..5=1,\"thickness\":1..100=30,\"fade\":0..100=0,\"vineColor\":color,\"flowerColor\":color,\"leafColor\":color,\"seed\":u32=0,\"newLayer\":bool} → {layer,newLayer,bounds,primitives,frame}",
+      "file": "crates/engine/src/render_cmds.rs",
+      "line": 197,
+      "api": "pictureFrame",
+      "header": "RenderFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.render.relight",
+      "name": "Relight",
+      "params": "angle[-180,180],elevation[0,90],intensity/ambient[0,100],warmth[-100,100],softness[1,100]",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 603,
+      "api": "relight",
+      "header": "RenderFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.render.tree",
+      "name": "Tree…",
+      "params": "{\"baseTreeType\":1..34=1,\"lightDirection\":1..5=3,\"leavesAmount\":0..100=50,\"leavesSize\":0..200=100,\"branchesHeight\":50..300=100,\"branchesThickness\":50..200=100,\"defaultLeaves\":bool=true,\"leavesColor\":color,\"customBranchColor\":bool,\"branchesColor\":color,\"flatShading\":bool,\"seed\":u32=0,\"x\":0..1=0.5,\"y\":0..1=0.95,\"size\":0.05..2=0.8,\"newLayer\":bool} → {layer,newLayer,bounds,primitives,treeType}",
+      "file": "crates/engine/src/render_cmds.rs",
+      "line": 207,
+      "api": "tree",
+      "header": "RenderFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.sharpen.sharpen",
+      "name": "Sharpen",
+      "params": "{}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 278,
+      "api": "filterSharpen",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.sharpen.sharpenEdges",
+      "name": "Sharpen Edges",
+      "params": "{}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 280,
+      "api": "sharpenEdges",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.sharpen.sharpenMore",
+      "name": "Sharpen More",
+      "params": "{}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 279,
+      "api": "sharpenMore",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.sharpen.smartSharpen",
+      "name": "Smart Sharpen…",
+      "params": "{\"amount\":1..500=100,\"radius\":0.1..64=1,\"reduceNoise\":0..100=10}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 297,
+      "api": "smartSharpen",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.sharpen.unsharpMask",
+      "name": "Unsharp Mask…",
+      "params": "{\"amount\":1..500=50,\"radius\":0.1..1000=1,\"threshold\":0..255=0}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 291,
+      "api": "unsharpMask",
+      "header": "BlurFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.stylize.diffuse",
+      "name": "Diffuse…",
+      "params": "{\"mode\":\"normal|darkenOnly|lightenOnly|anisotropic\",\"seed\":u32=0}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 548,
+      "api": "diffuse",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.stylize.emboss",
+      "name": "Emboss…",
+      "params": "{\"angle\":-180..180=135,\"height\":1..100=3,\"amount\":1..500=100}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 312,
+      "api": "emboss",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.stylize.extrude",
+      "name": "Extrude…",
+      "params": "{\"type\":\"blocks|pyramids\",\"size\":2..255=30,\"depth\":1..255=30,\"depthMode\":\"random|levelBased\",\"solidFrontFaces\":bool,\"maskIncompleteBlocks\":bool,\"seed\":u32=0}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 549,
+      "api": "extrude",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.stylize.findEdges",
+      "name": "Find Edges",
+      "params": "{}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 313,
+      "api": "findEdges",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.stylize.oilPaint",
+      "name": "Oil Paint…",
+      "params": "{\"stylization\":0.1..10=4,\"cleanliness\":0..10=5,\"scale\":0.1..10=1,\"bristleDetail\":0..10=5,\"lighting\":bool=true,\"angle\":-180..180=-60,\"shine\":0..10=1}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 555,
+      "api": "oilPaint",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.stylize.solarize",
+      "name": "Solarize",
+      "params": "{}",
+      "file": "crates/engine/src/filters.rs",
+      "line": 314,
+      "api": "solarize",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.stylize.tiles",
+      "name": "Tiles…",
+      "params": "{\"count\":1..99=10,\"maxOffset\":1..99=10,\"fill\":\"background|foreground|inverse|unaltered\",\"seed\":u32=0,\"foreground\":json,\"background\":json}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 561,
+      "api": "tiles",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.stylize.traceContour",
+      "name": "Trace Contour…",
+      "params": "{\"level\":0..255=128,\"edge\":\"lower|upper\"}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 567,
+      "api": "traceContour",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.stylize.wind",
+      "name": "Wind…",
+      "params": "{\"method\":\"wind|blast|stagger\",\"direction\":\"fromRight|fromLeft\",\"seed\":u32=0}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 568,
+      "api": "wind",
+      "header": "PixelFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.vanishingPoint",
+      "name": "Vanishing Point…",
+      "params": "{\"planes\":[{\"corners\":[[x,y]×4]} | {\"from\":plane,\"edge\":\"top|right|bottom|left\",\"angle\":deg=90,\"depth\":1}],\"focalLength\":px=0,\"paste\":[{\"plane\":0,\"layer\":id? (else the clipboard),\"at\":[u,v]=[0.25,0.25],\"width\":0..1=0.5}],\"clone\":[{\"source\":[x,y],\"points\":[[x,y]],\"size\":px=40,\"hardness\":0..100=50,\"opacity\":0..100=100}],\"newLayer\":bool=false}",
+      "file": "crates/engine/src/vp_cmds.rs",
+      "line": 199,
+      "api": "vanishingPoint",
+      "header": "MeshFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.video.deInterlace",
+      "name": "De-Interlace…",
+      "params": "{\"eliminate\":\"oddFields|evenFields\",\"createBy\":\"interpolation|duplication\"}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 673,
+      "api": "deInterlace",
+      "header": "UtilityFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "filter.video.ntscColors",
+      "name": "NTSC Colors",
+      "params": "{}",
+      "file": "crates/engine/src/filters_ext.rs",
+      "line": 679,
+      "api": "ntscColors",
+      "header": "UtilityFilters.h",
+      "kind": "filter"
+    },
+    {
+      "command": "layer.smartObjects.perspectiveWarp",
+      "name": "Perspective Warp",
+      "params": "{\"planes\":[{\"src\":[[x,y]×4],\"dst\":[[x,y]×4]}…] (corners clockwise from top-left; corners that coincide in src are linked),\"straighten\":\"horizontal|vertical|auto\"?,\"interpolation\":\"bicubic|bilinear|nearest\",\"layer\":id?}",
+      "file": "crates/engine/src/distort_cmds.rs",
+      "line": 412,
+      "api": "perspectiveWarp",
+      "header": "MeshFilters.h",
+      "kind": "alias"
+    },
+    {
+      "command": "layer.smartObjects.puppetWarp",
+      "name": "Puppet Warp",
+      "params": "{\"pins\":[{\"src\":[x,y],\"dst\":[x,y],\"rotate\":deg?,\"depth\":n?}…],\"mode\":\"rigid|normal|distort\"=\"normal\",\"density\":\"fewer|normal|more\"=\"normal\",\"expansion\":px=2,\"interpolation\":\"bicubic|bilinear|nearest\",\"layer\":id?} — mesh over the opaque region, as-rigid-as-possible; on a smart object it becomes a smart filter",
+      "file": "crates/engine/src/distort_cmds.rs",
+      "line": 392,
+      "api": "puppetWarp",
+      "header": "MeshFilters.h",
+      "kind": "alias"
+    }
+  ],
+  "notes": [
+    "Every FilterParams variant and all 47 GalleryFilter variants reach real Rust CPU kernels. No algorithm placeholder found in these paths.",
+    "Filter last repeat, smart filter conversion and WASM plugin dispatch are execution/document concepts, not pixel algorithms.",
+    "0.4 includes distinct CameraRawFilter and LensFilter APIs with the Photocraft relative-temperature and encoded-lens contracts.",
+    "No Neural Filters algorithm exists; only roadmap/parity discussion.",
+    "Puppet and Perspective are Edit/SmartObjects menu operations recorded as smart filters."
+  ],
+  "legacy_enum_operations": [
+    {
+      "name": "Invert",
+      "api": "invert",
+      "header": "Tone.h"
+    },
+    {
+      "name": "Desaturate",
+      "api": "desaturate",
+      "header": "Color.h"
+    }
+  ],
+  "lightcraft_commit": "629e39380e296f588c64cd9c0053a8edc3528f36",
+  "lightcraft_looks": [
+    "lightcraftLookColor",
+    "lightcraftLookNeutral",
+    "lightcraftLookVivid",
+    "lightcraftLookLandscape",
+    "lightcraftLookPortrait",
+    "lightcraftLookMono",
+    "lightcraftLookFilmWarmPrint",
+    "lightcraftLookFilmCoolFade",
+    "lightcraftLookFilmGoldenHour",
+    "lightcraftLookFilmFadedSlide",
+    "lightcraftLookCineTealAmber",
+    "lightcraftLookCineNightBlue",
+    "lightcraftLookCineDesertHeat",
+    "lightcraftLookCineNeonDusk",
+    "lightcraftLookMutedMatteSoft",
+    "lightcraftLookMutedBleached",
+    "lightcraftLookMutedPastelHaze",
+    "lightcraftLookMutedQuietGreen",
+    "lightcraftLookBwMonoRich",
+    "lightcraftLookBwRedFilter",
+    "lightcraftLookBwSoft",
+    "lightcraftLookBwSepia"
+  ],
+  "lightcraft_presets": [
+    "lightcraftPresetWarmGlow",
+    "lightcraftPresetCoolMorning",
+    "lightcraftPresetTealOrange",
+    "lightcraftPresetVividPop",
+    "lightcraftPresetSoftPastel",
+    "lightcraftPresetFadedMatte",
+    "lightcraftPresetWarmFilm",
+    "lightcraftPresetMutedFilm",
+    "lightcraftPresetBwHighContrast",
+    "lightcraftPresetBwSoft",
+    "lightcraftPresetBwSelenium",
+    "lightcraftPresetCrispLandscape",
+    "lightcraftPresetGoldenHour",
+    "lightcraftPresetBlueHour",
+    "lightcraftPresetSoftSkin",
+    "lightcraftPresetBrightAiry",
+    "lightcraftPresetMoody",
+    "lightcraftPresetCinematic",
+    "lightcraftPresetMoodyPortrait",
+    "lightcraftPresetGoldenGlow",
+    "lightcraftPresetCleanStudio",
+    "lightcraftPresetCrispVista",
+    "lightcraftPresetDeepSky",
+    "lightcraftPresetLushGreens",
+    "lightcraftPresetDesertWarmth",
+    "lightcraftPresetMistyMorning",
+    "lightcraftPresetGrittyStreet",
+    "lightcraftPresetNeonNight",
+    "lightcraftPresetConcreteCool",
+    "lightcraftPresetFadedUrban",
+    "lightcraftPresetFreshBright",
+    "lightcraftPresetWarmTable",
+    "lightcraftPresetDarkMoodyFood",
+    "lightcraftPresetAutumnGold",
+    "lightcraftPresetWinterBlue",
+    "lightcraftPresetSpringFresh",
+    "lightcraftPresetSummerHaze",
+    "lightcraftPresetInstant70s",
+    "lightcraftPresetCrossProcess",
+    "lightcraftPresetBleachBypass",
+    "lightcraftPresetBwSepia"
+  ],
+  "resamplers": [
+    "resizeBox",
+    "resizeBilinear",
+    "resizeMitchell",
+    "resizeLanczos3"
+  ],
+  "lightcraft_retouch": [
+    {
+      "api": "cloneSpot",
+      "source": "spots.rs",
+      "file": "crates/pipeline/src/spots.rs"
+    },
+    {
+      "api": "healSpot",
+      "source": "spots.rs",
+      "file": "crates/pipeline/src/spots.rs"
+    },
+    {
+      "api": "removeSpot",
+      "source": "spots.rs",
+      "file": "crates/pipeline/src/spots.rs"
+    },
+    {
+      "api": "rankSpotSources",
+      "source": "spots.rs",
+      "file": "crates/pipeline/src/spots.rs"
+    },
+    {
+      "api": "redEye",
+      "source": "redeye.rs",
+      "file": "crates/pipeline/src/redeye.rs"
+    },
+    {
+      "api": "petEye",
+      "source": "redeye.rs",
+      "file": "crates/pipeline/src/redeye.rs"
+    },
+    {
+      "api": "detectPupil",
+      "source": "redeye.rs",
+      "file": "crates/pipeline/src/redeye.rs"
+    },
+    {
+      "api": "visualizeSpots",
+      "source": "visualize.rs",
+      "file": "crates/pipeline/src/visualize.rs"
+    },
+    {
+      "api": "detectDustSpots",
+      "source": "dust.rs",
+      "file": "crates/pipeline/src/dust.rs"
+    }
+  ],
+  "lightcraft_diagnostics": [
+    {
+      "api": "pointColorRangePreview",
+      "source": "visualize.rs",
+      "file": "crates/pipeline/src/visualize.rs"
+    },
+    {
+      "api": "maskColorOverlay",
+      "source": "visualize.rs",
+      "file": "crates/pipeline/src/visualize.rs"
+    },
+    {
+      "api": "maskColorOnBwOverlay",
+      "source": "visualize.rs",
+      "file": "crates/pipeline/src/visualize.rs"
+    },
+    {
+      "api": "maskImageOnBlack",
+      "source": "visualize.rs",
+      "file": "crates/pipeline/src/visualize.rs"
+    },
+    {
+      "api": "maskImageOnWhite",
+      "source": "visualize.rs",
+      "file": "crates/pipeline/src/visualize.rs"
+    },
+    {
+      "api": "maskWhiteOnBlack",
+      "source": "visualize.rs",
+      "file": "crates/pipeline/src/visualize.rs"
+    },
+    {
+      "api": "destinationGamutWarning",
+      "source": "finish.rs",
+      "file": "crates/pipeline/src/finish.rs"
+    },
+    {
+      "api": "displayGamutWarning",
+      "source": "output.rs",
+      "file": "crates/pipeline/src/output.rs"
+    }
+  ]
+}

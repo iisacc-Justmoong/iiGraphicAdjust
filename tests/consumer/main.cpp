@@ -2,6 +2,8 @@
 #include <array>
 #include <iiGraphicAdjust/iiGraphicAdjust.h>
 
+int runFilterConsumer();
+
 int main() {
     using namespace iiGraphicAdjust;
     const std::array<std::uint32_t, 2> pixels{0xff808080U, 0x804080c0U};
@@ -113,5 +115,7 @@ int main() {
     LocalAdjustment local{linear->view(), {}};
     local.options.exposure = .5;
     const std::array<LocalAdjustment, 1> locals{local};
-    return applyLocalAdjustments(image->view(), locals) ? 0 : 17;
+    if (!applyLocalAdjustments(image->view(), locals))
+        return 17;
+    return runFilterConsumer();
 }

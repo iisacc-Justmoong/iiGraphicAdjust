@@ -1,8 +1,17 @@
 # iiGraphicAdjust
 
-Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.3.0**. The public API and implementation use only the C++ standard library. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency, including transitive dependencies.
+Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.4.0**. The public API and implementation use only the C++ standard library. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency, including transitive dependencies.
 
 ## Features
+
+Version 0.4.0 adds individual filtering APIs selected by re-inspecting both supplied repositories. [The complete filter inventory](docs/Filters.md) and [machine-readable catalog](docs/filter-catalog.json) map every executable command to a public function and pinned source.
+
+- PhotoCraft: all 120 executable Filter-menu operations, including 47 individual Gallery effects, plus the two Edit transforms that can be recorded as smart filters. Blur/Blur Gallery, Sharpen, Noise, Distort, Pixelate, Stylize, Render, Video and Other families have separate typed APIs.
+- Special filters: relative-temperature Camera Raw, encoded Lens Correction, dense-field Liquify, spherical/constraint-based Adaptive Wide Angle, metric-plane Vanishing Point, cotangent-ARAP Puppet Warp and linked-plane Perspective Warp. Geometry helpers expose mesh/pin/constraint results to hosts.
+- Gallery: the 47 effects retain individual functions/options; a typed `GalleryEffect` stack applies them in order.
+- LightCraft: 22 named looks, 41 named built-in presets, Box/Bilinear/Mitchell/Lanczos3 resampling, and actual Clone/Heal/Remove, Red Eye/Pet Eye, spot visualization and dust detection kernels. Point Color range preview, five mask composites and destination/display gamut warnings are separate diagnostic APIs.
+- Reusable alpha-weighted box-guided and cross-guided filtering. Original linear-light `gaussianBlur`, `sharpen` and normalized `addNoise` behavior is preserved alongside the new encoded-space menu functions.
+
 
 Version 0.3.0 adds 27 public Lightroom-style development and masking operations, selected from the actual LightCraft processing code. Details, source mapping and intentional differences are in [Lightroom development](docs/Lightroom.md).
 
@@ -56,7 +65,7 @@ Builds, staged packages, consumer checks and generated examples stay under `buil
 ## Consume the installed package
 
 ```cmake
-find_package(iiGraphicAdjust 0.3 CONFIG REQUIRED)
+find_package(iiGraphicAdjust 0.4 CONFIG REQUIRED)
 target_link_libraries(my_app PRIVATE iiGraphicAdjust::iiGraphicAdjust)
 ```
 
@@ -98,10 +107,10 @@ The original example and `iiGraphicAdjustDevelopExample` write real 256×128 adj
 
 ## Scope
 
-This release processes normalized sRGB images on the CPU. A separate HdrImageView accepts linear HDR radiance for tone mapping. Premultiplied input, wide-gamut/ICC conversion, image decoding, GPU execution, vector geometry and text shaping remain outside the contract. Legacy `ColorAdjustment` temperature/tint retain their relative channel-gain semantics; the new `whiteBalance()` uses Kelvin/tint chromatic adaptation. Legacy noise modes are Uniform and Gaussian; `filmGrain()` adds a distinct correlated procedural model. No blue-noise claim is made. `develop()` normalizes between SDR stages and does not retain the reference's RAW scene headroom.
+This release processes normalized sRGB images on the CPU. A separate HdrImageView accepts linear HDR radiance for tone mapping. Premultiplied input, wide-gamut/ICC conversion, image decoding, GPU execution, general vector drawing and text shaping remain outside the contract. Legacy `ColorAdjustment` temperature/tint retain their relative channel-gain semantics; the new `whiteBalance()` uses Kelvin/tint chromatic adaptation. Legacy noise modes are Uniform and Gaussian; `filmGrain()` adds a distinct correlated procedural model. No blue-noise claim is made. `develop()` normalizes between SDR stages and does not retain the reference's RAW scene headroom.
 
 The module is ready for a caller to use through its installed CMake package. Dreamscapes and existing SDK processing paths are not migrated by creating this package. Cross-platform source portability does not imply a verified Windows, Linux, iOS or Android build.
 
-See the original [API contract](docs/API.md), [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md), [Lightroom development](docs/Lightroom.md), [Photoshop reference coverage](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).
+See the [filter catalog and contracts](docs/Filters.md), original [API contract](docs/API.md), [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md), [Lightroom development](docs/Lightroom.md), [Photoshop reference coverage](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).
 
-Version 0.3 uses shared-library ABI series 0.3 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.3 for development operations; existing 0.1 and 0.2 function behavior is preserved.
+Version 0.4 uses shared-library ABI series 0.4 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.4 for the filter APIs; existing 0.1, 0.2 and 0.3 function behavior is preserved.

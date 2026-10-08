@@ -4,6 +4,15 @@ Run all checks from the module directory. Keep every build, consumer and generat
 
 ## Behavior coverage
 
+Version 0.4.0 adds filter-family suites for 47 individual Gallery functions, core blur/distortion/utility algorithms, lens geometry, pixel/stylize and procedural render models, Camera Raw controls, mesh/constraint algorithms, LightCraft look/preset/resampling and retouch. The inventory is independently checked with:
+
+```sh
+python3 -B tools/audit_filter_coverage.py --references
+```
+
+The optional reference check reads the pinned local Git checkouts in `build/references/`; without `--references` it checks this SDK's catalog, public headers, CMake/umbrella installation and actual calls in the installed consumer/unit suites. Python is an audit tool dependency, not a library dependency.
+
+
 Version 0.3.0 adds 20 Lightroom development suites, for 53 total. Tests cover radiometric Exposure, WB inverse/presets/Auto, monotone curve knots and clipping, 3600 hues of mixer partition, B&W Point Color disablement, calibration neutral-axis preservation, effect/detail behavior, seed repeatability, lens metadata and CA edge handling, guided masks, normalized local accumulation and zero-coverage exact identity. Deterministic randomized settings, NaN/Inf/enum/size rejection, hidden-color isolation and cancellation regressions supplement fixed numeric oracles. The additional mask suite compares 32-mask Exposure accumulation with an independent linear-light oracle and verifies Auto Mask selection across both luminance and equal-luminance chromatic boundaries.
 
 The original eight CTest suites cover invalid image/settings rejection, integer conversion round trips, color-adjustment reference vectors, all eight blend modes and partial alpha, Gaussian impulse response and transparent-edge color preservation, unsharp-mask threshold/alpha behavior, noise repeatability/distribution/independent sequences, and normalized-output/input-immutability invariants.
@@ -26,7 +35,7 @@ cmake --build build/consumer-shared/build --parallel 2
 ctest --test-dir build/consumer-shared/build --output-on-failure
 ```
 
-The consumer uses only installed public headers and the imported package, exercising conversion, adjustment, noise, blur, sharpen and SoftLight composition plus all 25 Photoshop-style categories and all 27 Lightroom-style public operations, Cube parsing and real linear HDR input. Repeat with `-DBUILD_SHARED_LIBS=OFF` in `build/static/build` and an independent staged prefix to check static export definitions. Version 0.3 requires `find_package(iiGraphicAdjust 0.3 CONFIG REQUIRED)`.
+The consumer uses only installed public headers and the imported package. It exercises the retained conversion/adjustment/development APIs, Cube parsing and real linear HDR input, and directly calls every new filtering, look/preset, resampling, mesh/analysis and diagnostic function. Unit suites supply numerical oracles; successful linking alone is not pixel verification. Repeat with `-DBUILD_SHARED_LIBS=OFF` in `build/static/build` and an independent staged prefix to check static export definitions. Version 0.4 requires `find_package(iiGraphicAdjust 0.4 CONFIG REQUIRED)`.
 
 ## Sanitizers
 
@@ -34,7 +43,7 @@ With a supported Clang/GCC toolchain:
 
 ```sh
 cmake -S . -B build/sanitized/build -DCMAKE_BUILD_TYPE=Debug \
-  -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer" \
+  -DCMAKE_CXX_FLAGS="-O1 -fsanitize=address,undefined -fno-omit-frame-pointer" \
   -DCMAKE_SHARED_LINKER_FLAGS="-fsanitize=address,undefined" \
   -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined"
 cmake --build build/sanitized/build --parallel 2
@@ -115,3 +124,36 @@ One 3840×2160 Light measurement (Highlights -60, Shadows +60) took 2.87315 seco
 Final logs are `build/lightroom-{shared,static,sanitized}-tests.log` and `build/lightroom-consumer-{shared,static,host}-tests.log`; the exact host loader evidence is `build/lightroom-host-loaded.log`. Machine-readable source fingerprints and package evidence are saved in `build/verification.json`; older reports are retained separately. LightCraft's inspected commit is `629e39380e296f588c64cd9c0053a8edc3528f36`; its Rust tests were not run.
 
 The new APIs are rendered-image operations on normalized sRGB. The convenience pipeline gamut-maps between stages and does not preserve the scene-linear Rec.2020 RAW headroom of LightCraft. Adobe pixel parity, RAW decoding, profile databases, AI tools, GUI/product integration and Windows/Linux/iOS/Android execution remain unverified or outside this module's implemented scope. No running product was restarted.
+
+## Recorded 0.4.0 filtering result — 2026-10-08
+
+The final filter source was validated on macOS arm64, AppleClang 21.0.0 and CMake 4.4.3:
+
+| Configuration/check | Result |
+| --- | --- |
+| Release shared library | 140/140 passed, zero compiler warnings |
+| Release static library | 140/140 passed, zero compiler warnings |
+| Debug `-O1`, AddressSanitizer + UndefinedBehaviorSanitizer | 140/140 passed, no findings |
+| Shared staged-package consumer | 1/1 passed |
+| Static staged-package consumer | 1/1 passed |
+| Actual host-installed CMake package consumer | 1/1 passed |
+| New public filtering/helper exports | All 219 present in the shared library and called by the consumer |
+| Installed consumer image calls | 208 new image calls plus 11 new options/geometry/analysis helpers |
+| Actual loaded SDK | `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.4.0.dylib` |
+| SDK/consumer source, imported targets, linked and loaded libraries | No Qt or external processing dependencies; no older SDK loaded |
+| Build/installed dylib SHA-256 | Identical: `927a58fdeb2f9eb3b1695efa5c971f59d79ea39c3e3038b81a13a383720e7d71` |
+| Installed public headers | All 28 identical to source/generated headers |
+| Installed documentation and MIT attribution | Identical to source |
+| Parent SDK installer discovery | `iiGraphicAdjust: dependencies=-` |
+
+There are **140 distinct CTest suites: 53 retained and 87 added**. Three complete library configurations and three package consumers yield **423 final successful test executions**. The reference inventory audit independently confirms 120 Filter commands, two Edit operations and two duplicate Smart Object aliases; 47 Gallery effects; 22 looks, 41 presets and four resamplers; nine retouch/analysis and eight additional diagnostic APIs. `tools/audit_filter_coverage.py --references` checks the pinned Rust command strings and Gallery registrations against the catalog, then checks public installation, unit references and direct installed-consumer calls. Both reference checkouts still match their fetched origin/HEAD commits.
+
+Tests include independent weighted box/cell averages, exact offset permutations, fixed noise streams, HSB/HSL round trips, threshold/median/extrema behavior, all 47 Gallery effects and typed stack order, all LightCraft numeric preset fields, closed-form resampling kernels, all 34 Tree types/16 Frame styles/six Flame modes, Clone/Heal/eye/dust oracles, all five mask formulas and proof/display gamut classification. Mesh tests assess actual fisheye-line straightening, barycentric Puppet pin accuracy, rigid translation of every vertex, linked-plane homography continuity, 3D tear-off adjacency and metric paste/clone transfer. Camera Raw has 35 settings × five pixels from the extracted pinned Rust `camera_raw::develop` kernel, within a 5e-5 channel tolerance; this is a partial numerical oracle, not a full upstream project or Adobe test run.
+
+Independent reviews reproduced and fixed tiny-sigma Gaussian NaN, float-alpha underflow, tiny-alpha Oil Paint/Relight handling, hidden-center directional Diffuse decisions, neutral/transparent-map Lens Blur behavior and extreme Wide Angle NaN-to-integer undefined behavior. Picture Frame now rejects more than 500,000 predicted primitives before creating them. Wide Angle was additionally checked over 168 model/focal/crop/constraint combinations with ASan/UBSan/float-cast-overflow; 15 numerically unprojectable combinations return a structured error, and general settings retain success. These regressions are retained in the normal CTest suites. Manual numerical audits supplement the suite count rather than increasing it.
+
+An initial unoptimized Debug sanitizer Wide Angle test exceeded its 60-second CTest limit and subsequently passed in 133.30 seconds with a 180-second limit. The final sanitizer build uses `-O1` with debug information and the same complete assertions; the complete 140 suites passed in 13.33 seconds. This is a suite measurement, not a photo-size latency guarantee. LeakSanitizer is unavailable on the tested macOS toolchain; `ASAN_OPTIONS=detect_leaks=0` was used, and no leak-proof claim is made.
+
+Final logs are `build/filters-{shared,static,sanitized}-tests.log`, `build/filters-consumer-{shared,static,host}-tests.log`, `build/filters-host-loaded.log`, `build/filters-exported-symbols.log` and `build/filters-catalog-audit.log`. Machine-readable fingerprints, exact package evidence and the final commit are in `build/verification.json`; the 0.3 report is preserved as `build/verification-0.3.0.json`.
+
+Source, tests and actual host installation are verified. The SDK remains rendered-SDR CPU processing with documented source adaptations; arbitrary ICC profiles, RAW decoding/headroom, full Adobe/Rust renderer parity, GPU acceleration, Dreamscapes/product integration and Windows/Linux/iOS/Android execution are outside this proof. No running product was restarted.

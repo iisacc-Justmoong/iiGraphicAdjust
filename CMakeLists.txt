@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
-project(iiGraphicAdjust VERSION 0.3.0 LANGUAGES CXX)
+project(iiGraphicAdjust VERSION 0.4.0 LANGUAGES CXX)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(PROJECT_IS_TOP_LEVEL AND CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -33,6 +33,18 @@ add_library(iiGraphicAdjust
     src/iiGraphicAdjust/Optics.cpp
     src/iiGraphicAdjust/Masks.cpp
     src/iiGraphicAdjust/Develop.cpp
+    src/iiGraphicAdjust/BlurFilters.cpp
+    src/iiGraphicAdjust/DistortionFilters.cpp
+    src/iiGraphicAdjust/UtilityFilters.cpp
+    src/iiGraphicAdjust/GalleryFilters.cpp
+    src/iiGraphicAdjust/LightcraftFilters.cpp
+    src/iiGraphicAdjust/LensFilter.cpp
+    src/iiGraphicAdjust/PixelFilters.cpp
+    src/iiGraphicAdjust/RenderFilters.cpp
+    src/iiGraphicAdjust/MeshFilters.cpp
+    src/iiGraphicAdjust/CameraRawFilter.cpp
+    src/iiGraphicAdjust/RetouchFilters.cpp
+    src/iiGraphicAdjust/DiagnosticFilters.cpp
     src/iiGraphicAdjust/Blend.cpp)
 add_library(iiGraphicAdjust::iiGraphicAdjust ALIAS iiGraphicAdjust)
 generate_export_header(iiGraphicAdjust BASE_NAME IIGRAPHICADJUST
@@ -70,6 +82,18 @@ install(FILES
     src/iiGraphicAdjust/Optics.h
     src/iiGraphicAdjust/Masks.h
     src/iiGraphicAdjust/Develop.h
+    src/iiGraphicAdjust/BlurFilters.h
+    src/iiGraphicAdjust/DistortionFilters.h
+    src/iiGraphicAdjust/UtilityFilters.h
+    src/iiGraphicAdjust/GalleryFilters.h
+    src/iiGraphicAdjust/LightcraftFilters.h
+    src/iiGraphicAdjust/LensFilter.h
+    src/iiGraphicAdjust/PixelFilters.h
+    src/iiGraphicAdjust/RenderFilters.h
+    src/iiGraphicAdjust/MeshFilters.h
+    src/iiGraphicAdjust/CameraRawFilter.h
+    src/iiGraphicAdjust/RetouchFilters.h
+    src/iiGraphicAdjust/DiagnosticFilters.h
     "${CMAKE_CURRENT_BINARY_DIR}/include/iiGraphicAdjust/Export.h"
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iiGraphicAdjust)
 install(EXPORT iiGraphicAdjustTargets NAMESPACE iiGraphicAdjust:: DESTINATION "${_package_dir}")
@@ -92,6 +116,69 @@ if(IIGRAPHICADJUST_BUILD_EXAMPLES)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(iiGraphicAdjustDiagnosticFiltersTests tests/diagnostic_filters.cpp)
+    target_link_libraries(iiGraphicAdjustDiagnosticFiltersTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case point masks gamut validation)
+        add_test(NAME iiGraphicAdjust.diagnostic.${_case} COMMAND iiGraphicAdjustDiagnosticFiltersTests ${_case})
+        set_tests_properties(iiGraphicAdjust.diagnostic.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
+    add_executable(iiGraphicAdjustRetouchFiltersTests tests/retouch_filters.cpp)
+    target_link_libraries(iiGraphicAdjustRetouchFiltersTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case spots eyes dust validation)
+        add_test(NAME iiGraphicAdjust.retouch.${_case} COMMAND iiGraphicAdjustRetouchFiltersTests ${_case})
+        set_tests_properties(iiGraphicAdjust.retouch.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
+    add_executable(iiGraphicAdjustMeshFiltersTests tests/mesh_filters.cpp)
+    target_link_libraries(iiGraphicAdjustMeshFiltersTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case liquify wide puppet perspective vanishing validation)
+        add_test(NAME iiGraphicAdjust.mesh.${_case} COMMAND iiGraphicAdjustMeshFiltersTests ${_case})
+        set_tests_properties(iiGraphicAdjust.mesh.${_case} PROPERTIES TIMEOUT 180)
+    endforeach()
+    add_executable(iiGraphicAdjustCameraRawFilterTests tests/camera_raw_filter.cpp)
+    target_link_libraries(iiGraphicAdjustCameraRawFilterTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case oracle basic color detail effects validation invariants)
+        add_test(NAME iiGraphicAdjust.cameraRaw.${_case} COMMAND iiGraphicAdjustCameraRawFilterTests ${_case})
+        set_tests_properties(iiGraphicAdjust.cameraRaw.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
+    add_executable(iiGraphicAdjustLensFilterTests tests/lens_filter.cpp)
+    target_link_libraries(iiGraphicAdjustLensFilterTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    add_test(NAME iiGraphicAdjust.filters.lens COMMAND iiGraphicAdjustLensFilterTests)
+    set_tests_properties(iiGraphicAdjust.filters.lens PROPERTIES TIMEOUT 60)
+    add_executable(iiGraphicAdjustGalleryFiltersTests tests/gallery_filters.cpp)
+    target_link_libraries(iiGraphicAdjustGalleryFiltersTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case coloredPencil cutout dryBrush galleryFilmGrain fresco neonGlow paintDaubs paletteKnife
+            plasticWrap posterEdges roughPastels smudgeStick sponge underpainting watercolor accentedEdges
+            angledStrokes crosshatch darkStrokes inkOutlines spatter sprayedStrokes sumiE diffuseGlow glass
+            oceanRipple basRelief chalkCharcoal charcoal chrome conteCrayon graphicPen halftonePattern
+            notePaper photocopy plaster reticulation stamp tornEdges waterPaper glowingEdges craquelure
+            grain mosaicTiles patchwork stainedGlass texturizer oracles stack)
+        add_test(NAME iiGraphicAdjust.gallery.${_case} COMMAND iiGraphicAdjustGalleryFiltersTests ${_case})
+        set_tests_properties(iiGraphicAdjust.gallery.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
+    add_executable(iiGraphicAdjustLightcraftFiltersTests tests/lightcraft_filters.cpp)
+    target_link_libraries(iiGraphicAdjustLightcraftFiltersTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case looks presets resize invalid)
+        add_test(NAME iiGraphicAdjust.lightcraft.${_case} COMMAND iiGraphicAdjustLightcraftFiltersTests ${_case})
+        set_tests_properties(iiGraphicAdjust.lightcraft.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
+    add_executable(iiGraphicAdjustPixelFiltersTests tests/pixel_filters.cpp)
+    target_link_libraries(iiGraphicAdjustPixelFiltersTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case pixelate stylize validation)
+        add_test(NAME iiGraphicAdjust.pixel.${_case} COMMAND iiGraphicAdjustPixelFiltersTests ${_case})
+        set_tests_properties(iiGraphicAdjust.pixel.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
+    add_executable(iiGraphicAdjustRenderFiltersTests tests/render_filters.cpp)
+    target_link_libraries(iiGraphicAdjustRenderFiltersTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case noise light procedural validation)
+        add_test(NAME iiGraphicAdjust.render.${_case} COMMAND iiGraphicAdjustRenderFiltersTests ${_case})
+        set_tests_properties(iiGraphicAdjust.render.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
+    add_executable(iiGraphicAdjustCoreFiltersTests tests/core_filters.cpp)
+    target_link_libraries(iiGraphicAdjustCoreFiltersTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case blur distortion utility isolation validation)
+        add_test(NAME iiGraphicAdjust.filters.${_case} COMMAND iiGraphicAdjustCoreFiltersTests ${_case})
+        set_tests_properties(iiGraphicAdjust.filters.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
     add_executable(iiGraphicAdjustMasksInvariantsTests tests/masks_invariants.cpp)
     target_link_libraries(iiGraphicAdjustMasksInvariantsTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     add_test(NAME iiGraphicAdjust.develop.mask-invariants COMMAND iiGraphicAdjustMasksInvariantsTests)
