@@ -6,3 +6,9 @@
 #include <iiGraphicAdjust/Hdr.h>
 #include <iiGraphicAdjust/Tone.h>
 #include <iiGraphicAdjust/Color.h>
+#include <iiGraphicAdjust/DevelopTone.h>
+#include <iiGraphicAdjust/DevelopColor.h>
+#include <iiGraphicAdjust/DevelopEffects.h>
+#include <iiGraphicAdjust/Optics.h>
+#include <iiGraphicAdjust/Masks.h>
+#include <iiGraphicAdjust/Develop.h>

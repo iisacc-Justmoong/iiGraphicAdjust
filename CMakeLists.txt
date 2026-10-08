@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
-project(iiGraphicAdjust VERSION 0.2.0 LANGUAGES CXX)
+project(iiGraphicAdjust VERSION 0.3.0 LANGUAGES CXX)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(PROJECT_IS_TOP_LEVEL AND CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     if(DEFINED ENV{HOME} AND NOT "$ENV{HOME}" STREQUAL "")
@@ -26,6 +27,12 @@ add_library(iiGraphicAdjust
     src/iiGraphicAdjust/Hdr.cpp
     src/iiGraphicAdjust/Tone.cpp
     src/iiGraphicAdjust/Color.cpp
+    src/iiGraphicAdjust/DevelopTone.cpp
+    src/iiGraphicAdjust/DevelopColor.cpp
+    src/iiGraphicAdjust/DevelopEffects.cpp
+    src/iiGraphicAdjust/Optics.cpp
+    src/iiGraphicAdjust/Masks.cpp
+    src/iiGraphicAdjust/Develop.cpp
     src/iiGraphicAdjust/Blend.cpp)
 add_library(iiGraphicAdjust::iiGraphicAdjust ALIAS iiGraphicAdjust)
 generate_export_header(iiGraphicAdjust BASE_NAME IIGRAPHICADJUST
@@ -57,6 +64,12 @@ install(FILES
     src/iiGraphicAdjust/Adjustments.h src/iiGraphicAdjust/Effects.h src/iiGraphicAdjust/Blend.h
     src/iiGraphicAdjust/Mapping.h src/iiGraphicAdjust/Hdr.h
     src/iiGraphicAdjust/Tone.h src/iiGraphicAdjust/Color.h
+    src/iiGraphicAdjust/DevelopTone.h
+    src/iiGraphicAdjust/DevelopColor.h
+    src/iiGraphicAdjust/DevelopEffects.h
+    src/iiGraphicAdjust/Optics.h
+    src/iiGraphicAdjust/Masks.h
+    src/iiGraphicAdjust/Develop.h
     "${CMAKE_CURRENT_BINARY_DIR}/include/iiGraphicAdjust/Export.h"
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iiGraphicAdjust)
 install(EXPORT iiGraphicAdjustTargets NAMESPACE iiGraphicAdjust:: DESTINATION "${_package_dir}")
@@ -71,12 +84,52 @@ install(DIRECTORY docs/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/doc
 install(DIRECTORY third_party/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/third_party)
 
 if(IIGRAPHICADJUST_BUILD_EXAMPLES)
+    add_executable(iiGraphicAdjustDevelopExample examples/develop.cpp)
+    target_link_libraries(iiGraphicAdjustDevelopExample PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     add_executable(iiGraphicAdjustExample examples/adjust.cpp)
     target_link_libraries(iiGraphicAdjustExample PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     set_target_properties(iiGraphicAdjustExample PROPERTIES CXX_EXTENSIONS OFF)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(iiGraphicAdjustMasksInvariantsTests tests/masks_invariants.cpp)
+    target_link_libraries(iiGraphicAdjustMasksInvariantsTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    add_test(NAME iiGraphicAdjust.develop.mask-invariants COMMAND iiGraphicAdjustMasksInvariantsTests)
+    set_tests_properties(iiGraphicAdjust.develop.mask-invariants PROPERTIES TIMEOUT 60)
+    add_executable(iiGraphicAdjustMasksTests tests/masks.cpp)
+    target_link_libraries(iiGraphicAdjustMasksTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case shapes combine local pipeline)
+        add_test(NAME iiGraphicAdjust.develop.${_case} COMMAND iiGraphicAdjustMasksTests ${_case})
+        set_tests_properties(iiGraphicAdjust.develop.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
+    add_executable(iiGraphicAdjustDevelopInvariantsTests tests/develop_invariants.cpp)
+    target_link_libraries(iiGraphicAdjustDevelopInvariantsTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case oracle invariants validation)
+        add_test(NAME iiGraphicAdjust.develop.${_case} COMMAND iiGraphicAdjustDevelopInvariantsTests ${_case})
+        set_tests_properties(iiGraphicAdjust.develop.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
+    add_executable(iiGraphicAdjustOpticsTests tests/optics.cpp)
+    target_link_libraries(iiGraphicAdjustOpticsTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    add_test(NAME iiGraphicAdjust.develop.optics COMMAND iiGraphicAdjustOpticsTests)
+    set_tests_properties(iiGraphicAdjust.develop.optics PROPERTIES TIMEOUT 30)
+    add_executable(iiGraphicAdjustDevelopEffectsTests tests/develop_effects.cpp)
+    target_link_libraries(iiGraphicAdjustDevelopEffectsTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case effects vignette grain detail)
+        add_test(NAME iiGraphicAdjust.develop.${_case} COMMAND iiGraphicAdjustDevelopEffectsTests ${_case})
+        set_tests_properties(iiGraphicAdjust.develop.${_case} PROPERTIES TIMEOUT 30)
+    endforeach()
+    add_executable(iiGraphicAdjustDevelopColorTests tests/develop_color.cpp)
+    target_link_libraries(iiGraphicAdjustDevelopColorTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case mixer point grading calibration)
+        add_test(NAME iiGraphicAdjust.develop.${_case} COMMAND iiGraphicAdjustDevelopColorTests ${_case})
+        set_tests_properties(iiGraphicAdjust.develop.${_case} PROPERTIES TIMEOUT 30)
+    endforeach()
+    add_executable(iiGraphicAdjustDevelopToneTests tests/develop_tone.cpp)
+    target_link_libraries(iiGraphicAdjustDevelopToneTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case wb light curve)
+        add_test(NAME iiGraphicAdjust.develop.${_case} COMMAND iiGraphicAdjustDevelopToneTests ${_case})
+        set_tests_properties(iiGraphicAdjust.develop.${_case} PROPERTIES TIMEOUT 30)
+    endforeach()
     add_executable(iiGraphicAdjustTests tests/processing.cpp)
     target_link_libraries(iiGraphicAdjustTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     set_target_properties(iiGraphicAdjustTests PROPERTIES CXX_EXTENSIONS OFF)

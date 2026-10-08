@@ -1,8 +1,18 @@
 # iiGraphicAdjust
 
-Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.2.0**. The public API and implementation use only the C++ standard library. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency, including transitive dependencies.
+Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.3.0**. The public API and implementation use only the C++ standard library. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency, including transitive dependencies.
 
 ## Features
+
+Version 0.3.0 adds 27 public Lightroom-style development and masking operations, selected from the actual LightCraft processing code. Details, source mapping and intentional differences are in [Lightroom development](docs/Lightroom.md).
+
+- White balance: Kelvin/tint Bradford adaptation, six presets, Auto and sampled neutralization.
+- Light: Exposure, Contrast, Highlights, Shadows, Whites, Blacks, Auto Light; parametric and cubic RGB/master curves with Refine Saturation.
+- Color: skin-protected Vibrance/Saturation, eight-band Mixer/B&W/Auto B&W, Point Color, four-wheel grading and Calibration.
+- Effects/detail: Texture, Clarity, Dehaze, three vignette styles, seeded film grain, masked detail sharpening and luminance/color noise reduction.
+- Optics: distortion, lens vignette compensation, manual/automatic lateral CA, purple/green defringe and host-supplied embedded lens coefficients.
+- Local adjustments: linear/radial/brush/luminance/color masks, combine/invert/edge refinement, 17 accumulated local sliders and color tint.
+- `develop()` composes the standalone SDR stages. Each stage normalizes to sRGB; this is not LightCraft's full scene-linear RAW pipeline.
 
 Version 0.2.0 adds APIs corresponding to the 22 classic Photoshop/PhotoCraft adjustment categories and three automatic corrections. This is independent processing with documented numeric contracts, not Photoshop binary or pixel compatibility.
 
@@ -46,7 +56,7 @@ Builds, staged packages, consumer checks and generated examples stay under `buil
 ## Consume the installed package
 
 ```cmake
-find_package(iiGraphicAdjust 0.2 CONFIG REQUIRED)
+find_package(iiGraphicAdjust 0.3 CONFIG REQUIRED)
 target_link_libraries(my_app PRIVATE iiGraphicAdjust::iiGraphicAdjust)
 ```
 
@@ -84,14 +94,14 @@ if (!words) return;
 build/iiGraphicAdjustExample build/adjusted.ppm
 ```
 
-The example writes a real 256×128 adjusted RGB gradient as binary PPM using standard C++ file I/O. File encoding is confined to the example; the library processes caller-provided pixels.
+The original example and `iiGraphicAdjustDevelopExample` write real 256×128 adjusted RGB gradients as binary PPM using standard C++ file I/O. The development example also applies a radial local adjustment. File encoding is confined to examples; the library processes caller-provided pixels.
 
 ## Scope
 
-This release processes normalized sRGB images on the CPU. A separate HdrImageView accepts linear HDR radiance for tone mapping. Premultiplied input, wide-gamut/ICC conversion, image decoding, GPU execution, vector geometry and text shaping remain outside the contract. Temperature/tint are relative channel gains, not calibrated photographic white balance. Noise modes are Uniform and Gaussian; no blue-noise claim is made.
+This release processes normalized sRGB images on the CPU. A separate HdrImageView accepts linear HDR radiance for tone mapping. Premultiplied input, wide-gamut/ICC conversion, image decoding, GPU execution, vector geometry and text shaping remain outside the contract. Legacy `ColorAdjustment` temperature/tint retain their relative channel-gain semantics; the new `whiteBalance()` uses Kelvin/tint chromatic adaptation. Legacy noise modes are Uniform and Gaussian; `filmGrain()` adds a distinct correlated procedural model. No blue-noise claim is made. `develop()` normalizes between SDR stages and does not retain the reference's RAW scene headroom.
 
 The module is ready for a caller to use through its installed CMake package. Dreamscapes and existing SDK processing paths are not migrated by creating this package. Cross-platform source portability does not imply a verified Windows, Linux, iOS or Android build.
 
-See the original [API contract](docs/API.md), new [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md) contracts, the [reference coverage and attribution](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).
+See the original [API contract](docs/API.md), [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md), [Lightroom development](docs/Lightroom.md), [Photoshop reference coverage](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).
 
-Version 0.2 uses shared-library ABI series 0.2 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.2 for the new operations; existing 0.1 function behavior is preserved.
+Version 0.3 uses shared-library ABI series 0.3 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.3 for development operations; existing 0.1 and 0.2 function behavior is preserved.
