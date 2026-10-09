@@ -6,6 +6,8 @@
 
 | File | Responsibility |
 | --- | --- |
+| `RawProcessing.h/.cpp` | Unpacked Bayer normalization, demosaicing and supplied sensor calibration |
+| `PhotoOperations.h/.cpp` | Integer orientation/crop and alpha-aware photo histograms |
 | `Image.h/.cpp` | Borrowed/owned pixel contract and byte/word conversion |
 | `Adjustments.h/.cpp` | Color and opacity adjustments |
 | `Effects.h/.cpp` | Blur, unsharp mask and deterministic noise |
@@ -46,7 +48,7 @@ Color adjustment, noise, composition and format conversion cost O(N) for N pixel
 
 ## Packaging
 
-The package target is `iiGraphicAdjust::iiGraphicAdjust`; CMake propagates C++23 and the installed public include path. `GenerateExportHeader` supports shared-library visibility and static definitions. ABI series 0.3 uses `SameMinorVersion` package compatibility. Consumers must use a compatible compiler/standard-library ABI when crossing a shared-library boundary with standard containers.
+The package target is `iiGraphicAdjust::iiGraphicAdjust`; CMake propagates C++23 and the installed public include path. `GenerateExportHeader` supports shared-library visibility and static definitions. ABI series 0.5 uses `SameMinorVersion` package compatibility. Consumers must use a compatible compiler/standard-library ABI when crossing a shared-library boundary with standard containers.
 
 The default install prefix is `~/.local/SDK/iiGraphicAdjust`. The parent `SDK/install_all.py` discovers this directory from `CMakeLists.txt`; no central module list or duplicated install script is needed. The exported package declares no external library dependencies. Qt independence must be verified from source, exported CMake targets and linked binaries, rather than relying on an unused CMake disable-find option.
 

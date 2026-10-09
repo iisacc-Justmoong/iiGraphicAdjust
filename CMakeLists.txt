@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
-project(iiGraphicAdjust VERSION 0.4.0 LANGUAGES CXX)
+project(iiGraphicAdjust VERSION 0.5.0 LANGUAGES CXX)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(PROJECT_IS_TOP_LEVEL AND CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -21,6 +21,8 @@ option(IIGRAPHICADJUST_BUILD_EXAMPLES "Build the standalone image adjustment exa
 
 add_library(iiGraphicAdjust
     src/iiGraphicAdjust/Image.cpp
+    src/iiGraphicAdjust/RawProcessing.cpp
+    src/iiGraphicAdjust/PhotoOperations.cpp
     src/iiGraphicAdjust/Adjustments.cpp
     src/iiGraphicAdjust/Effects.cpp
     src/iiGraphicAdjust/Mapping.cpp
@@ -73,6 +75,7 @@ install(TARGETS iiGraphicAdjust EXPORT iiGraphicAdjustTargets
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES
     src/iiGraphicAdjust/iiGraphicAdjust.h src/iiGraphicAdjust/Image.h
+    src/iiGraphicAdjust/RawProcessing.h src/iiGraphicAdjust/PhotoOperations.h
     src/iiGraphicAdjust/Adjustments.h src/iiGraphicAdjust/Effects.h src/iiGraphicAdjust/Blend.h
     src/iiGraphicAdjust/Mapping.h src/iiGraphicAdjust/Hdr.h
     src/iiGraphicAdjust/Tone.h src/iiGraphicAdjust/Color.h
@@ -116,6 +119,18 @@ if(IIGRAPHICADJUST_BUILD_EXAMPLES)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(iiGraphicAdjustRawTests tests/raw_processing.cpp)
+    target_link_libraries(iiGraphicAdjustRawTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case patterns interpolation calibration rendering layout validation)
+        add_test(NAME iiGraphicAdjust.raw.${_case} COMMAND iiGraphicAdjustRawTests ${_case})
+        set_tests_properties(iiGraphicAdjust.raw.${_case} PROPERTIES TIMEOUT 30)
+    endforeach()
+    add_executable(iiGraphicAdjustPhotoTests tests/photo_operations.cpp)
+    target_link_libraries(iiGraphicAdjustPhotoTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case orientation crop histogram validation)
+        add_test(NAME iiGraphicAdjust.photo.${_case} COMMAND iiGraphicAdjustPhotoTests ${_case})
+        set_tests_properties(iiGraphicAdjust.photo.${_case} PROPERTIES TIMEOUT 30)
+    endforeach()
     add_executable(iiGraphicAdjustDiagnosticFiltersTests tests/diagnostic_filters.cpp)
     target_link_libraries(iiGraphicAdjustDiagnosticFiltersTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     foreach(_case point masks gamut validation)

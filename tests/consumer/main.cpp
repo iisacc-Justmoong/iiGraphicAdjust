@@ -117,5 +117,14 @@ int main() {
     const std::array<LocalAdjustment, 1> locals{local};
     if (!applyLocalAdjustments(image->view(), locals))
         return 17;
+    const std::array<std::uint16_t,4> mosaic{65535,32768,32768,0};
+    const auto raw=developRaw({2,2,2,mosaic});
+    if(!raw || raw->pixels[0].r!=1 || raw->pixels[0].b!=0) return 18;
+    const auto rendered=renderRaw({2,2,2,mosaic});
+    if(!rendered) return 19;
+    const auto oriented=applyOrientation(rendered->view(),ExifOrientation::RightTop);
+    if(!oriented || oriented->width!=2 || oriented->height!=2) return 20;
+    const auto cropped=crop(oriented->view(),{0,0,1,2});
+    if(!cropped || !imageHistogram(cropped->view())) return 21;
     return runFilterConsumer();
 }

@@ -2,6 +2,11 @@
 
 Run all checks from the module directory. Keep every build, consumer and generated file below `build/`.
 
+Version 0.5.0 adds six Bayer RAW and four photo-operation suites, for 150 total.
+The new installed-consumer calls exercise unpacked sensor development, SDR
+rendering, photo helpers and the retained filtering APIs. The current photo
+processing evidence is recorded in [PhotoProcessingVerification.md](PhotoProcessingVerification.md).
+
 ## Behavior coverage
 
 Version 0.4.0 adds filter-family suites for 47 individual Gallery functions, core blur/distortion/utility algorithms, lens geometry, pixel/stylize and procedural render models, Camera Raw controls, mesh/constraint algorithms, LightCraft look/preset/resampling and retouch. The inventory is independently checked with:
@@ -35,7 +40,7 @@ cmake --build build/consumer-shared/build --parallel 2
 ctest --test-dir build/consumer-shared/build --output-on-failure
 ```
 
-The consumer uses only installed public headers and the imported package. It exercises the retained conversion/adjustment/development APIs, Cube parsing and real linear HDR input, and directly calls every new filtering, look/preset, resampling, mesh/analysis and diagnostic function. Unit suites supply numerical oracles; successful linking alone is not pixel verification. Repeat with `-DBUILD_SHARED_LIBS=OFF` in `build/static/build` and an independent staged prefix to check static export definitions. Version 0.4 requires `find_package(iiGraphicAdjust 0.4 CONFIG REQUIRED)`.
+The consumer uses only installed public headers and the imported package. It exercises the retained conversion/adjustment/development APIs, Cube parsing and real linear HDR input, and directly calls every new filtering, look/preset, resampling, mesh/analysis and diagnostic function. Unit suites supply numerical oracles; successful linking alone is not pixel verification. Repeat with `-DBUILD_SHARED_LIBS=OFF` in `build/static/build` and an independent staged prefix to check static export definitions. Version 0.5 requires `find_package(iiGraphicAdjust 0.5 CONFIG REQUIRED)`.
 
 ## Sanitizers
 

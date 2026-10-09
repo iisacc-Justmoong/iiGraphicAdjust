@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 project(iiGraphicAdjustConsumer LANGUAGES CXX)
 enable_testing()
-find_package(iiGraphicAdjust 0.4 CONFIG REQUIRED)
+find_package(iiGraphicAdjust 0.5 CONFIG REQUIRED)
 add_executable(iiGraphicAdjustConsumer main.cpp filters.cpp)
 target_link_libraries(iiGraphicAdjustConsumer PRIVATE iiGraphicAdjust::iiGraphicAdjust)
 set_target_properties(iiGraphicAdjustConsumer PROPERTIES CXX_EXTENSIONS OFF)

@@ -24,3 +24,5 @@
 #include <iiGraphicAdjust/Tone.h>
 #include <iiGraphicAdjust/UtilityFilters.h>
 #include <iiGraphicAdjust/DiagnosticFilters.h>
+#include <iiGraphicAdjust/RawProcessing.h>
+#include <iiGraphicAdjust/PhotoOperations.h>

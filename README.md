@@ -1,8 +1,17 @@
 # iiGraphicAdjust
 
-Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.4.0**. The public API and implementation use only the C++ standard library. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency, including transitive dependencies.
+Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.5.0**. The public API and implementation use only the C++ standard library. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency, including transitive dependencies.
 
 ## Features
+
+Version 0.5.0 adds a sensor and photograph processing foundation without changing the existing rendered-image filters:
+
+- `developRaw()` accepts caller-decoded 16-bit Bayer samples with row stride, four CFA patterns and crop phase. It subtracts per-tile black levels, normalizes by white level, bilinearly demosaics, applies supplied white balance and a camera-to-linear-sRGB matrix, and preserves highlight headroom above one.
+- `renderRaw()` composes the new linear output with the existing HDR toning function. RAW container decoding and physical camera calibration remain the caller's responsibility.
+- `applyOrientation()` handles all eight EXIF orientations; `crop()` performs exact bounded integer cropping.
+- `imageHistogram()` reports encoded RGB and linear-luminance bins/statistics with explicit alpha weighting.
+
+See [RAW processing](docs/RawProcessing.md) and [photographic operations](docs/PhotoOperations.md). These leaf APIs introduce no dependency on a camera SDK. An optional upper layer in iiCameraIntergration composes captured frames with these functions and the existing development/resampling stages.
 
 Version 0.4.0 adds individual filtering APIs selected by re-inspecting both supplied repositories. [The complete filter inventory](docs/Filters.md) and [machine-readable catalog](docs/filter-catalog.json) map every executable command to a public function and pinned source.
 
@@ -65,7 +74,7 @@ Builds, staged packages, consumer checks and generated examples stay under `buil
 ## Consume the installed package
 
 ```cmake
-find_package(iiGraphicAdjust 0.4 CONFIG REQUIRED)
+find_package(iiGraphicAdjust 0.5 CONFIG REQUIRED)
 target_link_libraries(my_app PRIVATE iiGraphicAdjust::iiGraphicAdjust)
 ```
 
@@ -107,10 +116,10 @@ The original example and `iiGraphicAdjustDevelopExample` write real 256×128 adj
 
 ## Scope
 
-This release processes normalized sRGB images on the CPU. A separate HdrImageView accepts linear HDR radiance for tone mapping. Premultiplied input, wide-gamut/ICC conversion, image decoding, GPU execution, general vector drawing and text shaping remain outside the contract. Legacy `ColorAdjustment` temperature/tint retain their relative channel-gain semantics; the new `whiteBalance()` uses Kelvin/tint chromatic adaptation. Legacy noise modes are Uniform and Gaussian; `filmGrain()` adds a distinct correlated procedural model. No blue-noise claim is made. `develop()` normalizes between SDR stages and does not retain the reference's RAW scene headroom.
+Rendered-image functions process normalized sRGB on the CPU. `developRaw()` separately processes unpacked Bayer sensor samples and produces linear sRGB with HDR headroom; a separate `HdrImageView` accepts linear HDR radiance for tone mapping. Premultiplied input, wide-gamut/ICC conversion, encoded RAW/image-file decoding, GPU execution, general vector drawing and text shaping remain outside the contract. Legacy `ColorAdjustment` temperature/tint retain their relative channel-gain semantics; the new `whiteBalance()` uses Kelvin/tint chromatic adaptation. Legacy noise modes are Uniform and Gaussian; `filmGrain()` adds a distinct correlated procedural model. No blue-noise claim is made. `develop()` normalizes between SDR stages and does not retain the reference's RAW scene headroom.
 
 The module is ready for a caller to use through its installed CMake package. Dreamscapes and existing SDK processing paths are not migrated by creating this package. Cross-platform source portability does not imply a verified Windows, Linux, iOS or Android build.
 
 See the [filter catalog and contracts](docs/Filters.md), original [API contract](docs/API.md), [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md), [Lightroom development](docs/Lightroom.md), [Photoshop reference coverage](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).
 
-Version 0.4 uses shared-library ABI series 0.4 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.4 for the filter APIs; existing 0.1, 0.2 and 0.3 function behavior is preserved.
+Version 0.5 uses shared-library ABI series 0.5 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.5 for the current public APIs; existing 0.1, 0.2 and 0.3 function behavior is preserved. The current sensor/photo verification is recorded in [PhotoProcessingVerification](docs/PhotoProcessingVerification.md).
