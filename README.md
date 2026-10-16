@@ -1,8 +1,15 @@
 # iiGraphicAdjust
 
-Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.5.0**. The public API and implementation use only the C++ standard library. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency, including transitive dependencies.
+Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.5.1**. The public API and implementation use only the C++ standard library. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency, including transitive dependencies.
 
 ## Features
+
+Version 0.5.1 adds two explicitly separate processing contracts without changing existing correction models or the ABI series:
+
+- `applyMaskedCorrection()` applies the RGB of any same-sized correction result through caller-supplied float coverage, with amount `[0,100]`, optional inversion and encoded/linear sRGB interpolation. It preserves base alpha and hidden RGB, validates inactive inputs too, and returns detached storage. Existing Levels, Curves, Kelvin WB, HSL, Detail and Camera Raw results can be localized without importing a brush SDK. This composition is an independent implementation; recovered Lightroom local-curve/control declarations establish the functional gap, not an Adobe pixel oracle.
+- `SampleFilters.h` separately exposes the evidence-bound Photoshop Average kernels for 8-bit, 16-bit and float32 sample planes and Solarize for 8/16-bit rows. Average preserves the recovered tile/mask/rounding and float accumulation behavior; Solarize retains the observed integer scales and 16-bit wrapping. These mutable sample-plane contracts differ from normalized `ImageView`, and the existing independent `average(ImageView)`/`solarize(ImageView)` APIs retain their previous behavior. Strict floating-point source flags preserve the measured accumulation order.
+
+See [masked correction composition](docs/LocalCorrections.md), [recovered sample-plane kernels](docs/SampleFilters.md) and [local correction verification](docs/LocalCorrectionsVerification.md). Native sample-kernel replay evidence is bounded to those kernels; the SDK does not claim to reconstruct Adobe's complete rendering engine.
 
 Version 0.5.0 adds a sensor and photograph processing foundation without changing the existing rendered-image filters:
 
@@ -47,7 +54,7 @@ The original operations remain available with their 0.1 semantics:
 - Source-over compositing in sRGB or linear sRGB with Normal, Multiply, Screen, Overlay, Darken, Lighten, SoftLight and Difference blend modes.
 - Conversion between normalized straight-alpha RGBA floats, RGBA8 bytes and numeric `0xAARRGGBB` words.
 
-All processing returns new storage and leaves the input unchanged. Public results use `std::expected<T, Error>`. There are no placeholder processing functions or implicit product/document writes.
+Normalized image and mask processing returns new storage and leaves inputs unchanged. Public results use `std::expected`; image/mask operations retain `Result<T>` and the existing `Error` type. `SampleFilters` fill/Solarize operations explicitly write caller-owned mutable sample planes after validation and use their separate `SampleFilterError`. There are no placeholder processing functions or implicit product/document writes.
 
 ## Build and test
 
@@ -114,12 +121,18 @@ build/iiGraphicAdjustExample build/adjusted.ppm
 
 The original example and `iiGraphicAdjustDevelopExample` write real 256×128 adjusted RGB gradients as binary PPM using standard C++ file I/O. The development example also applies a radial local adjustment. File encoding is confined to examples; the library processes caller-provided pixels.
 
+`iiGraphicAdjustLocalCorrectionsExample` computes Kelvin white balance first, then applies that result only through a feathered radial mask with 85% amount:
+
+```sh
+build/iiGraphicAdjustLocalCorrectionsExample build/local-correction.ppm
+```
+
 ## Scope
 
 Rendered-image functions process normalized sRGB on the CPU. `developRaw()` separately processes unpacked Bayer sensor samples and produces linear sRGB with HDR headroom; a separate `HdrImageView` accepts linear HDR radiance for tone mapping. Premultiplied input, wide-gamut/ICC conversion, encoded RAW/image-file decoding, GPU execution, general vector drawing and text shaping remain outside the contract. Legacy `ColorAdjustment` temperature/tint retain their relative channel-gain semantics; the new `whiteBalance()` uses Kelvin/tint chromatic adaptation. Legacy noise modes are Uniform and Gaussian; `filmGrain()` adds a distinct correlated procedural model. No blue-noise claim is made. `develop()` normalizes between SDR stages and does not retain the reference's RAW scene headroom.
 
 The module is ready for a caller to use through its installed CMake package. Dreamscapes and existing SDK processing paths are not migrated by creating this package. Cross-platform source portability does not imply a verified Windows, Linux, iOS or Android build.
 
-See the [filter catalog and contracts](docs/Filters.md), original [API contract](docs/API.md), [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md), [Lightroom development](docs/Lightroom.md), [Photoshop reference coverage](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).
+See the [filter catalog and contracts](docs/Filters.md), original [API contract](docs/API.md), [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md), [Lightroom development](docs/Lightroom.md), [masked corrections](docs/LocalCorrections.md), [sample-plane kernels](docs/SampleFilters.md), [Photoshop reference coverage](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).
 
 Version 0.5 uses shared-library ABI series 0.5 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.5 for the current public APIs; existing 0.1, 0.2 and 0.3 function behavior is preserved. The current sensor/photo verification is recorded in [PhotoProcessingVerification](docs/PhotoProcessingVerification.md).

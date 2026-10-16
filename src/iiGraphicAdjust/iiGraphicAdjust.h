@@ -26,3 +26,5 @@
 #include <iiGraphicAdjust/DiagnosticFilters.h>
 #include <iiGraphicAdjust/RawProcessing.h>
 #include <iiGraphicAdjust/PhotoOperations.h>
+#include <iiGraphicAdjust/LocalCorrections.h>
+#include <iiGraphicAdjust/SampleFilters.h>

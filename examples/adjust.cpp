@@ -1,3 +1,4 @@
+#include <iiFileProviderStorage.h>
 #include <iiGraphicAdjust/iiGraphicAdjust.h>
 #include <fstream>
 #include <iostream>
@@ -15,7 +16,7 @@ int main(int argc, char** argv) {
     if (!adjusted) { std::cerr << adjusted.error().message << '\n'; return 1; }
     const auto bytes=iiGraphicAdjust::toRgba8(adjusted->view());
     if (!bytes) { std::cerr << bytes.error().message << '\n'; return 1; }
-    std::ofstream output(argv[1],std::ios::binary);
+    iiFileProvider::native::OutputFile output(argv[1],std::ios::binary);
     output << "P6\n256 128\n255\n";
     for (std::size_t i=0;i<bytes->size();i+=4)
         output.write(reinterpret_cast<const char*>(bytes->data()+i),3);

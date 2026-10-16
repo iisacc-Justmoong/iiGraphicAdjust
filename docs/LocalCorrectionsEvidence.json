@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "implementationKind": "independent C++23 masked RGB composition, not Adobe renderer reconstruction",
+  "observations": [
+    {
+      "id": "develop-local-curve",
+      "sourceKind": "recovered Lua decompiler pseudocode, not original C++ or a renderer oracle",
+      "project": "/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Lightroom",
+      "bundlePath": "Contents/PlugIns/Develop.lrmodule/Contents/Resources/DevelopLocalizedCommon.lua",
+      "sourcePath": "/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Lightroom/recovered/scripts/decompiled/Contents/PlugIns/Develop.lrmodule/Contents/Resources/DevelopLocalizedCommon.lua",
+      "sha256": "2069f5fafae1738591cd741bda9e2ceda5c907b1c9190b87a3036c770f326343",
+      "originalBytecodeSha256": "2fbd23cffa050b330c29211d10a0ce9dcc707312f135728394aa8f1f3e2ed7ef",
+      "decompilerQuality": {
+        "bundlePath": "Contents/PlugIns/Develop.lrmodule/Contents/Resources/DevelopLocalizedCommon.lua",
+        "grade": "reconstructed-lua54-only-syntax-valid",
+        "path": "recovered/scripts/decompiled/Contents/PlugIns/Develop.lrmodule/Contents/Resources/DevelopLocalizedCommon.lua",
+        "originalSha256": "2fbd23cffa050b330c29211d10a0ce9dcc707312f135728394aa8f1f3e2ed7ef",
+        "sha256": "2069f5fafae1738591cd741bda9e2ceda5c907b1c9190b87a3036c770f326343",
+        "meaningEquivalent": null
+      },
+      "outputLineStart": 5270,
+      "outputLineEndInclusive": 5320,
+      "outputLineSpanSha256": "de871a4b91bf0b1ec77ec658a3ff49d1d1dc7ece2aa4a6bec8704d801f74531a",
+      "targetExecution": false
+    },
+    {
+      "id": "correction-amount-control",
+      "sourceKind": "recovered Lua decompiler pseudocode, not original C++ or a renderer oracle",
+      "project": "/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Lightroom",
+      "bundlePath": "Contents/PlugIns/organize.lrmodule/Contents/Resources/EditParameters2.lua",
+      "sourcePath": "/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Lightroom/recovered/scripts/decompiled/Contents/PlugIns/organize.lrmodule/Contents/Resources/EditParameters2.lua",
+      "sha256": "6ce5cd489c9981907a0ac0af47874d45837eee006f2ee1f7ab498a0e47c5eaf1",
+      "originalBytecodeSha256": "169451e9204c42e5796693806cac47380c37e537329b443ec0feae0e26dcc336",
+      "decompilerQuality": {
+        "bundlePath": "Contents/PlugIns/organize.lrmodule/Contents/Resources/EditParameters2.lua",
+        "grade": "reconstructed-pseudocode-syntax-invalid",
+        "path": "recovered/scripts/decompiled/Contents/PlugIns/organize.lrmodule/Contents/Resources/EditParameters2.lua",
+        "originalSha256": "169451e9204c42e5796693806cac47380c37e537329b443ec0feae0e26dcc336",
+        "sha256": "6ce5cd489c9981907a0ac0af47874d45837eee006f2ee1f7ab498a0e47c5eaf1",
+        "meaningEquivalent": null
+      },
+      "outputLineStart": 10525,
+      "outputLineEndInclusive": 10562,
+      "outputLineSpanSha256": "ebadf3613db4b54f3d22dbda14e81840bf9e3ebec86dc65bb68d073247269ef7",
+      "targetExecution": false
+    }
+  ],
+  "gap": "Recovered localPointCurve/EnableLocalToneCurve controls are not represented in the SDK fixed 17-slider LocalAdjustmentOptions. Caller-computed curves/developCurve and Kelvin WB results can now be localized without altering those existing models.",
+  "numericContractOrigin": "SDK design: coverage [0,1] and amount [0,100] with explicit encoded/linear sRGB interpolation. Recovered control declarations do not establish Adobe interpolation units or math.",
+  "separateKernelEvidence": "SampleFilters.md records independently recovered/replayed Photoshop sample-plane kernels. Its replay evidence does not apply to masked composition or existing normalized-image correction models.",
+  "remaining": [
+    "Native CameraRaw correction engine was not decompiled or executed for this implementation.",
+    "No Adobe rendering equivalence or Photoshop/Lightroom workflow completion is claimed."
+  ]
+}

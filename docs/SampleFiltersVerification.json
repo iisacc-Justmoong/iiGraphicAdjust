@@ -1,0 +1,55 @@
+{
+  "authority": "controlled-original-arm64-replay-against-new-sdk",
+  "module": "iiGraphicAdjust",
+  "version": "0.5.1",
+  "nativeArchitecture": "arm64",
+  "averageProcedure": "0x34fc",
+  "solarizeProcedure": "0x2800",
+  "averageCases": 78,
+  "solarizeCases": 26,
+  "comparedActiveSamples": 1730775,
+  "checksPassed": 1291286,
+  "solarize8FullDomain": true,
+  "solarize16FullDomain": true,
+  "scope": "Owned mappings of immutable SHA-bound original slices; synthetic host records; public new SDK sample APIs via inline names-only compatibility wrappers",
+  "photoshopGuiExecuted": false,
+  "originalInstalledBinariesModified": false,
+  "exitCode": 0,
+  "files": [
+    {
+      "path": "/Volumes/Storage/Workspace/SDK/build/local-photo-processing/stage/iiGraphicAdjust/lib/libiiGraphicAdjust.0.5.1.dylib",
+      "bytes": 990768,
+      "sha256": "7a8c59ef5671dcfa6dbafbdb0ffdd3c70ef87ce564388104c966f758400a08f6"
+    },
+    {
+      "path": "/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Photoshop/src/Filters.cpp",
+      "bytes": 6973,
+      "sha256": "d9792948b8f4eccf8544e9e2dee794ef04b3792df3706700b4550150410054b2"
+    },
+    {
+      "path": "/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Photoshop/tests/filters.cpp",
+      "bytes": 20088,
+      "sha256": "0e9ee59cc0c17984e844527d5fcce15b47b752382089c749640e90609437b96d"
+    },
+    {
+      "path": "/Volumes/Storage/Workspace/SDK/build/local-photo-processing/native-replay/include/photoshop_reverse/Filters.hpp",
+      "bytes": 1722,
+      "sha256": "2b71e7e12f30e4a294db735af795e84e948d812b94d1f0dac86253c8c43a0f6b"
+    },
+    {
+      "path": "/Volumes/Storage/Workspace/SDK/build/local-photo-processing/native-replay/sdk-native-replay",
+      "bytes": 79136,
+      "sha256": "d4739287476d8e7683ef3b2e6a00d365b873f2631f9b7458c25e43636f1f5ad7"
+    },
+    {
+      "path": "/Volumes/Storage/Workspace/SDK/build/local-photo-processing/native-replay/oracle/build/analysis/average.arm64",
+      "bytes": 45936,
+      "sha256": "1fc869369f41119f05e4125aaa65000a60aede8ea21a5ef527fb8b328883cac0"
+    },
+    {
+      "path": "/Volumes/Storage/Workspace/SDK/build/local-photo-processing/native-replay/oracle/build/analysis/solarize.arm64",
+      "bytes": 110768,
+      "sha256": "491ef435586a6c94995eecdf9378878fe168a887032d4eee916b5a5f027f0550"
+    }
+  ]
+}

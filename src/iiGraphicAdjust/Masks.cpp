@@ -1,20 +1,13 @@
 // Algorithms adapted from LightCraft; see third_party/lightcraft/LICENSE-MIT.
 #include "DevelopInternal.h"
+#include "MaskInternal.h"
 #include <iiGraphicAdjust/Masks.h>
 
 namespace iiGraphicAdjust {
 namespace dd = develop_detail;
 namespace {
 Result<void> validate(MaskView m) {
-    const auto count = detail::pixelCount(m.width, m.height);
-    if (!count)
-        return std::unexpected(count.error());
-    if (*count != m.coverage.size())
-        return std::unexpected(Error{ErrorCode::InvalidBuffer, "Mask count must match dimensions"});
-    for (auto v : m.coverage)
-        if (!detail::inRange(v, 0, 1))
-            return std::unexpected(dd::invalid("Mask coverage must be finite and normalized"));
-    return {};
+    return detail::validateMask(m);
 }
 bool point(MaskPoint p) {
     return detail::inRange(p.x, -2, 3) && detail::inRange(p.y, -2, 3);

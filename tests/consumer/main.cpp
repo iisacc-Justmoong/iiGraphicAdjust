@@ -126,5 +126,23 @@ int main() {
     if(!oriented || oriented->width!=2 || oriented->height!=2) return 20;
     const auto cropped=crop(oriented->view(),{0,0,1,2});
     if(!cropped || !imageHistogram(cropped->view())) return 21;
+    const std::array<float, 2> correctionCoverage{0, 1};
+    const auto corrected = invert(image->view());
+    if (!corrected) return 22;
+    const auto localized = applyMaskedCorrection(image->view(), corrected->view(),
+                                                 {2, 1, correctionCoverage});
+    if (!localized || localized->pixels[0] != image->pixels[0] ||
+        localized->pixels[1] != corrected->pixels[1] ||
+        localized->pixels.data() == image->pixels.data()) return 23;
+    const auto encodedLocal = applyMaskedCorrection(image->view(), corrected->view(),
+                                                    {2, 1, correctionCoverage},
+                                                    {50, CorrectionSpace::Srgb, true});
+    if (!encodedLocal || encodedLocal->pixels[1] != image->pixels[1]) return 24;
+    const std::array<std::uint8_t, 3> averageSamples{0, 128, 255};
+    const auto average = sampleAverage8({averageSamples, 3, 1, 3});
+    if (!average || average->value != 128 || average->selectedSamples != 3) return 25;
+    std::array<std::uint16_t, 4> solarizeSamples{0, 16383, 16384, 32768};
+    const auto solarized = solarizeSamples16({solarizeSamples, 4, 1, 4});
+    if (!solarized || solarizeSamples != std::array<std::uint16_t, 4>{0, 16383, 16384, 0}) return 26;
     return runFilterConsumer();
 }

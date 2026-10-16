@@ -1,5 +1,12 @@
 cmake_minimum_required(VERSION 3.24)
-project(iiGraphicAdjust VERSION 0.5.0 LANGUAGES CXX)
+project(iiGraphicAdjust VERSION 0.5.1 LANGUAGES CXX)
+# File creation is owned by iiFileProvider.
+find_package(iiFileProviderNative 0.6 CONFIG REQUIRED HINTS "$ENV{IIFILEPROVIDER_PREFIX}" "$ENV{HOME}/.local/SDK/iiFileProvider")
+link_libraries(iiFileProvider::Native)
+
+
+
+
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(PROJECT_IS_TOP_LEVEL AND CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -23,6 +30,7 @@ add_library(iiGraphicAdjust
     src/iiGraphicAdjust/Image.cpp
     src/iiGraphicAdjust/RawProcessing.cpp
     src/iiGraphicAdjust/PhotoOperations.cpp
+    src/iiGraphicAdjust/SampleFilters.cpp
     src/iiGraphicAdjust/Adjustments.cpp
     src/iiGraphicAdjust/Effects.cpp
     src/iiGraphicAdjust/Mapping.cpp
@@ -34,6 +42,7 @@ add_library(iiGraphicAdjust
     src/iiGraphicAdjust/DevelopEffects.cpp
     src/iiGraphicAdjust/Optics.cpp
     src/iiGraphicAdjust/Masks.cpp
+    src/iiGraphicAdjust/LocalCorrections.cpp
     src/iiGraphicAdjust/Develop.cpp
     src/iiGraphicAdjust/BlurFilters.cpp
     src/iiGraphicAdjust/DistortionFilters.cpp
@@ -49,6 +58,13 @@ add_library(iiGraphicAdjust
     src/iiGraphicAdjust/DiagnosticFilters.cpp
     src/iiGraphicAdjust/Blend.cpp)
 add_library(iiGraphicAdjust::iiGraphicAdjust ALIAS iiGraphicAdjust)
+if(MSVC)
+    set_source_files_properties(src/iiGraphicAdjust/SampleFilters.cpp PROPERTIES
+        COMPILE_OPTIONS /fp:strict)
+else()
+    set_source_files_properties(src/iiGraphicAdjust/SampleFilters.cpp PROPERTIES
+        COMPILE_OPTIONS "-fno-fast-math;-ffp-contract=off")
+endif()
 generate_export_header(iiGraphicAdjust BASE_NAME IIGRAPHICADJUST
     EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/iiGraphicAdjust/Export.h")
 target_compile_features(iiGraphicAdjust PUBLIC cxx_std_23)
@@ -76,6 +92,7 @@ install(TARGETS iiGraphicAdjust EXPORT iiGraphicAdjustTargets
 install(FILES
     src/iiGraphicAdjust/iiGraphicAdjust.h src/iiGraphicAdjust/Image.h
     src/iiGraphicAdjust/RawProcessing.h src/iiGraphicAdjust/PhotoOperations.h
+    src/iiGraphicAdjust/LocalCorrections.h src/iiGraphicAdjust/SampleFilters.h
     src/iiGraphicAdjust/Adjustments.h src/iiGraphicAdjust/Effects.h src/iiGraphicAdjust/Blend.h
     src/iiGraphicAdjust/Mapping.h src/iiGraphicAdjust/Hdr.h
     src/iiGraphicAdjust/Tone.h src/iiGraphicAdjust/Color.h
@@ -111,6 +128,8 @@ install(DIRECTORY docs/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/doc
 install(DIRECTORY third_party/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/third_party)
 
 if(IIGRAPHICADJUST_BUILD_EXAMPLES)
+    add_executable(iiGraphicAdjustLocalCorrectionsExample examples/local_corrections.cpp)
+    target_link_libraries(iiGraphicAdjustLocalCorrectionsExample PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     add_executable(iiGraphicAdjustDevelopExample examples/develop.cpp)
     target_link_libraries(iiGraphicAdjustDevelopExample PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     add_executable(iiGraphicAdjustExample examples/adjust.cpp)
@@ -119,6 +138,18 @@ if(IIGRAPHICADJUST_BUILD_EXAMPLES)
 endif()
 
 if(BUILD_TESTING)
+    add_executable(iiGraphicAdjustLocalCorrectionsTests tests/local_corrections.cpp)
+    target_link_libraries(iiGraphicAdjustLocalCorrectionsTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case identity coverage spaces alpha validation composition)
+        add_test(NAME iiGraphicAdjust.localCorrection.${_case} COMMAND iiGraphicAdjustLocalCorrectionsTests ${_case})
+        set_tests_properties(iiGraphicAdjust.localCorrection.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
+    add_executable(iiGraphicAdjustSampleFiltersTests tests/sample_filters.cpp)
+    target_link_libraries(iiGraphicAdjustSampleFiltersTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case average8 average16 float selection fill solarize validation)
+        add_test(NAME iiGraphicAdjust.sample.${_case} COMMAND iiGraphicAdjustSampleFiltersTests ${_case})
+        set_tests_properties(iiGraphicAdjust.sample.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
     add_executable(iiGraphicAdjustRawTests tests/raw_processing.cpp)
     target_link_libraries(iiGraphicAdjustRawTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     foreach(_case patterns interpolation calibration rendering layout validation)
