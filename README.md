@@ -1,5 +1,7 @@
 # iiGraphicAdjust
 
+[Windows 빌드 및 실행](docs/WindowsBuildAndRun.md)
+
 Package release: **0.6.1** (2026-10-19). This maintenance release follows the
 concurrently completed 0.6.0 object API implementation. Build, full tests and
 installation are verified together against this final source snapshot.
