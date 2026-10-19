@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
-project(iiGraphicAdjust VERSION 0.5.1 LANGUAGES CXX)
+project(iiGraphicAdjust VERSION 0.6.1 LANGUAGES CXX)
 # File creation is owned by iiFileProvider.
 find_package(iiFileProviderNative 0.6 CONFIG REQUIRED HINTS "$ENV{IIFILEPROVIDER_PREFIX}" "$ENV{HOME}/.local/SDK/iiFileProvider")
 link_libraries(iiFileProvider::Native)
@@ -27,6 +27,11 @@ option(BUILD_SHARED_LIBS "Build iiGraphicAdjust as a shared library" ON)
 option(IIGRAPHICADJUST_BUILD_EXAMPLES "Build the standalone image adjustment example" ON)
 
 add_library(iiGraphicAdjust
+    src/iiGraphicAdjust/Operation.cpp
+    src/iiGraphicAdjust/ObjectCatalog.cpp
+    src/iiGraphicAdjust/OwnedResourceObjects.cpp
+    src/iiGraphicAdjust/DevelopFeatureObjects.cpp
+    src/iiGraphicAdjust/CorrectionExtensions.cpp
     src/iiGraphicAdjust/Image.cpp
     src/iiGraphicAdjust/RawProcessing.cpp
     src/iiGraphicAdjust/PhotoOperations.cpp
@@ -90,6 +95,8 @@ install(TARGETS iiGraphicAdjust EXPORT iiGraphicAdjustTargets
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(FILES
+    src/iiGraphicAdjust/Objects.h src/iiGraphicAdjust/Operation.h
+    src/iiGraphicAdjust/CorrectionExtensions.h
     src/iiGraphicAdjust/iiGraphicAdjust.h src/iiGraphicAdjust/Image.h
     src/iiGraphicAdjust/RawProcessing.h src/iiGraphicAdjust/PhotoOperations.h
     src/iiGraphicAdjust/LocalCorrections.h src/iiGraphicAdjust/SampleFilters.h
@@ -116,6 +123,9 @@ install(FILES
     src/iiGraphicAdjust/DiagnosticFilters.h
     "${CMAKE_CURRENT_BINARY_DIR}/include/iiGraphicAdjust/Export.h"
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iiGraphicAdjust)
+install(DIRECTORY src/iiGraphicAdjust/objects
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iiGraphicAdjust
+    FILES_MATCHING PATTERN "*.h")
 install(EXPORT iiGraphicAdjustTargets NAMESPACE iiGraphicAdjust:: DESTINATION "${_package_dir}")
 configure_package_config_file(cmake/iiGraphicAdjustConfig.cmake.in
     "${CMAKE_CURRENT_BINARY_DIR}/iiGraphicAdjustConfig.cmake" INSTALL_DESTINATION "${_package_dir}")
@@ -128,6 +138,8 @@ install(DIRECTORY docs/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/doc
 install(DIRECTORY third_party/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/third_party)
 
 if(IIGRAPHICADJUST_BUILD_EXAMPLES)
+    add_executable(iiGraphicAdjustObjectsExample examples/objects.cpp)
+    target_link_libraries(iiGraphicAdjustObjectsExample PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     add_executable(iiGraphicAdjustLocalCorrectionsExample examples/local_corrections.cpp)
     target_link_libraries(iiGraphicAdjustLocalCorrectionsExample PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     add_executable(iiGraphicAdjustDevelopExample examples/develop.cpp)
@@ -138,6 +150,35 @@ if(IIGRAPHICADJUST_BUILD_EXAMPLES)
 endif()
 
 if(BUILD_TESTING)
+    add_test(NAME iiGraphicAdjust.objects.installed_package
+        COMMAND ${CMAKE_COMMAND}
+            "-DSOURCE_ROOT=${CMAKE_CURRENT_SOURCE_DIR}"
+            "-DBINARY_ROOT=${CMAKE_CURRENT_BINARY_DIR}"
+            "-DNATIVE_PROVIDER=${iiFileProviderNative_DIR}"
+            "-DCXX_COMPILER=${CMAKE_CXX_COMPILER}"
+            "-DCXX_FLAGS=${CMAKE_CXX_FLAGS}"
+            "-DCTEST_COMMAND=${CMAKE_CTEST_COMMAND}"
+            -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/operation_package.cmake")
+    set_tests_properties(iiGraphicAdjust.objects.installed_package PROPERTIES TIMEOUT 240)
+    add_executable(iiGraphicAdjustObjectCatalogTests tests/object_catalog_execution.cpp)
+    target_link_libraries(iiGraphicAdjustObjectCatalogTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case adjustment analysis blur cameraRaw color composite correction develop diagnostic distortion
+            effects gallery geometry hdr local look mapping mask optics pixel raw render resource retouch sample tone utility)
+        add_test(NAME iiGraphicAdjust.objects.execute.${_case} COMMAND iiGraphicAdjustObjectCatalogTests ${_case})
+        set_tests_properties(iiGraphicAdjust.objects.execute.${_case} PROPERTIES TIMEOUT 120)
+    endforeach()
+    add_executable(iiGraphicAdjustCorrectionExtensionsTests tests/correction_extensions.cpp)
+    target_link_libraries(iiGraphicAdjustCorrectionExtensionsTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case alpha flat fills detail analysis validation)
+        add_test(NAME iiGraphicAdjust.extensions.${_case} COMMAND iiGraphicAdjustCorrectionExtensionsTests ${_case})
+        set_tests_properties(iiGraphicAdjust.extensions.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
+    add_executable(iiGraphicAdjustOperationObjectsTests tests/operation_objects.cpp)
+    target_link_libraries(iiGraphicAdjustOperationObjectsTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case ordering ownership masking failures catalog)
+        add_test(NAME iiGraphicAdjust.objects.${_case} COMMAND iiGraphicAdjustOperationObjectsTests ${_case})
+        set_tests_properties(iiGraphicAdjust.objects.${_case} PROPERTIES TIMEOUT 60)
+    endforeach()
     add_executable(iiGraphicAdjustLocalCorrectionsTests tests/local_corrections.cpp)
     target_link_libraries(iiGraphicAdjustLocalCorrectionsTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     foreach(_case identity coverage spaces alpha validation composition)

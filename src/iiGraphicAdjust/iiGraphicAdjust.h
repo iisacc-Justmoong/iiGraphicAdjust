@@ -1,4 +1,5 @@
 #pragma once
+#include <iiGraphicAdjust/Objects.h>
 #include <iiGraphicAdjust/Adjustments.h>
 #include <iiGraphicAdjust/Blend.h>
 #include <iiGraphicAdjust/BlurFilters.h>

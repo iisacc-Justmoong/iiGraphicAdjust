@@ -61,3 +61,7 @@ A 64-bit seed and pixel index are hashed into a private per-pixel SplitMix64 sta
 Source alpha zero, including opacity zero, preserves the backdrop exactly. Transparent backdrop RGB does not influence the result. SoftLight uses the cubic branch below backdrop 0.25 and square-root branch above it, matching the equations in [W3C Compositing and Blending Level 1](https://www.w3.org/TR/2024/CRD-compositing-1-20240321/#blendingsoftlight). sRGB transfer functions follow [CSS Color Level 4](https://www.w3.org/TR/css-color-4/#color-conversion-code). Selecting linear sRGB is an explicit working-space choice; it does not claim CSS renderer parity.
 
 Version 0.2.0 adds Tone.h, Color.h, Mapping.h and Hdr.h to the umbrella header. Their separate contracts are in Tone.md, Color.md and Mapping.md; the functions above retain their original behavior.
+
+## Version 0.6 typed objects
+
+[OperationObjects.md](OperationObjects.md) documents 309 editable value objects, owned resources, immutable `Operation` captures, ordered masked `OperationStack` rendering, and typed analysis/mask/RAW/resource entry points. [object-catalog.json](object-catalog.json) is the complete public inventory. Detail struct layout changed; rebuild consumers for ABI series 0.6. The prior free-function contracts remain available.

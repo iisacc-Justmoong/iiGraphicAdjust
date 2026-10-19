@@ -164,7 +164,9 @@ Result<Image> developDetail(ImageView image, const DevelopDetailOptions &o) {
     if (!detail::inRange(o.sharpenAmount, 0, 150) || !detail::inRange(o.sharpenMasking, 0, 100) ||
         !detail::inRange(o.luminanceNoise, 0, 100) || !detail::inRange(o.luminanceDetail, 0, 100) ||
         !detail::inRange(o.colorNoise, 0, 100) || !detail::inRange(o.colorDetail, 0, 100) ||
-        !detail::inRange(o.colorSmoothness, 0, 100))
+        !detail::inRange(o.colorSmoothness, 0, 100) ||
+        !detail::inRange(o.sharpenRadius, .5, 3) || !detail::inRange(o.sharpenDetail, 0, 100) ||
+        !detail::inRange(o.luminanceContrast, 0, 100))
         return std::unexpected(dd::invalid("Invalid detail settings"));
     return detail::allocated([&] {
         if (o.sharpenAmount == 0 && o.luminanceNoise == 0 && o.colorNoise == 0)
@@ -176,10 +178,17 @@ Result<Image> developDetail(ImageView image, const DevelopDetailOptions &o) {
             const auto smooth =
                 dd::guided(f, logs, 1 + 2.5 * amount,
                            .002 + amount * amount * .25 * (1 - .7 * o.luminanceDetail / 100));
+            dd::Plane broadBefore, broadAfter;
+            if (o.luminanceContrast>0) {
+                broadBefore=dd::gaussian(f,logs,4+2*amount);
+                broadAfter=dd::gaussian(f,smooth,4+2*amount);
+            }
             for (std::size_t i = 0; i < f.rgb.size(); ++i)
                 if (f.alpha[i] > 0)
                     f.rgb[i] =
-                        dd::scale(f.rgb[i], std::exp2((smooth[i] - logs[i]) * std::sqrt(amount)));
+                        dd::scale(f.rgb[i], std::exp2((smooth[i] - logs[i] +
+                            (o.luminanceContrast>0 ? o.luminanceContrast/100*
+                                (broadBefore[i]-broadAfter[i]) : 0)) * std::sqrt(amount)));
         }
         if (o.colorNoise > 0) {
             std::array<dd::Plane, 3> chroma;
@@ -203,12 +212,15 @@ Result<Image> developDetail(ImageView image, const DevelopDetailOptions &o) {
                 }
         }
         if (o.sharpenAmount > 0) {
-            const auto logs = dd::logs(f),
-                       blurred =
-                           dd::gaussian(f, logs, std::max(.6, .0018 * std::max(f.width, f.height)));
+            const auto logs = dd::logs(f);
+            const auto radius=std::max(.6,.0018*std::max(f.width,f.height))*o.sharpenRadius;
+            const auto blurred=dd::gaussian(f,logs,radius);
+            dd::Plane fine;
+            if (o.sharpenDetail!=25) fine=dd::gaussian(f,logs,std::max(.3,radius*.5));
             for (std::size_t i = 0; i < f.rgb.size(); ++i)
                 if (f.alpha[i] > 0) {
-                    const auto det = logs[i] - blurred[i],
+                    const auto det = logs[i] - blurred[i] + (o.sharpenDetail!=25 ?
+                                (o.sharpenDetail-25)/75*.5*(logs[i]-fine[i]) : 0),
                                mask = o.sharpenMasking > 0
                                           ? dd::smooth(o.sharpenMasking / 100 * .25,
                                                        o.sharpenMasking / 100 * .25 + .15,

@@ -1,8 +1,29 @@
 # iiGraphicAdjust
 
-Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.5.1**. The public API and implementation use only the C++ standard library. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency, including transitive dependencies.
+Package release: **0.6.1** (2026-10-19). This maintenance release follows the
+concurrently completed 0.6.0 object API implementation. Build, full tests and
+installation are verified together against this final source snapshot.
+
+
+Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.6.1**. Processing uses the C++ standard library; the package also requires the existing Qt-free `iiFileProviderNative >= 0.6` for native file integration. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency.
 
 ## Features
+
+Version **0.6.0** adds **309 typed value objects** for the full existing processing
+surface, owned resources, automatic analysis, masks, RAW and LUT/profile recipes.
+`Operation` captures an immutable object snapshot and `OperationStack` applies
+up to 256 ordered stages with owned masks, transfer-space-aware premultiplied
+interpolation and precise failure locations. Five new kernels add flat-field
+correction, color-to-alpha unmixing and solid/gradient/pattern fills. Sharpen
+Radius/Detail and Luminance NR Contrast now perform real processing.
+
+See [object API and contracts](docs/OperationObjects.md), the
+[complete object inventory](docs/object-catalog.json) and
+[Adobe coverage and remaining features](docs/adobe-feature-coverage.json).
+All existing CPU operations are objectified; Adobe neural/generative functions,
+full RAW/HDR color workflows and Adobe rendering equivalence remain incomplete.
+This is not a recovery of Adobe's original source. Public detail settings changed
+layout, so **0.6 consumers must rebuild**. Validation installs only to `build/`.
 
 Version 0.5.1 adds two explicitly separate processing contracts without changing existing correction models or the ABI series:
 
@@ -81,7 +102,7 @@ Builds, staged packages, consumer checks and generated examples stay under `buil
 ## Consume the installed package
 
 ```cmake
-find_package(iiGraphicAdjust 0.5 CONFIG REQUIRED)
+find_package(iiGraphicAdjust 0.6 CONFIG REQUIRED)
 target_link_libraries(my_app PRIVATE iiGraphicAdjust::iiGraphicAdjust)
 ```
 
@@ -135,4 +156,4 @@ The module is ready for a caller to use through its installed CMake package. Dre
 
 See the [filter catalog and contracts](docs/Filters.md), original [API contract](docs/API.md), [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md), [Lightroom development](docs/Lightroom.md), [masked corrections](docs/LocalCorrections.md), [sample-plane kernels](docs/SampleFilters.md), [Photoshop reference coverage](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).
 
-Version 0.5 uses shared-library ABI series 0.5 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.5 for the current public APIs; existing 0.1, 0.2 and 0.3 function behavior is preserved. The current sensor/photo verification is recorded in [PhotoProcessingVerification](docs/PhotoProcessingVerification.md).
+Version 0.6 uses shared-library ABI series 0.6 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.6 for the current public APIs; existing 0.1, 0.2 and 0.3 function behavior is preserved. The current sensor/photo verification is recorded in [PhotoProcessingVerification](docs/PhotoProcessingVerification.md).

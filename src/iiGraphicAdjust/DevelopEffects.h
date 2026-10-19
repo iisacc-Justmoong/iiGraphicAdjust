@@ -18,6 +18,10 @@ struct DevelopDetailOptions final {
     double sharpenAmount = 0, sharpenMasking = 0; // [0,150], [0,100].
     double luminanceNoise = 0, luminanceDetail = 50;
     double colorNoise = 0, colorDetail = 50, colorSmoothness = 50; // [0,100].
+    // Independent CPU detail controls. Defaults retain the preceding kernel.
+    double sharpenRadius = 1; // [.5,3], scales the image-relative detail radius.
+    double sharpenDetail = 25; // [0,100], fine-band gain around the default value 25.
+    double luminanceContrast = 0; // [0,100], restore broad local contrast after NR.
 };
 [[nodiscard]] IIGRAPHICADJUST_EXPORT Result<Image>
 developEffects(ImageView image, const DevelopEffectsOptions &options = {});

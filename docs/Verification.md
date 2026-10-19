@@ -1,5 +1,7 @@
 # Verification
 
+Current 0.6 object/correction evidence is in [OperationObjectsVerification.md](OperationObjectsVerification.md). The versioned results below describe earlier feature checkpoints.
+
 Run all checks from the module directory. Keep every build, consumer and generated file below `build/`.
 
 Version 0.5.0 adds six Bayer RAW and four photo-operation suites, for 150 total.

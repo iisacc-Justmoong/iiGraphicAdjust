@@ -12,7 +12,7 @@ Reference: [storytold/lightcraft](https://github.com/storytold/lightcraft), insp
 | 4 | Manual distortion, manual/automatic lateral CA, supplied lens coefficients, lens vignetting and purple/green defringe | `pipeline/src/optics.rs` |
 | 5 | Composed development and deterministic local masks/coverage | `pipeline/src/lib.rs`, `masks.rs`, `finish.rs` |
 
-The reference declares Sharpen Radius, Sharpen Detail, NR Contrast, Lens Blur and Enhance settings, but the inspected CPU/GPU pipeline does not read them. They are not added as ineffective controls. RAW decoding, camera/lens profile registries, AI segmentation, healing, red-eye, crop/geometry, catalog/preset persistence and GUI are separate host concerns. Existing Cube LUT APIs supply creative looks without importing the reference's preset database. Embedded DNG lens metadata is not decoded by this module.
+The pinned reference declared Sharpen Radius, Sharpen Detail, NR Contrast, Lens Blur and Enhance settings without reading them in that inspected pipeline. Version 0.6 independently implements active Radius/Detail/NR Contrast controls and supplies an owned-depth-map Lens Blur object. These are functional CPU implementations, not learned Enhance or automatic depth inference; see [OperationObjects.md](OperationObjects.md). RAW decoding, camera/lens profile registries, AI segmentation, healing, red-eye, crop/geometry, catalog/preset persistence and GUI are separate host concerns. Existing Cube LUT APIs supply creative looks without importing the reference's preset database. Embedded DNG lens metadata is not decoded by this module.
 
 ## Pixel contract
 
@@ -40,7 +40,7 @@ Texture scales a fine Gaussian log-luminance band (sigma `max(0.6, 0.0018*longEd
 
 Post-crop Vignette uses normalized current-image coordinates, midpoint, roundness and feather. HighlightPriority protects bright pixels with the Highlights slider; ColorPriority scales colors; PaintOverlay uses black/white paint behavior (negative ColorPriority and PaintOverlay are numerically identical in this reference). Film Grain is deterministic seeded two-octave value noise in encoded sRGB, with size relative to the long edge and midtone weighting. No global random state is used.
 
-Detail exposes only controls used by the reference: Sharpen Amount/Masking, Luminance Noise/Detail and Color Noise/Detail/Smoothness. Luminance NR filters log luminance with edge-aware guidance; color NR filters chromaticity at preserved luminance. Sharpening follows NR and scales the fine log-luminance band with optional edge masking. This is conventional deterministic NR, not Adobe AI Denoise. Operations validate inactive controls too.
+The original detail controls used by the reference are: Sharpen Amount/Masking, Luminance Noise/Detail and Color Noise/Detail/Smoothness. Luminance NR filters log luminance with edge-aware guidance; color NR filters chromaticity at preserved luminance. Sharpening follows NR and scales the fine log-luminance band with optional edge masking. This is conventional deterministic NR, not Adobe AI Denoise. Operations validate inactive controls too.
 
 ## Optics
 

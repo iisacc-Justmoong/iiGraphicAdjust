@@ -1,0 +1,433 @@
+{
+  "schema": 1,
+  "reviewed_on": "2026-10-19",
+  "complete_adobe_coverage": false,
+  "object_count": 309,
+  "note": "All 309 concrete objects have executable tests. This matrix records category coverage and explicit gaps, not complete Adobe feature/options or pixel equivalence.",
+  "covered_categories": [
+    {
+      "area": "photoshop.tonal_adjustments",
+      "status": "cpu_implementation",
+      "objects": [
+        "tone.brightnessContrast",
+        "tone.levels",
+        "tone.curves",
+        "tone.exposure",
+        "tone.shadowsHighlights",
+        "tone.invert",
+        "tone.posterize",
+        "tone.threshold",
+        "tone.equalize",
+        "tone.autoLevels",
+        "tone.autoContrast",
+        "tone.autoColor"
+      ],
+      "note": "Independent CPU contracts; Adobe pixel parity not established.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "photoshop.color_adjustments",
+      "status": "cpu_implementation",
+      "objects": [
+        "color.hueSaturation",
+        "color.vibrance",
+        "color.colorBalance",
+        "color.blackAndWhite",
+        "color.photoFilter",
+        "color.channelMixer",
+        "color.selectiveColor",
+        "color.desaturate",
+        "color.replaceColor",
+        "color.matchColor",
+        "mapping.gradientMap",
+        "mapping.colorLookup"
+      ],
+      "note": "Independent CPU contracts; Adobe pixel parity not established.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "photoshop.fill_pixels",
+      "status": "cpu_implementation",
+      "objects": [
+        "correction.solidFill",
+        "correction.gradientFill",
+        "correction.patternFill"
+      ],
+      "note": "Pixel fills; no Adobe layer/pattern-file persistence.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "photoshop.blur_sharpen",
+      "status": "cpu_implementation",
+      "objects": [
+        "blur.filterGaussianBlur",
+        "blur.boxBlur",
+        "blur.motionBlur",
+        "blur.radialBlur",
+        "blur.surfaceBlur",
+        "blur.unsharpMask",
+        "blur.smartSharpen",
+        "blur.smartBlur",
+        "blur.shapeBlur",
+        "blur.irisBlur",
+        "blur.fieldBlur",
+        "blur.spinBlur",
+        "blur.pathBlur",
+        "blur.tiltShift",
+        "blur.lensBlur"
+      ],
+      "note": "Lens Blur accepts an owned depth map; no automatic depth inference.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "photoshop.camera_raw",
+      "status": "cpu_implementation",
+      "objects": [
+        "cameraRaw.cameraRawFilter"
+      ],
+      "note": "Independent CPU contracts; Adobe pixel parity not established.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "photoshop.geometry",
+      "status": "cpu_implementation",
+      "objects": [
+        "geometry.liquify",
+        "geometry.adaptiveWideAngle",
+        "geometry.puppetWarp",
+        "geometry.perspectiveWarp",
+        "geometry.vanishingPoint"
+      ],
+      "note": "Independent CPU contracts; Adobe pixel parity not established.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "photoshop.artistic_pixel_render",
+      "status": "cpu_implementation",
+      "objects": [
+        "gallery.filterGallery",
+        "gallery.watercolor",
+        "pixel.oilPaint",
+        "pixel.mosaic",
+        "render.lightingEffects",
+        "render.flame",
+        "render.tree",
+        "render.pictureFrame"
+      ],
+      "note": "Independent CPU contracts; Adobe pixel parity not established.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "lightroom.basic_and_curve",
+      "status": "cpu_implementation",
+      "objects": [
+        "develop.whiteBalance",
+        "develop.autoWhiteBalance",
+        "develop.sampledWhiteBalance",
+        "develop.whiteBalancePreset",
+        "develop.developLight",
+        "develop.autoDevelopLight",
+        "develop.developCurve"
+      ],
+      "note": "Independent CPU contracts; Adobe pixel parity not established.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "lightroom.color",
+      "status": "cpu_implementation",
+      "objects": [
+        "develop.colorMixer",
+        "develop.pointColor",
+        "develop.colorGrading",
+        "develop.blackAndWhiteMix",
+        "develop.autoBlackAndWhiteMix",
+        "develop.vibrance",
+        "develop.calibrate"
+      ],
+      "note": "Independent CPU contracts; Adobe pixel parity not established.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "lightroom.detail_and_effects",
+      "status": "cpu_implementation",
+      "objects": [
+        "develop.sharpening",
+        "develop.luminanceNoiseReduction",
+        "develop.colorNoiseReduction",
+        "develop.texture",
+        "develop.clarity",
+        "develop.dehaze",
+        "develop.filmGrain",
+        "develop.postCropVignette"
+      ],
+      "note": "Radius/detail/NR contrast are active independent CPU controls. NR is not AI Denoise.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "lightroom.optics",
+      "status": "caller_supplied_data",
+      "objects": [
+        "optics.correctOptics",
+        "optics.lensCorrection",
+        "optics.defringe",
+        "analysis.estimateChromaticAberration"
+      ],
+      "note": "Embedded/profile coefficients are supplied by the host; no Adobe profile registry or file decoder.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "lightroom.local_corrections",
+      "status": "cpu_implementation",
+      "objects": [
+        "mask.linearMask",
+        "mask.radialMask",
+        "mask.brushMask",
+        "mask.luminanceRangeMask",
+        "mask.colorRangeMask",
+        "mask.refineMask",
+        "local.applyLocalAdjustments",
+        "local.applyMaskedCorrection"
+      ],
+      "note": "Independent CPU contracts; Adobe pixel parity not established.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "lightroom.retouch",
+      "status": "cpu_implementation",
+      "objects": [
+        "retouch.cloneSpot",
+        "retouch.healSpot",
+        "retouch.removeSpot",
+        "retouch.redEye",
+        "retouch.petEye",
+        "analysis.detectDustSpots"
+      ],
+      "note": "Conventional patch-based repair and explicit eye/dust analysis; no semantic generative removal.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "lightroom.depth_blur",
+      "status": "caller_supplied_data",
+      "objects": [
+        "blur.lensBlur"
+      ],
+      "note": "Caller supplies the depth map; the object owns it. Automatic subject/depth prediction is not implemented.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "lightroom.flat_field",
+      "status": "partial",
+      "objects": [
+        "correction.flatFieldCorrection"
+      ],
+      "note": "Decoded normalized RGB calibration; no Lightroom RAW/DNG flat-field metadata workflow.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "lightroom.raw_and_hdr",
+      "status": "partial",
+      "objects": [
+        "raw.developRaw",
+        "raw.renderRaw",
+        "hdr.hdrToning"
+      ],
+      "note": "Unpacked Bayer input and HDR tone mapping only. Full camera decoding, scene-linear wide-gamut development and HDR output are not implemented.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "lightroom.presets_resize",
+      "status": "cpu_implementation",
+      "objects": [
+        "look.applyLightcraftLook",
+        "look.applyLightcraftPreset",
+        "resource.lightcraftLookOptions",
+        "resource.lightcraftPresetOptions",
+        "look.resizeBox",
+        "look.resizeBilinear",
+        "look.resizeMitchell",
+        "look.resizeLanczos3"
+      ],
+      "note": "LightCraft recipes and conventional resampling, not Adobe preset interchange or learned enhancement.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    },
+    {
+      "area": "reference_extension.color_unmix",
+      "status": "cpu_implementation",
+      "objects": [
+        "correction.colorToAlpha"
+      ],
+      "note": "Current PhotoCraft extension; its command explicitly states this is not a Photoshop filter.",
+      "adobe_option_and_pixel_equivalence_verified": false
+    }
+  ],
+  "not_implemented": [
+    {
+      "area": "neural.smart_portrait",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "neural.skin_smoothing_model",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "neural.super_zoom",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "neural.jpeg_restoration_model",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "neural.semantic_colorization",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "neural.style_transfer_model",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "neural.makeup_transfer_model",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "neural.photo_restoration_model",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "neural.harmonization_model",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "neural.landscape_mixer_model",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "neural.depth_inference",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "neural.color_transfer_model",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "lightroom.ai_raw_denoise",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "lightroom.enhance_raw_details",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "lightroom.learned_super_resolution",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "lightroom.generative_remove",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "lightroom.semantic_people_object_selection",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "lightroom.reflection_removal",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "lightroom.automatic_subject_sky_people_masks",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "lightroom.hdr_photo_merge",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "lightroom.panorama_merge",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "color.scene_linear_wide_gamut_develop",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "color.full_icc_dcp_lcp_registry_and_conversion",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "interchange.adobe_presets_and_smart_filter_persistence",
+      "status": "not_implemented",
+      "object": null
+    },
+    {
+      "area": "validation.adobe_application_pixel_equivalence",
+      "status": "not_implemented",
+      "object": null
+    }
+  ],
+  "references": [
+    {
+      "project": "Photoshop",
+      "commit": "d95fdf3181c01ad41e95456091a394b105a9afb2",
+      "path": "crates/algo/src/color_to_alpha.rs",
+      "sha256": "61b217f1e95d28679725191d0facc1ce054e72bf99c6a3aacbbd531f8e1be2bc",
+      "classification": "open_source_reconstruction"
+    },
+    {
+      "project": "Photoshop",
+      "commit": "d95fdf3181c01ad41e95456091a394b105a9afb2",
+      "path": "crates/engine/src/color_to_alpha_cmds.rs",
+      "sha256": "8c48867efe254ca407ea528dc550aed64700c76d92fa272ef7bd1b762bc9df12",
+      "classification": "open_source_reconstruction"
+    },
+    {
+      "project": "Photoshop",
+      "commit": "d95fdf3181c01ad41e95456091a394b105a9afb2",
+      "path": "crates/doc/src/adjust.rs",
+      "sha256": "6decc0b6a6bd8d20d9dbba5c93d3bce08be3d231422342276d02bfa832c2c588",
+      "classification": "open_source_reconstruction"
+    },
+    {
+      "project": "Lightroom",
+      "commit": "d999e382bafbb5d5c54482fdb1d11f6a63bfdf69",
+      "path": "crates/pipeline/src/local.rs",
+      "sha256": "6bf40e393316a8588fe4180fb53d09a0bf4ee0e1c3e27986111de30500682c66",
+      "classification": "open_source_reconstruction"
+    },
+    {
+      "project": "Lightroom",
+      "commit": "d999e382bafbb5d5c54482fdb1d11f6a63bfdf69",
+      "path": "crates/pipeline/src/finish.rs",
+      "sha256": "1ae53438884cbad585f7488f08a12edac5156432df26036c9840cb89d4d2a19b",
+      "classification": "open_source_reconstruction"
+    }
+  ],
+  "public_reference_urls": [
+    "https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/adjustment-layers-options.html",
+    "https://helpx.adobe.com/photoshop/desktop/effects-filters/neural-filters/neural-filters-gallery.html",
+    "https://helpx.adobe.com/lightroom-classic/desktop/process-and-develop-photos/image-tone-color.html",
+    "https://helpx.adobe.com/lightroom-classic/desktop.html"
+  ]
+}
