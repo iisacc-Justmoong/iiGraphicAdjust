@@ -105,10 +105,11 @@ template <class Map> Image remap(ImageView image, Edge edge, Map map) {
         }
     return out;
 }
-inline void boxAxis(Buffer &data, std::size_t w, std::size_t h, std::size_t r, bool horizontal) {
+inline void boxAxis(Buffer &data, Buffer &next, std::size_t w, std::size_t h, std::size_t r, bool horizontal) {
     if (!r)
         return;
-    Buffer next(data.size());
+    // Every output element is overwritten. Reuse the same allocation for each pass.
+    next.resize(data.size());
     const std::size_t len = horizontal ? w : h, lines = horizontal ? h : w;
     auto at = [&](std::size_t line, std::size_t p) {
         return horizontal ? line * w + p : p * w + line;
@@ -136,8 +137,9 @@ inline void boxAxis(Buffer &data, std::size_t w, std::size_t h, std::size_t r, b
 }
 inline Buffer boxed(ImageView image, std::size_t radius) {
     auto b = read(image);
-    boxAxis(b, image.width, image.height, radius, true);
-    boxAxis(b, image.width, image.height, radius, false);
+    Buffer scratch;
+    boxAxis(b, scratch, image.width, image.height, radius, true);
+    boxAxis(b, scratch, image.width, image.height, radius, false);
     return b;
 }
 inline Buffer gauss(ImageView image, double sigma) {
@@ -145,6 +147,7 @@ inline Buffer gauss(ImageView image, double sigma) {
     if (sigma == 0)
         return b;
     if (sigma > 4) {
+        Buffer scratch;
         int low = std::max(1, int(std::floor(std::sqrt(4 * sigma * sigma + 1))));
         if (low % 2 == 0)
             --low;
@@ -153,7 +156,7 @@ inline Buffer gauss(ImageView image, double sigma) {
                            0, 3);
         for (bool hor : {true, false})
             for (int pass = 0; pass < 3; ++pass)
-                boxAxis(b, image.width, image.height,
+                boxAxis(b, scratch, image.width, image.height,
                         std::size_t((low + (pass < m ? 0 : 2) - 1) / 2), hor);
         return b;
     }

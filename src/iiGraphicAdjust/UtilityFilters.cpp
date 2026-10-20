@@ -7,14 +7,14 @@ namespace {
 std::vector<double> guided(const std::vector<double> &g, const std::vector<double> &p,
                            const std::vector<double> &alpha, std::size_t w, std::size_t h,
                            std::size_t radius, double eps) {
-    fd::Buffer m(g.size()), weights(g.size());
+    fd::Buffer m(g.size()), weights(g.size()), scratch;
     for (std::size_t i = 0; i < g.size(); ++i) {
         m[i] = {g[i] * alpha[i], p[i] * alpha[i], g[i] * g[i] * alpha[i], g[i] * p[i] * alpha[i]};
         weights[i][0] = alpha[i];
     }
     for (bool horizontal : {true, false}) {
-        fd::boxAxis(m, w, h, radius, horizontal);
-        fd::boxAxis(weights, w, h, radius, horizontal);
+        fd::boxAxis(m, scratch, w, h, radius, horizontal);
+        fd::boxAxis(weights, scratch, w, h, radius, horizontal);
     }
     fd::Buffer ab(g.size());
     for (std::size_t i = 0; i < g.size(); ++i) {
@@ -27,7 +27,7 @@ std::vector<double> guided(const std::vector<double> &g, const std::vector<doubl
         ab[i] = {a * alpha[i], (v[1] - a * v[0]) * alpha[i], alpha[i], 0};
     }
     for (bool horizontal : {true, false})
-        fd::boxAxis(ab, w, h, radius, horizontal);
+        fd::boxAxis(ab, scratch, w, h, radius, horizontal);
     auto out = p;
     for (std::size_t i = 0; i < p.size(); ++i)
         if (ab[i][2] > 0)

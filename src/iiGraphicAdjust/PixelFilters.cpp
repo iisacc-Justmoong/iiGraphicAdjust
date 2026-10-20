@@ -63,6 +63,12 @@ Result<Image> colorHalftone(ImageView in, const ColorHalftoneOptions &o) {
     return process(in, [&] {
         auto out = detail::copy(in);
         double cell = o.maximumRadius * std::sqrt(2.);
+        std::array<double, 3> sine{}, cosine{};
+        for (int ch = 0; ch < 3; ++ch) {
+            const auto angle = radians(o.angles[ch]);
+            sine[ch] = std::sin(angle);
+            cosine[ch] = std::cos(angle);
+        }
         for (std::size_t y = 0; y < in.height; ++y)
             for (std::size_t x = 0; x < in.width; ++x) {
                 auto i = y * in.width + x;
@@ -71,7 +77,7 @@ Result<Image> colorHalftone(ImageView in, const ColorHalftoneOptions &o) {
                     continue;
                 Color vals{};
                 for (int ch = 0; ch < 3; ++ch) {
-                    double angle = radians(o.angles[ch]), s = std::sin(angle), co = std::cos(angle),
+                    double s = sine[ch], co = cosine[ch],
                            u = (x + .5) * co + (y + .5) * s, v = -(x + .5) * s + (y + .5) * co,
                            cov = 0;
                     auto cu = std::int64_t(std::floor(u / cell)),

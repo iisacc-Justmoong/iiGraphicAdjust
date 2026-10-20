@@ -48,6 +48,38 @@ void contract(const Result<Image> &r, ImageView source, bool keepAlpha = false) 
     }
 }
 void blurCases() {
+    // Independent scalar taps detect stale scratch pixels and swapped-buffer mistakes.
+    for (auto dimensions : {std::pair{1U, 7U}, std::pair{9U, 1U}, std::pair{9U, 7U}}) {
+        const auto source = fixture(dimensions.first, dimensions.second);
+        for (double sigma : {5., 12., 1000.}) {
+            using P = std::array<double, 4>;
+            std::vector<P> expected;
+            for (auto p : source.pixels) expected.push_back({double(p.r)*p.a, double(p.g)*p.a, double(p.b)*p.a, p.a});
+            int low = std::max(1, int(std::floor(std::sqrt(4*sigma*sigma+1))));
+            if (low%2==0) --low;
+            const auto m = std::clamp(int(std::round((12*sigma*sigma-3.*low*low-12.*low-9)/(-4.*low-4))),0,3);
+            for (bool horizontal : {true, false}) for (int pass=0; pass<3; ++pass) {
+                const int radius=(low+(pass<m ? 0 : 2)-1)/2;
+                std::vector<P> next(expected.size());
+                for (int y=0; y<int(source.height); ++y) for (int x=0; x<int(source.width); ++x) {
+                    for (int tap=-radius; tap<=radius; ++tap) {
+                        const auto xx=std::clamp(x+(horizontal ? tap : 0),0,int(source.width)-1);
+                        const auto yy=std::clamp(y+(horizontal ? 0 : tap),0,int(source.height)-1);
+                        for (int c=0;c<4;++c) next[y*source.width+x][c]+=expected[yy*source.width+xx][c]/(2.*radius+1);
+                    }
+                }
+                expected.swap(next);
+            }
+            const auto actual=filterGaussianBlur(source.view(),sigma);
+            check(bool(actual), "multi-pass Gaussian succeeds");
+            if (actual) for (std::size_t i=0;i<expected.size();++i) {
+                const auto alpha=float(expected[i][3]);
+                const Rgba p=alpha<=0 ? Rgba{0,0,0,0} : Rgba{float(expected[i][0]/expected[i][3]),float(expected[i][1]/expected[i][3]),float(expected[i][2]/expected[i][3]),alpha};
+                const auto q=actual->pixels[i];
+                check(near(p.r,q.r) && near(p.g,q.g) && near(p.b,q.b) && near(p.a,q.a), "reused Gaussian workspace agrees with scalar taps");
+            }
+        }
+    }
     auto image = fixture();
     auto view = image.view();
     for (auto r :
