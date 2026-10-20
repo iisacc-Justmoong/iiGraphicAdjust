@@ -159,3 +159,11 @@ The module is ready for a caller to use through its installed CMake package. Dre
 See the [filter catalog and contracts](docs/Filters.md), original [API contract](docs/API.md), [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md), [Lightroom development](docs/Lightroom.md), [masked corrections](docs/LocalCorrections.md), [sample-plane kernels](docs/SampleFilters.md), [Photoshop reference coverage](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).
 
 Version 0.6 uses shared-library ABI series 0.6 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.6 for the current public APIs; existing 0.1, 0.2 and 0.3 function behavior is preserved. The current sensor/photo verification is recorded in [PhotoProcessingVerification](docs/PhotoProcessingVerification.md).
+
+## License
+
+SPDX-License-Identifier: MIT
+
+The original code and documentation in this repository are licensed under the
+[MIT License](LICENSE). Third-party code, libraries, fonts, tools, and model
+weights retain their respective licenses.
