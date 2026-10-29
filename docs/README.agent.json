@@ -1,0 +1,866 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:1285fde61fbe7dae994eb1ec3fa6834b225034ca5cce54092e95ed37588be789",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/README.md",
+    "sha256": "4ee3ff8dbb59809440b34bebd8a98501321849a51c3edb00c76ddfd24b21fdfa",
+    "bytes": 3066,
+    "line_count": 43,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "iiGraphicAdjust Documentation",
+    "role": "overview",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# iiGraphicAdjust Documentation\n",
+      "level": 1,
+      "title": "iiGraphicAdjust Documentation"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "html",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "<!-- workspace-docs:document-map:start -->\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "heading",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "## Human and agent document map\n",
+      "level": 2,
+      "title": "Human and agent document map"
+    },
+    {
+      "id": "b000005",
+      "kind": "blank",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "paragraph",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "Markdown is the maintained human source. Agent JSON is a structured, source-traceable projection.\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "table",
+      "start_line": 8,
+      "end_line": 42,
+      "raw": "| Document | Agent JSON |\n| --- | --- |\n| [`AGENT.md`](../AGENT.md) | [JSON](entrypoints/AGENT.agent.json) |\n| [`README.md`](../README.md) | [JSON](entrypoints/README.agent.json) |\n| [`docs/API.md`](API.md) | [JSON](API.agent.json) |\n| [`docs/Architecture.md`](Architecture.md) | [JSON](Architecture.agent.json) |\n| [`docs/CameraRawFilter.md`](CameraRawFilter.md) | [JSON](CameraRawFilter.agent.json) |\n| [`docs/Color.md`](Color.md) | [JSON](Color.agent.json) |\n| [`docs/CoreFilters.md`](CoreFilters.md) | [JSON](CoreFilters.agent.json) |\n| [`docs/DiagnosticFilters.md`](DiagnosticFilters.md) | [JSON](DiagnosticFilters.agent.json) |\n| [`docs/FILE_PROVIDER.md`](FILE_PROVIDER.md) | [JSON](FILE_PROVIDER.agent.json) |\n| [`docs/Filters.md`](Filters.md) | [JSON](Filters.agent.json) |\n| [`docs/GalleryFilters.md`](GalleryFilters.md) | [JSON](GalleryFilters.agent.json) |\n| [`docs/LensFilter.md`](LensFilter.md) | [JSON](LensFilter.agent.json) |\n| [`docs/LightcraftFilters.md`](LightcraftFilters.md) | [JSON](LightcraftFilters.agent.json) |\n| [`docs/Lightroom.md`](Lightroom.md) | [JSON](Lightroom.agent.json) |\n| [`docs/LocalCorrections.md`](LocalCorrections.md) | [JSON](LocalCorrections.agent.json) |\n| [`docs/LocalCorrectionsVerification.md`](LocalCorrectionsVerification.md) | [JSON](LocalCorrectionsVerification.agent.json) |\n| [`docs/Mapping.md`](Mapping.md) | [JSON](Mapping.agent.json) |\n| [`docs/MeshFilters.md`](MeshFilters.md) | [JSON](MeshFilters.agent.json) |\n| [`docs/OperationObjects.md`](OperationObjects.md) | [JSON](OperationObjects.agent.json) |\n| [`docs/OperationObjectsVerification.md`](OperationObjectsVerification.md) | [JSON](OperationObjectsVerification.agent.json) |\n| [`docs/PERFORMANCE.md`](PERFORMANCE.md) | [JSON](PERFORMANCE.agent.json) |\n| [`docs/PhotoOperations.md`](PhotoOperations.md) | [JSON](PhotoOperations.agent.json) |\n| [`docs/PhotoProcessingVerification.md`](PhotoProcessingVerification.md) | [JSON](PhotoProcessingVerification.agent.json) |\n| [`docs/PixelFilters.md`](PixelFilters.md) | [JSON](PixelFilters.agent.json) |\n| [`docs/RawProcessing.md`](RawProcessing.md) | [JSON](RawProcessing.agent.json) |\n| [`docs/References.md`](References.md) | [JSON](References.agent.json) |\n| [`docs/RenderFilters.md`](RenderFilters.md) | [JSON](RenderFilters.agent.json) |\n| [`docs/RetouchFilters.md`](RetouchFilters.md) | [JSON](RetouchFilters.agent.json) |\n| [`docs/SampleFilters.md`](SampleFilters.md) | [JSON](SampleFilters.agent.json) |\n| [`docs/Tone.md`](Tone.md) | [JSON](Tone.agent.json) |\n| [`docs/Verification.md`](Verification.md) | [JSON](Verification.agent.json) |\n| [`docs/WindowsBuildAndRun.md`](WindowsBuildAndRun.md) | [JSON](WindowsBuildAndRun.agent.json) |\n| [`docs/documentation-structure.md`](documentation-structure.md) | [JSON](documentation-structure.agent.json) |\n",
+      "columns": [
+        "Document",
+        "Agent JSON"
+      ],
+      "rows": [
+        [
+          "[`AGENT.md`](../AGENT.md)",
+          "[JSON](entrypoints/AGENT.agent.json)"
+        ],
+        [
+          "[`README.md`](../README.md)",
+          "[JSON](entrypoints/README.agent.json)"
+        ],
+        [
+          "[`docs/API.md`](API.md)",
+          "[JSON](API.agent.json)"
+        ],
+        [
+          "[`docs/Architecture.md`](Architecture.md)",
+          "[JSON](Architecture.agent.json)"
+        ],
+        [
+          "[`docs/CameraRawFilter.md`](CameraRawFilter.md)",
+          "[JSON](CameraRawFilter.agent.json)"
+        ],
+        [
+          "[`docs/Color.md`](Color.md)",
+          "[JSON](Color.agent.json)"
+        ],
+        [
+          "[`docs/CoreFilters.md`](CoreFilters.md)",
+          "[JSON](CoreFilters.agent.json)"
+        ],
+        [
+          "[`docs/DiagnosticFilters.md`](DiagnosticFilters.md)",
+          "[JSON](DiagnosticFilters.agent.json)"
+        ],
+        [
+          "[`docs/FILE_PROVIDER.md`](FILE_PROVIDER.md)",
+          "[JSON](FILE_PROVIDER.agent.json)"
+        ],
+        [
+          "[`docs/Filters.md`](Filters.md)",
+          "[JSON](Filters.agent.json)"
+        ],
+        [
+          "[`docs/GalleryFilters.md`](GalleryFilters.md)",
+          "[JSON](GalleryFilters.agent.json)"
+        ],
+        [
+          "[`docs/LensFilter.md`](LensFilter.md)",
+          "[JSON](LensFilter.agent.json)"
+        ],
+        [
+          "[`docs/LightcraftFilters.md`](LightcraftFilters.md)",
+          "[JSON](LightcraftFilters.agent.json)"
+        ],
+        [
+          "[`docs/Lightroom.md`](Lightroom.md)",
+          "[JSON](Lightroom.agent.json)"
+        ],
+        [
+          "[`docs/LocalCorrections.md`](LocalCorrections.md)",
+          "[JSON](LocalCorrections.agent.json)"
+        ],
+        [
+          "[`docs/LocalCorrectionsVerification.md`](LocalCorrectionsVerification.md)",
+          "[JSON](LocalCorrectionsVerification.agent.json)"
+        ],
+        [
+          "[`docs/Mapping.md`](Mapping.md)",
+          "[JSON](Mapping.agent.json)"
+        ],
+        [
+          "[`docs/MeshFilters.md`](MeshFilters.md)",
+          "[JSON](MeshFilters.agent.json)"
+        ],
+        [
+          "[`docs/OperationObjects.md`](OperationObjects.md)",
+          "[JSON](OperationObjects.agent.json)"
+        ],
+        [
+          "[`docs/OperationObjectsVerification.md`](OperationObjectsVerification.md)",
+          "[JSON](OperationObjectsVerification.agent.json)"
+        ],
+        [
+          "[`docs/PERFORMANCE.md`](PERFORMANCE.md)",
+          "[JSON](PERFORMANCE.agent.json)"
+        ],
+        [
+          "[`docs/PhotoOperations.md`](PhotoOperations.md)",
+          "[JSON](PhotoOperations.agent.json)"
+        ],
+        [
+          "[`docs/PhotoProcessingVerification.md`](PhotoProcessingVerification.md)",
+          "[JSON](PhotoProcessingVerification.agent.json)"
+        ],
+        [
+          "[`docs/PixelFilters.md`](PixelFilters.md)",
+          "[JSON](PixelFilters.agent.json)"
+        ],
+        [
+          "[`docs/RawProcessing.md`](RawProcessing.md)",
+          "[JSON](RawProcessing.agent.json)"
+        ],
+        [
+          "[`docs/References.md`](References.md)",
+          "[JSON](References.agent.json)"
+        ],
+        [
+          "[`docs/RenderFilters.md`](RenderFilters.md)",
+          "[JSON](RenderFilters.agent.json)"
+        ],
+        [
+          "[`docs/RetouchFilters.md`](RetouchFilters.md)",
+          "[JSON](RetouchFilters.agent.json)"
+        ],
+        [
+          "[`docs/SampleFilters.md`](SampleFilters.md)",
+          "[JSON](SampleFilters.agent.json)"
+        ],
+        [
+          "[`docs/Tone.md`](Tone.md)",
+          "[JSON](Tone.agent.json)"
+        ],
+        [
+          "[`docs/Verification.md`](Verification.md)",
+          "[JSON](Verification.agent.json)"
+        ],
+        [
+          "[`docs/WindowsBuildAndRun.md`](WindowsBuildAndRun.md)",
+          "[JSON](WindowsBuildAndRun.agent.json)"
+        ],
+        [
+          "[`docs/documentation-structure.md`](documentation-structure.md)",
+          "[JSON](documentation-structure.agent.json)"
+        ]
+      ]
+    },
+    {
+      "id": "b000009",
+      "kind": "html",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "<!-- workspace-docs:document-map:end -->\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "iiGraphicAdjust Documentation",
+      "anchor": "iigraphicadjust-documentation",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000004",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Human and agent document map",
+      "anchor": "human-and-agent-document-map",
+      "start_line": 4
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000008",
+        "label": "`AGENT.md`",
+        "target": "../AGENT.md",
+        "kind": "relative",
+        "line": 10
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "entrypoints/AGENT.agent.json",
+        "kind": "relative",
+        "line": 10
+      },
+      {
+        "block_id": "b000008",
+        "label": "`README.md`",
+        "target": "../README.md",
+        "kind": "relative",
+        "line": 11
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "entrypoints/README.agent.json",
+        "kind": "relative",
+        "line": 11
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/API.md`",
+        "target": "API.md",
+        "kind": "relative",
+        "line": 12
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "API.agent.json",
+        "kind": "relative",
+        "line": 12
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/Architecture.md`",
+        "target": "Architecture.md",
+        "kind": "relative",
+        "line": 13
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "Architecture.agent.json",
+        "kind": "relative",
+        "line": 13
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/CameraRawFilter.md`",
+        "target": "CameraRawFilter.md",
+        "kind": "relative",
+        "line": 14
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "CameraRawFilter.agent.json",
+        "kind": "relative",
+        "line": 14
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/Color.md`",
+        "target": "Color.md",
+        "kind": "relative",
+        "line": 15
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "Color.agent.json",
+        "kind": "relative",
+        "line": 15
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/CoreFilters.md`",
+        "target": "CoreFilters.md",
+        "kind": "relative",
+        "line": 16
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "CoreFilters.agent.json",
+        "kind": "relative",
+        "line": 16
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/DiagnosticFilters.md`",
+        "target": "DiagnosticFilters.md",
+        "kind": "relative",
+        "line": 17
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "DiagnosticFilters.agent.json",
+        "kind": "relative",
+        "line": 17
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/FILE_PROVIDER.md`",
+        "target": "FILE_PROVIDER.md",
+        "kind": "relative",
+        "line": 18
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "FILE_PROVIDER.agent.json",
+        "kind": "relative",
+        "line": 18
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/Filters.md`",
+        "target": "Filters.md",
+        "kind": "relative",
+        "line": 19
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "Filters.agent.json",
+        "kind": "relative",
+        "line": 19
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/GalleryFilters.md`",
+        "target": "GalleryFilters.md",
+        "kind": "relative",
+        "line": 20
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "GalleryFilters.agent.json",
+        "kind": "relative",
+        "line": 20
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/LensFilter.md`",
+        "target": "LensFilter.md",
+        "kind": "relative",
+        "line": 21
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "LensFilter.agent.json",
+        "kind": "relative",
+        "line": 21
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/LightcraftFilters.md`",
+        "target": "LightcraftFilters.md",
+        "kind": "relative",
+        "line": 22
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "LightcraftFilters.agent.json",
+        "kind": "relative",
+        "line": 22
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/Lightroom.md`",
+        "target": "Lightroom.md",
+        "kind": "relative",
+        "line": 23
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "Lightroom.agent.json",
+        "kind": "relative",
+        "line": 23
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/LocalCorrections.md`",
+        "target": "LocalCorrections.md",
+        "kind": "relative",
+        "line": 24
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "LocalCorrections.agent.json",
+        "kind": "relative",
+        "line": 24
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/LocalCorrectionsVerification.md`",
+        "target": "LocalCorrectionsVerification.md",
+        "kind": "relative",
+        "line": 25
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "LocalCorrectionsVerification.agent.json",
+        "kind": "relative",
+        "line": 25
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/Mapping.md`",
+        "target": "Mapping.md",
+        "kind": "relative",
+        "line": 26
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "Mapping.agent.json",
+        "kind": "relative",
+        "line": 26
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/MeshFilters.md`",
+        "target": "MeshFilters.md",
+        "kind": "relative",
+        "line": 27
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "MeshFilters.agent.json",
+        "kind": "relative",
+        "line": 27
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/OperationObjects.md`",
+        "target": "OperationObjects.md",
+        "kind": "relative",
+        "line": 28
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "OperationObjects.agent.json",
+        "kind": "relative",
+        "line": 28
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/OperationObjectsVerification.md`",
+        "target": "OperationObjectsVerification.md",
+        "kind": "relative",
+        "line": 29
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "OperationObjectsVerification.agent.json",
+        "kind": "relative",
+        "line": 29
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/PERFORMANCE.md`",
+        "target": "PERFORMANCE.md",
+        "kind": "relative",
+        "line": 30
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "PERFORMANCE.agent.json",
+        "kind": "relative",
+        "line": 30
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/PhotoOperations.md`",
+        "target": "PhotoOperations.md",
+        "kind": "relative",
+        "line": 31
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "PhotoOperations.agent.json",
+        "kind": "relative",
+        "line": 31
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/PhotoProcessingVerification.md`",
+        "target": "PhotoProcessingVerification.md",
+        "kind": "relative",
+        "line": 32
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "PhotoProcessingVerification.agent.json",
+        "kind": "relative",
+        "line": 32
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/PixelFilters.md`",
+        "target": "PixelFilters.md",
+        "kind": "relative",
+        "line": 33
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "PixelFilters.agent.json",
+        "kind": "relative",
+        "line": 33
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/RawProcessing.md`",
+        "target": "RawProcessing.md",
+        "kind": "relative",
+        "line": 34
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "RawProcessing.agent.json",
+        "kind": "relative",
+        "line": 34
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/References.md`",
+        "target": "References.md",
+        "kind": "relative",
+        "line": 35
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "References.agent.json",
+        "kind": "relative",
+        "line": 35
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/RenderFilters.md`",
+        "target": "RenderFilters.md",
+        "kind": "relative",
+        "line": 36
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "RenderFilters.agent.json",
+        "kind": "relative",
+        "line": 36
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/RetouchFilters.md`",
+        "target": "RetouchFilters.md",
+        "kind": "relative",
+        "line": 37
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "RetouchFilters.agent.json",
+        "kind": "relative",
+        "line": 37
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/SampleFilters.md`",
+        "target": "SampleFilters.md",
+        "kind": "relative",
+        "line": 38
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "SampleFilters.agent.json",
+        "kind": "relative",
+        "line": 38
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/Tone.md`",
+        "target": "Tone.md",
+        "kind": "relative",
+        "line": 39
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "Tone.agent.json",
+        "kind": "relative",
+        "line": 39
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/Verification.md`",
+        "target": "Verification.md",
+        "kind": "relative",
+        "line": 40
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "Verification.agent.json",
+        "kind": "relative",
+        "line": 40
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/WindowsBuildAndRun.md`",
+        "target": "WindowsBuildAndRun.md",
+        "kind": "relative",
+        "line": 41
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "WindowsBuildAndRun.agent.json",
+        "kind": "relative",
+        "line": 41
+      },
+      {
+        "block_id": "b000008",
+        "label": "`docs/documentation-structure.md`",
+        "target": "documentation-structure.md",
+        "kind": "relative",
+        "line": 42
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "documentation-structure.agent.json",
+        "kind": "relative",
+        "line": 42
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000008",
+        "columns": [
+          "Document",
+          "Agent JSON"
+        ],
+        "rows": [
+          [
+            "[`AGENT.md`](../AGENT.md)",
+            "[JSON](entrypoints/AGENT.agent.json)"
+          ],
+          [
+            "[`README.md`](../README.md)",
+            "[JSON](entrypoints/README.agent.json)"
+          ],
+          [
+            "[`docs/API.md`](API.md)",
+            "[JSON](API.agent.json)"
+          ],
+          [
+            "[`docs/Architecture.md`](Architecture.md)",
+            "[JSON](Architecture.agent.json)"
+          ],
+          [
+            "[`docs/CameraRawFilter.md`](CameraRawFilter.md)",
+            "[JSON](CameraRawFilter.agent.json)"
+          ],
+          [
+            "[`docs/Color.md`](Color.md)",
+            "[JSON](Color.agent.json)"
+          ],
+          [
+            "[`docs/CoreFilters.md`](CoreFilters.md)",
+            "[JSON](CoreFilters.agent.json)"
+          ],
+          [
+            "[`docs/DiagnosticFilters.md`](DiagnosticFilters.md)",
+            "[JSON](DiagnosticFilters.agent.json)"
+          ],
+          [
+            "[`docs/FILE_PROVIDER.md`](FILE_PROVIDER.md)",
+            "[JSON](FILE_PROVIDER.agent.json)"
+          ],
+          [
+            "[`docs/Filters.md`](Filters.md)",
+            "[JSON](Filters.agent.json)"
+          ],
+          [
+            "[`docs/GalleryFilters.md`](GalleryFilters.md)",
+            "[JSON](GalleryFilters.agent.json)"
+          ],
+          [
+            "[`docs/LensFilter.md`](LensFilter.md)",
+            "[JSON](LensFilter.agent.json)"
+          ],
+          [
+            "[`docs/LightcraftFilters.md`](LightcraftFilters.md)",
+            "[JSON](LightcraftFilters.agent.json)"
+          ],
+          [
+            "[`docs/Lightroom.md`](Lightroom.md)",
+            "[JSON](Lightroom.agent.json)"
+          ],
+          [
+            "[`docs/LocalCorrections.md`](LocalCorrections.md)",
+            "[JSON](LocalCorrections.agent.json)"
+          ],
+          [
+            "[`docs/LocalCorrectionsVerification.md`](LocalCorrectionsVerification.md)",
+            "[JSON](LocalCorrectionsVerification.agent.json)"
+          ],
+          [
+            "[`docs/Mapping.md`](Mapping.md)",
+            "[JSON](Mapping.agent.json)"
+          ],
+          [
+            "[`docs/MeshFilters.md`](MeshFilters.md)",
+            "[JSON](MeshFilters.agent.json)"
+          ],
+          [
+            "[`docs/OperationObjects.md`](OperationObjects.md)",
+            "[JSON](OperationObjects.agent.json)"
+          ],
+          [
+            "[`docs/OperationObjectsVerification.md`](OperationObjectsVerification.md)",
+            "[JSON](OperationObjectsVerification.agent.json)"
+          ],
+          [
+            "[`docs/PERFORMANCE.md`](PERFORMANCE.md)",
+            "[JSON](PERFORMANCE.agent.json)"
+          ],
+          [
+            "[`docs/PhotoOperations.md`](PhotoOperations.md)",
+            "[JSON](PhotoOperations.agent.json)"
+          ],
+          [
+            "[`docs/PhotoProcessingVerification.md`](PhotoProcessingVerification.md)",
+            "[JSON](PhotoProcessingVerification.agent.json)"
+          ],
+          [
+            "[`docs/PixelFilters.md`](PixelFilters.md)",
+            "[JSON](PixelFilters.agent.json)"
+          ],
+          [
+            "[`docs/RawProcessing.md`](RawProcessing.md)",
+            "[JSON](RawProcessing.agent.json)"
+          ],
+          [
+            "[`docs/References.md`](References.md)",
+            "[JSON](References.agent.json)"
+          ],
+          [
+            "[`docs/RenderFilters.md`](RenderFilters.md)",
+            "[JSON](RenderFilters.agent.json)"
+          ],
+          [
+            "[`docs/RetouchFilters.md`](RetouchFilters.md)",
+            "[JSON](RetouchFilters.agent.json)"
+          ],
+          [
+            "[`docs/SampleFilters.md`](SampleFilters.md)",
+            "[JSON](SampleFilters.agent.json)"
+          ],
+          [
+            "[`docs/Tone.md`](Tone.md)",
+            "[JSON](Tone.agent.json)"
+          ],
+          [
+            "[`docs/Verification.md`](Verification.md)",
+            "[JSON](Verification.agent.json)"
+          ],
+          [
+            "[`docs/WindowsBuildAndRun.md`](WindowsBuildAndRun.md)",
+            "[JSON](WindowsBuildAndRun.agent.json)"
+          ],
+          [
+            "[`docs/documentation-structure.md`](documentation-structure.md)",
+            "[JSON](documentation-structure.agent.json)"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -1,0 +1,265 @@
+{
+  "format": "iisacc.agent-document-index",
+  "schema_version": 1,
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "documentation_root": "docs",
+  "agent_schema": "docs/agent-document.schema.json",
+  "documents": [
+    {
+      "document_id": "urn:iisacc:document:eceba21bf8dda3d788a34109f00d0236cb2c3ff825292e6f5f414f26039ec097",
+      "source": "AGENT.md",
+      "agent_json": "docs/entrypoints/AGENT.agent.json",
+      "source_sha256": "9c1d55a7256216389a8df9ffcc7b1b7320cd46cbabfaba839ba534e046294fb0",
+      "role": "instructions"
+    },
+    {
+      "document_id": "urn:iisacc:document:0b079fc9bae7645d722a81a3006638badfc25439fb8a916f75b6669470c2619d",
+      "source": "README.md",
+      "agent_json": "docs/entrypoints/README.agent.json",
+      "source_sha256": "48892d38648d2a589d5e97f74c95b7c0902853f8aa1042eb2268bbabe961eff2",
+      "role": "overview"
+    },
+    {
+      "document_id": "urn:iisacc:document:99cbb1a27dcec2a4b0bd53aa998cbe1b2189c1771dcfce34790047e6cbdbb70f",
+      "source": "docs/API.md",
+      "agent_json": "docs/API.agent.json",
+      "source_sha256": "4af05d01bd125202d2b171496a2b76529b27c3d16c0b388bdc3800ec5b3c9795",
+      "role": "reference"
+    },
+    {
+      "document_id": "urn:iisacc:document:81f50297e9f8224d4bd7e1d1a198ba84d91a1877c8928cd69ca74f52e2a5f7f3",
+      "source": "docs/Architecture.md",
+      "agent_json": "docs/Architecture.agent.json",
+      "source_sha256": "a9e4cc21124c0b7491b8de83633e4365d400acffceba3a86d66338536d919366",
+      "role": "reference"
+    },
+    {
+      "document_id": "urn:iisacc:document:e19c98dfd4d634afbcc85ba3bcc7700b8bfd3e885e0192a9dc61a978d985843c",
+      "source": "docs/CameraRawFilter.md",
+      "agent_json": "docs/CameraRawFilter.agent.json",
+      "source_sha256": "1b87768f3b55400398822b3bed8926b751670c951313305c2828b938d1e0eb28",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:4cea28ed6a8b01b65fd7959ac8ee7d2066d4fb1a4bd30ba59c8b3f573b0c271c",
+      "source": "docs/Color.md",
+      "agent_json": "docs/Color.agent.json",
+      "source_sha256": "e2d186bc94084f89a1d6f5b18dd4d586351c041b21785d08e612e17d3dbaf218",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:3e885d8dbd632a87c3e554ba7b0817b89223af9665d42daf28e8b64f0089bea4",
+      "source": "docs/CoreFilters.md",
+      "agent_json": "docs/CoreFilters.agent.json",
+      "source_sha256": "fc68b1d1fe5745b2fd7c4776e431e208c8d6bd010fe4127fc121d27871e1526a",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:d983960d1bcb15d135032752ffa4bca487e58d68987d99788cbd8ac05d079c5b",
+      "source": "docs/DiagnosticFilters.md",
+      "agent_json": "docs/DiagnosticFilters.agent.json",
+      "source_sha256": "dddc408485e5c63a4a8252229eae7628b4345c634082268b2938ce8612689859",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:80798b9b950677dfa973a69a8d5ab12d31afc075c3405e2857421d80a027c29e",
+      "source": "docs/FILE_PROVIDER.md",
+      "agent_json": "docs/FILE_PROVIDER.agent.json",
+      "source_sha256": "797a307e581cb9c4639fac2f6872938910717ce26d211e3b453b2e4845aeb355",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:1fbe74553b7004a7fd77bd810d8e0bc9543afc8dbb8485c54fabed843891e3e5",
+      "source": "docs/Filters.md",
+      "agent_json": "docs/Filters.agent.json",
+      "source_sha256": "25bbf65f6b7bbd1525569a8a72a8d5991916155fc1fb66671efcc5c96aa631d1",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:97b84fef0ea940144e10df2faf54df3c3c2da665be125ea819bfa433ad317af6",
+      "source": "docs/GalleryFilters.md",
+      "agent_json": "docs/GalleryFilters.agent.json",
+      "source_sha256": "67483fe03c20e3e623cebabe05fcf394592e2840a1040e03cae2736c69c134ff",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:d9129ba8011054e4cd7ae005e620b3517ed632fc6af8495e09633dfe703b7580",
+      "source": "docs/LensFilter.md",
+      "agent_json": "docs/LensFilter.agent.json",
+      "source_sha256": "3a9655cb6a594f864d0a5ad07be86324fdf9ec5521fd969b66d6f8e11f9206a1",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:67b3b8a3539e141699cdff00c0f13cc8ff0549fd0ddbd5a85fba43de2fd30947",
+      "source": "docs/LightcraftFilters.md",
+      "agent_json": "docs/LightcraftFilters.agent.json",
+      "source_sha256": "e9fcdb0a947247f69e67f919fad247d8d5e0db9e1f0a87d6821477d534c4c4c0",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:5c72f3602653b438faae1f2fd12587277e5b7a86d21d1c4d0fa09ef8d5098ded",
+      "source": "docs/Lightroom.md",
+      "agent_json": "docs/Lightroom.agent.json",
+      "source_sha256": "60c47fdabc6bd0d668931c61a3221f69436a591e7b4785ac27f6042d5cf7616a",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:2272a109a84503f89a5cf076ef938fd4b41d343af43e950d842307acb95eb8c7",
+      "source": "docs/LocalCorrections.md",
+      "agent_json": "docs/LocalCorrections.agent.json",
+      "source_sha256": "14adbe7a920c3bcddb9f1db08d70e0b87765887695fa53f553230051c8013e83",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:1876dbff752744c12a475b4cc690993bb902a19d9b85a9aa0eef931182490cdd",
+      "source": "docs/LocalCorrectionsVerification.md",
+      "agent_json": "docs/LocalCorrectionsVerification.agent.json",
+      "source_sha256": "1a558a1e61408132e7c8ce4ca787d365ee779eb554ba18f073228d41ed503deb",
+      "role": "evidence"
+    },
+    {
+      "document_id": "urn:iisacc:document:5610f10b414d0ff2ec5c29a1ea1bf273ff9d31245699fa17b5523ca5588290d6",
+      "source": "docs/Mapping.md",
+      "agent_json": "docs/Mapping.agent.json",
+      "source_sha256": "efc6001c00a69689323c329af2ba59c99bdaefef36d4befc9dd89ffd703c8a03",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:4f908d4a0d2be517618ee1351a595f77164ff420ed1053195d5a2bc998f61866",
+      "source": "docs/MeshFilters.md",
+      "agent_json": "docs/MeshFilters.agent.json",
+      "source_sha256": "5ebf047acce56a69a5b73dfbd106273c056559dd85daf47f00acc0981455b007",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:dd59fe326cde6a1b5ee6f4b9878df5e20a147031a87ec3fac349117491203934",
+      "source": "docs/OperationObjects.md",
+      "agent_json": "docs/OperationObjects.agent.json",
+      "source_sha256": "dbecddd073d90c370031c4be1eb7f5f98f1756d200320ec5ffe99510c0b27ef9",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:5361f2d67c6a5b681af5a91b13cb5c088de380d986d12f56858bcb45c668ff35",
+      "source": "docs/OperationObjectsVerification.md",
+      "agent_json": "docs/OperationObjectsVerification.agent.json",
+      "source_sha256": "8ce7274689404d9cbf9b3245317d3f0091498f66c36505dc14bf1181368caf82",
+      "role": "evidence"
+    },
+    {
+      "document_id": "urn:iisacc:document:e0cccb3d1530dd2ce96378eb42aa10ba949e23fa46d25cb9a2fc7591bbcc90e4",
+      "source": "docs/PERFORMANCE.md",
+      "agent_json": "docs/PERFORMANCE.agent.json",
+      "source_sha256": "744ce935d30e4fb2ed090682717ae89bd4667ae9eb6b2875cbe49ef41a93db48",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:7c49c8ae60a78daf1307b545a8ccd3ec0e21639e8e9b9cb7dc2cb60f5423411f",
+      "source": "docs/PhotoOperations.md",
+      "agent_json": "docs/PhotoOperations.agent.json",
+      "source_sha256": "64a5a1f248e54b756b69617a3827d1b92ba45062a1feee714ea9ff04859f4e49",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:22462b639e9e27819e8a9e02a602f1d455512cc2c149ca32e21378dafbd93d21",
+      "source": "docs/PhotoProcessingVerification.md",
+      "agent_json": "docs/PhotoProcessingVerification.agent.json",
+      "source_sha256": "abdc40099834e82cf15de0ef86fe4763f09257e77ff9325cde582b6023f4363e",
+      "role": "evidence"
+    },
+    {
+      "document_id": "urn:iisacc:document:764d4ac22350451628e56a417127e08afd7c549523036c70fcde079ad6c0068c",
+      "source": "docs/PixelFilters.md",
+      "agent_json": "docs/PixelFilters.agent.json",
+      "source_sha256": "b948dffbe80cf1dae19913c6006242f6a2454b2d3c97cd8f2717ae883cd74bcb",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:1285fde61fbe7dae994eb1ec3fa6834b225034ca5cce54092e95ed37588be789",
+      "source": "docs/README.md",
+      "agent_json": "docs/README.agent.json",
+      "source_sha256": "4ee3ff8dbb59809440b34bebd8a98501321849a51c3edb00c76ddfd24b21fdfa",
+      "role": "overview"
+    },
+    {
+      "document_id": "urn:iisacc:document:766728a25ebb7733f81962fe36bc54497e5bc111e7f801ce77f21075375512a6",
+      "source": "docs/RawProcessing.md",
+      "agent_json": "docs/RawProcessing.agent.json",
+      "source_sha256": "f41713097e2d2c248c2830d2d2acae703c7a0184e2592430135fb75ced920dfb",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:46ee578206ff9e1e34ea3155c79fb54054cac72a27b1597c6a720cf0f686f598",
+      "source": "docs/References.md",
+      "agent_json": "docs/References.agent.json",
+      "source_sha256": "b6bfc6caa8c72518870f469e2771650c7fe0c7e62e2c15840fcf2825f8ee5e05",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:b1ccb8ce0c7c9f2871b25a3e228bf1efa090f1ede2e8564a7e4b05ffada3c439",
+      "source": "docs/RenderFilters.md",
+      "agent_json": "docs/RenderFilters.agent.json",
+      "source_sha256": "94fa455f60f423bbf2a3689f565367d25344056387171f8441e92e8cb94866c5",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:4babc21a05a0cdf0f1c43c4ae1aec8a63f4e5aee3a5889a7d05fdf547a01d59d",
+      "source": "docs/RetouchFilters.md",
+      "agent_json": "docs/RetouchFilters.agent.json",
+      "source_sha256": "40c6ba5a3a598f011a8428b61634201cc409efa4f9913bb58e12e9fa039cb9e9",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:9d220bf54ff70358c80e64a822523bd28860043595b6ea2cf18db19fe34fab6a",
+      "source": "docs/SampleFilters.md",
+      "agent_json": "docs/SampleFilters.agent.json",
+      "source_sha256": "aeea66a4c9cdbb8cda87cf46129f2cb751df45eab39de273e560008792502eca",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:829e79dbc07835f46540ebada736baefa7cbf56f06b9def71f89d7eedd1f68ae",
+      "source": "docs/Tone.md",
+      "agent_json": "docs/Tone.agent.json",
+      "source_sha256": "07cbd14e87948d095cb81783b15aab20269c6fc08c06894b1f91ee3b2fa9b3d4",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:cc6d7722e52ae36b3c88d0b5f00cc225dcd3d287e62b1226586a4fce3564e5ba",
+      "source": "docs/Verification.md",
+      "agent_json": "docs/Verification.agent.json",
+      "source_sha256": "3513ef064db369a2731ebdfcc1db0faaf525ffe6f2ef4768f5098e97200ceb79",
+      "role": "evidence"
+    },
+    {
+      "document_id": "urn:iisacc:document:f303ba48f8aa84628cd341c684481588c7141376ef283957b9f4891493b08165",
+      "source": "docs/WindowsBuildAndRun.md",
+      "agent_json": "docs/WindowsBuildAndRun.agent.json",
+      "source_sha256": "5cb79f51ad8953b05c7a44975886594cfe618d1da100c195273ec2bc577f8d79",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:47b5699506f809f523691edf92568613a4f9b20c4b992d490d0f7da7fce6ad78",
+      "source": "docs/documentation-structure.md",
+      "agent_json": "docs/documentation-structure.agent.json",
+      "source_sha256": "05fab3e12a44c017e1375a23f38d228dbf692f2afaa08c4676a49a171d664758",
+      "role": "guide"
+    }
+  ],
+  "layout": {
+    "human_entry": "README.md",
+    "agent_entry": "AGENT.md",
+    "human_format": "markdown",
+    "agent_format": "structured_json",
+    "source_authority": "markdown"
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

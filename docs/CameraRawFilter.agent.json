@@ -1,0 +1,640 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:e19c98dfd4d634afbcc85ba3bcc7700b8bfd3e885e0192a9dc61a978d985843c",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/CameraRawFilter.md",
+    "sha256": "1b87768f3b55400398822b3bed8926b751670c951313305c2828b938d1e0eb28",
+    "bytes": 9708,
+    "line_count": 77,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Camera Raw rendered-image filter",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Camera Raw rendered-image filter\n",
+      "level": 1,
+      "title": "Camera Raw rendered-image filter"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "`<iiGraphicAdjust/CameraRawFilter.h>` exports `cameraRawFilter(ImageView image, const CameraRawOptions& options = {})`. It returns an owned `Result<Image>` and borrows the source image without changing it. The implementation uses C++23 and has no Qt dependency.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "The algorithm is adapted from Photocraft [commit 5896f0b63e6f342e0311920b4d2a0ea5a94330fc, `crates/algo/src/camera_raw.rs`](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/camera_raw.rs). Its MIT notice is retained in `third_party/photocraft/LICENSE-MIT`. This is the actual `Filter › Camera Raw Filter` over display-encoded RGB. It is not a sensor RAW decoder, a DNG camera profile implementation or a promise of Adobe pixel parity.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "## Processing order and parameter meaning\n",
+      "level": 2,
+      "title": "Processing order and parameter meaning"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "All RGB input and output channels use straight-alpha encoded sRGB in `[0,1]`. The filter keeps extended intermediate RGB values through its stages and applies the SDR clamp at the end. For example, an exposed red channel above 1 still contributes its full value to a later desaturation operation. Alpha remains exactly the source value. Transparent pixels keep their original hidden RGB; spatial means, guided statistics, chroma blurs and atmospheric-light estimates use alpha-weighted samples to keep hidden RGB out of visible output. This transparent-pixel handling strengthens the SDK contract relative to the reference, which iterates directly over every source RGB value.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "The ordered stages are:\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "list",
+      "start_line": 13,
+      "end_line": 21,
+      "raw": "1. Relative white balance and exposure. Temperature and tint are centered slider units, not Kelvin. Linear-light channel gains are `(1+.35*temperature/100, 1-.25*tint/100, 1-.35*temperature/100)`, normalized by BT.709 luma and multiplied by `2^exposure`. The result is encoded back to sRGB without intermediate clipping. No conversion to the Develop API's Kelvin white-balance setting occurs.\n2. Dehaze. A proxy with a longest axis at most 768 samples uses the dark-channel prior. The brightest 0.1 percent of its dark channel estimate atmospheric color; normalized dark-channel transmission is refined by a box-guided filter and upsampled. Positive values remove haze; negative values add haze toward the estimated atmosphere. Alpha is used for proxy averaging and atmospheric selection.\n3. Tone on encoded BT.709 luminance. Highlights and Shadows use fast box-guided base layers and exposure weights; Clarity adds a midtone-weighted larger band; Texture adds a small Gaussian band. Whites and Blacks shift their ends of the curve. Contrast adds an S-curve based on `-sin(2*pi*luma)`. Color ratios are retained, and over-range luminance from prior stages is carried forward.\n4. Presence. Saturation changes encoded chroma around BT.709 luma. Vibrance weights less saturated colors and partially protects orange skin hues.\n5. Curves. Four smooth parametric regions with movable splits are sampled into a 1024-entry monotonic LUT. A Fritsch-Carlson point-curve LUT then applies the master curve, followed by red, green and blue curves. Point coordinates use the reference's `[0,255]` units. LUT evaluation extends linearly outside `[0,1]` for intermediate values.\n6. HSL mixer. Eight neighboring hue centers use circular hat weights. Hue moves by up to 30 degrees; saturation scales HSV saturation; luminance is restored after hue/saturation changes, then adjusted by a saturation-weighted exposure shift. Achromatic pixels skip the hue mixer.\n7. Color grading. Shadows, midtones, highlights and global wheels add luma-neutral HSV tints with tone masks from Blending and Balance, then apply each wheel's luminance exposure.\n8. Detail. Luminance NR uses a box-guided filter with an amount-dependent radius and epsilon. Color NR blurs `B-Y` and `R-Y` chroma. Sharpening uses an unsharp luminance band with its actual Radius, Detail halo limit and Masking gradient gate. Detail settings affect their active parent stage; changing a radius with Sharpen Amount zero remains identity.\n9. Post-crop vignette and grain. The three vignette styles use a rounded ellipse/rectangle mask, highlight protection and exposure or overlay operations. Grain uses Photocraft's 64-bit position hash, interpolated value noise, a second roughness layer and luminance weighting. Seed is deterministic; Pixel Scale maps preview positions to full-resolution grain coordinates.\n",
+      "items": [
+        {
+          "marker": "1.",
+          "text": "Relative white balance and exposure. Temperature and tint are centered slider units, not Kelvin. Linear-light channel gains are `(1+.35*temperature/100, 1-.25*tint/100, 1-.35*temperature/100)`, normalized by BT.709 luma and multiplied by `2^exposure`. The result is encoded back to sRGB without intermediate clipping. No conversion to the Develop API's Kelvin white-balance setting occurs.",
+          "checked": null
+        },
+        {
+          "marker": "2.",
+          "text": "Dehaze. A proxy with a longest axis at most 768 samples uses the dark-channel prior. The brightest 0.1 percent of its dark channel estimate atmospheric color; normalized dark-channel transmission is refined by a box-guided filter and upsampled. Positive values remove haze; negative values add haze toward the estimated atmosphere. Alpha is used for proxy averaging and atmospheric selection.",
+          "checked": null
+        },
+        {
+          "marker": "3.",
+          "text": "Tone on encoded BT.709 luminance. Highlights and Shadows use fast box-guided base layers and exposure weights; Clarity adds a midtone-weighted larger band; Texture adds a small Gaussian band. Whites and Blacks shift their ends of the curve. Contrast adds an S-curve based on `-sin(2*pi*luma)`. Color ratios are retained, and over-range luminance from prior stages is carried forward.",
+          "checked": null
+        },
+        {
+          "marker": "4.",
+          "text": "Presence. Saturation changes encoded chroma around BT.709 luma. Vibrance weights less saturated colors and partially protects orange skin hues.",
+          "checked": null
+        },
+        {
+          "marker": "5.",
+          "text": "Curves. Four smooth parametric regions with movable splits are sampled into a 1024-entry monotonic LUT. A Fritsch-Carlson point-curve LUT then applies the master curve, followed by red, green and blue curves. Point coordinates use the reference's `[0,255]` units. LUT evaluation extends linearly outside `[0,1]` for intermediate values.",
+          "checked": null
+        },
+        {
+          "marker": "6.",
+          "text": "HSL mixer. Eight neighboring hue centers use circular hat weights. Hue moves by up to 30 degrees; saturation scales HSV saturation; luminance is restored after hue/saturation changes, then adjusted by a saturation-weighted exposure shift. Achromatic pixels skip the hue mixer.",
+          "checked": null
+        },
+        {
+          "marker": "7.",
+          "text": "Color grading. Shadows, midtones, highlights and global wheels add luma-neutral HSV tints with tone masks from Blending and Balance, then apply each wheel's luminance exposure.",
+          "checked": null
+        },
+        {
+          "marker": "8.",
+          "text": "Detail. Luminance NR uses a box-guided filter with an amount-dependent radius and epsilon. Color NR blurs `B-Y` and `R-Y` chroma. Sharpening uses an unsharp luminance band with its actual Radius, Detail halo limit and Masking gradient gate. Detail settings affect their active parent stage; changing a radius with Sharpen Amount zero remains identity.",
+          "checked": null
+        },
+        {
+          "marker": "9.",
+          "text": "Post-crop vignette and grain. The three vignette styles use a rounded ellipse/rectangle mask, highlight protection and exposure or overlay operations. Grain uses Photocraft's 64-bit position hash, interpolated value noise, a second roughness layer and luminance weighting. Seed is deterministic; Pixel Scale maps preview positions to full-resolution grain coordinates.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "Scalar Gaussian stages preserve the reference's three-box approximation and its small-sigma correction in [`fxutil.rs`](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/fxutil.rs#L165): if all rounded box radii become zero, one radius-1 pass is used. Thus the documented Sharpen Radius `.5` and low Color NR amounts still have a real effect. The SDK's other Gaussian filters have separate contracts.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "## All option fields\n",
+      "level": 2,
+      "title": "All option fields"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "`CameraRawWheel` contains `hue`, `saturation` and `luminance`. `CameraRawVignetteStyle` contains `HighlightPriority`, `ColorPriority` and `PaintOverlay`. `CameraRawOptions` has the following complete set of controls; none is silently mapped to an unrelated Develop control.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "table",
+      "start_line": 29,
+      "end_line": 51,
+      "raw": "| Fields | Defaults | Accepted range or meaning |\n| --- | --- | --- |\n| `temperature`, `tint` | 0, 0 | Relative sliders, `[-100,100]` |\n| `exposure` | 0 | `[-5,5]` stops |\n| `contrast`, `highlights`, `shadows`, `whites`, `blacks` | 0 | `[-100,100]` |\n| `texture`, `clarity`, `dehaze`, `vibrance`, `saturation` | 0 | `[-100,100]` |\n| `curveHighlights`, `curveLights`, `curveDarks`, `curveShadows` | 0 | `[-100,100]` |\n| `curveSplits` | `{25,50,75}` | Each `[5,95]`, strictly increasing |\n| `pointCurve`, `pointCurveRed`, `pointCurveGreen`, `pointCurveBlue` | Empty | Empty or 2–16 `[input,output]` pairs, each `[0,255]`, input gap at least 1 |\n| `hslHue`, `hslSaturation`, `hslLuminance` | Eight zeroes each | `[-100,100]`, in red/orange/yellow/green/aqua/blue/purple/magenta order |\n| `gradeShadows`, `gradeMidtones`, `gradeHighlights`, `gradeGlobal` | Neutral wheels | Hue `[0,360]`, saturation `[0,100]`, luminance `[-100,100]` |\n| `gradeBlending`, `gradeBalance` | 50, 0 | `[0,100]`, `[-100,100]` |\n| `sharpenAmount` | 0 | `[0,150]` |\n| `sharpenRadius` | 1 | `[.5,3]` pixels before Pixel Scale |\n| `sharpenDetail`, `sharpenMasking` | 25, 0 | `[0,100]` |\n| `noiseLuminance`, `noiseLuminanceDetail` | 0, 50 | `[0,100]` |\n| `noiseColor`, `noiseColorDetail` | 0, 50 | `[0,100]` |\n| `grainAmount`, `grainSize`, `grainRoughness` | 0, 25, 50 | `[0,100]` |\n| `vignetteAmount`, `vignetteRoundness` | 0, 0 | `[-100,100]` |\n| `vignetteMidpoint`, `vignetteFeather`, `vignetteHighlights` | 50, 50, 0 | `[0,100]` |\n| `vignetteStyle` | `HighlightPriority` | One of the three enum values |\n| `seed` | 0 | Unsigned 32-bit grain seed |\n| `pixelScale` | 1 | `[.01,1]`, scales detail radii and preview grain coordinates |\n",
+      "columns": [
+        "Fields",
+        "Defaults",
+        "Accepted range or meaning"
+      ],
+      "rows": [
+        [
+          "`temperature`, `tint`",
+          "0, 0",
+          "Relative sliders, `[-100,100]`"
+        ],
+        [
+          "`exposure`",
+          "0",
+          "`[-5,5]` stops"
+        ],
+        [
+          "`contrast`, `highlights`, `shadows`, `whites`, `blacks`",
+          "0",
+          "`[-100,100]`"
+        ],
+        [
+          "`texture`, `clarity`, `dehaze`, `vibrance`, `saturation`",
+          "0",
+          "`[-100,100]`"
+        ],
+        [
+          "`curveHighlights`, `curveLights`, `curveDarks`, `curveShadows`",
+          "0",
+          "`[-100,100]`"
+        ],
+        [
+          "`curveSplits`",
+          "`{25,50,75}`",
+          "Each `[5,95]`, strictly increasing"
+        ],
+        [
+          "`pointCurve`, `pointCurveRed`, `pointCurveGreen`, `pointCurveBlue`",
+          "Empty",
+          "Empty or 2–16 `[input,output]` pairs, each `[0,255]`, input gap at least 1"
+        ],
+        [
+          "`hslHue`, `hslSaturation`, `hslLuminance`",
+          "Eight zeroes each",
+          "`[-100,100]`, in red/orange/yellow/green/aqua/blue/purple/magenta order"
+        ],
+        [
+          "`gradeShadows`, `gradeMidtones`, `gradeHighlights`, `gradeGlobal`",
+          "Neutral wheels",
+          "Hue `[0,360]`, saturation `[0,100]`, luminance `[-100,100]`"
+        ],
+        [
+          "`gradeBlending`, `gradeBalance`",
+          "50, 0",
+          "`[0,100]`, `[-100,100]`"
+        ],
+        [
+          "`sharpenAmount`",
+          "0",
+          "`[0,150]`"
+        ],
+        [
+          "`sharpenRadius`",
+          "1",
+          "`[.5,3]` pixels before Pixel Scale"
+        ],
+        [
+          "`sharpenDetail`, `sharpenMasking`",
+          "25, 0",
+          "`[0,100]`"
+        ],
+        [
+          "`noiseLuminance`, `noiseLuminanceDetail`",
+          "0, 50",
+          "`[0,100]`"
+        ],
+        [
+          "`noiseColor`, `noiseColorDetail`",
+          "0, 50",
+          "`[0,100]`"
+        ],
+        [
+          "`grainAmount`, `grainSize`, `grainRoughness`",
+          "0, 25, 50",
+          "`[0,100]`"
+        ],
+        [
+          "`vignetteAmount`, `vignetteRoundness`",
+          "0, 0",
+          "`[-100,100]`"
+        ],
+        [
+          "`vignetteMidpoint`, `vignetteFeather`, `vignetteHighlights`",
+          "50, 50, 0",
+          "`[0,100]`"
+        ],
+        [
+          "`vignetteStyle`",
+          "`HighlightPriority`",
+          "One of the three enum values"
+        ],
+        [
+          "`seed`",
+          "0",
+          "Unsigned 32-bit grain seed"
+        ],
+        [
+          "`pixelScale`",
+          "1",
+          "`[.01,1]`, scales detail radii and preview grain coordinates"
+        ]
+      ]
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "Every floating parameter must be finite, including inactive dependent controls. Curves require ascending input coordinates; this public API does not accept malformed legacy saved curves. Y coordinates may descend, as the reference's validator allows. Empty curves and points that lie entirely on the identity diagonal are treated as linear, matching the reference's stage-neutral rule. Unknown style enums and values outside the ranges are rejected with `InvalidParameter` rather than clamped silently.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "The reference CameraRaw settings contain no Luminance NR Contrast or Color Smoothness field. Those controls are not exposed here. They also do not contain a RAW decoder, camera-profile/LUT setting, B&W treatment, optics stage, masks or retouch strokes. Other SDK modules provide those separate operations where implemented.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "Input dimensions must be nonzero, each axis at most 65536 and total pixels at most `64*1024*1024`. The image buffer must have exactly `width*height` normalized finite RGBA pixels. Dimensions and multiplication overflow are checked before allocation. Allocation failures return `AllocationFailure`. Neutral settings return an exact detached copy after validation.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "fenced_code",
+      "start_line": 59,
+      "end_line": 71,
+      "raw": "```cpp\n#include <iiGraphicAdjust/CameraRawFilter.h>\nusing namespace iiGraphicAdjust;\nCameraRawOptions settings;\nsettings.temperature = 20; // Relative warmth, not 20 K.\nsettings.exposure = .5;\nsettings.sharpenAmount = 35;\nsettings.sharpenRadius = .5;\nsettings.sharpenDetail = 60;\nsettings.noiseLuminance = 20;\nsettings.pointCurve = {{0,10},{64,55},{192,205},{255,255}};\nauto result = cameraRawFilter(source.view(), settings);\n```\n",
+      "language": "cpp",
+      "code": "#include <iiGraphicAdjust/CameraRawFilter.h>\nusing namespace iiGraphicAdjust;\nCameraRawOptions settings;\nsettings.temperature = 20; // Relative warmth, not 20 K.\nsettings.exposure = .5;\nsettings.sharpenAmount = 35;\nsettings.sharpenRadius = .5;\nsettings.sharpenDetail = 60;\nsettings.noiseLuminance = 20;\nsettings.pointCurve = {{0,10},{64,55},{192,205},{255,255}};\nauto result = cameraRawFilter(source.view(), settings);\n",
+      "closed": true
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "heading",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "## Verification\n",
+      "level": 2,
+      "title": "Verification"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 74,
+      "end_line": 74,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 75,
+      "end_line": 75,
+      "raw": "`tests/camera_raw_filter.cpp` supports `oracle`, `basic`, `color`, `detail`, `effects`, `validation`, `invariants` and `all` groups. It contains 35 numeric cases produced by the pinned Rust `camera_raw::develop` on an opaque 17×11 fixture, with five sampled pixels per case. The standalone Rust oracle only substitutes sequential workers and removes serialization attributes; its processing formulas are the upstream implementation. The source and execution log are retained under `build/camera-raw-upstream-oracle.rs` and `build/camera-raw-upstream-oracle.log` for reproduction. The test embeds fixed values and does not depend on a Rust compiler at test time.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 76,
+      "end_line": 76,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "Additional checks cover neutral identity, one-stop exposure, relative WB, intermediate over-range preservation, all four point curves and all eight HSL bands, curve splits, grading blending/balance, real Radius `.5` sharpening, active Detail/Masking and both NR Detail controls, every vignette style/control, grain parameters and seed, every scalar's NaN validation, all curve channels' malformed inputs, invalid dimensions/buffers, preserved alpha, hidden-RGB independence for all reference cases and deterministic combined-parameter finite-output trials.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Camera Raw rendered-image filter",
+      "anchor": "camera-raw-rendered-image-filter",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Processing order and parameter meaning",
+      "anchor": "processing-order-and-parameter-meaning",
+      "start_line": 7
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "All option fields",
+      "anchor": "all-option-fields",
+      "start_line": 25
+    },
+    {
+      "block_id": "b000031",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Verification",
+      "anchor": "verification",
+      "start_line": 73
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000023",
+        "line": 53,
+        "text": "Every floating parameter must be finite, including inactive dependent controls. Curves require ascending input coordinates; this public API does not accept malformed legacy saved curves. Y coordinates may descend, as the reference's validator allows. Empty curves and points that lie entirely on the identity diagonal are treated as linear, matching the reference's stage-neutral rule. Unknown style enums and values outside the ranges are rejected with `InvalidParameter` rather than clamped silently.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 55,
+        "text": "The reference CameraRaw settings contain no Luminance NR Contrast or Color Smoothness field. Those controls are not exposed here. They also do not contain a RAW decoder, camera-profile/LUT setting, B&W treatment, optics stage, masks or retouch strokes. Other SDK modules provide those separate operations where implemented.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 57,
+        "text": "Input dimensions must be nonzero, each axis at most 65536 and total pixels at most `64*1024*1024`. The image buffer must have exactly `width*height` normalized finite RGBA pixels. Dimensions and multiplication overflow are checked before allocation. Allocation failures return `AllocationFailure`. Neutral settings return an exact detached copy after validation.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000005",
+        "label": "commit 5896f0b63e6f342e0311920b4d2a0ea5a94330fc, `crates/algo/src/camera_raw.rs`",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/camera_raw.rs",
+        "kind": "external",
+        "line": 5
+      },
+      {
+        "block_id": "b000015",
+        "label": "`fxutil.rs`",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/fxutil.rs#L165",
+        "kind": "external",
+        "line": 23
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000021",
+        "columns": [
+          "Fields",
+          "Defaults",
+          "Accepted range or meaning"
+        ],
+        "rows": [
+          [
+            "`temperature`, `tint`",
+            "0, 0",
+            "Relative sliders, `[-100,100]`"
+          ],
+          [
+            "`exposure`",
+            "0",
+            "`[-5,5]` stops"
+          ],
+          [
+            "`contrast`, `highlights`, `shadows`, `whites`, `blacks`",
+            "0",
+            "`[-100,100]`"
+          ],
+          [
+            "`texture`, `clarity`, `dehaze`, `vibrance`, `saturation`",
+            "0",
+            "`[-100,100]`"
+          ],
+          [
+            "`curveHighlights`, `curveLights`, `curveDarks`, `curveShadows`",
+            "0",
+            "`[-100,100]`"
+          ],
+          [
+            "`curveSplits`",
+            "`{25,50,75}`",
+            "Each `[5,95]`, strictly increasing"
+          ],
+          [
+            "`pointCurve`, `pointCurveRed`, `pointCurveGreen`, `pointCurveBlue`",
+            "Empty",
+            "Empty or 2–16 `[input,output]` pairs, each `[0,255]`, input gap at least 1"
+          ],
+          [
+            "`hslHue`, `hslSaturation`, `hslLuminance`",
+            "Eight zeroes each",
+            "`[-100,100]`, in red/orange/yellow/green/aqua/blue/purple/magenta order"
+          ],
+          [
+            "`gradeShadows`, `gradeMidtones`, `gradeHighlights`, `gradeGlobal`",
+            "Neutral wheels",
+            "Hue `[0,360]`, saturation `[0,100]`, luminance `[-100,100]`"
+          ],
+          [
+            "`gradeBlending`, `gradeBalance`",
+            "50, 0",
+            "`[0,100]`, `[-100,100]`"
+          ],
+          [
+            "`sharpenAmount`",
+            "0",
+            "`[0,150]`"
+          ],
+          [
+            "`sharpenRadius`",
+            "1",
+            "`[.5,3]` pixels before Pixel Scale"
+          ],
+          [
+            "`sharpenDetail`, `sharpenMasking`",
+            "25, 0",
+            "`[0,100]`"
+          ],
+          [
+            "`noiseLuminance`, `noiseLuminanceDetail`",
+            "0, 50",
+            "`[0,100]`"
+          ],
+          [
+            "`noiseColor`, `noiseColorDetail`",
+            "0, 50",
+            "`[0,100]`"
+          ],
+          [
+            "`grainAmount`, `grainSize`, `grainRoughness`",
+            "0, 25, 50",
+            "`[0,100]`"
+          ],
+          [
+            "`vignetteAmount`, `vignetteRoundness`",
+            "0, 0",
+            "`[-100,100]`"
+          ],
+          [
+            "`vignetteMidpoint`, `vignetteFeather`, `vignetteHighlights`",
+            "50, 50, 0",
+            "`[0,100]`"
+          ],
+          [
+            "`vignetteStyle`",
+            "`HighlightPriority`",
+            "One of the three enum values"
+          ],
+          [
+            "`seed`",
+            "0",
+            "Unsigned 32-bit grain seed"
+          ],
+          [
+            "`pixelScale`",
+            "1",
+            "`[.01,1]`, scales detail radii and preview grain coordinates"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

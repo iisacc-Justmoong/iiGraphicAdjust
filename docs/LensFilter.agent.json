@@ -1,0 +1,156 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:d9129ba8011054e4cd7ae005e620b3517ed632fc6af8495e09633dfe703b7580",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/LensFilter.md",
+    "sha256": "3a9655cb6a594f864d0a5ad07be86324fdf9ec5521fd969b66d6f8e11f9206a1",
+    "bytes": 3555,
+    "line_count": 13,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "PhotoCraft Lens Correction filter",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# PhotoCraft Lens Correction filter\n",
+      "level": 1,
+      "title": "PhotoCraft Lens Correction filter"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "`LensFilter.h` provides `lensCorrection`, `genericLensProfile` and `autoLensScale`. This is the PhotoCraft encoded-sRGB Lens Correction filter, distinct from 0.3 `correctOptics`, which has its own Lightroom-style contract. The reference is [`algo/src/lens.rs`](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/lens.rs) and [`engine/src/lens_cmds.rs`](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs).\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "`LensCorrectionOptions` supplies an optional `LensFilterProfile`. `correctDistortion`, `correctVignette` and `correctCa` enable the respective profile fields; manual sliders remain effective independently. Distortion, red/cyan and blue/yellow fringe, vignette amount, vertical and horizontal perspective are [-100,100]. Vignette midpoint is [0,100], rotation [-180,180] degrees, scale [50,400] percent. Profile k1/k2/p1/p2 and three radial falloff coefficients are finite [-4,4]; CA red/blue fractional radial coefficients are [-.05,.05]. All inactive fields are validated too.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "Processing performs inverse scale/rotation, projective keystone division, Brown–Conrady radial/tangential mapping, separate red and blue radial samples and shared vignette compensation. Catmull–Rom bicubic samples use premultiplied encoded RGBA. `LensFilterEdge` provides Extension, Transparency and a caller-supplied normalized `edgeColor`, covering the reference's black/white fill without restricting it to those two colors. Source coverage follows the green plane; a fully uncovered red/blue fringe sample falls back to green-plane color to avoid colored rims. A completely neutral filter copies every input value, including invisible RGB. Nonneutral uncovered output is transparent black, except requested color fill.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "Manual vignette uses 1.5 EV at full amount multiplied by a smoothstep radial mask. Profile falloff is `max(.05, 1 + v1*r² + v2*r⁴ + v3*r⁶)` and is divided out. `genericLensProfile(focal35mm)` accepts [1,10000] mm and logarithmically interpolates the reference's seven generic 12/16/24/35/50/85/200 mm entries; outside the table it clamps to endpoint coefficients. It is an approximate generic profile, not EXIF detection or a lens database.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "`autoLensScale` validates the image and options, keeps an already-covering scale, otherwise searches up to 400 percent with 30 bisection steps. It samples 41 positions on each edge of the output pixel-center rectangle and checks the green-plane source point against source pixel-center bounds. This criterion is stricter than the reference's half-pixel canvas tolerance, to avoid transparent boundary pixels on a rotated opaque image. Extreme profiles may not have a covering scale; they return `InvalidParameter`. Sampled edge coverage is not a guarantee for every interior point of an arbitrary nonmonotonic polynomial profile. CA coverage and input transparency are not filled by this geometry check. The function does not overwrite the caller's options; assign its result to `options.scale` explicitly.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "Host-side auto EXIF profile selection, two-point straighten UI and application canvas/layer expansion are outside this raster operation. A caller can compute a rotation and supply a profile. Tests cover neutral/disabled profile identity, log interpolation, manual/profile vignette formulas, inverse rotation, all border fills, combined controls, hidden-RGB isolation, thin images, autoscale, invalid options and input immutability.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "PhotoCraft Lens Correction filter",
+      "anchor": "photocraft-lens-correction-filter",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "`algo/src/lens.rs`",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/lens.rs",
+        "kind": "external",
+        "line": 3
+      },
+      {
+        "block_id": "b000003",
+        "label": "`engine/src/lens_cmds.rs`",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs",
+        "kind": "external",
+        "line": 3
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

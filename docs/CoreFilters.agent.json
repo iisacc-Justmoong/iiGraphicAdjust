@@ -1,0 +1,744 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:3e885d8dbd632a87c3e554ba7b0817b89223af9665d42daf28e8b64f0089bea4",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/CoreFilters.md",
+    "sha256": "fc68b1d1fe5745b2fd7c4776e431e208c8d6bd010fe4127fc121d27871e1526a",
+    "bytes": 10278,
+    "line_count": 69,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Blur, distortion and utility filter contracts",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Blur, distortion and utility filter contracts\n",
+      "level": 1,
+      "title": "Blur, distortion and utility filter contracts"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "These individual functions are in `BlurFilters.h`, `DistortionFilters.h` and `UtilityFilters.h`. They implement the executable PhotoCraft menu/extended-filter families, with additional reusable box-guided kernels. [Filters.md](Filters.md) maps every command to its inspected source. All amounts below are menu units; input/output is normalized encoded sRGB, detached storage and `Result<T>` errors. All numeric values and enum fields, including inactive branches, are validated. Zero settings do not bypass image validation.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "## Blur and sharpening\n",
+      "level": 2,
+      "title": "Blur and sharpening"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "table",
+      "start_line": 7,
+      "end_line": 27,
+      "raw": "| Function/options | Accepted values | Processing |\n| --- | --- | --- |\n| `filterGaussianBlur` | Sigma [0,1000] px | Premultiplied encoded RGBA, exact separable Gaussian for sigma ≤4; three variance-matched box passes above four. Zero copies every pixel exactly. |\n| `boxBlur` | Rounded radius [0,2000] px | Separable sliding-window means with repeated edges, O(image pixels). |\n| `blur`, `blurMore` | None | Gaussian sigma .6 and 1.4. |\n| `motionBlur` | Angle [-360,360]°; distance [0,2000] px | Symmetric samples along the direction, repeated-edge bilinear sampling. |\n| `radialBlur` | Amount [0,100]; Spin/Zoom; x/y center [0,1] | Arc/radial integration with up to 65 samples. |\n| `surfaceBlur` | Radius [0,100]; threshold [0,255] | Alpha-weighted per-channel bilateral neighborhood with triangular range weight; source alpha retained. |\n| `unsharpMask` | Amount [0,500]%; radius [0,1000]; threshold [0,255] | Per-channel `original + amount/100*(original-blur)`, gated by channel difference. Source alpha retained. |\n| `filterSharpen`, `sharpenMore`, `sharpenEdges` | None | Unsharp recipes 60%/.5/0, 150%/.6/0 and 100%/.8/6. |\n| `smartSharpen` | Amount [0,500]%; radius [0,64]; reduceNoise [0,100] | Unsharp difference with exponential noise attenuation; source alpha retained. |\n| `highPass` | Radius [0,1000] | `.5 + original - blur` per channel; source alpha retained. |\n| `despeckle` | None | Surface Blur radius 2, threshold 12. |\n| `smartBlur` | Radius [.1,100]; threshold [.1,100]; Low/Medium/High; Normal/EdgeOnly/OverlayEdge | Bounded disc taps with RGB range cutoff. Quality selects sample stride. Edge modes derive a four-neighbor edge mask. Source alpha retained. |\n| `shapeBlur` | Radius [0,1000]; Circle/Ring/Square/Diamond/Triangle/Hexagon/Star/Heart/Cross | Rasterized shape spans and row-prefix means, repeated edges; filters RGB and coverage. |\n| `lensBlur` | Radius [0,100]; blades [3,8]; curvature [0,100]; rotation [0,360]°; depth None/Transparency/Map; focalDistance [0,255]; brightness/noise [0,100]; threshold [0,255]; Uniform/Gaussian noise | Polygonal aperture, depth-dependent defocus from nine radius levels with premultiplied interpolation, highlight boost and deterministic final noise. Optional depth map must match dimensions and normalized pixel contract. An uncovered depth-map sample is on the focal plane (zero defocus), independently of invertDepth; its hidden RGB is ignored. Radius below .5 with no highlight/noise effect is an exact copy after full validation. |\n| `tiltShift` | Blur [0,500]; center [0,1]; angle [-90,90]°; focus [0,1]; transition [.01,1] | Sharp strip and smooth distance-based defocus; six geometric Gaussian levels. |\n| `irisBlur` | Up to 64 pins: x/y [0,1], radii [.001,2], angle [-180,180]°, roundness [0,100], feather [0,.999], blur [0,500] | Elliptical/rounded-rectangular focus regions; sharpest pin wins. Empty pins copy exactly. |\n| `fieldBlur` | Up to 64 pins: x/y [0,1], blur [0,500] | Inverse-distance `1/(distance²+1)` interpolation of pin blur radii; with several pins the value at one pin also includes the other pins. Empty pins copy exactly. |\n| `spinBlur` | Up to 64 elliptical pins: x/y [0,1], radii [.001,2], angle [-180,180]°, blurAngle [0,360]° | Arc integration, bounded to 64 samples, feathered inside each ellipse. |\n| `pathBlur` | Up to 64 paths, ≤4096 total normalized [0,1] points, at least 2 per path; speed [0,500], taper [0,100] | Segment-based closest tangent, length/inverse-distance direction mixture and longitudinal taper; up to 64 symmetric samples. Degenerate paths have no blur. |\n",
+      "columns": [
+        "Function/options",
+        "Accepted values",
+        "Processing"
+      ],
+      "rows": [
+        [
+          "`filterGaussianBlur`",
+          "Sigma [0,1000] px",
+          "Premultiplied encoded RGBA, exact separable Gaussian for sigma ≤4; three variance-matched box passes above four. Zero copies every pixel exactly."
+        ],
+        [
+          "`boxBlur`",
+          "Rounded radius [0,2000] px",
+          "Separable sliding-window means with repeated edges, O(image pixels)."
+        ],
+        [
+          "`blur`, `blurMore`",
+          "None",
+          "Gaussian sigma .6 and 1.4."
+        ],
+        [
+          "`motionBlur`",
+          "Angle [-360,360]°; distance [0,2000] px",
+          "Symmetric samples along the direction, repeated-edge bilinear sampling."
+        ],
+        [
+          "`radialBlur`",
+          "Amount [0,100]; Spin/Zoom; x/y center [0,1]",
+          "Arc/radial integration with up to 65 samples."
+        ],
+        [
+          "`surfaceBlur`",
+          "Radius [0,100]; threshold [0,255]",
+          "Alpha-weighted per-channel bilateral neighborhood with triangular range weight; source alpha retained."
+        ],
+        [
+          "`unsharpMask`",
+          "Amount [0,500]%; radius [0,1000]; threshold [0,255]",
+          "Per-channel `original + amount/100*(original-blur)`, gated by channel difference. Source alpha retained."
+        ],
+        [
+          "`filterSharpen`, `sharpenMore`, `sharpenEdges`",
+          "None",
+          "Unsharp recipes 60%/.5/0, 150%/.6/0 and 100%/.8/6."
+        ],
+        [
+          "`smartSharpen`",
+          "Amount [0,500]%; radius [0,64]; reduceNoise [0,100]",
+          "Unsharp difference with exponential noise attenuation; source alpha retained."
+        ],
+        [
+          "`highPass`",
+          "Radius [0,1000]",
+          "`.5 + original - blur` per channel; source alpha retained."
+        ],
+        [
+          "`despeckle`",
+          "None",
+          "Surface Blur radius 2, threshold 12."
+        ],
+        [
+          "`smartBlur`",
+          "Radius [.1,100]; threshold [.1,100]; Low/Medium/High; Normal/EdgeOnly/OverlayEdge",
+          "Bounded disc taps with RGB range cutoff. Quality selects sample stride. Edge modes derive a four-neighbor edge mask. Source alpha retained."
+        ],
+        [
+          "`shapeBlur`",
+          "Radius [0,1000]; Circle/Ring/Square/Diamond/Triangle/Hexagon/Star/Heart/Cross",
+          "Rasterized shape spans and row-prefix means, repeated edges; filters RGB and coverage."
+        ],
+        [
+          "`lensBlur`",
+          "Radius [0,100]; blades [3,8]; curvature [0,100]; rotation [0,360]°; depth None/Transparency/Map; focalDistance [0,255]; brightness/noise [0,100]; threshold [0,255]; Uniform/Gaussian noise",
+          "Polygonal aperture, depth-dependent defocus from nine radius levels with premultiplied interpolation, highlight boost and deterministic final noise. Optional depth map must match dimensions and normalized pixel contract. An uncovered depth-map sample is on the focal plane (zero defocus), independently of invertDepth; its hidden RGB is ignored. Radius below .5 with no highlight/noise effect is an exact copy after full validation."
+        ],
+        [
+          "`tiltShift`",
+          "Blur [0,500]; center [0,1]; angle [-90,90]°; focus [0,1]; transition [.01,1]",
+          "Sharp strip and smooth distance-based defocus; six geometric Gaussian levels."
+        ],
+        [
+          "`irisBlur`",
+          "Up to 64 pins: x/y [0,1], radii [.001,2], angle [-180,180]°, roundness [0,100], feather [0,.999], blur [0,500]",
+          "Elliptical/rounded-rectangular focus regions; sharpest pin wins. Empty pins copy exactly."
+        ],
+        [
+          "`fieldBlur`",
+          "Up to 64 pins: x/y [0,1], blur [0,500]",
+          "Inverse-distance `1/(distance²+1)` interpolation of pin blur radii; with several pins the value at one pin also includes the other pins. Empty pins copy exactly."
+        ],
+        [
+          "`spinBlur`",
+          "Up to 64 elliptical pins: x/y [0,1], radii [.001,2], angle [-180,180]°, blurAngle [0,360]°",
+          "Arc integration, bounded to 64 samples, feathered inside each ellipse."
+        ],
+        [
+          "`pathBlur`",
+          "Up to 64 paths, ≤4096 total normalized [0,1] points, at least 2 per path; speed [0,500], taper [0,100]",
+          "Segment-based closest tangent, length/inverse-distance direction mixture and longitudinal taper; up to 64 symmetric samples. Degenerate paths have no blur."
+        ]
+      ]
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "Gaussian, box, motion, radial, shape, lens and blur-gallery operations filter transported alpha with RGB. Surface/Smart Blur, unsharp, Smart Sharpen, High Pass and Despeckle retain source coverage and invisible input values. Blur Gallery paths/pins are caller-supplied values; the SDK does not own interactive pin or path state. The SDK's bounded sigma levels and sampling differ from the reference's exact per-pixel render. This preserves the actual algorithm class without claiming exact bitwise output.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "heading",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "## Distortion\n",
+      "level": 2,
+      "title": "Distortion"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "table",
+      "start_line": 33,
+      "end_line": 44,
+      "raw": "| Function/options | Accepted values | Processing |\n| --- | --- | --- |\n| `offset` | Signed int32 x/y pixels; Wrap/Repeat/Transparent | Exact integer transport with selected border handling. |\n| `twirl` | Angle [-999,999]° | Inverse circular angle falloff around image center. |\n| `pinch` | Amount [-100,100] | Radial power mapping. |\n| `spherize` | Amount [-100,100]; Normal/HorizontalOnly/VerticalOnly | Spherical radial mapping, or one-axis mapping. |\n| `wave` | Generators [1,64]; min/max wavelength [1,999], ordered; min/max amplitude [0,999], ordered; Sine/Triangle/Square; seed; border | Seeded harmonic displacement sum. CPU reference clamps generators to 64 despite a larger UI range; SDK rejects excess instead. |\n| `ripple` | Amount [-999,999]; Small/Medium/Large | Cross-axis sine perturbation (x displaced by y phase, y by x phase) with sizes 8/16/32. |\n| `polarCoordinates` | RectangularToPolar/PolarToRectangular | Inverse Cartesian/polar coordinate conversion, transparent outside. |\n| `displace` | Map image; horizontal/vertical [-999,999]; stretch/tile; border | Map red/green relative to .5 controls displacement; 100% corresponds to 128 px. Invisible map samples are neutral. |\n| `shear` | Up to 4096 points: sorted unique position [0,1], offset [-1,1], minimum separation 1e-9; border | Nonuniform Catmull–Rom spline horizontal displacement across normalized height. Invalid order is rejected rather than silently sorted. |\n| `zigZag` | Amount [-100,100]; ridges [0,20]; AroundCenter/OutFromCenter/PondRipples | Angular or radial ring displacement. |\n",
+      "columns": [
+        "Function/options",
+        "Accepted values",
+        "Processing"
+      ],
+      "rows": [
+        [
+          "`offset`",
+          "Signed int32 x/y pixels; Wrap/Repeat/Transparent",
+          "Exact integer transport with selected border handling."
+        ],
+        [
+          "`twirl`",
+          "Angle [-999,999]°",
+          "Inverse circular angle falloff around image center."
+        ],
+        [
+          "`pinch`",
+          "Amount [-100,100]",
+          "Radial power mapping."
+        ],
+        [
+          "`spherize`",
+          "Amount [-100,100]; Normal/HorizontalOnly/VerticalOnly",
+          "Spherical radial mapping, or one-axis mapping."
+        ],
+        [
+          "`wave`",
+          "Generators [1,64]; min/max wavelength [1,999], ordered; min/max amplitude [0,999], ordered; Sine/Triangle/Square; seed; border",
+          "Seeded harmonic displacement sum. CPU reference clamps generators to 64 despite a larger UI range; SDK rejects excess instead."
+        ],
+        [
+          "`ripple`",
+          "Amount [-999,999]; Small/Medium/Large",
+          "Cross-axis sine perturbation (x displaced by y phase, y by x phase) with sizes 8/16/32."
+        ],
+        [
+          "`polarCoordinates`",
+          "RectangularToPolar/PolarToRectangular",
+          "Inverse Cartesian/polar coordinate conversion, transparent outside."
+        ],
+        [
+          "`displace`",
+          "Map image; horizontal/vertical [-999,999]; stretch/tile; border",
+          "Map red/green relative to .5 controls displacement; 100% corresponds to 128 px. Invisible map samples are neutral."
+        ],
+        [
+          "`shear`",
+          "Up to 4096 points: sorted unique position [0,1], offset [-1,1], minimum separation 1e-9; border",
+          "Nonuniform Catmull–Rom spline horizontal displacement across normalized height. Invalid order is rejected rather than silently sorted."
+        ],
+        [
+          "`zigZag`",
+          "Amount [-100,100]; ridges [0,20]; AroundCenter/OutFromCenter/PondRipples",
+          "Angular or radial ring displacement."
+        ]
+      ]
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "Geometry uses premultiplied bilinear encoded RGBA and source pixel centers; interpolation may change alpha. A zero displacement copies exact original values, including invisible colors. Exact integer Offset transports hidden colors with their coverage. Nonidentity zero-coverage interpolated output is canonical transparent black. All maps are supplied by the caller; document identifiers and image files are not loaded.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "## Noise, morphology and utility kernels\n",
+      "level": 2,
+      "title": "Noise, morphology and utility kernels"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "table",
+      "start_line": 50,
+      "end_line": 61,
+      "raw": "| Function/options | Accepted values | Processing |\n| --- | --- | --- |\n| `average` | None | Alpha-weighted visible encoded RGB mean, assigned at each visible pixel; original coverage retained. |\n| `filterAddNoise` | Amount [0,400]%; Uniform/Gaussian; monochromatic; uint32 seed | Reference uint32 coordinate hash, amplitude amount/200, Gaussian Box–Muller scaled .5; source coverage retained. |\n| `median`, `dustAndScratches` | Radius [0,500]; Dust threshold [0,255] | Disk `distance² ≤ r²+r`, alpha-weighted visible channel medians; Dust replaces channels only above the threshold. |\n| `minimum`, `maximum` | Radius [0,500]; Square/Round; affectAlpha default true | Per-channel visible extrema, optionally coverage extrema. Square uses separable monotone queues; Round uses a true disc. |\n| `reduceNoise` | Strength [0,10]; preserveDetails/reduceColorNoise/sharpenDetails [0,100]; removeJpegArtifact boolean | Encoded Y/Cb/Cr edge-preserving means, separate chroma smoothing, detail sharpening and optional 8-pixel JPEG grid deblocking. |\n| `customFilter` | 25 row-major 5×5 finite coefficients [-9999,9999]; scale [1,9999]; offset [-9999,9999] | Signed per-channel convolution, divide by scale and add offset/255; repeated edges, source coverage retained. All-zero kernel copies input as in the reference. |\n| `hsbHsl` | Input/output Rgb/Hsb/Hsl | Converts normalized RGB channel payloads; hue is normalized turns. Alpha remains coverage. |\n| `deInterlace` | eliminateEven false; interpolate true | Removes 1-based odd or even fields and rebuilds from neighboring retained fields by premultiplied mean or duplication. |\n| `ntscColors` | None | RGB→YIQ, chroma constrained by NTSC signal min/max, RGB reconstruction. |\n| `guidedBlur`, `crossGuidedBlur` | Radius [0,1000]; epsilon [1e-12,1]; optional guide image with matching dimensions | Two-stage alpha-weighted box moments and coefficient means, with encoded Rec.601 luminance guide. Original coverage retained. |\n",
+      "columns": [
+        "Function/options",
+        "Accepted values",
+        "Processing"
+      ],
+      "rows": [
+        [
+          "`average`",
+          "None",
+          "Alpha-weighted visible encoded RGB mean, assigned at each visible pixel; original coverage retained."
+        ],
+        [
+          "`filterAddNoise`",
+          "Amount [0,400]%; Uniform/Gaussian; monochromatic; uint32 seed",
+          "Reference uint32 coordinate hash, amplitude amount/200, Gaussian Box–Muller scaled .5; source coverage retained."
+        ],
+        [
+          "`median`, `dustAndScratches`",
+          "Radius [0,500]; Dust threshold [0,255]",
+          "Disk `distance² ≤ r²+r`, alpha-weighted visible channel medians; Dust replaces channels only above the threshold."
+        ],
+        [
+          "`minimum`, `maximum`",
+          "Radius [0,500]; Square/Round; affectAlpha default true",
+          "Per-channel visible extrema, optionally coverage extrema. Square uses separable monotone queues; Round uses a true disc."
+        ],
+        [
+          "`reduceNoise`",
+          "Strength [0,10]; preserveDetails/reduceColorNoise/sharpenDetails [0,100]; removeJpegArtifact boolean",
+          "Encoded Y/Cb/Cr edge-preserving means, separate chroma smoothing, detail sharpening and optional 8-pixel JPEG grid deblocking."
+        ],
+        [
+          "`customFilter`",
+          "25 row-major 5×5 finite coefficients [-9999,9999]; scale [1,9999]; offset [-9999,9999]",
+          "Signed per-channel convolution, divide by scale and add offset/255; repeated edges, source coverage retained. All-zero kernel copies input as in the reference."
+        ],
+        [
+          "`hsbHsl`",
+          "Input/output Rgb/Hsb/Hsl",
+          "Converts normalized RGB channel payloads; hue is normalized turns. Alpha remains coverage."
+        ],
+        [
+          "`deInterlace`",
+          "eliminateEven false; interpolate true",
+          "Removes 1-based odd or even fields and rebuilds from neighboring retained fields by premultiplied mean or duplication."
+        ],
+        [
+          "`ntscColors`",
+          "None",
+          "RGB→YIQ, chroma constrained by NTSC signal min/max, RGB reconstruction."
+        ],
+        [
+          "`guidedBlur`, `crossGuidedBlur`",
+          "Radius [0,1000]; epsilon [1e-12,1]; optional guide image with matching dimensions",
+          "Two-stage alpha-weighted box moments and coefficient means, with encoded Rec.601 luminance guide. Original coverage retained."
+        ]
+      ]
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "Median and morphology exclude invisible neighbor RGB; the reference's independent raw RGBA extrema/medians can read it. Minimum/Maximum `affectAlpha=false` preserves source coverage; true may expand/erode coverage, with colors from visible neighborhood samples. Custom convolution substitutes the visible center when a neighbor is fully invisible. Guided statistics use joint source/guide alpha, ignore uncovered data and leave pixels whose guide has no coverage unchanged. The public box-guided kernels are not aliases for the Gaussian-guided development/mask kernels already used by 0.3.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "## Complexity and verification\n",
+      "level": 2,
+      "title": "Complexity and verification"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "Square box/Gaussian approximation/guided filtering and square morphology are linear in pixel count; explicit small Gaussian kernels, disc median/morphology and Surface Blur scale with neighborhood size. Shape Blur uses row prefix sums but still scales with radius; large-radius disc filters can be expensive on photo-size images. Public radius bounds prevent coordinate overflows, not a latency guarantee. Full-frame arrays can consume substantial memory and allocations return explicit errors.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 68,
+      "end_line": 68,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 69,
+      "end_line": 69,
+      "raw": "`tests/core_filters.cpp` checks numerical box/weighted-alpha averages, threshold/detail behavior, exact offset permutations, neutral remaps, centered displacement maps, impulse medians/extrema, HSB/HSL round trips, retained-field reconstruction, seeded noise, hidden-RGB isolation, thin images, malformed geometry and all enum/number bounds. Legacy 0.1 effects and 0.2/0.3 operations retain their existing regression suites.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Blur, distortion and utility filter contracts",
+      "anchor": "blur-distortion-and-utility-filter-contracts",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Blur and sharpening",
+      "anchor": "blur-and-sharpening",
+      "start_line": 5
+    },
+    {
+      "block_id": "b000011",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Distortion",
+      "anchor": "distortion",
+      "start_line": 31
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Noise, morphology and utility kernels",
+      "anchor": "noise-morphology-and-utility-kernels",
+      "start_line": 48
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Complexity and verification",
+      "anchor": "complexity-and-verification",
+      "start_line": 65
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 3,
+        "text": "These individual functions are in `BlurFilters.h`, `DistortionFilters.h` and `UtilityFilters.h`. They implement the executable PhotoCraft menu/extended-filter families, with additional reusable box-guided kernels. [Filters.md](Filters.md) maps every command to its inspected source. All amounts below are menu units; input/output is normalized encoded sRGB, detached storage and `Result<T>` errors. All numeric values and enum fields, including inactive branches, are validated. Zero settings do not bypass image validation.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 22,
+        "text": "| `lensBlur` | Radius [0,100]; blades [3,8]; curvature [0,100]; rotation [0,360]°; depth None/Transparency/Map; focalDistance [0,255]; brightness/noise [0,100]; threshold [0,255]; Uniform/Gaussian noise | Polygonal aperture, depth-dependent defocus from nine radius levels with premultiplied interpolation, highlight boost and deterministic final noise. Optional depth map must match dimensions and normalized pixel contract. An uncovered depth-map sample is on the focal plane (zero defocus), independently of invertDepth; its hidden RGB is ignored. Radius below .5 with no highlight/noise effect is an exact copy after full validation. |",
+        "basis": "lexical_match",
+        "context": "table"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "Filters.md",
+        "target": "Filters.md",
+        "kind": "relative",
+        "line": 3
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000007",
+        "columns": [
+          "Function/options",
+          "Accepted values",
+          "Processing"
+        ],
+        "rows": [
+          [
+            "`filterGaussianBlur`",
+            "Sigma [0,1000] px",
+            "Premultiplied encoded RGBA, exact separable Gaussian for sigma ≤4; three variance-matched box passes above four. Zero copies every pixel exactly."
+          ],
+          [
+            "`boxBlur`",
+            "Rounded radius [0,2000] px",
+            "Separable sliding-window means with repeated edges, O(image pixels)."
+          ],
+          [
+            "`blur`, `blurMore`",
+            "None",
+            "Gaussian sigma .6 and 1.4."
+          ],
+          [
+            "`motionBlur`",
+            "Angle [-360,360]°; distance [0,2000] px",
+            "Symmetric samples along the direction, repeated-edge bilinear sampling."
+          ],
+          [
+            "`radialBlur`",
+            "Amount [0,100]; Spin/Zoom; x/y center [0,1]",
+            "Arc/radial integration with up to 65 samples."
+          ],
+          [
+            "`surfaceBlur`",
+            "Radius [0,100]; threshold [0,255]",
+            "Alpha-weighted per-channel bilateral neighborhood with triangular range weight; source alpha retained."
+          ],
+          [
+            "`unsharpMask`",
+            "Amount [0,500]%; radius [0,1000]; threshold [0,255]",
+            "Per-channel `original + amount/100*(original-blur)`, gated by channel difference. Source alpha retained."
+          ],
+          [
+            "`filterSharpen`, `sharpenMore`, `sharpenEdges`",
+            "None",
+            "Unsharp recipes 60%/.5/0, 150%/.6/0 and 100%/.8/6."
+          ],
+          [
+            "`smartSharpen`",
+            "Amount [0,500]%; radius [0,64]; reduceNoise [0,100]",
+            "Unsharp difference with exponential noise attenuation; source alpha retained."
+          ],
+          [
+            "`highPass`",
+            "Radius [0,1000]",
+            "`.5 + original - blur` per channel; source alpha retained."
+          ],
+          [
+            "`despeckle`",
+            "None",
+            "Surface Blur radius 2, threshold 12."
+          ],
+          [
+            "`smartBlur`",
+            "Radius [.1,100]; threshold [.1,100]; Low/Medium/High; Normal/EdgeOnly/OverlayEdge",
+            "Bounded disc taps with RGB range cutoff. Quality selects sample stride. Edge modes derive a four-neighbor edge mask. Source alpha retained."
+          ],
+          [
+            "`shapeBlur`",
+            "Radius [0,1000]; Circle/Ring/Square/Diamond/Triangle/Hexagon/Star/Heart/Cross",
+            "Rasterized shape spans and row-prefix means, repeated edges; filters RGB and coverage."
+          ],
+          [
+            "`lensBlur`",
+            "Radius [0,100]; blades [3,8]; curvature [0,100]; rotation [0,360]°; depth None/Transparency/Map; focalDistance [0,255]; brightness/noise [0,100]; threshold [0,255]; Uniform/Gaussian noise",
+            "Polygonal aperture, depth-dependent defocus from nine radius levels with premultiplied interpolation, highlight boost and deterministic final noise. Optional depth map must match dimensions and normalized pixel contract. An uncovered depth-map sample is on the focal plane (zero defocus), independently of invertDepth; its hidden RGB is ignored. Radius below .5 with no highlight/noise effect is an exact copy after full validation."
+          ],
+          [
+            "`tiltShift`",
+            "Blur [0,500]; center [0,1]; angle [-90,90]°; focus [0,1]; transition [.01,1]",
+            "Sharp strip and smooth distance-based defocus; six geometric Gaussian levels."
+          ],
+          [
+            "`irisBlur`",
+            "Up to 64 pins: x/y [0,1], radii [.001,2], angle [-180,180]°, roundness [0,100], feather [0,.999], blur [0,500]",
+            "Elliptical/rounded-rectangular focus regions; sharpest pin wins. Empty pins copy exactly."
+          ],
+          [
+            "`fieldBlur`",
+            "Up to 64 pins: x/y [0,1], blur [0,500]",
+            "Inverse-distance `1/(distance²+1)` interpolation of pin blur radii; with several pins the value at one pin also includes the other pins. Empty pins copy exactly."
+          ],
+          [
+            "`spinBlur`",
+            "Up to 64 elliptical pins: x/y [0,1], radii [.001,2], angle [-180,180]°, blurAngle [0,360]°",
+            "Arc integration, bounded to 64 samples, feathered inside each ellipse."
+          ],
+          [
+            "`pathBlur`",
+            "Up to 64 paths, ≤4096 total normalized [0,1] points, at least 2 per path; speed [0,500], taper [0,100]",
+            "Segment-based closest tangent, length/inverse-distance direction mixture and longitudinal taper; up to 64 symmetric samples. Degenerate paths have no blur."
+          ]
+        ]
+      },
+      {
+        "block_id": "b000013",
+        "columns": [
+          "Function/options",
+          "Accepted values",
+          "Processing"
+        ],
+        "rows": [
+          [
+            "`offset`",
+            "Signed int32 x/y pixels; Wrap/Repeat/Transparent",
+            "Exact integer transport with selected border handling."
+          ],
+          [
+            "`twirl`",
+            "Angle [-999,999]°",
+            "Inverse circular angle falloff around image center."
+          ],
+          [
+            "`pinch`",
+            "Amount [-100,100]",
+            "Radial power mapping."
+          ],
+          [
+            "`spherize`",
+            "Amount [-100,100]; Normal/HorizontalOnly/VerticalOnly",
+            "Spherical radial mapping, or one-axis mapping."
+          ],
+          [
+            "`wave`",
+            "Generators [1,64]; min/max wavelength [1,999], ordered; min/max amplitude [0,999], ordered; Sine/Triangle/Square; seed; border",
+            "Seeded harmonic displacement sum. CPU reference clamps generators to 64 despite a larger UI range; SDK rejects excess instead."
+          ],
+          [
+            "`ripple`",
+            "Amount [-999,999]; Small/Medium/Large",
+            "Cross-axis sine perturbation (x displaced by y phase, y by x phase) with sizes 8/16/32."
+          ],
+          [
+            "`polarCoordinates`",
+            "RectangularToPolar/PolarToRectangular",
+            "Inverse Cartesian/polar coordinate conversion, transparent outside."
+          ],
+          [
+            "`displace`",
+            "Map image; horizontal/vertical [-999,999]; stretch/tile; border",
+            "Map red/green relative to .5 controls displacement; 100% corresponds to 128 px. Invisible map samples are neutral."
+          ],
+          [
+            "`shear`",
+            "Up to 4096 points: sorted unique position [0,1], offset [-1,1], minimum separation 1e-9; border",
+            "Nonuniform Catmull–Rom spline horizontal displacement across normalized height. Invalid order is rejected rather than silently sorted."
+          ],
+          [
+            "`zigZag`",
+            "Amount [-100,100]; ridges [0,20]; AroundCenter/OutFromCenter/PondRipples",
+            "Angular or radial ring displacement."
+          ]
+        ]
+      },
+      {
+        "block_id": "b000019",
+        "columns": [
+          "Function/options",
+          "Accepted values",
+          "Processing"
+        ],
+        "rows": [
+          [
+            "`average`",
+            "None",
+            "Alpha-weighted visible encoded RGB mean, assigned at each visible pixel; original coverage retained."
+          ],
+          [
+            "`filterAddNoise`",
+            "Amount [0,400]%; Uniform/Gaussian; monochromatic; uint32 seed",
+            "Reference uint32 coordinate hash, amplitude amount/200, Gaussian Box–Muller scaled .5; source coverage retained."
+          ],
+          [
+            "`median`, `dustAndScratches`",
+            "Radius [0,500]; Dust threshold [0,255]",
+            "Disk `distance² ≤ r²+r`, alpha-weighted visible channel medians; Dust replaces channels only above the threshold."
+          ],
+          [
+            "`minimum`, `maximum`",
+            "Radius [0,500]; Square/Round; affectAlpha default true",
+            "Per-channel visible extrema, optionally coverage extrema. Square uses separable monotone queues; Round uses a true disc."
+          ],
+          [
+            "`reduceNoise`",
+            "Strength [0,10]; preserveDetails/reduceColorNoise/sharpenDetails [0,100]; removeJpegArtifact boolean",
+            "Encoded Y/Cb/Cr edge-preserving means, separate chroma smoothing, detail sharpening and optional 8-pixel JPEG grid deblocking."
+          ],
+          [
+            "`customFilter`",
+            "25 row-major 5×5 finite coefficients [-9999,9999]; scale [1,9999]; offset [-9999,9999]",
+            "Signed per-channel convolution, divide by scale and add offset/255; repeated edges, source coverage retained. All-zero kernel copies input as in the reference."
+          ],
+          [
+            "`hsbHsl`",
+            "Input/output Rgb/Hsb/Hsl",
+            "Converts normalized RGB channel payloads; hue is normalized turns. Alpha remains coverage."
+          ],
+          [
+            "`deInterlace`",
+            "eliminateEven false; interpolate true",
+            "Removes 1-based odd or even fields and rebuilds from neighboring retained fields by premultiplied mean or duplication."
+          ],
+          [
+            "`ntscColors`",
+            "None",
+            "RGB→YIQ, chroma constrained by NTSC signal min/max, RGB reconstruction."
+          ],
+          [
+            "`guidedBlur`, `crossGuidedBlur`",
+            "Radius [0,1000]; epsilon [1e-12,1]; optional guide image with matching dimensions",
+            "Two-stage alpha-weighted box moments and coefficient means, with encoded Rec.601 luminance guide. Original coverage retained."
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

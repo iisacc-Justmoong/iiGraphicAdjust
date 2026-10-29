@@ -23,7 +23,7 @@ buffers, stride/address overflow, NaN/Inf and unrepresentable output are rejecte
 The photo suite uses exact 3x2 pixel permutations for all eight EXIF orientations,
 cropped pixel/alpha comparisons and independently weighted histogram statistics.
 
-The optional upper-layer iiCameraIntergration 0.2.0 `ImageProcessing` component
+The optional upper-layer iiCameraIntegration 0.2.0 `ImageProcessing` component
 was verified in shared/static/sanitized configurations, with 21/21 camera suites
 and one installed consumer per variant. A generated first frame is decoded,
 interpreted under explicit color rules, oriented/cropped/developed/resized and
@@ -34,7 +34,7 @@ macOS LeakSanitizer is unavailable, so tests use `ASAN_OPTIONS=detect_leaks=0`.
 No sanitizer finding was reported. This does not prove absence of every memory
 or numerical defect or constitute a performance guarantee.
 
-Run `../iiCameraIntergration/tools/verify.sh --photo --sanitize` from this module
+Run `../iiCameraIntegration/tools/verify.sh --photo --sanitize` from this module
 with the sibling source and installed FFmpeg development libraries. Build, stage,
 generated images and consumer output stay under the respective `build/` folders.
 The routine explicitly selects each variant's package prefix. Host loader

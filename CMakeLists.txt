@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
 project(iiGraphicAdjust VERSION 0.6.1 LANGUAGES CXX)
-# File creation is owned by iiFileProvider.
-find_package(iiFileProviderNative 0.6 CONFIG REQUIRED HINTS "$ENV{IIFILEPROVIDER_PREFIX}" "$ENV{HOME}/.local/SDK/iiFileProvider")
-link_libraries(iiFileProvider::Native)
 
 
 
@@ -24,7 +21,6 @@ include(CMakePackageConfigHelpers)
 include(GenerateExportHeader)
 include(CTest)
 option(BUILD_SHARED_LIBS "Build iiGraphicAdjust as a shared library" ON)
-option(IIGRAPHICADJUST_BUILD_EXAMPLES "Build the standalone image adjustment example" ON)
 
 add_library(iiGraphicAdjust
     src/iiGraphicAdjust/Operation.cpp
@@ -137,24 +133,14 @@ install(FILES README.md DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust)
 install(DIRECTORY docs/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/docs)
 install(DIRECTORY third_party/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/third_party)
 
-if(IIGRAPHICADJUST_BUILD_EXAMPLES)
-    add_executable(iiGraphicAdjustObjectsExample examples/objects.cpp)
-    target_link_libraries(iiGraphicAdjustObjectsExample PRIVATE iiGraphicAdjust::iiGraphicAdjust)
-    add_executable(iiGraphicAdjustLocalCorrectionsExample examples/local_corrections.cpp)
-    target_link_libraries(iiGraphicAdjustLocalCorrectionsExample PRIVATE iiGraphicAdjust::iiGraphicAdjust)
-    add_executable(iiGraphicAdjustDevelopExample examples/develop.cpp)
-    target_link_libraries(iiGraphicAdjustDevelopExample PRIVATE iiGraphicAdjust::iiGraphicAdjust)
-    add_executable(iiGraphicAdjustExample examples/adjust.cpp)
-    target_link_libraries(iiGraphicAdjustExample PRIVATE iiGraphicAdjust::iiGraphicAdjust)
-    set_target_properties(iiGraphicAdjustExample PROPERTIES CXX_EXTENSIONS OFF)
-endif()
-
 if(BUILD_TESTING)
+    add_test(NAME iiGraphicAdjust.sdk_boundary
+        COMMAND ${CMAKE_COMMAND} "-DSOURCE_ROOT=${CMAKE_CURRENT_SOURCE_DIR}"
+            -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/sdk_boundary.cmake")
     add_test(NAME iiGraphicAdjust.objects.installed_package
         COMMAND ${CMAKE_COMMAND}
             "-DSOURCE_ROOT=${CMAKE_CURRENT_SOURCE_DIR}"
             "-DBINARY_ROOT=${CMAKE_CURRENT_BINARY_DIR}"
-            "-DNATIVE_PROVIDER=${iiFileProviderNative_DIR}"
             "-DCXX_COMPILER=${CMAKE_CXX_COMPILER}"
             "-DCXX_FLAGS=${CMAKE_CXX_FLAGS}"
             "-DCTEST_COMMAND=${CMAKE_CTEST_COMMAND}"

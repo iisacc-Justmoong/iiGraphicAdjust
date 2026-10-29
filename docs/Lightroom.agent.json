@@ -1,0 +1,706 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:5c72f3602653b438faae1f2fd12587277e5b7a86d21d1c4d0fa09ef8d5098ded",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/Lightroom.md",
+    "sha256": "60c47fdabc6bd0d668931c61a3221f69436a591e7b4785ac27f6042d5cf7616a",
+    "bytes": 13151,
+    "line_count": 92,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Lightroom-style development",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Lightroom-style development\n",
+      "level": 1,
+      "title": "Lightroom-style development"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "Reference: [storytold/lightcraft](https://github.com/storytold/lightcraft), inspected commit `629e39380e296f588c64cd9c0053a8edc3528f36`. This is an independent C++23 implementation, not an Adobe SDK or a claim of Adobe pixel parity. LightCraft's MIT attribution is distributed in `third_party/lightcraft/`.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "## Implementation order and source audit\n",
+      "level": 2,
+      "title": "Implementation order and source audit"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "table",
+      "start_line": 7,
+      "end_line": 13,
+      "raw": "| Order | Target | Actual reference processing |\n| --- | --- | --- |\n| 1 | Kelvin/tint WB, presets, auto/eyedropper; six Light sliders and Auto; parametric/cubic point curves and Refine Saturation | `color/src/cct.rs`, `color/src/spline.rs`, `pipeline/src/local.rs`, `tone.rs`, `auto.rs`, `finish.rs` |\n| 2 | Eight-band Color Mixer/B&W; Point Color; skin-protected Vibrance/Saturation; four-wheel grading; Calibration | `pipeline/src/colorops.rs` |\n| 3 | Texture, Clarity, Dehaze; post-crop vignette and grain; detail sharpening and luminance/color NR | `pipeline/src/local.rs`, `finish.rs` |\n| 4 | Manual distortion, manual/automatic lateral CA, supplied lens coefficients, lens vignetting and purple/green defringe | `pipeline/src/optics.rs` |\n| 5 | Composed development and deterministic local masks/coverage | `pipeline/src/lib.rs`, `masks.rs`, `finish.rs` |\n",
+      "columns": [
+        "Order",
+        "Target",
+        "Actual reference processing"
+      ],
+      "rows": [
+        [
+          "1",
+          "Kelvin/tint WB, presets, auto/eyedropper; six Light sliders and Auto; parametric/cubic point curves and Refine Saturation",
+          "`color/src/cct.rs`, `color/src/spline.rs`, `pipeline/src/local.rs`, `tone.rs`, `auto.rs`, `finish.rs`"
+        ],
+        [
+          "2",
+          "Eight-band Color Mixer/B&W; Point Color; skin-protected Vibrance/Saturation; four-wheel grading; Calibration",
+          "`pipeline/src/colorops.rs`"
+        ],
+        [
+          "3",
+          "Texture, Clarity, Dehaze; post-crop vignette and grain; detail sharpening and luminance/color NR",
+          "`pipeline/src/local.rs`, `finish.rs`"
+        ],
+        [
+          "4",
+          "Manual distortion, manual/automatic lateral CA, supplied lens coefficients, lens vignetting and purple/green defringe",
+          "`pipeline/src/optics.rs`"
+        ],
+        [
+          "5",
+          "Composed development and deterministic local masks/coverage",
+          "`pipeline/src/lib.rs`, `masks.rs`, `finish.rs`"
+        ]
+      ]
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "The pinned reference declared Sharpen Radius, Sharpen Detail, NR Contrast, Lens Blur and Enhance settings without reading them in that inspected pipeline. Version 0.6 independently implements active Radius/Detail/NR Contrast controls and supplies an owned-depth-map Lens Blur object. These are functional CPU implementations, not learned Enhance or automatic depth inference; see [OperationObjects.md](OperationObjects.md). RAW decoding, camera/lens profile registries, AI segmentation, healing, red-eye, crop/geometry, catalog/preset persistence and GUI are separate host concerns. Existing Cube LUT APIs supply creative looks without importing the reference's preset database. Embedded DNG lens metadata is not decoded by this module.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "heading",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "## Pixel contract\n",
+      "level": 2,
+      "title": "Pixel contract"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "Standalone operations take normalized straight-alpha encoded sRGB. Internal tone/spatial calculations decode to double-precision linear sRGB; color tools use OkLab/OkLCh derived from those primaries. This intentionally differs from LightCraft's Rec.2020 working space. Outputs preserve alpha and invisible normalized RGB, are detached, and gamut-map towards linear luminance before encoding. Spatial statistics are weighted by alpha: hidden pixels cannot influence visible neighbors. Inputs are finite and checked; invalid settings return `InvalidParameter` instead of silently clamping.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "Light slider units match the reference: exposure in stops `[-5,5]`, other sliders `[-100,100]`. Highlights/shadows shift a Gaussian self-guided log-luminance base. Contrast, whites and blacks use the reference's display-referred curve with a highlight shoulder when active; all-neutral rendered development is an exact copy. No camera tone look is guessed from SDR pixels.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "White balance resolves a Planckian locus in CIE 1960 uv, tint normal to that locus, and a luminance-normalized Bradford adaptation relative to the supplied as-shot temperature/tint. Temperatures are `[2000,50000]` K and tints `[-150,150]`. Auto uses alpha-weighted midtone/low-chroma statistics, while sampled WB uses one visible nonblack sample. Estimates return settings, leaving the application responsible for when to apply them.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "Parametric curves use movable splits in percent, strictly ordered inside `(0,100)`, raised-cosine region windows and a monotone sampled base. Point curves have 2..65536 finite normalized points with increasing inputs separated by at least `1e-9`; cubic Hermite interpolation limits segment slopes to avoid overshoot. Order is parametric → master → individual channel. Refine Saturation restores the pre-curve encoded chroma/luma ratio using the reference's bounded power blend; exact gray output stays gray. Previous Photoshop-style piecewise-linear `curves()` semantics are unchanged.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "Tint is a correction slider: positive adds magenta. The adaptation and estimator invert the reference's illuminant-tint sign consistently to honor this UI direction. Gaussian windows below sigma 3 use explicit convolution; wider windows use three variance-matched box passes to avoid radius-dependent photo-size processing costs. The latter is an approximation rather than exact LightCraft kernel parity.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "## Color\n",
+      "level": 2,
+      "title": "Color"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "`DevelopColorOptions` applies eight-band Mixer → up to eight Point Color samples → skin-protected Vibrance/Saturation → optional eight-band B&W → Shadows/Midtones/Highlights/Global grading. Mixer and B&W arrays use `MixerBand` order. Hue membership uses raised-cosine weights between OkLCh hues of pure sRGB band centers; weights sum to one around the hue circle. Mixer hue shift is ±0.5 radians, chroma scales by `1 + saturation/100`, and lightness shifts by ±0.18 with chroma weighting. Gray pixels receive no arbitrary mixer hue. Positive vibrance protects skin around the hue of sRGB HSV 25 degrees and saturated colors.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "`samplePointColor()` returns a visible color's OkLCh sample. Each sample controls hue/chroma/lightness widths, soft selection, three shifts and spread variance. Grading uses hue degrees `[0,360]`, saturation `[0,100]`, luminance `[-100,100]`, blending `[0,100]` and balance `[-100,100]`. Calibration rotates/scales linear sRGB primaries and normalizes the matrix to preserve the neutral axis, then applies luminance-preserving shadow tint. Degenerate calibration matrices return an error. Auto B&W computes alpha-weighted lightness separation for each chromatic band and returns eight slider values.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "Point Color is disabled during B&W treatment, matching the actual reference implementation.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "heading",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "## Effects and detail\n",
+      "level": 2,
+      "title": "Effects and detail"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "Texture scales a fine Gaussian log-luminance band (sigma `max(0.6, 0.0018*longEdge)`); Clarity uses a self-guided band (sigma `max(1, 0.012*longEdge)`, epsilon 0.8), with edge/detail taming and midtone weighting. Dehaze follows the CPU code rather than the README claim: blur `min(R,G,B)`, estimate airlight at the 99.5th percentile of visible values, and use transmission bounded below by 0.12. Negative Dehaze adds the estimated veil.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "Post-crop Vignette uses normalized current-image coordinates, midpoint, roundness and feather. HighlightPriority protects bright pixels with the Highlights slider; ColorPriority scales colors; PaintOverlay uses black/white paint behavior (negative ColorPriority and PaintOverlay are numerically identical in this reference). Film Grain is deterministic seeded two-octave value noise in encoded sRGB, with size relative to the long edge and midtone weighting. No global random state is used.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "The original detail controls used by the reference are: Sharpen Amount/Masking, Luminance Noise/Detail and Color Noise/Detail/Smoothness. Luminance NR filters log luminance with edge-aware guidance; color NR filters chromaticity at preserved luminance. Sharpening follows NR and scales the fine log-luminance band with optional edge masking. This is conventional deterministic NR, not Adobe AI Denoise. Operations validate inactive controls too.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "heading",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "## Optics\n",
+      "level": 2,
+      "title": "Optics"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "Manual distortion uses radial coefficient `-0.2*slider/100` about the image center, vignetting uses corner gain up to ±1.5 stops, and R/B chromatic aberration scales each plane relative to green by up to ±0.003. Auto CA collects radial high-contrast edges spread over a 24×24 grid, matches normalized channel profiles at subpixel offsets, and robustly fits displacement/radius. Weak evidence returns zero. No global image cache is used. Center coordinates consistently use pixel centers.\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "Hosts may supply decoded DNG-style per-plane radial/tangential warp coefficients and five radial vignette coefficients through `embeddedWarp`/`embeddedVignette`. Profile strengths scale those supplied coefficients; the SDK does not load Adobe LCP profiles or decode file metadata. Coefficients are finite `[-16,16]`, normalized centers `[0,1]`, radii `[1e-6,2]` long-edge units. Defringe reduces OkLab chroma of purple/green colors only near strong lightness edges; amount is `[0,20]` and ordered hue range sliders are `[0,100]`.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "Geometric sampling is bilinear in linear light with alpha normalization per channel. Hidden RGB never leaks into resampled colors. Dimensions remain unchanged; green-plane coverage supplies output alpha, outside green samples become transparent black, R/B use edge clamps, and warp-created invisible RGB is canonicalized. Vignette gain is evaluated once at the green-plane source position and shared across RGB. This is the explicit exception to non-geometric alpha/hidden-color preservation. Defringe lightness extrema use separable sliding windows with linear pixel cost.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "heading",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "## Masks and local adjustment\n",
+      "level": 2,
+      "title": "Masks and local adjustment"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "`Mask` owns row-major float coverage `[0,1]`; `MaskView` borrows it. Linear gradients require endpoints separated by at least `1e-9` in normalized coordinates. Radial masks use normalized centers, long-edge radii and rotated elliptical feathering. Brush strokes interpolate dabs at radius/4 (minimum half a pixel), accumulate flow up to density, combine paint with max and subtract eraser paint. Auto Mask weights dabs by similarity to the color under the dab and uses guided refinement. Limits are 4096 total stroke points and one million dabs per call. No UI gesture state is retained.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "Luminance Range maps log luminance from -8 to +4 EV around linear gray 0.18 into normalized range bounds. Color Range compares OkLab after a per-channel `c/(1+c)` selection mapping; supplied normalized colors are mapped the same way, so the exact sampled color selects itself at neutral exposure. Range masks have an explicit exposure argument. Add is `max(a,b)`, Subtract is `a*(1-b)`, Intersect is `a*b`. Invert and image-guided edge refinement return detached coverage. The caller can pass independently generated segmentation coverage through `MaskView` without importing an AI runtime.\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "paragraph",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "`applyLocalAdjustments()` accepts up to 32 same-sized borrowed masks. It accumulates coverage × amount × each slider before processing: Exposure, Temperature, Tint, Contrast, Highlights, Shadows, Whites, Blacks, Texture, Clarity, Dehaze, Hue, Saturation, Sharpness, Noise, Moiré and Defringe. Amount is `[0,200]`; most sliders are `[-100,100]`, Exposure `[-5,5]`, Defringe `[0,100]`. The last contributing color tint wins, following the reference. Tint hue is `[0,360]`, strength `[0,100]`. Spatial statistics are computed from the complete image and weighted by source alpha; coverage controls which pixels receive changes. Zero/cancelled contributions preserve original encoded pixels exactly, including the sRGB transfer-function knee; source alpha and hidden RGB are preserved. All mask storage must remain alive and immutable for the call.\n"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "Version 0.5.1 additionally offers [masked correction composition](LocalCorrections.md): a caller can compute any same-sized rendered result, including cubic point curves or Kelvin WB, then localize its RGB through `MaskView`. This uses amount `[0,100]` and explicit encoded/linear interpolation, preserving original alpha and hidden RGB. It does not change the 17-slider accumulation model or its `[0,200]` amount range. Recovered Lightroom local point-curve declarations motivated this functional path, but the composition is independently implemented and has no Adobe rendering-parity claim.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "heading",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "## Composition and usage\n",
+      "level": 2,
+      "title": "Composition and usage"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "paragraph",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "`develop()` invokes Optics → WB → Detail → Effects → Calibration → Light → Color → Vignette → Curve → Grain. This convenience deliberately composes public rendered-image operations; every stage returns normalized encoded sRGB and gamut-maps before the next stage. It is **not** LightCraft's scene-linear Rec.2020 RAW pipeline: exposure headroom and colors outside sRGB can be lost between stages. The existing `HdrImageView`/`hdrToning()` APIs remain separate. Call individual operations when the host needs another order, and apply local masks explicitly in the desired stage.\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "fenced_code",
+      "start_line": 67,
+      "end_line": 84,
+      "raw": "```cpp\n#include <iiGraphicAdjust/iiGraphicAdjust.h>\n\niiGraphicAdjust::DevelopOptions options;\noptions.light.exposure = 0.5;\noptions.light.shadows = 25;\noptions.color.vibrance = 20;\noptions.effects.texture = 15;\nauto result = iiGraphicAdjust::develop(source.view(), options);\nif (!result) return;\n\nauto mask = iiGraphicAdjust::radialMask(result->width, result->height);\nif (!mask) return;\niiGraphicAdjust::LocalAdjustment local{mask->view(), {}};\nlocal.options.exposure = 0.3;\nstd::array<iiGraphicAdjust::LocalAdjustment, 1> adjustments{local};\nauto localized = iiGraphicAdjust::applyLocalAdjustments(result->view(), adjustments);\n```\n",
+      "language": "cpp",
+      "code": "#include <iiGraphicAdjust/iiGraphicAdjust.h>\n\niiGraphicAdjust::DevelopOptions options;\noptions.light.exposure = 0.5;\noptions.light.shadows = 25;\noptions.color.vibrance = 20;\noptions.effects.texture = 15;\nauto result = iiGraphicAdjust::develop(source.view(), options);\nif (!result) return;\n\nauto mask = iiGraphicAdjust::radialMask(result->width, result->height);\nif (!mask) return;\niiGraphicAdjust::LocalAdjustment local{mask->view(), {}};\nlocal.options.exposure = 0.3;\nstd::array<iiGraphicAdjust::LocalAdjustment, 1> adjustments{local};\nauto localized = iiGraphicAdjust::applyLocalAdjustments(result->view(), adjustments);\n",
+      "closed": true
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 86,
+      "end_line": 86,
+      "raw": "The runnable `iiGraphicAdjustDevelopExample` generates a 256×128 PPM from a procedural source:\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 87,
+      "end_line": 87,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "fenced_code",
+      "start_line": 88,
+      "end_line": 90,
+      "raw": "```sh\n./build/iiGraphicAdjustDevelopExample build/lightroom.ppm\n```\n",
+      "language": "sh",
+      "code": "./build/iiGraphicAdjustDevelopExample build/lightroom.ppm\n",
+      "closed": true
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 92,
+      "end_line": 92,
+      "raw": "Source and package contain no Rust runtime, Qt, GUI framework or model dependency. Reference attribution is preserved under the MIT option of LightCraft's dual license. Lightroom/Adobe output parity, camera RAW development, color-managed wide-gamut export, UI integration and non-macOS platforms require separate validation.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Lightroom-style development",
+      "anchor": "lightroom-style-development",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Implementation order and source audit",
+      "anchor": "implementation-order-and-source-audit",
+      "start_line": 5
+    },
+    {
+      "block_id": "b000011",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Pixel contract",
+      "anchor": "pixel-contract",
+      "start_line": 17
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Color",
+      "anchor": "color",
+      "start_line": 29
+    },
+    {
+      "block_id": "b000031",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Effects and detail",
+      "anchor": "effects-and-detail",
+      "start_line": 37
+    },
+    {
+      "block_id": "b000039",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Optics",
+      "anchor": "optics",
+      "start_line": 45
+    },
+    {
+      "block_id": "b000047",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Masks and local adjustment",
+      "anchor": "masks-and-local-adjustment",
+      "start_line": 53
+    },
+    {
+      "block_id": "b000057",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Composition and usage",
+      "anchor": "composition-and-usage",
+      "start_line": 63
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000045",
+        "line": 51,
+        "text": "Geometric sampling is bilinear in linear light with alpha normalization per channel. Hidden RGB never leaks into resampled colors. Dimensions remain unchanged; green-plane coverage supplies output alpha, outside green samples become transparent black, R/B use edge clamps, and warp-created invisible RGB is canonicalized. Vignette gain is evaluated once at the green-plane source position and shared across RGB. This is the explicit exception to non-geometric alpha/hidden-color preservation. Defringe lightness extrema use separable sliding windows with linear pixel cost.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000053",
+        "line": 59,
+        "text": "`applyLocalAdjustments()` accepts up to 32 same-sized borrowed masks. It accumulates coverage × amount × each slider before processing: Exposure, Temperature, Tint, Contrast, Highlights, Shadows, Whites, Blacks, Texture, Clarity, Dehaze, Hue, Saturation, Sharpness, Noise, Moiré and Defringe. Amount is `[0,200]`; most sliders are `[-100,100]`, Exposure `[-5,5]`, Defringe `[0,100]`. The last contributing color tint wins, following the reference. Tint hue is `[0,360]`, strength `[0,100]`. Spatial statistics are computed from the complete image and weighted by source alpha; coverage controls which pixels receive changes. Zero/cancelled contributions preserve original encoded pixels exactly, including the sRGB transfer-function knee; source alpha and hidden RGB are preserved. All mask storage must remain alive and immutable for the call.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [
+      {
+        "block_id": "b000065",
+        "language": "sh",
+        "code": "./build/iiGraphicAdjustDevelopExample build/lightroom.ppm\n"
+      }
+    ],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "storytold/lightcraft",
+        "target": "https://github.com/storytold/lightcraft",
+        "kind": "external",
+        "line": 3
+      },
+      {
+        "block_id": "b000009",
+        "label": "OperationObjects.md",
+        "target": "OperationObjects.md",
+        "kind": "relative",
+        "line": 15
+      },
+      {
+        "block_id": "b000055",
+        "label": "masked correction composition",
+        "target": "LocalCorrections.md",
+        "kind": "relative",
+        "line": 61
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000007",
+        "columns": [
+          "Order",
+          "Target",
+          "Actual reference processing"
+        ],
+        "rows": [
+          [
+            "1",
+            "Kelvin/tint WB, presets, auto/eyedropper; six Light sliders and Auto; parametric/cubic point curves and Refine Saturation",
+            "`color/src/cct.rs`, `color/src/spline.rs`, `pipeline/src/local.rs`, `tone.rs`, `auto.rs`, `finish.rs`"
+          ],
+          [
+            "2",
+            "Eight-band Color Mixer/B&W; Point Color; skin-protected Vibrance/Saturation; four-wheel grading; Calibration",
+            "`pipeline/src/colorops.rs`"
+          ],
+          [
+            "3",
+            "Texture, Clarity, Dehaze; post-crop vignette and grain; detail sharpening and luminance/color NR",
+            "`pipeline/src/local.rs`, `finish.rs`"
+          ],
+          [
+            "4",
+            "Manual distortion, manual/automatic lateral CA, supplied lens coefficients, lens vignetting and purple/green defringe",
+            "`pipeline/src/optics.rs`"
+          ],
+          [
+            "5",
+            "Composed development and deterministic local masks/coverage",
+            "`pipeline/src/lib.rs`, `masks.rs`, `finish.rs`"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

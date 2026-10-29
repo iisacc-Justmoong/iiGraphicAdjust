@@ -1,0 +1,305 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:5610f10b414d0ff2ec5c29a1ea1bf273ff9d31245699fa17b5523ca5588290d6",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/Mapping.md",
+    "sha256": "efc6001c00a69689323c329af2ba59c99bdaefef36d4befc9dd89ffd703c8a03",
+    "bytes": 4282,
+    "line_count": 29,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Gradient Map, Color Lookup and HDR Toning — 0.2.0",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Gradient Map, Color Lookup and HDR Toning — 0.2.0\n",
+      "level": 1,
+      "title": "Gradient Map, Color Lookup and HDR Toning — 0.2.0"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "These are independent CPU operations with explicit numeric contracts. They preserve source alpha and return detached normalized sRGB images; they do not create adjustment layers or modify a document. All input images/settings are validated before neutral shortcuts.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "## Gradient Map\n",
+      "level": 2,
+      "title": "Gradient Map"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "`gradientMap(ImageView, GradientMapOptions)` uses encoded RGB tone `0.2126 R + 0.7152 G + 0.0722 B`. With reverse enabled the tone becomes `1-tone`. A gradient has 2..256 strictly increasing normalized positions with normalized RGB colors. Endpoints need not be 0 and 1: tones outside the first/last position use the closest stop. Colors interpolate linearly in encoded RGB. Amount `[0,1]` interpolates the mapped color with the original, preserving alpha and hidden RGB.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "Optional dither is a zero-mean 4×4 Bayer offset of less than half an 8-bit step, applied to the mapped RGB before clipping and amount interpolation. It is ordered dither, not blue noise. Pixel coordinates are relative to the input image origin.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "heading",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "## Color Lookup\n",
+      "level": 2,
+      "title": "Color Lookup"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "`ColorLut` owns either `size` RGB rows for a 1D LUT or `size^3` rows for a 3D LUT. Sizes are 2..65536 for 1D and 2..129 for 3D. Three-dimensional rows use red-fastest indexing `((b*size)+g)*size+r`. A 1D LUT independently interpolates each channel; it is not expanded into a large 3D table.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "Each finite increasing domain interval normalizes the corresponding input RGB coordinate, then clips the coordinate to the table. Values must be finite but may be outside `[0,1]`; only the final mapped color is clipped. Three-dimensional lookup offers trilinear or tetrahedral interpolation. Tetrahedral interpolation sorts the three fractions and interpolates four vertices in one of six tetrahedra. The tests distinguish both methods using analytic cross-product corner data and all six fraction orderings.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "`colorLookup(ImageView, ColorLut, ColorLookupOptions)` accepts amount `[0,1]` and the same optional ordered dither as Gradient Map. Unknown interpolation enum, malformed domain, nonfinite rows and wrong row count fail explicitly, including amount zero. Alpha and hidden RGB are unchanged.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "`identityLut(size)` builds an actual 3D identity lattice. `parseCubeLut(string_view)` parses a standalone `.cube` text buffer without filesystem I/O, using locale-independent `from_chars`. Supported directives are a quoted optional TITLE, exactly one LUT_1D_SIZE or LUT_3D_SIZE, optional DOMAIN_MIN/MAX, comments and exact finite RGB triples. Duplicate/misplaced directives, trailing garbage, missing/extra rows, invalid number syntax and combined 1D-shaper-plus-3D files are rejected. Input text is limited to 128 MiB. TITLE is validated but not retained; formats `.3dl`, `.look`, ICC profiles and LUT_*_INPUT_RANGE directives are outside this parser's contract.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "## HDR Toning\n",
+      "level": 2,
+      "title": "HDR Toning"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "`HdrImageView` is a separate borrowed view of `HdrRgba` samples in linear-light sRGB primaries. RGB may exceed one but must be finite and nonnegative; alpha remains normalized. The ordinary `ImageView` overload decodes encoded normalized sRGB before processing. Both return a normal `Image`.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "`HdrToningOptions` supports ExposureGamma and HighlightCompression. Exposure `[-16,16]` multiplies linear RGB by `2^exposure`. HighlightCompression additionally divides RGB by `1 + linear luminance`, a global Reinhard-style compression. Gamma `[0.01,100]` applies linear-light power `1/gamma` before sRGB output encoding. Clipping before power avoids overflow and produces the same normalized output as clipping after a positive power.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "HDR zero-alpha samples become transparent black because their unbounded hidden RGB cannot be preserved in the normalized output contract. The SDR overload keeps its original hidden RGB and returns an exact copy for neutral ExposureGamma. Alpha is unchanged in both overloads. Negative radiance, NaN, infinity, buffer mismatch, unknown methods and invalid settings fail.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "This SDK does not implement Photoshop's Local Adaptation or HDR histogram-equalization method, merge bracketed photographs, read HDR files, or reproduce its document flattening behavior. HDR Toning here names the supported exposure/gamma and global highlight-compression operations; it is not a full Photoshop dialog implementation.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Gradient Map, Color Lookup and HDR Toning — 0.2.0",
+      "anchor": "gradient-map-color-lookup-and-hdr-toning--020",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Gradient Map",
+      "anchor": "gradient-map",
+      "start_line": 5
+    },
+    {
+      "block_id": "b000011",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Color Lookup",
+      "anchor": "color-lookup",
+      "start_line": 11
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "HDR Toning",
+      "anchor": "hdr-toning",
+      "start_line": 21
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 3,
+        "text": "These are independent CPU operations with explicit numeric contracts. They preserve source alpha and return detached normalized sRGB images; they do not create adjustment layers or modify a document. All input images/settings are validated before neutral shortcuts.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 15,
+        "text": "Each finite increasing domain interval normalizes the corresponding input RGB coordinate, then clips the coordinate to the table. Values must be finite but may be outside `[0,1]`; only the final mapped color is clipped. Three-dimensional lookup offers trilinear or tetrahedral interpolation. Tetrahedral interpolation sorts the three fractions and interpolates four vertices in one of six tetrahedra. The tests distinguish both methods using analytic cross-product corner data and all six fraction orderings.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000023",
+        "line": 23,
+        "text": "`HdrImageView` is a separate borrowed view of `HdrRgba` samples in linear-light sRGB primaries. RGB may exceed one but must be finite and nonnegative; alpha remains normalized. The ordinary `ImageView` overload decodes encoded normalized sRGB before processing. Both return a normal `Image`.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

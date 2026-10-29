@@ -1,0 +1,506 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:7c49c8ae60a78daf1307b545a8ccd3ec0e21639e8e9b9cb7dc2cb60f5423411f",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/PhotoOperations.md",
+    "sha256": "64a5a1f248e54b756b69617a3827d1b92ba45062a1feee714ea9ff04859f4e49",
+    "bytes": 4783,
+    "line_count": 96,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Photographic orientation, cropping, and histograms",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Photographic orientation, cropping, and histograms\n",
+      "level": 1,
+      "title": "Photographic orientation, cropping, and histograms"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`PhotoOperations.h` adds exact pixel operations and image statistics. The module\nis C++23 and has no Qt or codec dependency. All operations accept the existing\n`ImageView` contract: nonempty row-major normalized sRGB pixels with straight\nalpha. Inputs are validated in full, including hidden RGB at zero alpha.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "## EXIF orientation\n",
+      "level": 2,
+      "title": "EXIF orientation"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 10,
+      "end_line": 13,
+      "raw": "`applyOrientation(image, orientation)` transforms stored image pixels into the\norientation specified by EXIF tag 274. The enum uses the tag's numeric values.\nEvery result owns storage, including orientation one. Pixel channels and alpha\nare copied exactly; there is no interpolation or quantization.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "For a stored image with rows `A B C / D E F`, the displayed result is:\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "table",
+      "start_line": 17,
+      "end_line": 26,
+      "raw": "| Tag | Enum | Output rows | Size |\n| --- | --- | --- | --- |\n| 1 | `TopLeft` | `A B C / D E F` | 3 x 2 |\n| 2 | `TopRight` | `C B A / F E D` | 3 x 2 |\n| 3 | `BottomRight` | `F E D / C B A` | 3 x 2 |\n| 4 | `BottomLeft` | `D E F / A B C` | 3 x 2 |\n| 5 | `LeftTop` | `A D / B E / C F` | 2 x 3 |\n| 6 | `RightTop` | `D A / E B / F C` | 2 x 3 |\n| 7 | `RightBottom` | `F C / E B / D A` | 2 x 3 |\n| 8 | `LeftBottom` | `C F / B E / A D` | 2 x 3 |\n",
+      "columns": [
+        "Tag",
+        "Enum",
+        "Output rows",
+        "Size"
+      ],
+      "rows": [
+        [
+          "1",
+          "`TopLeft`",
+          "`A B C / D E F`",
+          "3 x 2"
+        ],
+        [
+          "2",
+          "`TopRight`",
+          "`C B A / F E D`",
+          "3 x 2"
+        ],
+        [
+          "3",
+          "`BottomRight`",
+          "`F E D / C B A`",
+          "3 x 2"
+        ],
+        [
+          "4",
+          "`BottomLeft`",
+          "`D E F / A B C`",
+          "3 x 2"
+        ],
+        [
+          "5",
+          "`LeftTop`",
+          "`A D / B E / C F`",
+          "2 x 3"
+        ],
+        [
+          "6",
+          "`RightTop`",
+          "`D A / E B / F C`",
+          "2 x 3"
+        ],
+        [
+          "7",
+          "`RightBottom`",
+          "`F C / E B / D A`",
+          "2 x 3"
+        ],
+        [
+          "8",
+          "`LeftBottom`",
+          "`C F / B E / A D`",
+          "2 x 3"
+        ]
+      ]
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 31,
+      "raw": "`Image` stores no EXIF metadata. A caller saving already transformed pixels must\nreset its separately managed orientation tag to one. Applying the same tag again\nwould transform the image twice. Pixel orientation does not automatically rewrite\nmetadata coordinates, thumbnails, or lens calibration records.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "## Integer cropping\n",
+      "level": 2,
+      "title": "Integer cropping"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 37,
+      "raw": "`crop(image, PixelRect{x, y, width, height})` copies the exact source rectangle\n`[x,x+width) x [y,y+height)` into detached output storage. Coordinates are in the\ninput pixel grid. To crop displayed coordinates, apply orientation first.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 39,
+      "end_line": 42,
+      "raw": "Empty or partly outside rectangles return `InvalidParameter`. Bounds are checked\nwith subtraction after validating the origin, so a maximum-size integer cannot\nwrap into a valid rectangle. There is no padding, clamping, resize, or exposure\nchange. Alpha and RGB under fully transparent pixels are preserved.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "## Histograms and statistics\n",
+      "level": 2,
+      "title": "Histograms and statistics"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 51,
+      "raw": "`imageHistogram(image, options)` returns four channels of weighted counts and\nminimum, maximum, and mean values. Red, green, and blue use **encoded sRGB**.\nLuminance decodes each sRGB channel to linear light and computes\n`Y = 0.2126 R + 0.7152 G + 0.0722 B` using Rec709/sRGB primaries. The histogram is\nnot an ICC profile transform; callers must convert other color spaces to the\nimage contract before calling it.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 53,
+      "end_line": 58,
+      "raw": "`bins` defaults to 256 and may be in `[2,65536]`. Each bin covers\n`[i/bins,(i+1)/bins)`; the final bin also contains exactly one. Bin values are\n`double` weights rather than necessarily integer pixel counts. No density\nnormalization is applied: summing any channel's bins gives `totalWeight`, apart\nfrom floating-point summation rounding. Endpoint occupancy is not proof that the\noriginal scene or sensor was clipped.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "table",
+      "start_line": 60,
+      "end_line": 64,
+      "raw": "| Alpha policy | Pixel weight | Zero-alpha RGB |\n| --- | --- | --- |\n| `CoverageWeighted` (default) | Alpha coverage | Excluded |\n| `VisiblePixels` | One for each positive-alpha pixel | Excluded |\n| `AllPixels` | One for every pixel | Included |\n",
+      "columns": [
+        "Alpha policy",
+        "Pixel weight",
+        "Zero-alpha RGB"
+      ],
+      "rows": [
+        [
+          "`CoverageWeighted` (default)",
+          "Alpha coverage",
+          "Excluded"
+        ],
+        [
+          "`VisiblePixels`",
+          "One for each positive-alpha pixel",
+          "Excluded"
+        ],
+        [
+          "`AllPixels`",
+          "One for every pixel",
+          "Included"
+        ]
+      ]
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 66,
+      "end_line": 71,
+      "raw": "All four channels and their means use the same policy. Extrema are measured only\nover positive-weight samples. `pixelCount` is the validated input pixel count;\n`contributingPixels` counts samples with positive weight. A fully transparent\nimage with either exclusion policy succeeds with zero weight, all-zero bins,\nand zero extrema and means. Those zero statistics indicate no observations;\nuse `contributingPixels` to distinguish this case from a visible black image.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 73,
+      "end_line": 77,
+      "raw": "The count storage is at most four times 65536 `double` values (approximately\n2 MiB), independent of input resolution. Analysis scans the source without\nchanging it. Orientation and cropping allocate one output image. Storage\nallocation and container-limit failures return `AllocationFailure`, using the\nsame static-message error contract as the rest of the library.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "fenced_code",
+      "start_line": 79,
+      "end_line": 91,
+      "raw": "```cpp\n#include <iiGraphicAdjust/PhotoOperations.h>\n\nauto displayed = iiGraphicAdjust::applyOrientation(\n    source.view(), iiGraphicAdjust::ExifOrientation::RightTop);\nif (displayed) {\n    auto region = iiGraphicAdjust::crop(displayed->view(), {0, 0, 128, 128});\n    if (region) {\n        auto statistics = iiGraphicAdjust::imageHistogram(region->view());\n        // statistics->red.mean uses encoded sRGB, luminance.mean uses linear light.\n    }\n}\n```\n",
+      "language": "cpp",
+      "code": "#include <iiGraphicAdjust/PhotoOperations.h>\n\nauto displayed = iiGraphicAdjust::applyOrientation(\n    source.view(), iiGraphicAdjust::ExifOrientation::RightTop);\nif (displayed) {\n    auto region = iiGraphicAdjust::crop(displayed->view(), {0, 0, 128, 128});\n    if (region) {\n        auto statistics = iiGraphicAdjust::imageHistogram(region->view());\n        // statistics->red.mean uses encoded sRGB, luminance.mean uses linear light.\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 92,
+      "end_line": 92,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 93,
+      "end_line": 96,
+      "raw": "Tests in `tests/photo_operations.cpp` specify all eight rectangular orientation\noutputs independently, exact crop boundaries and integer overflow cases,\nencoded versus linear histogram values, three alpha policies, detached storage,\nfully transparent input, invalid enums, and malformed/nonfinite images.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Photographic orientation, cropping, and histograms",
+      "anchor": "photographic-orientation-cropping-and-histograms",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "EXIF orientation",
+      "anchor": "exif-orientation",
+      "start_line": 8
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Integer cropping",
+      "anchor": "integer-cropping",
+      "start_line": 33
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Histograms and statistics",
+      "anchor": "histograms-and-statistics",
+      "start_line": 44
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000013",
+        "line": 28,
+        "text": "`Image` stores no EXIF metadata. A caller saving already transformed pixels must",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000023",
+        "line": 50,
+        "text": "not an ICC profile transform; callers must convert other color spaces to the",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": [
+      {
+        "block_id": "b000011",
+        "columns": [
+          "Tag",
+          "Enum",
+          "Output rows",
+          "Size"
+        ],
+        "rows": [
+          [
+            "1",
+            "`TopLeft`",
+            "`A B C / D E F`",
+            "3 x 2"
+          ],
+          [
+            "2",
+            "`TopRight`",
+            "`C B A / F E D`",
+            "3 x 2"
+          ],
+          [
+            "3",
+            "`BottomRight`",
+            "`F E D / C B A`",
+            "3 x 2"
+          ],
+          [
+            "4",
+            "`BottomLeft`",
+            "`D E F / A B C`",
+            "3 x 2"
+          ],
+          [
+            "5",
+            "`LeftTop`",
+            "`A D / B E / C F`",
+            "2 x 3"
+          ],
+          [
+            "6",
+            "`RightTop`",
+            "`D A / E B / F C`",
+            "2 x 3"
+          ],
+          [
+            "7",
+            "`RightBottom`",
+            "`F C / E B / D A`",
+            "2 x 3"
+          ],
+          [
+            "8",
+            "`LeftBottom`",
+            "`C F / B E / A D`",
+            "2 x 3"
+          ]
+        ]
+      },
+      {
+        "block_id": "b000027",
+        "columns": [
+          "Alpha policy",
+          "Pixel weight",
+          "Zero-alpha RGB"
+        ],
+        "rows": [
+          [
+            "`CoverageWeighted` (default)",
+            "Alpha coverage",
+            "Excluded"
+          ],
+          [
+            "`VisiblePixels`",
+            "One for each positive-alpha pixel",
+            "Excluded"
+          ],
+          [
+            "`AllPixels`",
+            "One for every pixel",
+            "Included"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

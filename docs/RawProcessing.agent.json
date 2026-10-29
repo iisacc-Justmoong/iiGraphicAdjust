@@ -1,0 +1,593 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:766728a25ebb7733f81962fe36bc54497e5bc111e7f801ce77f21075375512a6",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/RawProcessing.md",
+    "sha256": "f41713097e2d2c248c2830d2d2acae703c7a0184e2592430135fb75ced920dfb",
+    "bytes": 7600,
+    "line_count": 130,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Sensor Bayer RAW processing",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Sensor Bayer RAW processing\n",
+      "level": 1,
+      "title": "Sensor Bayer RAW processing"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "`RawProcessing.h` processes an already decoded, unpacked unsigned 16-bit Bayer\nmosaic. It does not open a RAW file or infer calibration from a camera model.\nThe implementation uses standard C++23 without Qt or external image libraries.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "## Input and calibration contract\n",
+      "level": 2,
+      "title": "Input and calibration contract"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 15,
+      "raw": "`BayerImageView` supplies the image width and height, a stride measured in\n`uint16_t` samples, a read-only sample span, and one of `RGGB`, `BGGR`, `GRBG`, or\n`GBRG`. Each dimension must be at least two, and the stride must be at least the\nwidth. The span must contain `(height - 1) * strideSamples + width` samples;\npadding after the final row is unnecessary. Row padding and extra trailing\nsamples are ignored. Dimension and buffer-address arithmetic are checked before\nany sample is read.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 21,
+      "raw": "The pattern describes the 2x2 tile at the sensor reference origin. `phaseX` and\n`phaseY` must each be zero or one. For a crop starting at sensor position `(x,y)`,\nuse `phaseX = x % 2` and `phaseY = y % 2`. Both the CFA color and black-level\nlookup follow this phase. Callers must retain the original tile description when\nusing phase offsets; changing the pattern as well would apply the shift twice.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "`RawCalibration` supplies:\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "list",
+      "start_line": 25,
+      "end_line": 33,
+      "raw": "- `blackLevels`: four row-major values at the sensor reference tile, including\n  separate values for its two green sites. Each value must be finite,\n  nonnegative, and strictly below the white level.\n- `whiteLevel`: a finite value in `(0,65535]`, expressed in the same units as\n  the unpacked samples.\n- `whiteBalanceGains`: positive finite gains for camera red, green, and blue.\n- `cameraToLinearSrgb`: a finite row-major 3x3 matrix mapping white-balanced\n  camera RGB to linear sRGB with the D65 reference white. The caller must supply\n  a verified transform for the sensor and illuminant.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`blackLevels`: four row-major values at the sensor reference tile, including",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`whiteLevel`: a finite value in `(0,65535]`, expressed in the same units as",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`whiteBalanceGains`: positive finite gains for camera red, green, and blue.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`cameraToLinearSrgb`: a finite row-major 3x3 matrix mapping white-balanced",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 38,
+      "raw": "The identity matrix and unit gains are explicit defaults for synthetic data or\nthe assumption that camera RGB already matches linear sRGB. They do not establish\nphysical camera color accuracy. The matrix is not a DNG `ColorMatrix` tag or an\nICC profile; the required matrix direction and white point differ.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "## Numerical processing\n",
+      "level": 2,
+      "title": "Numerical processing"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "`developRaw(view, options)` performs these operations in order:\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "list",
+      "start_line": 44,
+      "end_line": 58,
+      "raw": "1. At each measured site, compute\n   `max(0, sample - tileBlack) / (whiteLevel - tileBlack)` in double precision.\n   Values above the white reference remain above one.\n2. Reconstruct the missing channels with Bayer bilinear interpolation. Measured\n   channels are retained. Missing green at red or blue averages axial green\n   neighbors; missing opposite red/blue averages diagonal neighbors. At a green\n   site, red and blue use their matching horizontal or vertical neighbors.\n3. At boundaries, average the available neighbors from the same stencil. No\n   reflected, replicated, or fabricated sensor samples are added. A 2x2 image is\n   supported; a single row or column is rejected because it does not contain all\n   required colors.\n4. Multiply camera RGB by its white-balance gains, then apply the supplied color\n   matrix. Negative matrix results clamp to zero as an explicit policy.\n5. Multiply by `2^exposureStops`, where exposure is finite in `[-16,16]` stops.\n   Positive highlights remain unclipped.\n",
+      "items": [
+        {
+          "marker": "1.",
+          "text": "At each measured site, compute",
+          "checked": null
+        },
+        {
+          "marker": "2.",
+          "text": "Reconstruct the missing channels with Bayer bilinear interpolation. Measured",
+          "checked": null
+        },
+        {
+          "marker": "3.",
+          "text": "At boundaries, average the available neighbors from the same stencil. No",
+          "checked": null
+        },
+        {
+          "marker": "4.",
+          "text": "Multiply camera RGB by its white-balance gains, then apply the supplied color",
+          "checked": null
+        },
+        {
+          "marker": "5.",
+          "text": "Multiply by `2^exposureStops`, where exposure is finite in `[-16,16]` stops.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 60,
+      "end_line": 65,
+      "raw": "The result is a detached `LinearRgbImage` containing opaque `HdrRgba` pixels.\nRGB is finite, nonnegative, linear-light sRGB stored as floats; values above one\nare valid. Its `view()` can feed the existing `hdrToning` API. Nonfinite\nintermediate calculations or output exceeding the finite float range return an\n`InvalidPixel` error. Allocation failures return `AllocationFailure` rather than\nescaping as allocation exceptions. Input samples and calibration remain unchanged.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 67,
+      "end_line": 72,
+      "raw": "`renderRaw(view, options, toning)` composes `developRaw` and `hdrToning`. The\ntoning stage applies its own exposure and gamma, clipping or highlight\ncompression, and sRGB transfer encoding. It produces the existing normalized\nstraight-alpha `Image`. Development exposure and toning exposure are separate,\nadditive stops. Keeping the linear result allows a later toning adjustment to\nrecover values above one without an earlier clipping loss.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "fenced_code",
+      "start_line": 74,
+      "end_line": 88,
+      "raw": "```cpp\n#include <iiGraphicAdjust/RawProcessing.h>\n#include <array>\n\n// Synthetic camera RGB assumed to have sRGB primaries.\nconst std::array<std::uint16_t,4> mosaic{110,410,410,810};\niiGraphicAdjust::BayerImageView source{\n    2,2,2,mosaic,iiGraphicAdjust::BayerPattern::RGGB};\niiGraphicAdjust::RawDevelopmentOptions options;\noptions.calibration.blackLevels={10,10,10,10};\noptions.calibration.whiteLevel=1010;\nauto linear=iiGraphicAdjust::developRaw(source,options);\n// Each linear output pixel is approximately R=.1, G=.4, B=.8, A=1.\nauto display=iiGraphicAdjust::renderRaw(source,options);\n```\n",
+      "language": "cpp",
+      "code": "#include <iiGraphicAdjust/RawProcessing.h>\n#include <array>\n\n// Synthetic camera RGB assumed to have sRGB primaries.\nconst std::array<std::uint16_t,4> mosaic{110,410,410,810};\niiGraphicAdjust::BayerImageView source{\n    2,2,2,mosaic,iiGraphicAdjust::BayerPattern::RGGB};\niiGraphicAdjust::RawDevelopmentOptions options;\noptions.calibration.blackLevels={10,10,10,10};\noptions.calibration.whiteLevel=1010;\nauto linear=iiGraphicAdjust::developRaw(source,options);\n// Each linear output pixel is approximately R=.1, G=.4, B=.8, A=1.\nauto display=iiGraphicAdjust::renderRaw(source,options);\n",
+      "closed": true
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 89,
+      "end_line": 89,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "heading",
+      "start_line": 90,
+      "end_line": 90,
+      "raw": "## Scope and reference boundaries\n",
+      "level": 2,
+      "title": "Scope and reference boundaries"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 92,
+      "end_line": 97,
+      "raw": "Bilinear demosaicing is a basic reconstruction algorithm. High-contrast edges can\nshow false color and zipper artifacts. This implementation does not claim\nMalvar-He-Cutler, adaptive demosaicing, vendor RAW-converter parity, or measured\ncamera image quality. The bilinear stencils are described in the primary\n[IPOL demosaicing article](https://www.ipol.im/pub/art/2011/g_mhcd/revisions/2011-08-14/g_mhcd.htm).\nThe implementation is independently written; no article source code is vendored.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 98,
+      "end_line": 98,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 99,
+      "end_line": 107,
+      "raw": "The [Adobe DNG specification 1.7.1.0](https://helpx.adobe.com/content/dam/help/en/camera-raw/digital-negative/jcr_content/root/content/flex/items/position/position-par/download_section_733958301/download-1/DNG_Spec_1_7_1_0.pdf)\ndefines repeating black levels, white levels, and camera color transformations.\nThis API is a smaller numeric contract, not a DNG decoder or a complete DNG\nrendering pipeline. In particular, it uses per-tile normalization, retains values\nabove one, clamps negative sensor values early, and accepts a direct camera-to-\nsRGB matrix. DNG's normalization, clipping, linearization, illuminant\ninterpolation, and camera-to-XYZ processing require additional work by a DNG\nadapter. DNG `ColorMatrix1` maps XYZ into camera space and must not be copied\ndirectly into `cameraToLinearSrgb`.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 109,
+      "end_line": 113,
+      "raw": "Packed RAW unpacking, file metadata parsing, nonlinear sensor linearization,\ndefective-pixel correction, lens shading, denoising, highlight reconstruction,\nICC processing, wide-gamut output, and automatic calibration are not included.\nApplications can perform suitable calibrated sensor corrections before this API\nand use existing image adjustments after SDR rendering.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 114,
+      "end_line": 114,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "heading",
+      "start_line": 115,
+      "end_line": 115,
+      "raw": "## Verification\n",
+      "level": 2,
+      "title": "Verification"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 116,
+      "end_line": 116,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 117,
+      "end_line": 117,
+      "raw": "`iiGraphicAdjust.raw.*` contains six independent CTest cases:\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 118,
+      "end_line": 118,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "table",
+      "start_line": 119,
+      "end_line": 126,
+      "raw": "| Case | Verified behavior |\n| --- | --- |\n| `patterns` | Distinct constant RGB through all four patterns, including edges and corners; detached output and immutable input |\n| `interpolation` | Independent affine RGB ramps in the interior, measured-site preservation, and explicit axial/diagonal/boundary arithmetic |\n| `calibration` | Separate green black levels, black/white endpoints, nonunit gains and nonidentity matrix oracle, and negative matrix policy |\n| `rendering` | Headroom preservation, negative toning exposure recovery, clipping/compression, and exact composition with `hdrToning` |\n| `layout` | Padded stride, odd dimensions, all Bayer/phase combinations, minimum 2x2, phased black levels, and ignored trailing samples |\n| `validation` | Invalid enum, phases, dimensions, truncation, addressing overflow, nonfinite calibration, gain/exposure ranges, and unrepresentable output |\n",
+      "columns": [
+        "Case",
+        "Verified behavior"
+      ],
+      "rows": [
+        [
+          "`patterns`",
+          "Distinct constant RGB through all four patterns, including edges and corners; detached output and immutable input"
+        ],
+        [
+          "`interpolation`",
+          "Independent affine RGB ramps in the interior, measured-site preservation, and explicit axial/diagonal/boundary arithmetic"
+        ],
+        [
+          "`calibration`",
+          "Separate green black levels, black/white endpoints, nonunit gains and nonidentity matrix oracle, and negative matrix policy"
+        ],
+        [
+          "`rendering`",
+          "Headroom preservation, negative toning exposure recovery, clipping/compression, and exact composition with `hdrToning`"
+        ],
+        [
+          "`layout`",
+          "Padded stride, odd dimensions, all Bayer/phase combinations, minimum 2x2, phased black levels, and ignored trailing samples"
+        ],
+        [
+          "`validation`",
+          "Invalid enum, phases, dimensions, truncation, addressing overflow, nonfinite calibration, gain/exposure ranges, and unrepresentable output"
+        ]
+      ]
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 127,
+      "end_line": 127,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 128,
+      "end_line": 130,
+      "raw": "These tests establish numeric behavior on synthetic sensor samples. Physical\ncamera calibration and hardware-captured RAW image quality remain outside this\nverification.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Sensor Bayer RAW processing",
+      "anchor": "sensor-bayer-raw-processing",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Input and calibration contract",
+      "anchor": "input-and-calibration-contract",
+      "start_line": 7
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Numerical processing",
+      "anchor": "numerical-processing",
+      "start_line": 40
+    },
+    {
+      "block_id": "b000029",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Scope and reference boundaries",
+      "anchor": "scope-and-reference-boundaries",
+      "start_line": 90
+    },
+    {
+      "block_id": "b000037",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Verification",
+      "anchor": "verification",
+      "start_line": 115
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 11,
+        "text": "`GBRG`. Each dimension must be at least two, and the stride must be at least the",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 12,
+        "text": "width. The span must contain `(height - 1) * strideSamples + width` samples;",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 18,
+        "text": "`phaseY` must each be zero or one. For a crop starting at sensor position `(x,y)`,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 20,
+        "text": "lookup follow this phase. Callers must retain the original tile description when",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 26,
+        "text": "separate values for its two green sites. Each value must be finite,",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000013",
+        "line": 32,
+        "text": "camera RGB to linear sRGB with the D65 reference white. The caller must supply",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000015",
+        "line": 36,
+        "text": "the assumption that camera RGB already matches linear sRGB. They do not establish",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 38,
+        "text": "ICC profile; the required matrix direction and white point differ.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 54,
+        "text": "required colors.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000033",
+        "line": 106,
+        "text": "adapter. DNG `ColorMatrix1` maps XYZ into camera space and must not be copied",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000031",
+        "label": "IPOL demosaicing article",
+        "target": "https://www.ipol.im/pub/art/2011/g_mhcd/revisions/2011-08-14/g_mhcd.htm",
+        "kind": "external",
+        "line": 96
+      },
+      {
+        "block_id": "b000033",
+        "label": "Adobe DNG specification 1.7.1.0",
+        "target": "https://helpx.adobe.com/content/dam/help/en/camera-raw/digital-negative/jcr_content/root/content/flex/items/position/position-par/download_section_733958301/download-1/DNG_Spec_1_7_1_0.pdf",
+        "kind": "external",
+        "line": 99
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000041",
+        "columns": [
+          "Case",
+          "Verified behavior"
+        ],
+        "rows": [
+          [
+            "`patterns`",
+            "Distinct constant RGB through all four patterns, including edges and corners; detached output and immutable input"
+          ],
+          [
+            "`interpolation`",
+            "Independent affine RGB ramps in the interior, measured-site preservation, and explicit axial/diagonal/boundary arithmetic"
+          ],
+          [
+            "`calibration`",
+            "Separate green black levels, black/white endpoints, nonunit gains and nonidentity matrix oracle, and negative matrix policy"
+          ],
+          [
+            "`rendering`",
+            "Headroom preservation, negative toning exposure recovery, clipping/compression, and exact composition with `hdrToning`"
+          ],
+          [
+            "`layout`",
+            "Padded stride, odd dimensions, all Bayer/phase combinations, minimum 2x2, phased black levels, and ignored trailing samples"
+          ],
+          [
+            "`validation`",
+            "Invalid enum, phases, dimensions, truncation, addressing overflow, nonfinite calibration, gain/exposure ranges, and unrepresentable output"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

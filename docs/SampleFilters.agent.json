@@ -1,0 +1,490 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:9d220bf54ff70358c80e64a822523bd28860043595b6ea2cf18db19fe34fab6a",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/SampleFilters.md",
+    "sha256": "aeea66a4c9cdbb8cda87cf46129f2cb751df45eab39de273e560008792502eca",
+    "bytes": 6077,
+    "line_count": 103,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Evidence-bound sample filters",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Evidence-bound sample filters\n",
+      "level": 1,
+      "title": "Evidence-bound sample filters"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`SampleFilters.h` provides separate C++23 APIs for the Average and Solarize\nsample kernels recovered from the installed Photoshop 27.10.0 arm64 plugins.\nThese APIs operate on caller-owned strided sample planes. They do not change\nthe existing `average(ImageView)` or `solarize(ImageView)` rendered-image\ncontracts, which use independent normalized RGBA models.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 12,
+      "raw": "The implementation is adapted from the workspace's independently authored,\nverified C++23 reconstruction, without linking the investigation project,\nAdobe binaries, a scripting runtime, Qt, or another SDK. Public declarations\nuse standard C++ types and the module's normal export macro.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "## Average\n",
+      "level": 2,
+      "title": "Average"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 16,
+      "end_line": 21,
+      "raw": "`sampleAverage8`, `sampleAverage16`, and `sampleAverageFloat32` accept one planar\nchannel and an optional `SampleSelectionMask`. Width counts active samples;\n`rowStrideSamples` counts elements, including any row padding. The mask may\nhave its own stride but must have the same active dimensions. Its high bit\nselects samples: bytes 128..255 select equally and 0..127 are excluded. This is\nbinary selection, not fractional mask weighting.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 29,
+      "raw": "The kernels traverse 256x256 tiles in top-to-bottom, left-to-right order.\nUnsigned integer tile sums use 32-bit arithmetic; completed tile sums and\ncounts accumulate as float64. Integer output is half-up rounded. Float input\ninstead accumulates as float32 within each tile, then float64 between tiles;\nthe final mean is converted to float32. Negative and HDR samples are unclamped.\nAn empty selection yields integer zero or floating NaN. Floating NaN payload\nidentity is outside the contract.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 37,
+      "raw": "`SampleAverageResult<T>` returns the value, selected sample count, and tile\ncount. `fillSampleAverage8/16/Float32` validate both views, compute the complete\nmean, then fill every active output sample. Output and input dimensions must\nmatch. Exact or partial input/output aliasing is safe because all input reads\nfinish before writes start. Row padding and storage beyond the active extent\nremain untouched. Photoshop's host selection compositing, per-channel callbacks,\nprogress, and cancellation are separate from these kernels.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 39,
+      "end_line": 41,
+      "raw": "Float arithmetic in this translation unit is compiled with contraction and\nfast-math disabled (`/fp:strict` on MSVC). Application changes to the thread's\nfloating-point rounding environment are outside the default contract.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "## Solarize\n",
+      "level": 2,
+      "title": "Solarize"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 45,
+      "end_line": 48,
+      "raw": "`solarizeSamples8/16` validate a mutable plane and then update active samples\nin place. Interleaved channels are supported by passing `pixelWidth * channels`\nas the active sample width; alpha is also transformed if included, so hosts\nmust exclude or separately preserve alpha when appropriate.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "table",
+      "start_line": 50,
+      "end_line": 53,
+      "raw": "| Input | Verified operation |\n|---|---|\n| byte | `x < 128 ? x : 255 - x` |\n| uint16 | `x < 16384 ? x : uint16_t(32768u - x)` |\n",
+      "columns": [
+        "Input",
+        "Verified operation"
+      ],
+      "rows": [
+        [
+          "byte",
+          "`x < 128 ? x : 255 - x`"
+        ],
+        [
+          "uint16",
+          "`x < 16384 ? x : uint16_t(32768u - x)`"
+        ]
+      ]
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 55,
+      "end_line": 60,
+      "raw": "The word scale is the observed Photoshop 0..32768 scale. Values above 32768\nretain the original 16-bit wrapping subtraction; they are not clamped or\nsilently rescaled from a 65535-based range. No float Solarize behavior is exposed.\nThe original worker truncates the active row sample count to signed 16; this\nsafe API rejects active widths above 32767 before writing. Callers may process\nsmaller row subviews when their images have wider rows.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "heading",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "## Validation\n",
+      "level": 2,
+      "title": "Validation"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 64,
+      "end_line": 69,
+      "raw": "All functions return `std::expected<..., SampleFilterError>`. Dimensions must\nbe positive and at most `INT32_MAX`, stride must cover an active row, and\n`(height-1)*stride+width` must fit both `size_t` and the supplied span. Invalid\ngeometry, stride, storage, mask/output dimensions, and unsupported Solarize\nrow widths are reported before any output mutation. No allocation or image\ncontainer decoding occurs inside these sample kernels.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 70,
+      "end_line": 70,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "heading",
+      "start_line": 71,
+      "end_line": 71,
+      "raw": "## Provenance and verification\n",
+      "level": 2,
+      "title": "Provenance and verification"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 73,
+      "end_line": 79,
+      "raw": "The canonical workspace report is\n[Photoshop native filters](/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Photoshop/docs/Filters.md).\nThe corresponding prior\n[native replay record](/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Photoshop/evidence/native/filters/native-replay.json)\ncompared the reconstruction to original arm64 instructions in owned memory\nwith synthetic host callbacks: 78 Average cases, 26 Solarize cases, 1,730,775\nactive samples, and 1,291,286 assertions. Photoshop GUI was not executed.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 80,
+      "end_line": 80,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "table",
+      "start_line": 81,
+      "end_line": 84,
+      "raw": "| Kernel | Original slice SHA-256 | REA evidence |\n|---|---|---|\n| Average `_DoStart` `0x34fc` | `1fc869369f41119f05e4125aaa65000a60aede8ea21a5ef527fb8b328883cac0` | pseudocode `ev_8da0d5c2ab74959c1bce22fd79151d5739b47e5600dbbccc03fd3c05822d1cb6`; assembly `ev_98e5c7c36ac748c0bea9bbfab1201e07d3f2e8c300decfd9221f657563506c58` |\n| Solarize worker `0x2800` | `491ef435586a6c94995eecdf9378878fe168a887032d4eee916b5a5f027f0550` | pseudocode `ev_6442587260ac96feab3b61a82ab904708052ad2b915ebc8fdbf899496bdf6210`; assembly `ev_581d5a58256253b626e530fbafeb6e5e307c73d21cd9ada4411cfdf2d1e44e6a` |\n",
+      "columns": [
+        "Kernel",
+        "Original slice SHA-256",
+        "REA evidence"
+      ],
+      "rows": [
+        [
+          "Average `_DoStart` `0x34fc`",
+          "`1fc869369f41119f05e4125aaa65000a60aede8ea21a5ef527fb8b328883cac0`",
+          "pseudocode `ev_8da0d5c2ab74959c1bce22fd79151d5739b47e5600dbbccc03fd3c05822d1cb6`; assembly `ev_98e5c7c36ac748c0bea9bbfab1201e07d3f2e8c300decfd9221f657563506c58`"
+        ],
+        [
+          "Solarize worker `0x2800`",
+          "`491ef435586a6c94995eecdf9378878fe168a887032d4eee916b5a5f027f0550`",
+          "pseudocode `ev_6442587260ac96feab3b61a82ab904708052ad2b915ebc8fdbf899496bdf6210`; assembly `ev_581d5a58256253b626e530fbafeb6e5e307c73d21cd9ada4411cfdf2d1e44e6a`"
+        ]
+      ]
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 86,
+      "end_line": 90,
+      "raw": "The SDK adds seven test cases covering integer tile bounds and rounding,\nfloat cancellation/HDR/NaN/signed zero, mask thresholds/empty selection,\nfill padding and aliasing, all 256 byte and all 65,536 word Solarize inputs, and\nfailure before mutation. The integration audit separately compares the SDK\nfunctions to the pinned workspace reconstruction in 170 cases.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 92,
+      "end_line": 103,
+      "raw": "The new SDK library was also compared directly to the same SHA-bound original\narm64 instructions using the existing controlled replay harness. A names-only\ncompatibility header forwards the harness's C++ calls to the exported SDK APIs;\nthe workspace reconstruction is not linked into that replay executable. All\n78 Average and 26 Solarize cases passed, including 1,730,775 active samples and\n1,291,286 assertions. The original slices are copied into owned memory;\nsynthetic host records and callbacks replace application integration. Non-NaN\nfloat output is bit-compared; NaN classification is compared. Current library,\nwrapper, harness, and slice hashes are in\n[SampleFiltersVerification.json](SampleFiltersVerification.json). This is a\nbounded original-kernel comparison, not Photoshop GUI execution or complete\nfilter-host compatibility.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Evidence-bound sample filters",
+      "anchor": "evidence-bound-sample-filters",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Average",
+      "anchor": "average",
+      "start_line": 14
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Solarize",
+      "anchor": "solarize",
+      "start_line": 43
+    },
+    {
+      "block_id": "b000025",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Validation",
+      "anchor": "validation",
+      "start_line": 62
+    },
+    {
+      "block_id": "b000029",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Provenance and verification",
+      "anchor": "provenance-and-verification",
+      "start_line": 71
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "These APIs operate on caller-owned strided sample planes. They do not change",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 19,
+        "text": "have its own stride but must have the same active dimensions. Its high bit",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 33,
+        "text": "mean, then fill every active output sample. Output and input dimensions must",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 48,
+        "text": "must exclude or separately preserve alpha when appropriate.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 64,
+        "text": "All functions return `std::expected<..., SampleFilterError>`. Dimensions must",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 65,
+        "text": "be positive and at most `INT32_MAX`, stride must cover an active row, and",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 66,
+        "text": "`(height-1)*stride+width` must fit both `size_t` and the supplied span. Invalid",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000031",
+        "label": "Photoshop native filters",
+        "target": "/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Photoshop/docs/Filters.md",
+        "kind": "relative",
+        "line": 74
+      },
+      {
+        "block_id": "b000031",
+        "label": "native replay record",
+        "target": "/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Photoshop/evidence/native/filters/native-replay.json",
+        "kind": "relative",
+        "line": 76
+      },
+      {
+        "block_id": "b000037",
+        "label": "SampleFiltersVerification.json",
+        "target": "SampleFiltersVerification.json",
+        "kind": "relative",
+        "line": 101
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000021",
+        "columns": [
+          "Input",
+          "Verified operation"
+        ],
+        "rows": [
+          [
+            "byte",
+            "`x < 128 ? x : 255 - x`"
+          ],
+          [
+            "uint16",
+            "`x < 16384 ? x : uint16_t(32768u - x)`"
+          ]
+        ]
+      },
+      {
+        "block_id": "b000033",
+        "columns": [
+          "Kernel",
+          "Original slice SHA-256",
+          "REA evidence"
+        ],
+        "rows": [
+          [
+            "Average `_DoStart` `0x34fc`",
+            "`1fc869369f41119f05e4125aaa65000a60aede8ea21a5ef527fb8b328883cac0`",
+            "pseudocode `ev_8da0d5c2ab74959c1bce22fd79151d5739b47e5600dbbccc03fd3c05822d1cb6`; assembly `ev_98e5c7c36ac748c0bea9bbfab1201e07d3f2e8c300decfd9221f657563506c58`"
+          ],
+          [
+            "Solarize worker `0x2800`",
+            "`491ef435586a6c94995eecdf9378878fe168a887032d4eee916b5a5f027f0550`",
+            "pseudocode `ev_6442587260ac96feab3b61a82ab904708052ad2b915ebc8fdbf899496bdf6210`; assembly `ev_581d5a58256253b626e530fbafeb6e5e307c73d21cd9ada4411cfdf2d1e44e6a`"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

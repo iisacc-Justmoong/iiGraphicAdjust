@@ -1,6 +1,6 @@
 # File creation ownership in iiGraphicAdjust
 
-Native image-export/example file creation delegates to provider streams/directories. Image processing, color operations and codec behavior remain here.
+The separate image-export example applications link iiFileProvider and delegate file creation to its streams. Image processing and color operations use caller-provided data and remain independent of every other SDK module.
 
 The common [ownership contract](../../iiFileProvider/docs/FILE_OWNERSHIP.md) defines stream, staging, control-file and
 installed-package rules. Source regression tests remain with this module; the

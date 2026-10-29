@@ -1,0 +1,239 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:22462b639e9e27819e8a9e02a602f1d455512cc2c149ca32e21378dafbd93d21",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/PhotoProcessingVerification.md",
+    "sha256": "abdc40099834e82cf15de0ef86fe4763f09257e77ff9325cde582b6023f4363e",
+    "bytes": 3322,
+    "line_count": 54,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Photo processing verification — 0.5.0",
+    "role": "evidence",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Photo processing verification — 0.5.0\n",
+      "level": 1,
+      "title": "Photo processing verification — 0.5.0"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 4,
+      "raw": "On 2026-10-09 (Asia/Seoul), the C++23 source was built and executed on macOS\narm64 with AppleClang 21.0.0. No Qt or external processing dependency was added.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "table",
+      "start_line": 6,
+      "end_line": 10,
+      "raw": "| Configuration | Library suites | Installed public-package consumer |\n| --- | ---: | ---: |\n| Release shared | 150/150 | 1/1 |\n| Release static | 150/150 | 1/1 |\n| Debug shared, AddressSanitizer + UndefinedBehaviorSanitizer | 150/150 | 1/1 |\n",
+      "columns": [
+        "Configuration",
+        "Library suites",
+        "Installed public-package consumer"
+      ],
+      "rows": [
+        [
+          "Release shared",
+          "150/150",
+          "1/1"
+        ],
+        [
+          "Release static",
+          "150/150",
+          "1/1"
+        ],
+        [
+          "Debug shared, AddressSanitizer + UndefinedBehaviorSanitizer",
+          "150/150",
+          "1/1"
+        ]
+      ]
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 12,
+      "end_line": 16,
+      "raw": "There are 140 retained rendered-image suites and ten added cases: six sensor RAW\ncases and four photo-operation cases. This is a suite count, not a count of all\npossible photographic functions. The new consumer calls `developRaw`, `renderRaw`,\n`applyOrientation`, `crop` and `imageHistogram` through installed headers/targets,\nwhile retaining the existing adjustment/filter consumer calls.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 24,
+      "raw": "RAW numeric tests compare independently calculated stencils, measured sites,\nfour CFA patterns and phase offsets, per-site black levels, nonidentity color\nmatrices, white balance and exposure. Values above one remain available in linear\noutput and can be recovered with later negative toning exposure. Malformed sample\nbuffers, stride/address overflow, NaN/Inf and unrepresentable output are rejected.\nThe photo suite uses exact 3x2 pixel permutations for all eight EXIF orientations,\ncropped pixel/alpha comparisons and independently weighted histogram statistics.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 30,
+      "raw": "The optional upper-layer iiCameraIntegration 0.2.0 `ImageProcessing` component\nwas verified in shared/static/sanitized configurations, with 21/21 camera suites\nand one installed consumer per variant. A generated first frame is decoded,\ninterpreted under explicit color rules, oriented/cropped/developed/resized and\nanalyzed. Camera types are not referenced by this processing SDK.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 32,
+      "end_line": 35,
+      "raw": "Both SDKs are sanitizer-instrumented. External FFmpeg/system libraries are not.\nmacOS LeakSanitizer is unavailable, so tests use `ASAN_OPTIONS=detect_leaks=0`.\nNo sanitizer finding was reported. This does not prove absence of every memory\nor numerical defect or constitute a performance guarantee.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 37,
+      "end_line": 42,
+      "raw": "Run `../iiCameraIntegration/tools/verify.sh --photo --sanitize` from this module\nwith the sibling source and installed FFmpeg development libraries. Build, stage,\ngenerated images and consumer output stay under the respective `build/` folders.\nThe routine explicitly selects each variant's package prefix. Host loader\ninspection confirms the shared consumer loads the staged 0.5.0 library. Existing\n`~/.local` 0.4.0 remains unchanged, and no running product was restarted.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 44,
+      "end_line": 48,
+      "raw": "Logs and JUnit results are `build/photo-{shared,static,sanitized}-ctest.xml`,\n`build/photo-{static,sanitized}-tests.log`, `build/photo-tests.log` and the\n`build/photo-*-consumer/ctest.xml` files. The complete repeatable workflow output\nand machine-readable matrix are in the camera module's\n`build/photo-workflow.log` and `build/photo-verification-report.json`.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 54,
+      "raw": "The RAW input is caller-decoded uint16 Bayer with caller-supplied calibration.\nEncoded RAW file decoding, a DNG pipeline, camera profiles, ICC/wide-gamut output,\nadaptive demosaicing, physical camera image quality, GPU acceleration, product\nintegration and Windows/Linux/iOS/Android runtime are not established here.\nExisting [historical verification](Verification.md) remains separately documented.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Photo processing verification — 0.5.0",
+      "anchor": "photo-processing-verification--050",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000019",
+        "label": "historical verification",
+        "target": "Verification.md",
+        "kind": "relative",
+        "line": 54
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000005",
+        "columns": [
+          "Configuration",
+          "Library suites",
+          "Installed public-package consumer"
+        ],
+        "rows": [
+          [
+            "Release shared",
+            "150/150",
+            "1/1"
+          ],
+          [
+            "Release static",
+            "150/150",
+            "1/1"
+          ],
+          [
+            "Debug shared, AddressSanitizer + UndefinedBehaviorSanitizer",
+            "150/150",
+            "1/1"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

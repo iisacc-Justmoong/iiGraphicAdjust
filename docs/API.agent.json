@@ -1,0 +1,668 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:99cbb1a27dcec2a4b0bd53aa998cbe1b2189c1771dcfce34790047e6cbdbb70f",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/API.md",
+    "sha256": "4af05d01bd125202d2b171496a2b76529b27c3d16c0b388bdc3800ec5b3c9795",
+    "bytes": 6893,
+    "line_count": 67,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Original processing API contract — retained in 0.2.0",
+    "role": "reference",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Original processing API contract — retained in 0.2.0\n",
+      "level": 1,
+      "title": "Original processing API contract — retained in 0.2.0"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "Include `<iiGraphicAdjust/iiGraphicAdjust.h>` for the complete API, or the independent `Image.h`, `Adjustments.h`, `Effects.h` and `Blend.h` headers. All names are in `iiGraphicAdjust`.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "## Pixels and errors\n",
+      "level": 2,
+      "title": "Pixels and errors"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "`Rgba` contains four normalized `float` channels, encoded sRGB RGB and straight alpha. Alpha defaults to one. Images are densely packed in row-major order; width and height are positive `std::size_t` values. The view must contain exactly `width * height` pixels. No stride, color profile, platform object or borrowed output is implied.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "Every operation validates dimensions, multiplication/container capacity, exact input length and finite `[0,1]` channels before processing. Every numeric setting must be finite and within its documented range. Invalid enumeration values are rejected, including on neutral calls. All operations return `Result<T>`, an alias for `std::expected<T, Error>`; error messages have static lifetime.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "table",
+      "start_line": 11,
+      "end_line": 18,
+      "raw": "| Error code | Meaning |\n| --- | --- |\n| `InvalidDimensions` | Empty dimensions or overflow/container capacity violation |\n| `InvalidBuffer` | Pixel/byte count differs from the dimensions |\n| `InvalidPixel` | Nonfinite or non-normalized RGBA input |\n| `InvalidParameter` | Nonfinite/out-of-range settings or unknown enum |\n| `SizeMismatch` | Both blend inputs are valid but have different dimensions |\n| `AllocationFailure` | Temporary/output allocation failed or exceeded container limits |\n",
+      "columns": [
+        "Error code",
+        "Meaning"
+      ],
+      "rows": [
+        [
+          "`InvalidDimensions`",
+          "Empty dimensions or overflow/container capacity violation"
+        ],
+        [
+          "`InvalidBuffer`",
+          "Pixel/byte count differs from the dimensions"
+        ],
+        [
+          "`InvalidPixel`",
+          "Nonfinite or non-normalized RGBA input"
+        ],
+        [
+          "`InvalidParameter`",
+          "Nonfinite/out-of-range settings or unknown enum"
+        ],
+        [
+          "`SizeMismatch`",
+          "Both blend inputs are valid but have different dimensions"
+        ],
+        [
+          "`AllocationFailure`",
+          "Temporary/output allocation failed or exceeded container limits"
+        ]
+      ]
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "Invalid spans that do not refer to live readable storage cannot be detected by the SDK; maintaining the span's lifetime is the caller's responsibility. Exceptions from storage allocation are translated to `AllocationFailure`. The SDK never mutates inputs or keeps a view beyond the synchronous call.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "`fromRgba8(width,height,bytes)` reads `R,G,B,A` byte groups; `toRgba8(view)` rounds normalized channels to nearest 8-bit values. `fromArgb32` and `toArgb32` interpret integer words as `0xAARRGGBB` regardless of memory byte order. Both formats use straight alpha and preserve RGB under zero alpha. Unpremultiply or normalize a GUI/renderer buffer in the host before passing it here.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "## Color adjustment\n",
+      "level": 2,
+      "title": "Color adjustment"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "`adjust(view, ColorAdjustment)` applies operations in this fixed order:\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "list",
+      "start_line": 28,
+      "end_line": 32,
+      "raw": "1. Decode sRGB, multiply by `2^exposure`, apply relative temperature/tint channel gains, clamp to `[0,1]`, and encode to sRGB. This conversion is skipped when all three settings are neutral.\n2. Apply brightness and contrast in encoded RGB: `(channel + brightness - 0.5) * (1 + contrast) + 0.5`, then clamp.\n3. Compute encoded-RGB luma `0.2126 R + 0.7152 G + 0.0722 B` and multiply the distance from that luma by `1 + saturation`, then clamp. This is an artistic saturation adjustment, not a colorimetric luminance conversion.\n4. Apply encoded RGB power `1 / gamma`.\n5. Multiply the original alpha by opacity.\n",
+      "items": [
+        {
+          "marker": "1.",
+          "text": "Decode sRGB, multiply by `2^exposure`, apply relative temperature/tint channel gains, clamp to `[0,1]`, and encode to sRGB. This conversion is skipped when all three settings are neutral.",
+          "checked": null
+        },
+        {
+          "marker": "2.",
+          "text": "Apply brightness and contrast in encoded RGB: `(channel + brightness - 0.5) * (1 + contrast) + 0.5`, then clamp.",
+          "checked": null
+        },
+        {
+          "marker": "3.",
+          "text": "Compute encoded-RGB luma `0.2126 R + 0.7152 G + 0.0722 B` and multiply the distance from that luma by `1 + saturation`, then clamp. This is an artistic saturation adjustment, not a colorimetric luminance conversion.",
+          "checked": null
+        },
+        {
+          "marker": "4.",
+          "text": "Apply encoded RGB power `1 / gamma`.",
+          "checked": null
+        },
+        {
+          "marker": "5.",
+          "text": "Multiply the original alpha by opacity.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "table",
+      "start_line": 34,
+      "end_line": 43,
+      "raw": "| Field | Default | Valid range |\n| --- | --- | --- |\n| exposure (stops) | 0 | `[-16,16]` |\n| brightness | 0 | `[-1,1]` |\n| contrast | 0 | `[-1,1]` |\n| saturation | 0 | `[-1,1]` |\n| gamma | 1 | `[0.01,100]` |\n| temperature | 0 | `[-1,1]` |\n| tint | 0 | `[-1,1]` |\n| opacity | 1 | `[0,1]` |\n",
+      "columns": [
+        "Field",
+        "Default",
+        "Valid range"
+      ],
+      "rows": [
+        [
+          "exposure (stops)",
+          "0",
+          "`[-16,16]`"
+        ],
+        [
+          "brightness",
+          "0",
+          "`[-1,1]`"
+        ],
+        [
+          "contrast",
+          "0",
+          "`[-1,1]`"
+        ],
+        [
+          "saturation",
+          "0",
+          "`[-1,1]`"
+        ],
+        [
+          "gamma",
+          "1",
+          "`[0.01,100]`"
+        ],
+        [
+          "temperature",
+          "0",
+          "`[-1,1]`"
+        ],
+        [
+          "tint",
+          "0",
+          "`[-1,1]`"
+        ],
+        [
+          "opacity",
+          "1",
+          "`[0,1]`"
+        ]
+      ]
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "Positive temperature increases red gain to `1+0.25*temperature` and decreases blue gain to `1-0.25*temperature`. Positive tint increases green gain to `1+0.25*tint`. These values are relative effects rather than Kelvin or a color-profile white-balance model. Zero-alpha RGB is kept unchanged. Default settings produce an exact detached copy.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "## Effects\n",
+      "level": 2,
+      "title": "Effects"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "`gaussianBlur(view,sigma)` accepts a standard deviation of `[0,32]` pixels. A normalized separable Gaussian kernel has radius `ceil(3*sigma)`. Samples outside the image repeat the nearest edge. RGB is decoded to linear sRGB and multiplied by alpha before convolution; all four premultiplied channels are filtered. Output is unpremultiplied and encoded to sRGB. A fully transparent filtered pixel becomes `(0,0,0,0)`; sigma zero returns an exact copy, including invisible RGB.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "`sharpen(view,SharpenOptions)` uses the same blur as an unsharp mask. Sigma is `[0,32]`, amount `[0,8]`, and threshold `[0,1]`. Linear RGB becomes `original + amount*(original-blurred)` if the maximum absolute channel difference exceeds the threshold, then is clipped and encoded. Original alpha and invisible RGB are preserved. Zero sigma or amount returns an exact copy.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "`addNoise(view,NoiseOptions)` adds samples to encoded RGB and clips to `[0,1]`. Amount `[0,1]` means half-range for Uniform samples and standard deviation for Gaussian samples. The requested Gaussian deviation describes noise before clipping. Monochromatic noise adds the same scalar to each RGB channel; color noise draws three separate scalars. Alpha and zero-alpha RGB remain unchanged.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "A 64-bit seed and pixel index are hashed into a private per-pixel SplitMix64 state. Uniform samples use a fixed integer-to-open-interval conversion; Gaussian samples use Box–Muller. There is no global random generator. Identical settings and inputs reproduce output within the same build/runtime. Cross-platform transcendental math may differ in the last bits; pixel equality across different standard libraries is not guaranteed. Neutral noise returns an exact copy.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "heading",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "## Blending\n",
+      "level": 2,
+      "title": "Blending"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "`blend(backdrop,source,BlendOptions)` requires equal dimensions. Opacity `[0,1]` multiplies source alpha. Blend space is encoded `Srgb` by default or `LinearSrgb`. Supported modes are Normal, Multiply, Screen, Overlay, Darken, Lighten, SoftLight and Difference. The blend function affects the overlapping source/backdrop portion, followed by Porter–Duff source-over composition; the output remains straight-alpha encoded sRGB.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "Source alpha zero, including opacity zero, preserves the backdrop exactly. Transparent backdrop RGB does not influence the result. SoftLight uses the cubic branch below backdrop 0.25 and square-root branch above it, matching the equations in [W3C Compositing and Blending Level 1](https://www.w3.org/TR/2024/CRD-compositing-1-20240321/#blendingsoftlight). sRGB transfer functions follow [CSS Color Level 4](https://www.w3.org/TR/css-color-4/#color-conversion-code). Selecting linear sRGB is an explicit working-space choice; it does not claim CSS renderer parity.\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "Version 0.2.0 adds Tone.h, Color.h, Mapping.h and Hdr.h to the umbrella header. Their separate contracts are in Tone.md, Color.md and Mapping.md; the functions above retain their original behavior.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "heading",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "## Version 0.6 typed objects\n",
+      "level": 2,
+      "title": "Version 0.6 typed objects"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "[OperationObjects.md](OperationObjects.md) documents 309 editable value objects, owned resources, immutable `Operation` captures, ordered masked `OperationStack` rendering, and typed analysis/mask/RAW/resource entry points. [object-catalog.json](object-catalog.json) is the complete public inventory. Detail struct layout changed; rebuild consumers for ABI series 0.6. The prior free-function contracts remain available.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Original processing API contract — retained in 0.2.0",
+      "anchor": "original-processing-api-contract--retained-in-020",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Pixels and errors",
+      "anchor": "pixels-and-errors",
+      "start_line": 5
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Color adjustment",
+      "anchor": "color-adjustment",
+      "start_line": 24
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Effects",
+      "anchor": "effects",
+      "start_line": 47
+    },
+    {
+      "block_id": "b000037",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Blending",
+      "anchor": "blending",
+      "start_line": 57
+    },
+    {
+      "block_id": "b000045",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Version 0.6 typed objects",
+      "anchor": "version-06-typed-objects",
+      "start_line": 65
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 7,
+        "text": "`Rgba` contains four normalized `float` channels, encoded sRGB RGB and straight alpha. Alpha defaults to one. Images are densely packed in row-major order; width and height are positive `std::size_t` values. The view must contain exactly `width * height` pixels. No stride, color profile, platform object or borrowed output is implied.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 9,
+        "text": "Every operation validates dimensions, multiplication/container capacity, exact input length and finite `[0,1]` channels before processing. Every numeric setting must be finite and within its documented range. Invalid enumeration values are rejected, including on neutral calls. All operations return `Result<T>`, an alias for `std::expected<T, Error>`; error messages have static lifetime.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 20,
+        "text": "Invalid spans that do not refer to live readable storage cannot be detected by the SDK; maintaining the span's lifetime is the caller's responsibility. Exceptions from storage allocation are translated to `AllocationFailure`. The SDK never mutates inputs or keeps a view beyond the synchronous call.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000041",
+        "label": "W3C Compositing and Blending Level 1",
+        "target": "https://www.w3.org/TR/2024/CRD-compositing-1-20240321/#blendingsoftlight",
+        "kind": "external",
+        "line": 61
+      },
+      {
+        "block_id": "b000041",
+        "label": "CSS Color Level 4",
+        "target": "https://www.w3.org/TR/css-color-4/#color-conversion-code",
+        "kind": "external",
+        "line": 61
+      },
+      {
+        "block_id": "b000047",
+        "label": "OperationObjects.md",
+        "target": "OperationObjects.md",
+        "kind": "relative",
+        "line": 67
+      },
+      {
+        "block_id": "b000047",
+        "label": "object-catalog.json",
+        "target": "object-catalog.json",
+        "kind": "relative",
+        "line": 67
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000011",
+        "columns": [
+          "Error code",
+          "Meaning"
+        ],
+        "rows": [
+          [
+            "`InvalidDimensions`",
+            "Empty dimensions or overflow/container capacity violation"
+          ],
+          [
+            "`InvalidBuffer`",
+            "Pixel/byte count differs from the dimensions"
+          ],
+          [
+            "`InvalidPixel`",
+            "Nonfinite or non-normalized RGBA input"
+          ],
+          [
+            "`InvalidParameter`",
+            "Nonfinite/out-of-range settings or unknown enum"
+          ],
+          [
+            "`SizeMismatch`",
+            "Both blend inputs are valid but have different dimensions"
+          ],
+          [
+            "`AllocationFailure`",
+            "Temporary/output allocation failed or exceeded container limits"
+          ]
+        ]
+      },
+      {
+        "block_id": "b000023",
+        "columns": [
+          "Field",
+          "Default",
+          "Valid range"
+        ],
+        "rows": [
+          [
+            "exposure (stops)",
+            "0",
+            "`[-16,16]`"
+          ],
+          [
+            "brightness",
+            "0",
+            "`[-1,1]`"
+          ],
+          [
+            "contrast",
+            "0",
+            "`[-1,1]`"
+          ],
+          [
+            "saturation",
+            "0",
+            "`[-1,1]`"
+          ],
+          [
+            "gamma",
+            "1",
+            "`[0.01,100]`"
+          ],
+          [
+            "temperature",
+            "0",
+            "`[-1,1]`"
+          ],
+          [
+            "tint",
+            "0",
+            "`[-1,1]`"
+          ],
+          [
+            "opacity",
+            "1",
+            "`[0,1]`"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

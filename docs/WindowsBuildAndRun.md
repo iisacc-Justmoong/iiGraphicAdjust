@@ -10,11 +10,7 @@ Release 빌드·실행 검사·설치를 완료하였다. 등록 검사 202개 �
 
 ## 이 프로젝트의 의존성과 실행 범위
 
-선행 workspace SDK는 다음과 같다. 각각의 Windows 지침에 따라 실행 검증과 설치를 완료한 뒤 진행한다.
-
-- [iiFileProvider](../../../SDK/iiFileProvider/docs/WindowsBuildAndRun.md)
-
-- iiFileProvider Native가 필요하다. 공개 API와 이미지 처리 코어는 Qt에 의존하지 않는다.
+현재 이미지 처리 SDK는 다른 SDK나 Qt 없이 빌드한다. 파일을 생성하는 예제는 별도 소비자 프로젝트에서 iiFileProvider를 직접 연결한다. 아래 Windows 검증 수치는 이 의존성 분리 전의 기록이며 변경 후 재검증을 뜻하지 않는다.
 
 프로젝트별 Windows 조건은 다음과 같다.
 

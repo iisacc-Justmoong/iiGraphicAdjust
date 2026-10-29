@@ -1,0 +1,1202 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:67b3b8a3539e141699cdff00c0f13cc8ff0549fd0ddbd5a85fba43de2fd30947",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/LightcraftFilters.md",
+    "sha256": "e9fcdb0a947247f69e67f919fad247d8d5e0db9e1f0a87d6821477d534c4c4c0",
+    "bytes": 20564,
+    "line_count": 128,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "LightCraft looks, presets and resampling filters",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LightCraft looks, presets and resampling filters\n",
+      "level": 1,
+      "title": "LightCraft looks, presets and resampling filters"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "`<iiGraphicAdjust/LightcraftFilters.h>` adds individually callable LightCraft looks and builtin preset recipes, plus four raster resampling filters. All interfaces use C++23, `ImageView`, `Result<T>` and the existing Qt-free Develop implementation. Input images are borrowed; every image result owns its storage.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "The reference is [LightCraft commit 629e39380e296f588c64cd9c0053a8edc3528f36](https://github.com/storytold/lightcraft/tree/629e39380e296f588c64cd9c0053a8edc3528f36). Its MIT notice is preserved in `third_party/lightcraft/LICENSE-MIT`. The recipes are LightCraft's own looks and builtin presets; their names do not claim Adobe rendering equivalence.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "## Recipe interfaces and execution\n",
+      "level": 2,
+      "title": "Recipe interfaces and execution"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "Every named look or preset function has the signature `Result<Image> function(ImageView image, double amount = 1)`. Amount is finite in `[0,2]`, corresponding to the reference's 0–200 percent control. Zero produces an exact detached copy, including hidden RGB in transparent pixels. All amounts validate the image and selection. Unknown enum values return `InvalidParameter`, including at zero amount.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "`lightcraftLookOptions(LightcraftLook, amount)` and `lightcraftPresetOptions(LightcraftPreset, amount)` return explicit `DevelopOptions` recipes. `applyLightcraftLook(ImageView, LightcraftLook, amount)` and `applyLightcraftPreset(ImageView, LightcraftPreset, amount)` select the same recipes. The named functions listed below are independently exported free functions; no string dispatcher or opaque style object is required. A host can retrieve a recipe, inspect or change its fields, then call `develop` or the individual Develop stages.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "Each recipe starts from default Develop settings. The look formulas below are deltas from these defaults, not a merge into existing user settings. Grading wheel hues stay fixed while look saturation and luminance scale with amount. A point-curve fade uses `b = clamp(black*amount,0,.45)`, `w = clamp(1-(1-white)*amount,.55,1)`, then `y = b + y*(w-b)`. B&W look treatment is active at every positive amount; zero remains identity. No look adds grain.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "Preset numeric fields interpolate from their default value: `default + (preset-default)*amount`, followed by each control's bounds. Preset B&W treatment and custom-WB mode switch at amount `.5`, matching the reference's nonnumeric patch rule. Below that threshold the selected WB remains as-shot, represented by the SDK's default 6500 K temperature and zero tint. Grading hue itself interpolates as a numeric preset field, unlike a profile wheel's fixed hue. Grain size/roughness interpolate from 25/50; vignette midpoint interpolates from 50. Fields omitted by a recipe retain their Develop defaults.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "Recipes run in the SDK's explicit order: optics → white balance → detail → Texture/Clarity/Dehaze → calibration → Light → Color/B&W/grading → post-crop vignette → curve → grain. Each stage maps its result to rendered SDR sRGB. LightCraft's source pipeline keeps scene-linear Rec.2020 data between stages, applies DNG profiles before these looks, and supports wider-range data. This module preserves the recipe values and reuses the SDK's defined SDR algorithms; a rendered sRGB input cannot reproduce RAW recovery, DNG camera profiles, continuous HDR processing or exact upstream output. In particular, stage clipping and the chosen curve/grade order can alter saturated or extreme pixels.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "fenced_code",
+      "start_line": 19,
+      "end_line": 30,
+      "raw": "```cpp\n#include <iiGraphicAdjust/LightcraftFilters.h>\nusing namespace iiGraphicAdjust;\nauto warm = lightcraftLookFilmWarmPrint(source.view(), .75);\nauto food = lightcraftPresetFreshBright(source.view());\nauto recipe = lightcraftPresetOptions(LightcraftPreset::GoldenHour);\nif (recipe) {\n    recipe->grain.seed = 42;\n    auto result = develop(source.view(), *recipe);\n}\nauto thumbnail = resizeLanczos3(source.view(), 320, 240);\n```\n",
+      "language": "cpp",
+      "code": "#include <iiGraphicAdjust/LightcraftFilters.h>\nusing namespace iiGraphicAdjust;\nauto warm = lightcraftLookFilmWarmPrint(source.view(), .75);\nauto food = lightcraftPresetFreshBright(source.view());\nauto recipe = lightcraftPresetOptions(LightcraftPreset::GoldenHour);\nif (recipe) {\n    recipe->grain.seed = 42;\n    auto result = develop(source.view(), *recipe);\n}\nauto thumbnail = resizeLanczos3(source.view(), 320, 240);\n",
+      "closed": true
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "## All individually exported look functions\n",
+      "level": 2,
+      "title": "All individually exported look functions"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "The 21 active look recipes and identity Color come from [`pipeline/src/profiles.rs`](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/profiles.rs#L45). Listed numbers are the values at amount 1. `grading` entries are `(hue, saturation, luminance)`; `fade` entries are `(black output, white output)`.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "table",
+      "start_line": 36,
+      "end_line": 59,
+      "raw": "| Function | Reference profile ID | Recipe |\n| --- | --- | --- |\n| `lightcraftLookColor` | `lc.color` | Identity |\n| `lightcraftLookNeutral` | `lc.neutral` | light.contrast=-18.0, color.saturation=-10.0, light.highlights=-10.0, light.shadows=8.0 |\n| `lightcraftLookVivid` | `lc.vivid` | light.contrast=16.0, color.saturation=14.0, color.vibrance=14.0, light.blacks=-6.0 |\n| `lightcraftLookLandscape` | `lc.landscape` | light.contrast=10.0, color.vibrance=10.0, mixer.green.sat=14.0, mixer.aqua.sat=10.0, mixer.blue.sat=14.0, mixer.blue.lum=-6.0, effects.clarity=6.0 |\n| `lightcraftLookPortrait` | `lc.portrait` | light.contrast=-6.0, mixer.orange.sat=-8.0, mixer.orange.lum=6.0, mixer.red.sat=-5.0, effects.texture=-6.0 |\n| `lightcraftLookMono` | `lc.mono` | B&W, light.contrast=8.0 |\n| `lightcraftLookFilmWarmPrint` | `lc.film.warm-print` | light.contrast=6.0, color.saturation=-4.0, mixer.orange.lum=4.0, fade curve.master=(0.04,0.97), grading.highlights=(40.0,18.0,0.0), grading.shadows=(25.0,8.0,0.0) |\n| `lightcraftLookFilmCoolFade` | `lc.film.cool-fade` | light.contrast=-8.0, color.saturation=-10.0, fade curve.master=(0.07,0.95), grading.shadows=(210.0,16.0,0.0), grading.highlights=(190.0,6.0,0.0) |\n| `lightcraftLookFilmGoldenHour` | `lc.film.golden-hour` | color.vibrance=10.0, curve.highlights=-8.0, mixer.orange.sat=8.0, mixer.yellow.hue=-6.0, grading.global=(45.0,10.0,0.0), grading.highlights=(35.0,20.0,0.0) |\n| `lightcraftLookFilmFadedSlide` | `lc.film.faded-slide` | light.contrast=14.0, color.vibrance=8.0, color.saturation=6.0, curve.shadows=10.0, fade curve.blue=(0.06,1.0), fade curve.red=(0.0,0.97) |\n| `lightcraftLookCineTealAmber` | `lc.cine.teal-amber` | light.contrast=10.0, mixer.orange.sat=6.0, mixer.green.hue=20.0, mixer.green.sat=-20.0, mixer.blue.hue=-8.0, grading.shadows=(195.0,30.0,0.0), grading.highlights=(38.0,24.0,0.0) |\n| `lightcraftLookCineNightBlue` | `lc.cine.night-blue` | light.contrast=12.0, color.saturation=-12.0, curve.darks=-8.0, grading.shadows=(220.0,28.0,-4.0), grading.midtones=(215.0,10.0,0.0) |\n| `lightcraftLookCineDesertHeat` | `lc.cine.desert-heat` | light.contrast=8.0, curve.lights=6.0, mixer.blue.sat=-25.0, mixer.aqua.sat=-20.0, grading.global=(32.0,16.0,0.0), grading.highlights=(48.0,12.0,0.0) |\n| `lightcraftLookCineNeonDusk` | `lc.cine.neon-dusk` | light.contrast=10.0, color.vibrance=18.0, mixer.magenta.sat=12.0, mixer.purple.sat=12.0, grading.shadows=(265.0,22.0,0.0), grading.highlights=(330.0,14.0,0.0) |\n| `lightcraftLookMutedMatteSoft` | `lc.muted.matte-soft` | light.contrast=-12.0, color.saturation=-14.0, curve.highlights=-6.0, fade curve.master=(0.08,0.96) |\n| `lightcraftLookMutedBleached` | `lc.muted.bleached` | light.contrast=22.0, color.saturation=-38.0, curve.lights=6.0, effects.clarity=8.0 |\n| `lightcraftLookMutedPastelHaze` | `lc.muted.pastel-haze` | light.contrast=-18.0, color.saturation=-20.0, color.vibrance=12.0, fade curve.master=(0.1,1.0), grading.highlights=(330.0,6.0,0.0), grading.shadows=(200.0,6.0,0.0) |\n| `lightcraftLookMutedQuietGreen` | `lc.muted.quiet-green` | light.contrast=-4.0, color.saturation=-8.0, mixer.green.sat=-30.0, mixer.green.hue=-10.0, mixer.yellow.sat=-18.0, mixer.aqua.sat=-15.0, fade curve.master=(0.04,1.0) |\n| `lightcraftLookBwMonoRich` | `lc.bw.mono-rich` | B&W, light.contrast=18.0, curve.darks=-8.0, curve.lights=6.0, bw_mix.red=8.0, bw_mix.orange=10.0, bw_mix.blue=-12.0 |\n| `lightcraftLookBwRedFilter` | `lc.bw.red-filter` | B&W, light.contrast=12.0, bw_mix.red=40.0, bw_mix.orange=30.0, bw_mix.yellow=10.0, bw_mix.green=-20.0, bw_mix.aqua=-30.0, bw_mix.blue=-45.0 |\n| `lightcraftLookBwSoft` | `lc.bw.soft` | B&W, light.contrast=-14.0, bw_mix.orange=12.0, fade curve.master=(0.06,0.97) |\n| `lightcraftLookBwSepia` | `lc.bw.sepia` | B&W, light.contrast=6.0, fade curve.master=(0.04,0.98), grading.shadows=(28.0,18.0,0.0), grading.highlights=(45.0,14.0,0.0) |\n",
+      "columns": [
+        "Function",
+        "Reference profile ID",
+        "Recipe"
+      ],
+      "rows": [
+        [
+          "`lightcraftLookColor`",
+          "`lc.color`",
+          "Identity"
+        ],
+        [
+          "`lightcraftLookNeutral`",
+          "`lc.neutral`",
+          "light.contrast=-18.0, color.saturation=-10.0, light.highlights=-10.0, light.shadows=8.0"
+        ],
+        [
+          "`lightcraftLookVivid`",
+          "`lc.vivid`",
+          "light.contrast=16.0, color.saturation=14.0, color.vibrance=14.0, light.blacks=-6.0"
+        ],
+        [
+          "`lightcraftLookLandscape`",
+          "`lc.landscape`",
+          "light.contrast=10.0, color.vibrance=10.0, mixer.green.sat=14.0, mixer.aqua.sat=10.0, mixer.blue.sat=14.0, mixer.blue.lum=-6.0, effects.clarity=6.0"
+        ],
+        [
+          "`lightcraftLookPortrait`",
+          "`lc.portrait`",
+          "light.contrast=-6.0, mixer.orange.sat=-8.0, mixer.orange.lum=6.0, mixer.red.sat=-5.0, effects.texture=-6.0"
+        ],
+        [
+          "`lightcraftLookMono`",
+          "`lc.mono`",
+          "B&W, light.contrast=8.0"
+        ],
+        [
+          "`lightcraftLookFilmWarmPrint`",
+          "`lc.film.warm-print`",
+          "light.contrast=6.0, color.saturation=-4.0, mixer.orange.lum=4.0, fade curve.master=(0.04,0.97), grading.highlights=(40.0,18.0,0.0), grading.shadows=(25.0,8.0,0.0)"
+        ],
+        [
+          "`lightcraftLookFilmCoolFade`",
+          "`lc.film.cool-fade`",
+          "light.contrast=-8.0, color.saturation=-10.0, fade curve.master=(0.07,0.95), grading.shadows=(210.0,16.0,0.0), grading.highlights=(190.0,6.0,0.0)"
+        ],
+        [
+          "`lightcraftLookFilmGoldenHour`",
+          "`lc.film.golden-hour`",
+          "color.vibrance=10.0, curve.highlights=-8.0, mixer.orange.sat=8.0, mixer.yellow.hue=-6.0, grading.global=(45.0,10.0,0.0), grading.highlights=(35.0,20.0,0.0)"
+        ],
+        [
+          "`lightcraftLookFilmFadedSlide`",
+          "`lc.film.faded-slide`",
+          "light.contrast=14.0, color.vibrance=8.0, color.saturation=6.0, curve.shadows=10.0, fade curve.blue=(0.06,1.0), fade curve.red=(0.0,0.97)"
+        ],
+        [
+          "`lightcraftLookCineTealAmber`",
+          "`lc.cine.teal-amber`",
+          "light.contrast=10.0, mixer.orange.sat=6.0, mixer.green.hue=20.0, mixer.green.sat=-20.0, mixer.blue.hue=-8.0, grading.shadows=(195.0,30.0,0.0), grading.highlights=(38.0,24.0,0.0)"
+        ],
+        [
+          "`lightcraftLookCineNightBlue`",
+          "`lc.cine.night-blue`",
+          "light.contrast=12.0, color.saturation=-12.0, curve.darks=-8.0, grading.shadows=(220.0,28.0,-4.0), grading.midtones=(215.0,10.0,0.0)"
+        ],
+        [
+          "`lightcraftLookCineDesertHeat`",
+          "`lc.cine.desert-heat`",
+          "light.contrast=8.0, curve.lights=6.0, mixer.blue.sat=-25.0, mixer.aqua.sat=-20.0, grading.global=(32.0,16.0,0.0), grading.highlights=(48.0,12.0,0.0)"
+        ],
+        [
+          "`lightcraftLookCineNeonDusk`",
+          "`lc.cine.neon-dusk`",
+          "light.contrast=10.0, color.vibrance=18.0, mixer.magenta.sat=12.0, mixer.purple.sat=12.0, grading.shadows=(265.0,22.0,0.0), grading.highlights=(330.0,14.0,0.0)"
+        ],
+        [
+          "`lightcraftLookMutedMatteSoft`",
+          "`lc.muted.matte-soft`",
+          "light.contrast=-12.0, color.saturation=-14.0, curve.highlights=-6.0, fade curve.master=(0.08,0.96)"
+        ],
+        [
+          "`lightcraftLookMutedBleached`",
+          "`lc.muted.bleached`",
+          "light.contrast=22.0, color.saturation=-38.0, curve.lights=6.0, effects.clarity=8.0"
+        ],
+        [
+          "`lightcraftLookMutedPastelHaze`",
+          "`lc.muted.pastel-haze`",
+          "light.contrast=-18.0, color.saturation=-20.0, color.vibrance=12.0, fade curve.master=(0.1,1.0), grading.highlights=(330.0,6.0,0.0), grading.shadows=(200.0,6.0,0.0)"
+        ],
+        [
+          "`lightcraftLookMutedQuietGreen`",
+          "`lc.muted.quiet-green`",
+          "light.contrast=-4.0, color.saturation=-8.0, mixer.green.sat=-30.0, mixer.green.hue=-10.0, mixer.yellow.sat=-18.0, mixer.aqua.sat=-15.0, fade curve.master=(0.04,1.0)"
+        ],
+        [
+          "`lightcraftLookBwMonoRich`",
+          "`lc.bw.mono-rich`",
+          "B&W, light.contrast=18.0, curve.darks=-8.0, curve.lights=6.0, bw_mix.red=8.0, bw_mix.orange=10.0, bw_mix.blue=-12.0"
+        ],
+        [
+          "`lightcraftLookBwRedFilter`",
+          "`lc.bw.red-filter`",
+          "B&W, light.contrast=12.0, bw_mix.red=40.0, bw_mix.orange=30.0, bw_mix.yellow=10.0, bw_mix.green=-20.0, bw_mix.aqua=-30.0, bw_mix.blue=-45.0"
+        ],
+        [
+          "`lightcraftLookBwSoft`",
+          "`lc.bw.soft`",
+          "B&W, light.contrast=-14.0, bw_mix.orange=12.0, fade curve.master=(0.06,0.97)"
+        ],
+        [
+          "`lightcraftLookBwSepia`",
+          "`lc.bw.sepia`",
+          "B&W, light.contrast=6.0, fade curve.master=(0.04,0.98), grading.shadows=(28.0,18.0,0.0), grading.highlights=(45.0,14.0,0.0)"
+        ]
+      ]
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "## All individually exported preset functions\n",
+      "level": 2,
+      "title": "All individually exported preset functions"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "All 41 builtin recipes come from [`engine/src/presets.rs::builtin`](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/engine/src/presets.rs#L143). Each row exposes its own image function. The numeric fixture test covers every provided recipe field, amount interpolation and named-function execution. The JSON below is the upstream recipe at amount 1; `wb.mode` and `treatment` follow the threshold rule above.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "table",
+      "start_line": 65,
+      "end_line": 107,
+      "raw": "| Function | Reference ID and group | Recipe |\n| --- | --- | --- |\n| `lightcraftPresetWarmGlow` | `lc.warm-glow` (Color) | `{\"wb\":{\"mode\":\"custom\",\"temp\":7200.0,\"tint\":8.0},\"light\":{\"contrast\":8.0,\"shadows\":12.0},\"color\":{\"vibrance\":18.0}}` |\n| `lightcraftPresetCoolMorning` | `lc.cool-morning` (Color) | `{\"wb\":{\"mode\":\"custom\",\"temp\":5600.0,\"tint\":-4.0},\"light\":{\"highlights\":-20.0},\"color\":{\"vibrance\":10.0},\"grading\":{\"shadows\":{\"hue\":215.0,\"sat\":12.0,\"lum\":0.0}}}` |\n| `lightcraftPresetTealOrange` | `lc.teal-orange` (Color) | `{\"grading\":{\"shadows\":{\"hue\":195.0,\"sat\":28.0,\"lum\":0.0},\"highlights\":{\"hue\":35.0,\"sat\":22.0,\"lum\":0.0},\"balance\":10.0},\"color\":{\"vibrance\":12.0},\"light\":{\"contrast\":14.0}}` |\n| `lightcraftPresetVividPop` | `lc.vivid-pop` (Color) | `{\"color\":{\"vibrance\":40.0,\"saturation\":8.0},\"light\":{\"contrast\":18.0,\"whites\":10.0,\"blacks\":-10.0},\"effects\":{\"clarity\":12.0}}` |\n| `lightcraftPresetSoftPastel` | `lc.soft-pastel` (Color) | `{\"light\":{\"contrast\":-25.0,\"highlights\":-30.0,\"shadows\":35.0,\"blacks\":20.0},\"color\":{\"saturation\":-18.0,\"vibrance\":10.0},\"curve\":{\"shadows\":25.0}}` |\n| `lightcraftPresetFadedMatte` | `lc.faded-matte` (Film) | `{\"curve\":{\"shadows\":40.0,\"highlights\":-15.0},\"light\":{\"contrast\":-10.0},\"color\":{\"saturation\":-12.0},\"grain\":{\"amount\":18.0,\"size\":25.0,\"roughness\":50.0}}` |\n| `lightcraftPresetWarmFilm` | `lc.warm-film` (Film) | `{\"wb\":{\"mode\":\"custom\",\"temp\":6900.0,\"tint\":5.0},\"curve\":{\"shadows\":22.0},\"grading\":{\"highlights\":{\"hue\":45.0,\"sat\":15.0,\"lum\":0.0}},\"grain\":{\"amount\":22.0,\"size\":30.0,\"roughness\":55.0},\"vignette\":{\"amount\":-12.0}}` |\n| `lightcraftPresetMutedFilm` | `lc.muted-film` (Film) | `{\"color\":{\"saturation\":-25.0,\"vibrance\":5.0},\"light\":{\"contrast\":10.0},\"curve\":{\"shadows\":18.0},\"grain\":{\"amount\":15.0}}` |\n| `lightcraftPresetBwHighContrast` | `lc.bw-high-contrast` (B&W) | `{\"treatment\":\"bw\",\"light\":{\"contrast\":45.0,\"whites\":20.0,\"blacks\":-25.0},\"effects\":{\"clarity\":20.0},\"bw_mix\":{\"blue\":-30.0,\"red\":15.0}}` |\n| `lightcraftPresetBwSoft` | `lc.bw-soft` (B&W) | `{\"treatment\":\"bw\",\"light\":{\"contrast\":-15.0,\"shadows\":25.0},\"curve\":{\"shadows\":15.0}}` |\n| `lightcraftPresetBwSelenium` | `lc.bw-selenium` (B&W) | `{\"treatment\":\"bw\",\"light\":{\"contrast\":20.0},\"grading\":{\"shadows\":{\"hue\":285.0,\"sat\":18.0,\"lum\":0.0},\"highlights\":{\"hue\":40.0,\"sat\":10.0,\"lum\":0.0}}}` |\n| `lightcraftPresetCrispLandscape` | `lc.crisp-landscape` (Landscape) | `{\"light\":{\"highlights\":-45.0,\"shadows\":30.0,\"contrast\":12.0},\"effects\":{\"clarity\":22.0,\"dehaze\":12.0,\"texture\":15.0},\"color\":{\"vibrance\":25.0}}` |\n| `lightcraftPresetGoldenHour` | `lc.golden-hour` (Landscape) | `{\"wb\":{\"mode\":\"custom\",\"temp\":7600.0,\"tint\":12.0},\"light\":{\"highlights\":-35.0,\"shadows\":20.0},\"grading\":{\"highlights\":{\"hue\":38.0,\"sat\":25.0,\"lum\":5.0}},\"vignette\":{\"amount\":-15.0}}` |\n| `lightcraftPresetBlueHour` | `lc.blue-hour` (Landscape) | `{\"wb\":{\"mode\":\"custom\",\"temp\":5200.0,\"tint\":6.0},\"light\":{\"shadows\":25.0,\"exposure\":0.2},\"mixer\":{\"blue\":{\"hue\":0.0,\"sat\":25.0,\"lum\":0.0},\"purple\":{\"hue\":0.0,\"sat\":15.0,\"lum\":0.0}}}` |\n| `lightcraftPresetSoftSkin` | `lc.soft-skin` (Portrait) | `{\"effects\":{\"texture\":-25.0,\"clarity\":-10.0},\"light\":{\"contrast\":-5.0,\"shadows\":15.0},\"mixer\":{\"orange\":{\"hue\":0.0,\"sat\":-8.0,\"lum\":10.0}}}` |\n| `lightcraftPresetBrightAiry` | `lc.bright-airy` (Portrait) | `{\"light\":{\"exposure\":0.45,\"contrast\":-15.0,\"highlights\":-40.0,\"shadows\":40.0,\"whites\":15.0},\"color\":{\"vibrance\":8.0,\"saturation\":-8.0}}` |\n| `lightcraftPresetMoody` | `lc.moody` (Style) | `{\"light\":{\"exposure\":-0.3,\"contrast\":20.0,\"highlights\":-30.0,\"blacks\":-15.0},\"color\":{\"saturation\":-20.0},\"grading\":{\"shadows\":{\"hue\":200.0,\"sat\":15.0,\"lum\":-5.0}},\"vignette\":{\"amount\":-30.0}}` |\n| `lightcraftPresetCinematic` | `lc.cinematic` (Style) | `{\"curve\":{\"shadows\":20.0,\"highlights\":-10.0},\"grading\":{\"shadows\":{\"hue\":190.0,\"sat\":25.0,\"lum\":0.0},\"highlights\":{\"hue\":30.0,\"sat\":18.0,\"lum\":0.0}},\"light\":{\"contrast\":15.0},\"vignette\":{\"amount\":-20.0}}` |\n| `lightcraftPresetMoodyPortrait` | `lc.moody-portrait` (Portrait) | `{\"light\":{\"exposure\":-0.25,\"contrast\":20.0,\"highlights\":-30.0,\"blacks\":-12.0},\"color\":{\"saturation\":-15.0},\"vignette\":{\"amount\":-25.0,\"midpoint\":40.0},\"mixer\":{\"orange\":{\"sat\":6.0}}}` |\n| `lightcraftPresetGoldenGlow` | `lc.golden-glow` (Portrait) | `{\"grading\":{\"highlights\":{\"hue\":40.0,\"sat\":18.0,\"lum\":0.0},\"midtones\":{\"hue\":35.0,\"sat\":8.0,\"lum\":0.0}},\"light\":{\"shadows\":15.0},\"effects\":{\"clarity\":-8.0}}` |\n| `lightcraftPresetCleanStudio` | `lc.clean-studio` (Portrait) | `{\"light\":{\"contrast\":10.0,\"whites\":15.0,\"blacks\":-8.0},\"effects\":{\"texture\":-10.0},\"color\":{\"vibrance\":5.0}}` |\n| `lightcraftPresetCrispVista` | `lc.crisp-vista` (Landscape) | `{\"effects\":{\"dehaze\":15.0,\"clarity\":18.0,\"texture\":12.0},\"light\":{\"contrast\":12.0,\"highlights\":-25.0,\"shadows\":18.0},\"color\":{\"vibrance\":20.0}}` |\n| `lightcraftPresetDeepSky` | `lc.deep-sky` (Landscape) | `{\"mixer\":{\"blue\":{\"lum\":-25.0,\"sat\":15.0},\"aqua\":{\"lum\":-10.0}},\"light\":{\"highlights\":-30.0},\"effects\":{\"dehaze\":10.0}}` |\n| `lightcraftPresetLushGreens` | `lc.lush-greens` (Landscape) | `{\"mixer\":{\"green\":{\"hue\":12.0,\"sat\":18.0,\"lum\":8.0},\"yellow\":{\"hue\":10.0,\"sat\":10.0}},\"color\":{\"vibrance\":12.0},\"effects\":{\"clarity\":8.0}}` |\n| `lightcraftPresetDesertWarmth` | `lc.desert-warmth` (Landscape) | `{\"mixer\":{\"orange\":{\"sat\":15.0,\"lum\":5.0},\"yellow\":{\"hue\":-8.0,\"sat\":10.0},\"blue\":{\"sat\":-10.0}},\"grading\":{\"highlights\":{\"hue\":38.0,\"sat\":12.0,\"lum\":0.0}},\"light\":{\"contrast\":10.0}}` |\n| `lightcraftPresetMistyMorning` | `lc.misty-morning` (Landscape) | `{\"effects\":{\"dehaze\":-18.0,\"clarity\":-12.0},\"light\":{\"contrast\":-18.0,\"highlights\":-10.0},\"grading\":{\"shadows\":{\"hue\":210.0,\"sat\":10.0,\"lum\":0.0}},\"color\":{\"saturation\":-10.0}}` |\n| `lightcraftPresetGrittyStreet` | `lc.gritty-street` (Urban) | `{\"effects\":{\"clarity\":35.0,\"texture\":20.0},\"light\":{\"contrast\":25.0,\"blacks\":-15.0},\"color\":{\"saturation\":-30.0},\"vignette\":{\"amount\":-18.0}}` |\n| `lightcraftPresetNeonNight` | `lc.neon-night` (Urban) | `{\"mixer\":{\"magenta\":{\"sat\":20.0},\"purple\":{\"sat\":18.0},\"blue\":{\"sat\":12.0},\"aqua\":{\"sat\":15.0}},\"light\":{\"contrast\":18.0,\"blacks\":-12.0},\"color\":{\"vibrance\":15.0},\"grading\":{\"shadows\":{\"hue\":250.0,\"sat\":15.0,\"lum\":0.0}}}` |\n| `lightcraftPresetConcreteCool` | `lc.concrete-cool` (Urban) | `{\"grading\":{\"shadows\":{\"hue\":205.0,\"sat\":14.0,\"lum\":0.0},\"highlights\":{\"hue\":200.0,\"sat\":6.0,\"lum\":0.0}},\"color\":{\"saturation\":-20.0},\"light\":{\"contrast\":12.0},\"effects\":{\"clarity\":15.0}}` |\n| `lightcraftPresetFadedUrban` | `lc.faded-urban` (Urban) | `{\"curve\":{\"shadows\":30.0},\"color\":{\"saturation\":-22.0},\"light\":{\"contrast\":-8.0},\"grain\":{\"amount\":12.0,\"size\":25.0,\"roughness\":45.0}}` |\n| `lightcraftPresetFreshBright` | `lc.fresh-bright` (Food) | `{\"light\":{\"exposure\":0.25,\"shadows\":20.0,\"whites\":10.0},\"color\":{\"vibrance\":22.0},\"effects\":{\"texture\":15.0}}` |\n| `lightcraftPresetWarmTable` | `lc.warm-table` (Food) | `{\"grading\":{\"midtones\":{\"hue\":32.0,\"sat\":10.0,\"lum\":0.0}},\"mixer\":{\"orange\":{\"sat\":10.0},\"red\":{\"sat\":8.0}},\"light\":{\"contrast\":8.0}}` |\n| `lightcraftPresetDarkMoodyFood` | `lc.dark-moody-food` (Food) | `{\"light\":{\"exposure\":-0.3,\"contrast\":22.0,\"highlights\":-20.0,\"blacks\":-15.0},\"effects\":{\"texture\":18.0},\"vignette\":{\"amount\":-22.0}}` |\n| `lightcraftPresetAutumnGold` | `lc.autumn-gold` (Seasons) | `{\"mixer\":{\"green\":{\"hue\":-30.0,\"sat\":-10.0},\"yellow\":{\"hue\":-15.0,\"sat\":15.0},\"orange\":{\"sat\":18.0}},\"grading\":{\"highlights\":{\"hue\":40.0,\"sat\":10.0,\"lum\":0.0}}}` |\n| `lightcraftPresetWinterBlue` | `lc.winter-blue` (Seasons) | `{\"grading\":{\"shadows\":{\"hue\":215.0,\"sat\":18.0,\"lum\":0.0},\"highlights\":{\"hue\":205.0,\"sat\":8.0,\"lum\":0.0}},\"color\":{\"saturation\":-12.0},\"light\":{\"whites\":12.0}}` |\n| `lightcraftPresetSpringFresh` | `lc.spring-fresh` (Seasons) | `{\"mixer\":{\"green\":{\"hue\":10.0,\"sat\":12.0,\"lum\":10.0},\"magenta\":{\"sat\":10.0}},\"light\":{\"shadows\":15.0},\"color\":{\"vibrance\":15.0}}` |\n| `lightcraftPresetSummerHaze` | `lc.summer-haze` (Seasons) | `{\"effects\":{\"dehaze\":-12.0},\"curve\":{\"shadows\":18.0},\"grading\":{\"highlights\":{\"hue\":45.0,\"sat\":14.0,\"lum\":0.0}},\"light\":{\"contrast\":-10.0}}` |\n| `lightcraftPresetInstant70s` | `lc.instant-70s` (Vintage) | `{\"curve\":{\"shadows\":28.0,\"highlights\":-18.0},\"grading\":{\"shadows\":{\"hue\":170.0,\"sat\":14.0,\"lum\":0.0},\"highlights\":{\"hue\":45.0,\"sat\":18.0,\"lum\":0.0}},\"color\":{\"saturation\":-10.0},\"vignette\":{\"amount\":-15.0},\"grain\":{\"amount\":20.0,\"size\":30.0,\"roughness\":55.0}}` |\n| `lightcraftPresetCrossProcess` | `lc.cross-process` (Vintage) | `{\"grading\":{\"shadows\":{\"hue\":230.0,\"sat\":25.0,\"lum\":0.0},\"highlights\":{\"hue\":60.0,\"sat\":25.0,\"lum\":0.0}},\"light\":{\"contrast\":22.0},\"color\":{\"saturation\":10.0}}` |\n| `lightcraftPresetBleachBypass` | `lc.bleach-bypass` (Vintage) | `{\"color\":{\"saturation\":-40.0},\"light\":{\"contrast\":35.0,\"highlights\":-15.0},\"effects\":{\"clarity\":15.0}}` |\n| `lightcraftPresetBwSepia` | `lc.bw-sepia` (B&W) | `{\"treatment\":\"bw\",\"grading\":{\"shadows\":{\"hue\":32.0,\"sat\":22.0,\"lum\":0.0},\"highlights\":{\"hue\":42.0,\"sat\":18.0,\"lum\":0.0}},\"curve\":{\"shadows\":10.0}}` |\n",
+      "columns": [
+        "Function",
+        "Reference ID and group",
+        "Recipe"
+      ],
+      "rows": [
+        [
+          "`lightcraftPresetWarmGlow`",
+          "`lc.warm-glow` (Color)",
+          "`{\"wb\":{\"mode\":\"custom\",\"temp\":7200.0,\"tint\":8.0},\"light\":{\"contrast\":8.0,\"shadows\":12.0},\"color\":{\"vibrance\":18.0}}`"
+        ],
+        [
+          "`lightcraftPresetCoolMorning`",
+          "`lc.cool-morning` (Color)",
+          "`{\"wb\":{\"mode\":\"custom\",\"temp\":5600.0,\"tint\":-4.0},\"light\":{\"highlights\":-20.0},\"color\":{\"vibrance\":10.0},\"grading\":{\"shadows\":{\"hue\":215.0,\"sat\":12.0,\"lum\":0.0}}}`"
+        ],
+        [
+          "`lightcraftPresetTealOrange`",
+          "`lc.teal-orange` (Color)",
+          "`{\"grading\":{\"shadows\":{\"hue\":195.0,\"sat\":28.0,\"lum\":0.0},\"highlights\":{\"hue\":35.0,\"sat\":22.0,\"lum\":0.0},\"balance\":10.0},\"color\":{\"vibrance\":12.0},\"light\":{\"contrast\":14.0}}`"
+        ],
+        [
+          "`lightcraftPresetVividPop`",
+          "`lc.vivid-pop` (Color)",
+          "`{\"color\":{\"vibrance\":40.0,\"saturation\":8.0},\"light\":{\"contrast\":18.0,\"whites\":10.0,\"blacks\":-10.0},\"effects\":{\"clarity\":12.0}}`"
+        ],
+        [
+          "`lightcraftPresetSoftPastel`",
+          "`lc.soft-pastel` (Color)",
+          "`{\"light\":{\"contrast\":-25.0,\"highlights\":-30.0,\"shadows\":35.0,\"blacks\":20.0},\"color\":{\"saturation\":-18.0,\"vibrance\":10.0},\"curve\":{\"shadows\":25.0}}`"
+        ],
+        [
+          "`lightcraftPresetFadedMatte`",
+          "`lc.faded-matte` (Film)",
+          "`{\"curve\":{\"shadows\":40.0,\"highlights\":-15.0},\"light\":{\"contrast\":-10.0},\"color\":{\"saturation\":-12.0},\"grain\":{\"amount\":18.0,\"size\":25.0,\"roughness\":50.0}}`"
+        ],
+        [
+          "`lightcraftPresetWarmFilm`",
+          "`lc.warm-film` (Film)",
+          "`{\"wb\":{\"mode\":\"custom\",\"temp\":6900.0,\"tint\":5.0},\"curve\":{\"shadows\":22.0},\"grading\":{\"highlights\":{\"hue\":45.0,\"sat\":15.0,\"lum\":0.0}},\"grain\":{\"amount\":22.0,\"size\":30.0,\"roughness\":55.0},\"vignette\":{\"amount\":-12.0}}`"
+        ],
+        [
+          "`lightcraftPresetMutedFilm`",
+          "`lc.muted-film` (Film)",
+          "`{\"color\":{\"saturation\":-25.0,\"vibrance\":5.0},\"light\":{\"contrast\":10.0},\"curve\":{\"shadows\":18.0},\"grain\":{\"amount\":15.0}}`"
+        ],
+        [
+          "`lightcraftPresetBwHighContrast`",
+          "`lc.bw-high-contrast` (B&W)",
+          "`{\"treatment\":\"bw\",\"light\":{\"contrast\":45.0,\"whites\":20.0,\"blacks\":-25.0},\"effects\":{\"clarity\":20.0},\"bw_mix\":{\"blue\":-30.0,\"red\":15.0}}`"
+        ],
+        [
+          "`lightcraftPresetBwSoft`",
+          "`lc.bw-soft` (B&W)",
+          "`{\"treatment\":\"bw\",\"light\":{\"contrast\":-15.0,\"shadows\":25.0},\"curve\":{\"shadows\":15.0}}`"
+        ],
+        [
+          "`lightcraftPresetBwSelenium`",
+          "`lc.bw-selenium` (B&W)",
+          "`{\"treatment\":\"bw\",\"light\":{\"contrast\":20.0},\"grading\":{\"shadows\":{\"hue\":285.0,\"sat\":18.0,\"lum\":0.0},\"highlights\":{\"hue\":40.0,\"sat\":10.0,\"lum\":0.0}}}`"
+        ],
+        [
+          "`lightcraftPresetCrispLandscape`",
+          "`lc.crisp-landscape` (Landscape)",
+          "`{\"light\":{\"highlights\":-45.0,\"shadows\":30.0,\"contrast\":12.0},\"effects\":{\"clarity\":22.0,\"dehaze\":12.0,\"texture\":15.0},\"color\":{\"vibrance\":25.0}}`"
+        ],
+        [
+          "`lightcraftPresetGoldenHour`",
+          "`lc.golden-hour` (Landscape)",
+          "`{\"wb\":{\"mode\":\"custom\",\"temp\":7600.0,\"tint\":12.0},\"light\":{\"highlights\":-35.0,\"shadows\":20.0},\"grading\":{\"highlights\":{\"hue\":38.0,\"sat\":25.0,\"lum\":5.0}},\"vignette\":{\"amount\":-15.0}}`"
+        ],
+        [
+          "`lightcraftPresetBlueHour`",
+          "`lc.blue-hour` (Landscape)",
+          "`{\"wb\":{\"mode\":\"custom\",\"temp\":5200.0,\"tint\":6.0},\"light\":{\"shadows\":25.0,\"exposure\":0.2},\"mixer\":{\"blue\":{\"hue\":0.0,\"sat\":25.0,\"lum\":0.0},\"purple\":{\"hue\":0.0,\"sat\":15.0,\"lum\":0.0}}}`"
+        ],
+        [
+          "`lightcraftPresetSoftSkin`",
+          "`lc.soft-skin` (Portrait)",
+          "`{\"effects\":{\"texture\":-25.0,\"clarity\":-10.0},\"light\":{\"contrast\":-5.0,\"shadows\":15.0},\"mixer\":{\"orange\":{\"hue\":0.0,\"sat\":-8.0,\"lum\":10.0}}}`"
+        ],
+        [
+          "`lightcraftPresetBrightAiry`",
+          "`lc.bright-airy` (Portrait)",
+          "`{\"light\":{\"exposure\":0.45,\"contrast\":-15.0,\"highlights\":-40.0,\"shadows\":40.0,\"whites\":15.0},\"color\":{\"vibrance\":8.0,\"saturation\":-8.0}}`"
+        ],
+        [
+          "`lightcraftPresetMoody`",
+          "`lc.moody` (Style)",
+          "`{\"light\":{\"exposure\":-0.3,\"contrast\":20.0,\"highlights\":-30.0,\"blacks\":-15.0},\"color\":{\"saturation\":-20.0},\"grading\":{\"shadows\":{\"hue\":200.0,\"sat\":15.0,\"lum\":-5.0}},\"vignette\":{\"amount\":-30.0}}`"
+        ],
+        [
+          "`lightcraftPresetCinematic`",
+          "`lc.cinematic` (Style)",
+          "`{\"curve\":{\"shadows\":20.0,\"highlights\":-10.0},\"grading\":{\"shadows\":{\"hue\":190.0,\"sat\":25.0,\"lum\":0.0},\"highlights\":{\"hue\":30.0,\"sat\":18.0,\"lum\":0.0}},\"light\":{\"contrast\":15.0},\"vignette\":{\"amount\":-20.0}}`"
+        ],
+        [
+          "`lightcraftPresetMoodyPortrait`",
+          "`lc.moody-portrait` (Portrait)",
+          "`{\"light\":{\"exposure\":-0.25,\"contrast\":20.0,\"highlights\":-30.0,\"blacks\":-12.0},\"color\":{\"saturation\":-15.0},\"vignette\":{\"amount\":-25.0,\"midpoint\":40.0},\"mixer\":{\"orange\":{\"sat\":6.0}}}`"
+        ],
+        [
+          "`lightcraftPresetGoldenGlow`",
+          "`lc.golden-glow` (Portrait)",
+          "`{\"grading\":{\"highlights\":{\"hue\":40.0,\"sat\":18.0,\"lum\":0.0},\"midtones\":{\"hue\":35.0,\"sat\":8.0,\"lum\":0.0}},\"light\":{\"shadows\":15.0},\"effects\":{\"clarity\":-8.0}}`"
+        ],
+        [
+          "`lightcraftPresetCleanStudio`",
+          "`lc.clean-studio` (Portrait)",
+          "`{\"light\":{\"contrast\":10.0,\"whites\":15.0,\"blacks\":-8.0},\"effects\":{\"texture\":-10.0},\"color\":{\"vibrance\":5.0}}`"
+        ],
+        [
+          "`lightcraftPresetCrispVista`",
+          "`lc.crisp-vista` (Landscape)",
+          "`{\"effects\":{\"dehaze\":15.0,\"clarity\":18.0,\"texture\":12.0},\"light\":{\"contrast\":12.0,\"highlights\":-25.0,\"shadows\":18.0},\"color\":{\"vibrance\":20.0}}`"
+        ],
+        [
+          "`lightcraftPresetDeepSky`",
+          "`lc.deep-sky` (Landscape)",
+          "`{\"mixer\":{\"blue\":{\"lum\":-25.0,\"sat\":15.0},\"aqua\":{\"lum\":-10.0}},\"light\":{\"highlights\":-30.0},\"effects\":{\"dehaze\":10.0}}`"
+        ],
+        [
+          "`lightcraftPresetLushGreens`",
+          "`lc.lush-greens` (Landscape)",
+          "`{\"mixer\":{\"green\":{\"hue\":12.0,\"sat\":18.0,\"lum\":8.0},\"yellow\":{\"hue\":10.0,\"sat\":10.0}},\"color\":{\"vibrance\":12.0},\"effects\":{\"clarity\":8.0}}`"
+        ],
+        [
+          "`lightcraftPresetDesertWarmth`",
+          "`lc.desert-warmth` (Landscape)",
+          "`{\"mixer\":{\"orange\":{\"sat\":15.0,\"lum\":5.0},\"yellow\":{\"hue\":-8.0,\"sat\":10.0},\"blue\":{\"sat\":-10.0}},\"grading\":{\"highlights\":{\"hue\":38.0,\"sat\":12.0,\"lum\":0.0}},\"light\":{\"contrast\":10.0}}`"
+        ],
+        [
+          "`lightcraftPresetMistyMorning`",
+          "`lc.misty-morning` (Landscape)",
+          "`{\"effects\":{\"dehaze\":-18.0,\"clarity\":-12.0},\"light\":{\"contrast\":-18.0,\"highlights\":-10.0},\"grading\":{\"shadows\":{\"hue\":210.0,\"sat\":10.0,\"lum\":0.0}},\"color\":{\"saturation\":-10.0}}`"
+        ],
+        [
+          "`lightcraftPresetGrittyStreet`",
+          "`lc.gritty-street` (Urban)",
+          "`{\"effects\":{\"clarity\":35.0,\"texture\":20.0},\"light\":{\"contrast\":25.0,\"blacks\":-15.0},\"color\":{\"saturation\":-30.0},\"vignette\":{\"amount\":-18.0}}`"
+        ],
+        [
+          "`lightcraftPresetNeonNight`",
+          "`lc.neon-night` (Urban)",
+          "`{\"mixer\":{\"magenta\":{\"sat\":20.0},\"purple\":{\"sat\":18.0},\"blue\":{\"sat\":12.0},\"aqua\":{\"sat\":15.0}},\"light\":{\"contrast\":18.0,\"blacks\":-12.0},\"color\":{\"vibrance\":15.0},\"grading\":{\"shadows\":{\"hue\":250.0,\"sat\":15.0,\"lum\":0.0}}}`"
+        ],
+        [
+          "`lightcraftPresetConcreteCool`",
+          "`lc.concrete-cool` (Urban)",
+          "`{\"grading\":{\"shadows\":{\"hue\":205.0,\"sat\":14.0,\"lum\":0.0},\"highlights\":{\"hue\":200.0,\"sat\":6.0,\"lum\":0.0}},\"color\":{\"saturation\":-20.0},\"light\":{\"contrast\":12.0},\"effects\":{\"clarity\":15.0}}`"
+        ],
+        [
+          "`lightcraftPresetFadedUrban`",
+          "`lc.faded-urban` (Urban)",
+          "`{\"curve\":{\"shadows\":30.0},\"color\":{\"saturation\":-22.0},\"light\":{\"contrast\":-8.0},\"grain\":{\"amount\":12.0,\"size\":25.0,\"roughness\":45.0}}`"
+        ],
+        [
+          "`lightcraftPresetFreshBright`",
+          "`lc.fresh-bright` (Food)",
+          "`{\"light\":{\"exposure\":0.25,\"shadows\":20.0,\"whites\":10.0},\"color\":{\"vibrance\":22.0},\"effects\":{\"texture\":15.0}}`"
+        ],
+        [
+          "`lightcraftPresetWarmTable`",
+          "`lc.warm-table` (Food)",
+          "`{\"grading\":{\"midtones\":{\"hue\":32.0,\"sat\":10.0,\"lum\":0.0}},\"mixer\":{\"orange\":{\"sat\":10.0},\"red\":{\"sat\":8.0}},\"light\":{\"contrast\":8.0}}`"
+        ],
+        [
+          "`lightcraftPresetDarkMoodyFood`",
+          "`lc.dark-moody-food` (Food)",
+          "`{\"light\":{\"exposure\":-0.3,\"contrast\":22.0,\"highlights\":-20.0,\"blacks\":-15.0},\"effects\":{\"texture\":18.0},\"vignette\":{\"amount\":-22.0}}`"
+        ],
+        [
+          "`lightcraftPresetAutumnGold`",
+          "`lc.autumn-gold` (Seasons)",
+          "`{\"mixer\":{\"green\":{\"hue\":-30.0,\"sat\":-10.0},\"yellow\":{\"hue\":-15.0,\"sat\":15.0},\"orange\":{\"sat\":18.0}},\"grading\":{\"highlights\":{\"hue\":40.0,\"sat\":10.0,\"lum\":0.0}}}`"
+        ],
+        [
+          "`lightcraftPresetWinterBlue`",
+          "`lc.winter-blue` (Seasons)",
+          "`{\"grading\":{\"shadows\":{\"hue\":215.0,\"sat\":18.0,\"lum\":0.0},\"highlights\":{\"hue\":205.0,\"sat\":8.0,\"lum\":0.0}},\"color\":{\"saturation\":-12.0},\"light\":{\"whites\":12.0}}`"
+        ],
+        [
+          "`lightcraftPresetSpringFresh`",
+          "`lc.spring-fresh` (Seasons)",
+          "`{\"mixer\":{\"green\":{\"hue\":10.0,\"sat\":12.0,\"lum\":10.0},\"magenta\":{\"sat\":10.0}},\"light\":{\"shadows\":15.0},\"color\":{\"vibrance\":15.0}}`"
+        ],
+        [
+          "`lightcraftPresetSummerHaze`",
+          "`lc.summer-haze` (Seasons)",
+          "`{\"effects\":{\"dehaze\":-12.0},\"curve\":{\"shadows\":18.0},\"grading\":{\"highlights\":{\"hue\":45.0,\"sat\":14.0,\"lum\":0.0}},\"light\":{\"contrast\":-10.0}}`"
+        ],
+        [
+          "`lightcraftPresetInstant70s`",
+          "`lc.instant-70s` (Vintage)",
+          "`{\"curve\":{\"shadows\":28.0,\"highlights\":-18.0},\"grading\":{\"shadows\":{\"hue\":170.0,\"sat\":14.0,\"lum\":0.0},\"highlights\":{\"hue\":45.0,\"sat\":18.0,\"lum\":0.0}},\"color\":{\"saturation\":-10.0},\"vignette\":{\"amount\":-15.0},\"grain\":{\"amount\":20.0,\"size\":30.0,\"roughness\":55.0}}`"
+        ],
+        [
+          "`lightcraftPresetCrossProcess`",
+          "`lc.cross-process` (Vintage)",
+          "`{\"grading\":{\"shadows\":{\"hue\":230.0,\"sat\":25.0,\"lum\":0.0},\"highlights\":{\"hue\":60.0,\"sat\":25.0,\"lum\":0.0}},\"light\":{\"contrast\":22.0},\"color\":{\"saturation\":10.0}}`"
+        ],
+        [
+          "`lightcraftPresetBleachBypass`",
+          "`lc.bleach-bypass` (Vintage)",
+          "`{\"color\":{\"saturation\":-40.0},\"light\":{\"contrast\":35.0,\"highlights\":-15.0},\"effects\":{\"clarity\":15.0}}`"
+        ],
+        [
+          "`lightcraftPresetBwSepia`",
+          "`lc.bw-sepia` (B&W)",
+          "`{\"treatment\":\"bw\",\"grading\":{\"shadows\":{\"hue\":32.0,\"sat\":22.0,\"lum\":0.0},\"highlights\":{\"hue\":42.0,\"sat\":18.0,\"lum\":0.0}},\"curve\":{\"shadows\":10.0}}`"
+        ]
+      ]
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "heading",
+      "start_line": 109,
+      "end_line": 109,
+      "raw": "## Resampling functions\n",
+      "level": 2,
+      "title": "Resampling functions"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 110,
+      "end_line": 110,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 111,
+      "end_line": 111,
+      "raw": "[`raster/src/resample.rs`](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/raster/src/resample.rs#L7) defines these four actual CPU kernels. The GPU uploads the same contribution tables. Every function takes `(ImageView image, std::size_t width, std::size_t height)` and returns `Result<Image>`.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 112,
+      "end_line": 112,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "table",
+      "start_line": 113,
+      "end_line": 118,
+      "raw": "| Function | Kernel and support |\n| --- | --- |\n| `resizeBox` | Rectangular window, `abs(x)<=.5` |\n| `resizeBilinear` | Triangle, `max(0,1-abs(x))`, support 1 |\n| `resizeMitchell` | Mitchell-Netravali cubic with `B=C=1/3`, support 2 |\n| `resizeLanczos3` | `sinc(x)*sinc(x/3)`, support 3 |\n",
+      "columns": [
+        "Function",
+        "Kernel and support"
+      ],
+      "rows": [
+        [
+          "`resizeBox`",
+          "Rectangular window, `abs(x)<=.5`"
+        ],
+        [
+          "`resizeBilinear`",
+          "Triangle, `max(0,1-abs(x))`, support 1"
+        ],
+        [
+          "`resizeMitchell`",
+          "Mitchell-Netravali cubic with `B=C=1/3`, support 2"
+        ],
+        [
+          "`resizeLanczos3`",
+          "`sinc(x)*sinc(x/3)`, support 3"
+        ]
+      ]
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 119,
+      "end_line": 119,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 120,
+      "end_line": 120,
+      "raw": "The center of output coordinate `i` is `(i+.5)*source/destination`. Downscaling widens support by `max(1,source/destination)` for anti-aliasing. Each axis normalizes its cropped in-bounds taps; it neither wraps nor pads colors beyond the source. Filtering is separable, horizontal then vertical, using double-precision accumulation. All channels and alpha are filtered in linear-light premultiplied RGBA. RGB is divided by the unbounded filtered alpha before alpha and RGB are clipped, so negative cubic/sinc lobes do not generate a dark straight-alpha halo. Newly invisible output uses `{0,0,0,0}`. Same dimensions return an exact detached copy instead of filtering.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 121,
+      "end_line": 121,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 122,
+      "end_line": 122,
+      "raw": "Each input/output axis must be in `[1,65536]`. The input image, output image and horizontal intermediate (`output width * input height`) must each contain no more than `64*1024*1024` pixels. The contribution table is bounded to `1024*1024` taps per axis. Empty or overflowing dimensions, bounds violations, mismatched buffers, nonfinite channels and RGBA outside `[0,1]` are rejected before processing. Allocation failures return `AllocationFailure`. The reference clamps zero output dimensions to one; this SDK rejects zero to preserve its image-validation contract.\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 124,
+      "end_line": 124,
+      "raw": "These are post-render raster filters. Upstream texture sampling in the GUI, Bayer/X-Trans demosaicing and internal pyramid resampling are separate execution contexts. `resizeBox` is a size-changing reconstruction kernel, distinct from a fixed-size box blur.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "heading",
+      "start_line": 126,
+      "end_line": 126,
+      "raw": "## Verification\n",
+      "level": 2,
+      "title": "Verification"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 127,
+      "end_line": 127,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 128,
+      "end_line": 128,
+      "raw": "`tests/lightcraft_filters.cpp` offers `looks`, `presets`, `resize`, `invalid` and `all` groups. It calls every named function at zero, quarter, full and double amount; verifies finite normalized output, alpha and hidden-RGB preservation; compares every builtin preset field with fixed upstream JSON fixtures; checks selected look deltas, fade endpoints, B&W treatment and grading; and verifies an explicitly assembled Develop recipe. Resampling tests use closed-form two-pixel reference values, the linear-light mean, constant-signal conservation, axis symmetry, detached identity, transparent-edge color isolation and validation without allocating huge images.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LightCraft looks, presets and resampling filters",
+      "anchor": "lightcraft-looks-presets-and-resampling-filters",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Recipe interfaces and execution",
+      "anchor": "recipe-interfaces-and-execution",
+      "start_line": 7
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "All individually exported look functions",
+      "anchor": "all-individually-exported-look-functions",
+      "start_line": 32
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "All individually exported preset functions",
+      "anchor": "all-individually-exported-preset-functions",
+      "start_line": 61
+    },
+    {
+      "block_id": "b000033",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Resampling functions",
+      "anchor": "resampling-functions",
+      "start_line": 109
+    },
+    {
+      "block_id": "b000045",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Verification",
+      "anchor": "verification",
+      "start_line": 126
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000005",
+        "line": 5,
+        "text": "The reference is [LightCraft commit 629e39380e296f588c64cd9c0053a8edc3528f36](https://github.com/storytold/lightcraft/tree/629e39380e296f588c64cd9c0053a8edc3528f36). Its MIT notice is preserved in `third_party/lightcraft/LICENSE-MIT`. The recipes are LightCraft's own looks and builtin presets; their names do not claim Adobe rendering equivalence.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 11,
+        "text": "`lightcraftLookOptions(LightcraftLook, amount)` and `lightcraftPresetOptions(LightcraftPreset, amount)` return explicit `DevelopOptions` recipes. `applyLightcraftLook(ImageView, LightcraftLook, amount)` and `applyLightcraftPreset(ImageView, LightcraftPreset, amount)` select the same recipes. The named functions listed below are independently exported free functions; no string dispatcher or opaque style object is required. A host can retrieve a recipe, inspect or change its fields, then call `develop` or the individual Develop stages.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000039",
+        "line": 120,
+        "text": "The center of output coordinate `i` is `(i+.5)*source/destination`. Downscaling widens support by `max(1,source/destination)` for anti-aliasing. Each axis normalizes its cropped in-bounds taps; it neither wraps nor pads colors beyond the source. Filtering is separable, horizontal then vertical, using double-precision accumulation. All channels and alpha are filtered in linear-light premultiplied RGBA. RGB is divided by the unbounded filtered alpha before alpha and RGB are clipped, so negative cubic/sinc lobes do not generate a dark straight-alpha halo. Newly invisible output uses `{0,0,0,0}`. Same dimensions return an exact detached copy instead of filtering.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000041",
+        "line": 122,
+        "text": "Each input/output axis must be in `[1,65536]`. The input image, output image and horizontal intermediate (`output width * input height`) must each contain no more than `64*1024*1024` pixels. The contribution table is bounded to `1024*1024` taps per axis. Empty or overflowing dimensions, bounds violations, mismatched buffers, nonfinite channels and RGBA outside `[0,1]` are rejected before processing. Allocation failures return `AllocationFailure`. The reference clamps zero output dimensions to one; this SDK rejects zero to preserve its image-validation contract.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000005",
+        "label": "LightCraft commit 629e39380e296f588c64cd9c0053a8edc3528f36",
+        "target": "https://github.com/storytold/lightcraft/tree/629e39380e296f588c64cd9c0053a8edc3528f36",
+        "kind": "external",
+        "line": 5
+      },
+      {
+        "block_id": "b000023",
+        "label": "`pipeline/src/profiles.rs`",
+        "target": "https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/profiles.rs#L45",
+        "kind": "external",
+        "line": 34
+      },
+      {
+        "block_id": "b000029",
+        "label": "`engine/src/presets.rs::builtin`",
+        "target": "https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/engine/src/presets.rs#L143",
+        "kind": "external",
+        "line": 63
+      },
+      {
+        "block_id": "b000035",
+        "label": "`raster/src/resample.rs`",
+        "target": "https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/raster/src/resample.rs#L7",
+        "kind": "external",
+        "line": 111
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000025",
+        "columns": [
+          "Function",
+          "Reference profile ID",
+          "Recipe"
+        ],
+        "rows": [
+          [
+            "`lightcraftLookColor`",
+            "`lc.color`",
+            "Identity"
+          ],
+          [
+            "`lightcraftLookNeutral`",
+            "`lc.neutral`",
+            "light.contrast=-18.0, color.saturation=-10.0, light.highlights=-10.0, light.shadows=8.0"
+          ],
+          [
+            "`lightcraftLookVivid`",
+            "`lc.vivid`",
+            "light.contrast=16.0, color.saturation=14.0, color.vibrance=14.0, light.blacks=-6.0"
+          ],
+          [
+            "`lightcraftLookLandscape`",
+            "`lc.landscape`",
+            "light.contrast=10.0, color.vibrance=10.0, mixer.green.sat=14.0, mixer.aqua.sat=10.0, mixer.blue.sat=14.0, mixer.blue.lum=-6.0, effects.clarity=6.0"
+          ],
+          [
+            "`lightcraftLookPortrait`",
+            "`lc.portrait`",
+            "light.contrast=-6.0, mixer.orange.sat=-8.0, mixer.orange.lum=6.0, mixer.red.sat=-5.0, effects.texture=-6.0"
+          ],
+          [
+            "`lightcraftLookMono`",
+            "`lc.mono`",
+            "B&W, light.contrast=8.0"
+          ],
+          [
+            "`lightcraftLookFilmWarmPrint`",
+            "`lc.film.warm-print`",
+            "light.contrast=6.0, color.saturation=-4.0, mixer.orange.lum=4.0, fade curve.master=(0.04,0.97), grading.highlights=(40.0,18.0,0.0), grading.shadows=(25.0,8.0,0.0)"
+          ],
+          [
+            "`lightcraftLookFilmCoolFade`",
+            "`lc.film.cool-fade`",
+            "light.contrast=-8.0, color.saturation=-10.0, fade curve.master=(0.07,0.95), grading.shadows=(210.0,16.0,0.0), grading.highlights=(190.0,6.0,0.0)"
+          ],
+          [
+            "`lightcraftLookFilmGoldenHour`",
+            "`lc.film.golden-hour`",
+            "color.vibrance=10.0, curve.highlights=-8.0, mixer.orange.sat=8.0, mixer.yellow.hue=-6.0, grading.global=(45.0,10.0,0.0), grading.highlights=(35.0,20.0,0.0)"
+          ],
+          [
+            "`lightcraftLookFilmFadedSlide`",
+            "`lc.film.faded-slide`",
+            "light.contrast=14.0, color.vibrance=8.0, color.saturation=6.0, curve.shadows=10.0, fade curve.blue=(0.06,1.0), fade curve.red=(0.0,0.97)"
+          ],
+          [
+            "`lightcraftLookCineTealAmber`",
+            "`lc.cine.teal-amber`",
+            "light.contrast=10.0, mixer.orange.sat=6.0, mixer.green.hue=20.0, mixer.green.sat=-20.0, mixer.blue.hue=-8.0, grading.shadows=(195.0,30.0,0.0), grading.highlights=(38.0,24.0,0.0)"
+          ],
+          [
+            "`lightcraftLookCineNightBlue`",
+            "`lc.cine.night-blue`",
+            "light.contrast=12.0, color.saturation=-12.0, curve.darks=-8.0, grading.shadows=(220.0,28.0,-4.0), grading.midtones=(215.0,10.0,0.0)"
+          ],
+          [
+            "`lightcraftLookCineDesertHeat`",
+            "`lc.cine.desert-heat`",
+            "light.contrast=8.0, curve.lights=6.0, mixer.blue.sat=-25.0, mixer.aqua.sat=-20.0, grading.global=(32.0,16.0,0.0), grading.highlights=(48.0,12.0,0.0)"
+          ],
+          [
+            "`lightcraftLookCineNeonDusk`",
+            "`lc.cine.neon-dusk`",
+            "light.contrast=10.0, color.vibrance=18.0, mixer.magenta.sat=12.0, mixer.purple.sat=12.0, grading.shadows=(265.0,22.0,0.0), grading.highlights=(330.0,14.0,0.0)"
+          ],
+          [
+            "`lightcraftLookMutedMatteSoft`",
+            "`lc.muted.matte-soft`",
+            "light.contrast=-12.0, color.saturation=-14.0, curve.highlights=-6.0, fade curve.master=(0.08,0.96)"
+          ],
+          [
+            "`lightcraftLookMutedBleached`",
+            "`lc.muted.bleached`",
+            "light.contrast=22.0, color.saturation=-38.0, curve.lights=6.0, effects.clarity=8.0"
+          ],
+          [
+            "`lightcraftLookMutedPastelHaze`",
+            "`lc.muted.pastel-haze`",
+            "light.contrast=-18.0, color.saturation=-20.0, color.vibrance=12.0, fade curve.master=(0.1,1.0), grading.highlights=(330.0,6.0,0.0), grading.shadows=(200.0,6.0,0.0)"
+          ],
+          [
+            "`lightcraftLookMutedQuietGreen`",
+            "`lc.muted.quiet-green`",
+            "light.contrast=-4.0, color.saturation=-8.0, mixer.green.sat=-30.0, mixer.green.hue=-10.0, mixer.yellow.sat=-18.0, mixer.aqua.sat=-15.0, fade curve.master=(0.04,1.0)"
+          ],
+          [
+            "`lightcraftLookBwMonoRich`",
+            "`lc.bw.mono-rich`",
+            "B&W, light.contrast=18.0, curve.darks=-8.0, curve.lights=6.0, bw_mix.red=8.0, bw_mix.orange=10.0, bw_mix.blue=-12.0"
+          ],
+          [
+            "`lightcraftLookBwRedFilter`",
+            "`lc.bw.red-filter`",
+            "B&W, light.contrast=12.0, bw_mix.red=40.0, bw_mix.orange=30.0, bw_mix.yellow=10.0, bw_mix.green=-20.0, bw_mix.aqua=-30.0, bw_mix.blue=-45.0"
+          ],
+          [
+            "`lightcraftLookBwSoft`",
+            "`lc.bw.soft`",
+            "B&W, light.contrast=-14.0, bw_mix.orange=12.0, fade curve.master=(0.06,0.97)"
+          ],
+          [
+            "`lightcraftLookBwSepia`",
+            "`lc.bw.sepia`",
+            "B&W, light.contrast=6.0, fade curve.master=(0.04,0.98), grading.shadows=(28.0,18.0,0.0), grading.highlights=(45.0,14.0,0.0)"
+          ]
+        ]
+      },
+      {
+        "block_id": "b000031",
+        "columns": [
+          "Function",
+          "Reference ID and group",
+          "Recipe"
+        ],
+        "rows": [
+          [
+            "`lightcraftPresetWarmGlow`",
+            "`lc.warm-glow` (Color)",
+            "`{\"wb\":{\"mode\":\"custom\",\"temp\":7200.0,\"tint\":8.0},\"light\":{\"contrast\":8.0,\"shadows\":12.0},\"color\":{\"vibrance\":18.0}}`"
+          ],
+          [
+            "`lightcraftPresetCoolMorning`",
+            "`lc.cool-morning` (Color)",
+            "`{\"wb\":{\"mode\":\"custom\",\"temp\":5600.0,\"tint\":-4.0},\"light\":{\"highlights\":-20.0},\"color\":{\"vibrance\":10.0},\"grading\":{\"shadows\":{\"hue\":215.0,\"sat\":12.0,\"lum\":0.0}}}`"
+          ],
+          [
+            "`lightcraftPresetTealOrange`",
+            "`lc.teal-orange` (Color)",
+            "`{\"grading\":{\"shadows\":{\"hue\":195.0,\"sat\":28.0,\"lum\":0.0},\"highlights\":{\"hue\":35.0,\"sat\":22.0,\"lum\":0.0},\"balance\":10.0},\"color\":{\"vibrance\":12.0},\"light\":{\"contrast\":14.0}}`"
+          ],
+          [
+            "`lightcraftPresetVividPop`",
+            "`lc.vivid-pop` (Color)",
+            "`{\"color\":{\"vibrance\":40.0,\"saturation\":8.0},\"light\":{\"contrast\":18.0,\"whites\":10.0,\"blacks\":-10.0},\"effects\":{\"clarity\":12.0}}`"
+          ],
+          [
+            "`lightcraftPresetSoftPastel`",
+            "`lc.soft-pastel` (Color)",
+            "`{\"light\":{\"contrast\":-25.0,\"highlights\":-30.0,\"shadows\":35.0,\"blacks\":20.0},\"color\":{\"saturation\":-18.0,\"vibrance\":10.0},\"curve\":{\"shadows\":25.0}}`"
+          ],
+          [
+            "`lightcraftPresetFadedMatte`",
+            "`lc.faded-matte` (Film)",
+            "`{\"curve\":{\"shadows\":40.0,\"highlights\":-15.0},\"light\":{\"contrast\":-10.0},\"color\":{\"saturation\":-12.0},\"grain\":{\"amount\":18.0,\"size\":25.0,\"roughness\":50.0}}`"
+          ],
+          [
+            "`lightcraftPresetWarmFilm`",
+            "`lc.warm-film` (Film)",
+            "`{\"wb\":{\"mode\":\"custom\",\"temp\":6900.0,\"tint\":5.0},\"curve\":{\"shadows\":22.0},\"grading\":{\"highlights\":{\"hue\":45.0,\"sat\":15.0,\"lum\":0.0}},\"grain\":{\"amount\":22.0,\"size\":30.0,\"roughness\":55.0},\"vignette\":{\"amount\":-12.0}}`"
+          ],
+          [
+            "`lightcraftPresetMutedFilm`",
+            "`lc.muted-film` (Film)",
+            "`{\"color\":{\"saturation\":-25.0,\"vibrance\":5.0},\"light\":{\"contrast\":10.0},\"curve\":{\"shadows\":18.0},\"grain\":{\"amount\":15.0}}`"
+          ],
+          [
+            "`lightcraftPresetBwHighContrast`",
+            "`lc.bw-high-contrast` (B&W)",
+            "`{\"treatment\":\"bw\",\"light\":{\"contrast\":45.0,\"whites\":20.0,\"blacks\":-25.0},\"effects\":{\"clarity\":20.0},\"bw_mix\":{\"blue\":-30.0,\"red\":15.0}}`"
+          ],
+          [
+            "`lightcraftPresetBwSoft`",
+            "`lc.bw-soft` (B&W)",
+            "`{\"treatment\":\"bw\",\"light\":{\"contrast\":-15.0,\"shadows\":25.0},\"curve\":{\"shadows\":15.0}}`"
+          ],
+          [
+            "`lightcraftPresetBwSelenium`",
+            "`lc.bw-selenium` (B&W)",
+            "`{\"treatment\":\"bw\",\"light\":{\"contrast\":20.0},\"grading\":{\"shadows\":{\"hue\":285.0,\"sat\":18.0,\"lum\":0.0},\"highlights\":{\"hue\":40.0,\"sat\":10.0,\"lum\":0.0}}}`"
+          ],
+          [
+            "`lightcraftPresetCrispLandscape`",
+            "`lc.crisp-landscape` (Landscape)",
+            "`{\"light\":{\"highlights\":-45.0,\"shadows\":30.0,\"contrast\":12.0},\"effects\":{\"clarity\":22.0,\"dehaze\":12.0,\"texture\":15.0},\"color\":{\"vibrance\":25.0}}`"
+          ],
+          [
+            "`lightcraftPresetGoldenHour`",
+            "`lc.golden-hour` (Landscape)",
+            "`{\"wb\":{\"mode\":\"custom\",\"temp\":7600.0,\"tint\":12.0},\"light\":{\"highlights\":-35.0,\"shadows\":20.0},\"grading\":{\"highlights\":{\"hue\":38.0,\"sat\":25.0,\"lum\":5.0}},\"vignette\":{\"amount\":-15.0}}`"
+          ],
+          [
+            "`lightcraftPresetBlueHour`",
+            "`lc.blue-hour` (Landscape)",
+            "`{\"wb\":{\"mode\":\"custom\",\"temp\":5200.0,\"tint\":6.0},\"light\":{\"shadows\":25.0,\"exposure\":0.2},\"mixer\":{\"blue\":{\"hue\":0.0,\"sat\":25.0,\"lum\":0.0},\"purple\":{\"hue\":0.0,\"sat\":15.0,\"lum\":0.0}}}`"
+          ],
+          [
+            "`lightcraftPresetSoftSkin`",
+            "`lc.soft-skin` (Portrait)",
+            "`{\"effects\":{\"texture\":-25.0,\"clarity\":-10.0},\"light\":{\"contrast\":-5.0,\"shadows\":15.0},\"mixer\":{\"orange\":{\"hue\":0.0,\"sat\":-8.0,\"lum\":10.0}}}`"
+          ],
+          [
+            "`lightcraftPresetBrightAiry`",
+            "`lc.bright-airy` (Portrait)",
+            "`{\"light\":{\"exposure\":0.45,\"contrast\":-15.0,\"highlights\":-40.0,\"shadows\":40.0,\"whites\":15.0},\"color\":{\"vibrance\":8.0,\"saturation\":-8.0}}`"
+          ],
+          [
+            "`lightcraftPresetMoody`",
+            "`lc.moody` (Style)",
+            "`{\"light\":{\"exposure\":-0.3,\"contrast\":20.0,\"highlights\":-30.0,\"blacks\":-15.0},\"color\":{\"saturation\":-20.0},\"grading\":{\"shadows\":{\"hue\":200.0,\"sat\":15.0,\"lum\":-5.0}},\"vignette\":{\"amount\":-30.0}}`"
+          ],
+          [
+            "`lightcraftPresetCinematic`",
+            "`lc.cinematic` (Style)",
+            "`{\"curve\":{\"shadows\":20.0,\"highlights\":-10.0},\"grading\":{\"shadows\":{\"hue\":190.0,\"sat\":25.0,\"lum\":0.0},\"highlights\":{\"hue\":30.0,\"sat\":18.0,\"lum\":0.0}},\"light\":{\"contrast\":15.0},\"vignette\":{\"amount\":-20.0}}`"
+          ],
+          [
+            "`lightcraftPresetMoodyPortrait`",
+            "`lc.moody-portrait` (Portrait)",
+            "`{\"light\":{\"exposure\":-0.25,\"contrast\":20.0,\"highlights\":-30.0,\"blacks\":-12.0},\"color\":{\"saturation\":-15.0},\"vignette\":{\"amount\":-25.0,\"midpoint\":40.0},\"mixer\":{\"orange\":{\"sat\":6.0}}}`"
+          ],
+          [
+            "`lightcraftPresetGoldenGlow`",
+            "`lc.golden-glow` (Portrait)",
+            "`{\"grading\":{\"highlights\":{\"hue\":40.0,\"sat\":18.0,\"lum\":0.0},\"midtones\":{\"hue\":35.0,\"sat\":8.0,\"lum\":0.0}},\"light\":{\"shadows\":15.0},\"effects\":{\"clarity\":-8.0}}`"
+          ],
+          [
+            "`lightcraftPresetCleanStudio`",
+            "`lc.clean-studio` (Portrait)",
+            "`{\"light\":{\"contrast\":10.0,\"whites\":15.0,\"blacks\":-8.0},\"effects\":{\"texture\":-10.0},\"color\":{\"vibrance\":5.0}}`"
+          ],
+          [
+            "`lightcraftPresetCrispVista`",
+            "`lc.crisp-vista` (Landscape)",
+            "`{\"effects\":{\"dehaze\":15.0,\"clarity\":18.0,\"texture\":12.0},\"light\":{\"contrast\":12.0,\"highlights\":-25.0,\"shadows\":18.0},\"color\":{\"vibrance\":20.0}}`"
+          ],
+          [
+            "`lightcraftPresetDeepSky`",
+            "`lc.deep-sky` (Landscape)",
+            "`{\"mixer\":{\"blue\":{\"lum\":-25.0,\"sat\":15.0},\"aqua\":{\"lum\":-10.0}},\"light\":{\"highlights\":-30.0},\"effects\":{\"dehaze\":10.0}}`"
+          ],
+          [
+            "`lightcraftPresetLushGreens`",
+            "`lc.lush-greens` (Landscape)",
+            "`{\"mixer\":{\"green\":{\"hue\":12.0,\"sat\":18.0,\"lum\":8.0},\"yellow\":{\"hue\":10.0,\"sat\":10.0}},\"color\":{\"vibrance\":12.0},\"effects\":{\"clarity\":8.0}}`"
+          ],
+          [
+            "`lightcraftPresetDesertWarmth`",
+            "`lc.desert-warmth` (Landscape)",
+            "`{\"mixer\":{\"orange\":{\"sat\":15.0,\"lum\":5.0},\"yellow\":{\"hue\":-8.0,\"sat\":10.0},\"blue\":{\"sat\":-10.0}},\"grading\":{\"highlights\":{\"hue\":38.0,\"sat\":12.0,\"lum\":0.0}},\"light\":{\"contrast\":10.0}}`"
+          ],
+          [
+            "`lightcraftPresetMistyMorning`",
+            "`lc.misty-morning` (Landscape)",
+            "`{\"effects\":{\"dehaze\":-18.0,\"clarity\":-12.0},\"light\":{\"contrast\":-18.0,\"highlights\":-10.0},\"grading\":{\"shadows\":{\"hue\":210.0,\"sat\":10.0,\"lum\":0.0}},\"color\":{\"saturation\":-10.0}}`"
+          ],
+          [
+            "`lightcraftPresetGrittyStreet`",
+            "`lc.gritty-street` (Urban)",
+            "`{\"effects\":{\"clarity\":35.0,\"texture\":20.0},\"light\":{\"contrast\":25.0,\"blacks\":-15.0},\"color\":{\"saturation\":-30.0},\"vignette\":{\"amount\":-18.0}}`"
+          ],
+          [
+            "`lightcraftPresetNeonNight`",
+            "`lc.neon-night` (Urban)",
+            "`{\"mixer\":{\"magenta\":{\"sat\":20.0},\"purple\":{\"sat\":18.0},\"blue\":{\"sat\":12.0},\"aqua\":{\"sat\":15.0}},\"light\":{\"contrast\":18.0,\"blacks\":-12.0},\"color\":{\"vibrance\":15.0},\"grading\":{\"shadows\":{\"hue\":250.0,\"sat\":15.0,\"lum\":0.0}}}`"
+          ],
+          [
+            "`lightcraftPresetConcreteCool`",
+            "`lc.concrete-cool` (Urban)",
+            "`{\"grading\":{\"shadows\":{\"hue\":205.0,\"sat\":14.0,\"lum\":0.0},\"highlights\":{\"hue\":200.0,\"sat\":6.0,\"lum\":0.0}},\"color\":{\"saturation\":-20.0},\"light\":{\"contrast\":12.0},\"effects\":{\"clarity\":15.0}}`"
+          ],
+          [
+            "`lightcraftPresetFadedUrban`",
+            "`lc.faded-urban` (Urban)",
+            "`{\"curve\":{\"shadows\":30.0},\"color\":{\"saturation\":-22.0},\"light\":{\"contrast\":-8.0},\"grain\":{\"amount\":12.0,\"size\":25.0,\"roughness\":45.0}}`"
+          ],
+          [
+            "`lightcraftPresetFreshBright`",
+            "`lc.fresh-bright` (Food)",
+            "`{\"light\":{\"exposure\":0.25,\"shadows\":20.0,\"whites\":10.0},\"color\":{\"vibrance\":22.0},\"effects\":{\"texture\":15.0}}`"
+          ],
+          [
+            "`lightcraftPresetWarmTable`",
+            "`lc.warm-table` (Food)",
+            "`{\"grading\":{\"midtones\":{\"hue\":32.0,\"sat\":10.0,\"lum\":0.0}},\"mixer\":{\"orange\":{\"sat\":10.0},\"red\":{\"sat\":8.0}},\"light\":{\"contrast\":8.0}}`"
+          ],
+          [
+            "`lightcraftPresetDarkMoodyFood`",
+            "`lc.dark-moody-food` (Food)",
+            "`{\"light\":{\"exposure\":-0.3,\"contrast\":22.0,\"highlights\":-20.0,\"blacks\":-15.0},\"effects\":{\"texture\":18.0},\"vignette\":{\"amount\":-22.0}}`"
+          ],
+          [
+            "`lightcraftPresetAutumnGold`",
+            "`lc.autumn-gold` (Seasons)",
+            "`{\"mixer\":{\"green\":{\"hue\":-30.0,\"sat\":-10.0},\"yellow\":{\"hue\":-15.0,\"sat\":15.0},\"orange\":{\"sat\":18.0}},\"grading\":{\"highlights\":{\"hue\":40.0,\"sat\":10.0,\"lum\":0.0}}}`"
+          ],
+          [
+            "`lightcraftPresetWinterBlue`",
+            "`lc.winter-blue` (Seasons)",
+            "`{\"grading\":{\"shadows\":{\"hue\":215.0,\"sat\":18.0,\"lum\":0.0},\"highlights\":{\"hue\":205.0,\"sat\":8.0,\"lum\":0.0}},\"color\":{\"saturation\":-12.0},\"light\":{\"whites\":12.0}}`"
+          ],
+          [
+            "`lightcraftPresetSpringFresh`",
+            "`lc.spring-fresh` (Seasons)",
+            "`{\"mixer\":{\"green\":{\"hue\":10.0,\"sat\":12.0,\"lum\":10.0},\"magenta\":{\"sat\":10.0}},\"light\":{\"shadows\":15.0},\"color\":{\"vibrance\":15.0}}`"
+          ],
+          [
+            "`lightcraftPresetSummerHaze`",
+            "`lc.summer-haze` (Seasons)",
+            "`{\"effects\":{\"dehaze\":-12.0},\"curve\":{\"shadows\":18.0},\"grading\":{\"highlights\":{\"hue\":45.0,\"sat\":14.0,\"lum\":0.0}},\"light\":{\"contrast\":-10.0}}`"
+          ],
+          [
+            "`lightcraftPresetInstant70s`",
+            "`lc.instant-70s` (Vintage)",
+            "`{\"curve\":{\"shadows\":28.0,\"highlights\":-18.0},\"grading\":{\"shadows\":{\"hue\":170.0,\"sat\":14.0,\"lum\":0.0},\"highlights\":{\"hue\":45.0,\"sat\":18.0,\"lum\":0.0}},\"color\":{\"saturation\":-10.0},\"vignette\":{\"amount\":-15.0},\"grain\":{\"amount\":20.0,\"size\":30.0,\"roughness\":55.0}}`"
+          ],
+          [
+            "`lightcraftPresetCrossProcess`",
+            "`lc.cross-process` (Vintage)",
+            "`{\"grading\":{\"shadows\":{\"hue\":230.0,\"sat\":25.0,\"lum\":0.0},\"highlights\":{\"hue\":60.0,\"sat\":25.0,\"lum\":0.0}},\"light\":{\"contrast\":22.0},\"color\":{\"saturation\":10.0}}`"
+          ],
+          [
+            "`lightcraftPresetBleachBypass`",
+            "`lc.bleach-bypass` (Vintage)",
+            "`{\"color\":{\"saturation\":-40.0},\"light\":{\"contrast\":35.0,\"highlights\":-15.0},\"effects\":{\"clarity\":15.0}}`"
+          ],
+          [
+            "`lightcraftPresetBwSepia`",
+            "`lc.bw-sepia` (B&W)",
+            "`{\"treatment\":\"bw\",\"grading\":{\"shadows\":{\"hue\":32.0,\"sat\":22.0,\"lum\":0.0},\"highlights\":{\"hue\":42.0,\"sat\":18.0,\"lum\":0.0}},\"curve\":{\"shadows\":10.0}}`"
+          ]
+        ]
+      },
+      {
+        "block_id": "b000037",
+        "columns": [
+          "Function",
+          "Kernel and support"
+        ],
+        "rows": [
+          [
+            "`resizeBox`",
+            "Rectangular window, `abs(x)<=.5`"
+          ],
+          [
+            "`resizeBilinear`",
+            "Triangle, `max(0,1-abs(x))`, support 1"
+          ],
+          [
+            "`resizeMitchell`",
+            "Mitchell-Netravali cubic with `B=C=1/3`, support 2"
+          ],
+          [
+            "`resizeLanczos3`",
+            "`sinc(x)*sinc(x/3)`, support 3"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

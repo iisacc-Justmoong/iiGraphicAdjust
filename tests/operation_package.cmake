@@ -1,4 +1,4 @@
-foreach(_required SOURCE_ROOT BINARY_ROOT NATIVE_PROVIDER)
+foreach(_required SOURCE_ROOT BINARY_ROOT)
     if(NOT DEFINED ${_required} OR "${${_required}}" STREQUAL "")
         message(FATAL_ERROR "Missing ${_required}")
     endif()
@@ -26,7 +26,7 @@ foreach(_file include/iiGraphicAdjust/Objects.h include/iiGraphicAdjust/Operatio
     endif()
 endforeach()
 run_checked(configure "${CMAKE_COMMAND}" -S "${SOURCE_ROOT}/tests/consumer" -B "${_stage}/build"
-    "-DCMAKE_PREFIX_PATH=${_stage}/install" "-DiiFileProviderNative_DIR=${NATIVE_PROVIDER}"
+    "-DCMAKE_PREFIX_PATH=${_stage}/install" "-DCMAKE_DISABLE_FIND_PACKAGE_iiFileProviderNative=TRUE"
     "-DCMAKE_CXX_COMPILER=${CXX_COMPILER}" "-DCMAKE_CXX_FLAGS=${CXX_FLAGS}"
     "-DCMAKE_BUILD_TYPE=Release")
 run_checked(build "${CMAKE_COMMAND}" --build "${_stage}/build" --parallel 2)

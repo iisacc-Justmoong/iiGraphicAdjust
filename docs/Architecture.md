@@ -1,6 +1,6 @@
 # Architecture
 
-`iiGraphicAdjust` is a leaf processing SDK. Kernels use C++23 and the standard library; the package links the existing Qt-free `iiFileProviderNative >= 0.6` for native file integration. Product state, GUI types, document persistence, font shaping and file decoding remain responsibilities of its callers. The package introduces no reverse dependency on Dreamscapes, iiSharedCanvas or iiPaintEngine.
+`iiGraphicAdjust` is an independent processing SDK. Kernels use C++23 and the standard library and receive caller-owned image data. Product state, GUI types, document persistence, font shaping and file decoding remain responsibilities of callers. Applications may combine image processing with iiFileProvider without linking one SDK into the other.
 
 ## Change boundaries
 
@@ -53,7 +53,7 @@ Color adjustment, noise, composition and format conversion cost O(N) for N pixel
 
 The package target is `iiGraphicAdjust::iiGraphicAdjust`; CMake propagates C++23 and the installed public include path. `GenerateExportHeader` supports shared-library visibility and static definitions. ABI series 0.6 uses `SameMinorVersion` package compatibility. Consumers must use a compatible compiler/standard-library ABI when crossing a shared-library boundary with standard containers.
 
-The default install prefix is `~/.local/SDK/iiGraphicAdjust`. The parent `SDK/install_all.py` discovers this directory from `CMakeLists.txt`; no central module list or duplicated install script is needed. The exported package declares its Qt-free native file provider dependency. Qt independence must be verified from source, exported CMake targets and linked binaries, rather than relying on an unused CMake disable-find option.
+The default install prefix is `~/.local/SDK/iiGraphicAdjust`. The parent `SDK/install_all.py` discovers this directory from `CMakeLists.txt`; no central module list or duplicated install script is needed. The exported package does not discover or link another SDK. Independence must be verified from source, exported CMake targets, linked binaries and a separately configured installed consumer.
 
 No existing product or SDK adapter is rewritten in this release. Integrating a host means adapting its actual pixel format and ownership contract to `ImageView` or the documented converters, then calling the desired operations explicitly.
 

@@ -1,13 +1,13 @@
 # iiGraphicAdjust
 
-[Windows 빌드 및 실행](docs/WindowsBuildAndRun.md)
+[Windows build and execution](docs/WindowsBuildAndRun.md)
 
 Package release: **0.6.1** (2026-10-19). This maintenance release follows the
 concurrently completed 0.6.0 object API implementation. Build, full tests and
 installation are verified together against this final source snapshot.
 
 
-Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.6.1**. Processing uses the C++ standard library; the package also requires the existing Qt-free `iiFileProviderNative >= 0.6` for native file integration. There is no Qt, LVRS, iiPaintEngine or iiSharedCanvas dependency.
+Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.6.1**. Processing uses the C++ standard library and caller-provided image data; the library neither creates files nor depends on other SDK modules. Applications provide file loading and publishing separately, for example through iiFileProvider. There is no Qt dependency.
 
 ## Features
 
@@ -41,7 +41,7 @@ Version 0.5.0 adds a sensor and photograph processing foundation without changin
 - `applyOrientation()` handles all eight EXIF orientations; `crop()` performs exact bounded integer cropping.
 - `imageHistogram()` reports encoded RGB and linear-luminance bins/statistics with explicit alpha weighting.
 
-See [RAW processing](docs/RawProcessing.md) and [photographic operations](docs/PhotoOperations.md). These leaf APIs introduce no dependency on a camera SDK. An optional upper layer in iiCameraIntergration composes captured frames with these functions and the existing development/resampling stages.
+See [RAW processing](docs/RawProcessing.md) and [photographic operations](docs/PhotoOperations.md). These leaf APIs introduce no dependency on a camera SDK. An optional upper layer in iiCameraIntegration composes captured frames with these functions and the existing development/resampling stages.
 
 Version 0.4.0 adds individual filtering APIs selected by re-inspecting both supplied repositories. [The complete filter inventory](docs/Filters.md) and [machine-readable catalog](docs/filter-catalog.json) map every executable command to a public function and pinned source.
 
@@ -90,7 +90,7 @@ ctest --test-dir build -C Release --output-on-failure
 cmake --install build --config Release
 ```
 
-The standalone default installation prefix is `~/.local/SDK/iiGraphicAdjust`. Set `-DCMAKE_INSTALL_PREFIX=/your/prefix` to override it. Shared libraries are enabled by default; `-DBUILD_SHARED_LIBS=OFF` builds a static library. Set `-DIIGRAPHICADJUST_BUILD_EXAMPLES=OFF` and/or `-DBUILD_TESTING=OFF` for library-only builds.
+The standalone default installation prefix is `~/.local/SDK/iiGraphicAdjust`. Set `-DCMAKE_INSTALL_PREFIX=/your/prefix` to override it. Shared libraries are enabled by default; `-DBUILD_SHARED_LIBS=OFF` builds a static library. Set `-DBUILD_TESTING=OFF` for a library-only build. The examples are separately configured applications rather than targets in the SDK build.
 
 This module is automatically discovered by the existing parent SDK installer:
 
@@ -139,15 +139,18 @@ if (!words) return;
 ## Example
 
 ```sh
-build/iiGraphicAdjustExample build/adjusted.ppm
+cmake -S examples -B build/examples \
+  -DCMAKE_PREFIX_PATH="$HOME/.local/SDK/iiGraphicAdjust;$HOME/.local/SDK/iiFileProvider"
+cmake --build build/examples
+build/examples/iiGraphicAdjustExample resources/adjusted.ppm
 ```
 
-The original example and `iiGraphicAdjustDevelopExample` write real 256×128 adjusted RGB gradients as binary PPM using standard C++ file I/O. The development example also applies a radial local adjustment. File encoding is confined to examples; the library processes caller-provided pixels.
+The original example and `iiGraphicAdjustDevelopExample` write real 256×128 adjusted RGB gradients as binary PPM through iiFileProvider. The application links the two independent SDKs explicitly. The development example also applies a radial local adjustment. File encoding is confined to examples; the library processes caller-provided pixels.
 
 `iiGraphicAdjustLocalCorrectionsExample` computes Kelvin white balance first, then applies that result only through a feathered radial mask with 85% amount:
 
 ```sh
-build/iiGraphicAdjustLocalCorrectionsExample build/local-correction.ppm
+build/examples/iiGraphicAdjustLocalCorrectionsExample resources/local-correction.ppm
 ```
 
 ## Scope
@@ -167,3 +170,12 @@ SPDX-License-Identifier: MIT
 The original code and documentation in this repository are licensed under the
 [MIT License](LICENSE). Third-party code, libraries, fonts, tools, and model
 weights retain their respective licenses.
+
+<!-- workspace-docs:readme:start -->
+## Documentation entry points
+
+- Human overview: this English `README.md`.
+- Agent instructions: [AGENT.md](AGENT.md).
+- Human documentation: [documentation index](docs/README.md).
+- Structured agent documentation: [agent index](docs/agent-index.json).
+<!-- workspace-docs:readme:end -->
