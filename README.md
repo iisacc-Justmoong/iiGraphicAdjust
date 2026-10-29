@@ -1,5 +1,7 @@
 # iiGraphicAdjust
 
+Sources and adjacent headers are grouped by responsibility under `src/`; see [source layout](docs/SourceLayout.md). Public include names remain stable.
+
 [Windows build and execution](docs/WindowsBuildAndRun.md)
 
 Package release: **0.6.1** (2026-10-19). This maintenance release follows the

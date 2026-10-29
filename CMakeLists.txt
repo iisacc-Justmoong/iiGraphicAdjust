@@ -22,57 +22,105 @@ include(GenerateExportHeader)
 include(CTest)
 option(BUILD_SHARED_LIBS "Build iiGraphicAdjust as a shared library" ON)
 
+set(_adjust_public_headers
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Objects.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Operation.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/CorrectionExtensions.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/iiGraphicAdjust.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Image.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Raw/RawProcessing.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/PhotoOperations.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Masks/LocalCorrections.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/SampleFilters.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/Adjustments.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/Effects.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/Blend.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/Mapping.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/Hdr.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/Tone.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/Color.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/DevelopTone.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/DevelopColor.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/DevelopEffects.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/Optics.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Masks/Masks.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/Develop.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/BlurFilters.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/DistortionFilters.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/UtilityFilters.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/GalleryFilters.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/LightcraftFilters.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/LensFilter.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/PixelFilters.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/RenderFilters.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/MeshFilters.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Raw/CameraRawFilter.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/RetouchFilters.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Filters/DiagnosticFilters.h"
+)
+foreach(_header IN LISTS _adjust_public_headers)
+    get_filename_component(_name "${_header}" NAME)
+    file(GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/include/iiGraphicAdjust/${_name}"
+        CONTENT "#pragma once\n#include \"${_header}\"\n")
+endforeach()
+file(GLOB _adjust_object_headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/objects/*.h")
+foreach(_header IN LISTS _adjust_object_headers)
+    get_filename_component(_name "${_header}" NAME)
+    file(GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/include/iiGraphicAdjust/objects/${_name}"
+        CONTENT "#pragma once\n#include \"${_header}\"\n")
+endforeach()
+
 add_library(iiGraphicAdjust
-    src/iiGraphicAdjust/Operation.cpp
-    src/iiGraphicAdjust/ObjectCatalog.cpp
-    src/iiGraphicAdjust/OwnedResourceObjects.cpp
-    src/iiGraphicAdjust/DevelopFeatureObjects.cpp
-    src/iiGraphicAdjust/CorrectionExtensions.cpp
-    src/iiGraphicAdjust/Image.cpp
-    src/iiGraphicAdjust/RawProcessing.cpp
-    src/iiGraphicAdjust/PhotoOperations.cpp
-    src/iiGraphicAdjust/SampleFilters.cpp
-    src/iiGraphicAdjust/Adjustments.cpp
-    src/iiGraphicAdjust/Effects.cpp
-    src/iiGraphicAdjust/Mapping.cpp
-    src/iiGraphicAdjust/Hdr.cpp
-    src/iiGraphicAdjust/Tone.cpp
-    src/iiGraphicAdjust/Color.cpp
-    src/iiGraphicAdjust/DevelopTone.cpp
-    src/iiGraphicAdjust/DevelopColor.cpp
-    src/iiGraphicAdjust/DevelopEffects.cpp
-    src/iiGraphicAdjust/Optics.cpp
-    src/iiGraphicAdjust/Masks.cpp
-    src/iiGraphicAdjust/LocalCorrections.cpp
-    src/iiGraphicAdjust/Develop.cpp
-    src/iiGraphicAdjust/BlurFilters.cpp
-    src/iiGraphicAdjust/DistortionFilters.cpp
-    src/iiGraphicAdjust/UtilityFilters.cpp
-    src/iiGraphicAdjust/GalleryFilters.cpp
-    src/iiGraphicAdjust/LightcraftFilters.cpp
-    src/iiGraphicAdjust/LensFilter.cpp
-    src/iiGraphicAdjust/PixelFilters.cpp
-    src/iiGraphicAdjust/RenderFilters.cpp
-    src/iiGraphicAdjust/MeshFilters.cpp
-    src/iiGraphicAdjust/CameraRawFilter.cpp
-    src/iiGraphicAdjust/RetouchFilters.cpp
-    src/iiGraphicAdjust/DiagnosticFilters.cpp
-    src/iiGraphicAdjust/Blend.cpp)
+    src/Core/Operation.cpp
+    src/Core/ObjectCatalog.cpp
+    src/Core/OwnedResourceObjects.cpp
+    src/Development/DevelopFeatureObjects.cpp
+    src/Development/CorrectionExtensions.cpp
+    src/Core/Image.cpp
+    src/Raw/RawProcessing.cpp
+    src/Development/PhotoOperations.cpp
+    src/Filters/SampleFilters.cpp
+    src/Development/Adjustments.cpp
+    src/Development/Effects.cpp
+    src/Development/Mapping.cpp
+    src/Development/Hdr.cpp
+    src/Development/Tone.cpp
+    src/Development/Color.cpp
+    src/Development/DevelopTone.cpp
+    src/Development/DevelopColor.cpp
+    src/Development/DevelopEffects.cpp
+    src/Development/Optics.cpp
+    src/Masks/Masks.cpp
+    src/Masks/LocalCorrections.cpp
+    src/Development/Develop.cpp
+    src/Filters/BlurFilters.cpp
+    src/Filters/DistortionFilters.cpp
+    src/Filters/UtilityFilters.cpp
+    src/Filters/GalleryFilters.cpp
+    src/Filters/LightcraftFilters.cpp
+    src/Filters/LensFilter.cpp
+    src/Filters/PixelFilters.cpp
+    src/Filters/RenderFilters.cpp
+    src/Filters/MeshFilters.cpp
+    src/Raw/CameraRawFilter.cpp
+    src/Filters/RetouchFilters.cpp
+    src/Filters/DiagnosticFilters.cpp
+    src/Development/Blend.cpp)
 add_library(iiGraphicAdjust::iiGraphicAdjust ALIAS iiGraphicAdjust)
 if(MSVC)
-    set_source_files_properties(src/iiGraphicAdjust/SampleFilters.cpp PROPERTIES
+    set_source_files_properties(src/Filters/SampleFilters.cpp PROPERTIES
         COMPILE_OPTIONS /fp:strict)
 else()
-    set_source_files_properties(src/iiGraphicAdjust/SampleFilters.cpp PROPERTIES
+    set_source_files_properties(src/Filters/SampleFilters.cpp PROPERTIES
         COMPILE_OPTIONS "-fno-fast-math;-ffp-contract=off")
 endif()
 generate_export_header(iiGraphicAdjust BASE_NAME IIGRAPHICADJUST
     EXPORT_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/include/iiGraphicAdjust/Export.h")
 target_compile_features(iiGraphicAdjust PUBLIC cxx_std_23)
 target_include_directories(iiGraphicAdjust PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    PRIVATE src/Core src/Development src/Masks src/Filters)
 if(NOT BUILD_SHARED_LIBS)
     target_compile_definitions(iiGraphicAdjust PUBLIC IIGRAPHICADJUST_STATIC_DEFINE)
 endif()
@@ -90,36 +138,10 @@ install(TARGETS iiGraphicAdjust EXPORT iiGraphicAdjustTargets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(FILES
-    src/iiGraphicAdjust/Objects.h src/iiGraphicAdjust/Operation.h
-    src/iiGraphicAdjust/CorrectionExtensions.h
-    src/iiGraphicAdjust/iiGraphicAdjust.h src/iiGraphicAdjust/Image.h
-    src/iiGraphicAdjust/RawProcessing.h src/iiGraphicAdjust/PhotoOperations.h
-    src/iiGraphicAdjust/LocalCorrections.h src/iiGraphicAdjust/SampleFilters.h
-    src/iiGraphicAdjust/Adjustments.h src/iiGraphicAdjust/Effects.h src/iiGraphicAdjust/Blend.h
-    src/iiGraphicAdjust/Mapping.h src/iiGraphicAdjust/Hdr.h
-    src/iiGraphicAdjust/Tone.h src/iiGraphicAdjust/Color.h
-    src/iiGraphicAdjust/DevelopTone.h
-    src/iiGraphicAdjust/DevelopColor.h
-    src/iiGraphicAdjust/DevelopEffects.h
-    src/iiGraphicAdjust/Optics.h
-    src/iiGraphicAdjust/Masks.h
-    src/iiGraphicAdjust/Develop.h
-    src/iiGraphicAdjust/BlurFilters.h
-    src/iiGraphicAdjust/DistortionFilters.h
-    src/iiGraphicAdjust/UtilityFilters.h
-    src/iiGraphicAdjust/GalleryFilters.h
-    src/iiGraphicAdjust/LightcraftFilters.h
-    src/iiGraphicAdjust/LensFilter.h
-    src/iiGraphicAdjust/PixelFilters.h
-    src/iiGraphicAdjust/RenderFilters.h
-    src/iiGraphicAdjust/MeshFilters.h
-    src/iiGraphicAdjust/CameraRawFilter.h
-    src/iiGraphicAdjust/RetouchFilters.h
-    src/iiGraphicAdjust/DiagnosticFilters.h
+install(FILES ${_adjust_public_headers}
     "${CMAKE_CURRENT_BINARY_DIR}/include/iiGraphicAdjust/Export.h"
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iiGraphicAdjust)
-install(DIRECTORY src/iiGraphicAdjust/objects
+install(DIRECTORY src/Core/objects
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/iiGraphicAdjust
     FILES_MATCHING PATTERN "*.h")
 install(EXPORT iiGraphicAdjustTargets NAMESPACE iiGraphicAdjust:: DESTINATION "${_package_dir}")
@@ -134,6 +156,8 @@ install(DIRECTORY docs/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/doc
 install(DIRECTORY third_party/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/third_party)
 
 if(BUILD_TESTING)
+    add_test(NAME iiGraphicAdjust.source_layout COMMAND ${CMAKE_COMMAND}
+        "-DSOURCE_ROOT=${CMAKE_CURRENT_SOURCE_DIR}" -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/source_layout.cmake")
     add_test(NAME iiGraphicAdjust.sdk_boundary
         COMMAND ${CMAKE_COMMAND} "-DSOURCE_ROOT=${CMAKE_CURRENT_SOURCE_DIR}"
             -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/sdk_boundary.cmake")

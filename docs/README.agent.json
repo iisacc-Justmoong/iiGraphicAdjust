@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/README.md",
-    "sha256": "4ee3ff8dbb59809440b34bebd8a98501321849a51c3edb00c76ddfd24b21fdfa",
-    "bytes": 3066,
-    "line_count": 43,
+    "sha256": "005dec9fa9f6e60b8a32036e7357db40215bae94ad3f7ec42dacdd0581d56300",
+    "bytes": 3146,
+    "line_count": 44,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -79,8 +79,8 @@
       "id": "b000008",
       "kind": "table",
       "start_line": 8,
-      "end_line": 42,
-      "raw": "| Document | Agent JSON |\n| --- | --- |\n| [`AGENT.md`](../AGENT.md) | [JSON](entrypoints/AGENT.agent.json) |\n| [`README.md`](../README.md) | [JSON](entrypoints/README.agent.json) |\n| [`docs/API.md`](API.md) | [JSON](API.agent.json) |\n| [`docs/Architecture.md`](Architecture.md) | [JSON](Architecture.agent.json) |\n| [`docs/CameraRawFilter.md`](CameraRawFilter.md) | [JSON](CameraRawFilter.agent.json) |\n| [`docs/Color.md`](Color.md) | [JSON](Color.agent.json) |\n| [`docs/CoreFilters.md`](CoreFilters.md) | [JSON](CoreFilters.agent.json) |\n| [`docs/DiagnosticFilters.md`](DiagnosticFilters.md) | [JSON](DiagnosticFilters.agent.json) |\n| [`docs/FILE_PROVIDER.md`](FILE_PROVIDER.md) | [JSON](FILE_PROVIDER.agent.json) |\n| [`docs/Filters.md`](Filters.md) | [JSON](Filters.agent.json) |\n| [`docs/GalleryFilters.md`](GalleryFilters.md) | [JSON](GalleryFilters.agent.json) |\n| [`docs/LensFilter.md`](LensFilter.md) | [JSON](LensFilter.agent.json) |\n| [`docs/LightcraftFilters.md`](LightcraftFilters.md) | [JSON](LightcraftFilters.agent.json) |\n| [`docs/Lightroom.md`](Lightroom.md) | [JSON](Lightroom.agent.json) |\n| [`docs/LocalCorrections.md`](LocalCorrections.md) | [JSON](LocalCorrections.agent.json) |\n| [`docs/LocalCorrectionsVerification.md`](LocalCorrectionsVerification.md) | [JSON](LocalCorrectionsVerification.agent.json) |\n| [`docs/Mapping.md`](Mapping.md) | [JSON](Mapping.agent.json) |\n| [`docs/MeshFilters.md`](MeshFilters.md) | [JSON](MeshFilters.agent.json) |\n| [`docs/OperationObjects.md`](OperationObjects.md) | [JSON](OperationObjects.agent.json) |\n| [`docs/OperationObjectsVerification.md`](OperationObjectsVerification.md) | [JSON](OperationObjectsVerification.agent.json) |\n| [`docs/PERFORMANCE.md`](PERFORMANCE.md) | [JSON](PERFORMANCE.agent.json) |\n| [`docs/PhotoOperations.md`](PhotoOperations.md) | [JSON](PhotoOperations.agent.json) |\n| [`docs/PhotoProcessingVerification.md`](PhotoProcessingVerification.md) | [JSON](PhotoProcessingVerification.agent.json) |\n| [`docs/PixelFilters.md`](PixelFilters.md) | [JSON](PixelFilters.agent.json) |\n| [`docs/RawProcessing.md`](RawProcessing.md) | [JSON](RawProcessing.agent.json) |\n| [`docs/References.md`](References.md) | [JSON](References.agent.json) |\n| [`docs/RenderFilters.md`](RenderFilters.md) | [JSON](RenderFilters.agent.json) |\n| [`docs/RetouchFilters.md`](RetouchFilters.md) | [JSON](RetouchFilters.agent.json) |\n| [`docs/SampleFilters.md`](SampleFilters.md) | [JSON](SampleFilters.agent.json) |\n| [`docs/Tone.md`](Tone.md) | [JSON](Tone.agent.json) |\n| [`docs/Verification.md`](Verification.md) | [JSON](Verification.agent.json) |\n| [`docs/WindowsBuildAndRun.md`](WindowsBuildAndRun.md) | [JSON](WindowsBuildAndRun.agent.json) |\n| [`docs/documentation-structure.md`](documentation-structure.md) | [JSON](documentation-structure.agent.json) |\n",
+      "end_line": 43,
+      "raw": "| Document | Agent JSON |\n| --- | --- |\n| [`AGENT.md`](../AGENT.md) | [JSON](entrypoints/AGENT.agent.json) |\n| [`README.md`](../README.md) | [JSON](entrypoints/README.agent.json) |\n| [`docs/API.md`](API.md) | [JSON](API.agent.json) |\n| [`docs/Architecture.md`](Architecture.md) | [JSON](Architecture.agent.json) |\n| [`docs/CameraRawFilter.md`](CameraRawFilter.md) | [JSON](CameraRawFilter.agent.json) |\n| [`docs/Color.md`](Color.md) | [JSON](Color.agent.json) |\n| [`docs/CoreFilters.md`](CoreFilters.md) | [JSON](CoreFilters.agent.json) |\n| [`docs/DiagnosticFilters.md`](DiagnosticFilters.md) | [JSON](DiagnosticFilters.agent.json) |\n| [`docs/FILE_PROVIDER.md`](FILE_PROVIDER.md) | [JSON](FILE_PROVIDER.agent.json) |\n| [`docs/Filters.md`](Filters.md) | [JSON](Filters.agent.json) |\n| [`docs/GalleryFilters.md`](GalleryFilters.md) | [JSON](GalleryFilters.agent.json) |\n| [`docs/LensFilter.md`](LensFilter.md) | [JSON](LensFilter.agent.json) |\n| [`docs/LightcraftFilters.md`](LightcraftFilters.md) | [JSON](LightcraftFilters.agent.json) |\n| [`docs/Lightroom.md`](Lightroom.md) | [JSON](Lightroom.agent.json) |\n| [`docs/LocalCorrections.md`](LocalCorrections.md) | [JSON](LocalCorrections.agent.json) |\n| [`docs/LocalCorrectionsVerification.md`](LocalCorrectionsVerification.md) | [JSON](LocalCorrectionsVerification.agent.json) |\n| [`docs/Mapping.md`](Mapping.md) | [JSON](Mapping.agent.json) |\n| [`docs/MeshFilters.md`](MeshFilters.md) | [JSON](MeshFilters.agent.json) |\n| [`docs/OperationObjects.md`](OperationObjects.md) | [JSON](OperationObjects.agent.json) |\n| [`docs/OperationObjectsVerification.md`](OperationObjectsVerification.md) | [JSON](OperationObjectsVerification.agent.json) |\n| [`docs/PERFORMANCE.md`](PERFORMANCE.md) | [JSON](PERFORMANCE.agent.json) |\n| [`docs/PhotoOperations.md`](PhotoOperations.md) | [JSON](PhotoOperations.agent.json) |\n| [`docs/PhotoProcessingVerification.md`](PhotoProcessingVerification.md) | [JSON](PhotoProcessingVerification.agent.json) |\n| [`docs/PixelFilters.md`](PixelFilters.md) | [JSON](PixelFilters.agent.json) |\n| [`docs/RawProcessing.md`](RawProcessing.md) | [JSON](RawProcessing.agent.json) |\n| [`docs/References.md`](References.md) | [JSON](References.agent.json) |\n| [`docs/RenderFilters.md`](RenderFilters.md) | [JSON](RenderFilters.agent.json) |\n| [`docs/RetouchFilters.md`](RetouchFilters.md) | [JSON](RetouchFilters.agent.json) |\n| [`docs/SampleFilters.md`](SampleFilters.md) | [JSON](SampleFilters.agent.json) |\n| [`docs/SourceLayout.md`](SourceLayout.md) | [JSON](SourceLayout.agent.json) |\n| [`docs/Tone.md`](Tone.md) | [JSON](Tone.agent.json) |\n| [`docs/Verification.md`](Verification.md) | [JSON](Verification.agent.json) |\n| [`docs/WindowsBuildAndRun.md`](WindowsBuildAndRun.md) | [JSON](WindowsBuildAndRun.agent.json) |\n| [`docs/documentation-structure.md`](documentation-structure.md) | [JSON](documentation-structure.agent.json) |\n",
       "columns": [
         "Document",
         "Agent JSON"
@@ -203,6 +203,10 @@
           "[JSON](SampleFilters.agent.json)"
         ],
         [
+          "[`docs/SourceLayout.md`](SourceLayout.md)",
+          "[JSON](SourceLayout.agent.json)"
+        ],
+        [
           "[`docs/Tone.md`](Tone.md)",
           "[JSON](Tone.agent.json)"
         ],
@@ -223,8 +227,8 @@
     {
       "id": "b000009",
       "kind": "html",
-      "start_line": 43,
-      "end_line": 43,
+      "start_line": 44,
+      "end_line": 44,
       "raw": "<!-- workspace-docs:document-map:end -->\n"
     }
   ],
@@ -658,59 +662,73 @@
       },
       {
         "block_id": "b000008",
+        "label": "`docs/SourceLayout.md`",
+        "target": "SourceLayout.md",
+        "kind": "relative",
+        "line": 39
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "SourceLayout.agent.json",
+        "kind": "relative",
+        "line": 39
+      },
+      {
+        "block_id": "b000008",
         "label": "`docs/Tone.md`",
         "target": "Tone.md",
         "kind": "relative",
-        "line": 39
+        "line": 40
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "Tone.agent.json",
         "kind": "relative",
-        "line": 39
+        "line": 40
       },
       {
         "block_id": "b000008",
         "label": "`docs/Verification.md`",
         "target": "Verification.md",
         "kind": "relative",
-        "line": 40
+        "line": 41
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "Verification.agent.json",
         "kind": "relative",
-        "line": 40
+        "line": 41
       },
       {
         "block_id": "b000008",
         "label": "`docs/WindowsBuildAndRun.md`",
         "target": "WindowsBuildAndRun.md",
         "kind": "relative",
-        "line": 41
+        "line": 42
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "WindowsBuildAndRun.agent.json",
         "kind": "relative",
-        "line": 41
+        "line": 42
       },
       {
         "block_id": "b000008",
         "label": "`docs/documentation-structure.md`",
         "target": "documentation-structure.md",
         "kind": "relative",
-        "line": 42
+        "line": 43
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "documentation-structure.agent.json",
         "kind": "relative",
-        "line": 42
+        "line": 43
       }
     ],
     "tables": [
@@ -836,6 +854,10 @@
           [
             "[`docs/SampleFilters.md`](SampleFilters.md)",
             "[JSON](SampleFilters.agent.json)"
+          ],
+          [
+            "[`docs/SourceLayout.md`](SourceLayout.md)",
+            "[JSON](SourceLayout.agent.json)"
           ],
           [
             "[`docs/Tone.md`](Tone.md)",

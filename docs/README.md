@@ -36,6 +36,7 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/RenderFilters.md`](RenderFilters.md) | [JSON](RenderFilters.agent.json) |
 | [`docs/RetouchFilters.md`](RetouchFilters.md) | [JSON](RetouchFilters.agent.json) |
 | [`docs/SampleFilters.md`](SampleFilters.md) | [JSON](SampleFilters.agent.json) |
+| [`docs/SourceLayout.md`](SourceLayout.md) | [JSON](SourceLayout.agent.json) |
 | [`docs/Tone.md`](Tone.md) | [JSON](Tone.agent.json) |
 | [`docs/Verification.md`](Verification.md) | [JSON](Verification.agent.json) |
 | [`docs/WindowsBuildAndRun.md`](WindowsBuildAndRun.md) | [JSON](WindowsBuildAndRun.agent.json) |
