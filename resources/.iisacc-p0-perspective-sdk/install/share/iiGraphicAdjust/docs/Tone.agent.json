@@ -1,0 +1,857 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:829e79dbc07835f46540ebada736baefa7cbf56f06b9def71f89d7eedd1f68ae",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/Tone.md",
+    "sha256": "07cbd14e87948d095cb81783b15aab20269c6fc08c06894b1f91ee3b2fa9b3d4",
+    "bytes": 8632,
+    "line_count": 172,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Tonal adjustments",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Tonal adjustments\n",
+      "level": 1,
+      "title": "Tonal adjustments"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 8,
+      "raw": "`<iiGraphicAdjust/Tone.h>` contains standalone tonal operations inspired by the\nPhotoshop Image > Adjustments commands. They are independent C++23 implementations\nof the contracts below. They do not reproduce Adobe's private processing pipeline\nand do not promise pixel-for-pixel Photoshop parity. In particular, this SDK\nprocesses normalized float sRGB and has no ICC, CMYK, HDR, document bit-depth,\nselection, or adjustment-layer context.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 10,
+      "end_line": 16,
+      "raw": "Every function returns `Result<Image>`, validates the input, keeps its dimensions,\nand creates detached storage. Input storage is immutable. Alpha remains exactly\nunchanged, including partially transparent samples. Pixels whose alpha is zero\nretain their original hidden RGB and do not contribute to statistics. Every\nnonzero-alpha pixel contributes equally to histograms and automatic corrections;\nalpha is not a statistical weight. Invalid settings return `InvalidParameter`;\ndimensions, buffers, pixels, and allocation failures use the existing error codes.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "## Brightness and Contrast\n",
+      "level": 2,
+      "title": "Brightness and Contrast"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 21,
+      "raw": "`brightnessContrast(image, BrightnessContrastOptions)` operates on encoded RGB.\nBrightness and contrast are finite values in `[-1,1]`. For each visible channel:\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "fenced_code",
+      "start_line": 23,
+      "end_line": 25,
+      "raw": "```\noutput = clamp((input + brightness - 0.5) * (1 + contrast) + 0.5)\n```\n",
+      "language": "",
+      "code": "output = clamp((input + brightness - 0.5) * (1 + contrast) + 0.5)\n",
+      "closed": true
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 27,
+      "end_line": 29,
+      "raw": "Zero brightness and contrast are exact identity. Contrast `-1` produces 0.5.\nThis is the SDK's explicit slope-and-offset contract, rather than an emulation of\nPhotoshop's modern or legacy Brightness/Contrast switches.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "## Levels\n",
+      "level": 2,
+      "title": "Levels"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 33,
+      "end_line": 37,
+      "raw": "`levels(image, LevelsOptions)` applies the master channel first, followed by the\ncorresponding red, green, or blue channel. Each `LevelChannel` has normalized\n`inputBlack`, `inputWhite`, `outputBlack`, and `outputWhite` endpoints and a\nfinite `gamma` in `[0.01,100]`. Input black must be strictly below input white.\nOutput endpoints may be equal or reversed, allowing flattening and inversion.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "fenced_code",
+      "start_line": 39,
+      "end_line": 42,
+      "raw": "```\nt = clamp((input - inputBlack) / (inputWhite - inputBlack))\noutput = outputBlack + (outputWhite - outputBlack) * pow(t, 1 / gamma)\n```\n",
+      "language": "",
+      "code": "t = clamp((input - inputBlack) / (inputWhite - inputBlack))\noutput = outputBlack + (outputWhite - outputBlack) * pow(t, 1 / gamma)\n",
+      "closed": true
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 44,
+      "end_line": 46,
+      "raw": "Identity channels bypass arithmetic. This float formula does not include\nPhotoshop's document-depth rounding or the fitted shadow-toe behavior observed\nin the reference Rust implementation.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "## Curves\n",
+      "level": 2,
+      "title": "Curves"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 54,
+      "raw": "`curves(image, CurvesOptions)` applies a master curve before the individual RGB\ncurves. A `CurveChannel` contains between 2 and 65,536 finite `CurvePoint` values.\nBoth coordinates are in `[0,1]`; input coordinates must already be strictly\nincreasing. Duplicate, descending, and nonfinite input coordinates are errors,\nnot silently sorted or merged.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 56,
+      "end_line": 60,
+      "raw": "The SDK uses piecewise linear interpolation. Values below or above the supplied\ndomain map to the nearest endpoint output. Outputs need not be monotonic, and\nlinear segments cannot overshoot. Diagonal curves covering the complete `[0,1]`\ndomain are exact identity. This deliberately differs from Photoshop-style\ncubic spline interpolation.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "heading",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "## Exposure\n",
+      "level": 2,
+      "title": "Exposure"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 64,
+      "end_line": 66,
+      "raw": "`exposure(image, ExposureOptions)` uses the SDK's standard sRGB transfer function\nto linearize and encode color. `stops` is in `[-16,16]`, `offset` is a linear-light\noffset in `[-1,1]`, and `gamma` is in `[0.01,100]`.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "fenced_code",
+      "start_line": 68,
+      "end_line": 71,
+      "raw": "```\nlinearOutput = pow(clamp(sRGBDecode(input) * exp2(stops) + offset), 1 / gamma)\noutput = sRGBEncode(linearOutput)\n```\n",
+      "language": "",
+      "code": "linearOutput = pow(clamp(sRGBDecode(input) * exp2(stops) + offset), 1 / gamma)\noutput = sRGBEncode(linearOutput)\n",
+      "closed": true
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 73,
+      "end_line": 75,
+      "raw": "Exposure, offset, and gamma all operate in linear light, in that order. Neutral\nsettings return exact channel values. Clipping before gamma intentionally makes\nthis an SDR operation; values above one are not retained.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 76,
+      "end_line": 76,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "heading",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "## Shadows and Highlights\n",
+      "level": 2,
+      "title": "Shadows and Highlights"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 79,
+      "end_line": 81,
+      "raw": "`shadowsHighlights(image, ShadowsHighlightsOptions)` uses per-pixel encoded\nluminance `Y = 0.2126 R + 0.7152 G + 0.0722 B`. Amounts are in `[0,1]`; tonal\nwidths are in `(0,1]`. Let `smooth(x) = t²(3-2t)` for `t = clamp(x)`:\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "fenced_code",
+      "start_line": 83,
+      "end_line": 87,
+      "raw": "```\nlift = shadows * smooth((shadowWidth - Y) / shadowWidth)\ndarken = highlights * smooth((Y - (1 - highlightWidth)) / highlightWidth)\noutput = clamp((input + lift * (1 - input)) * (1 - darken))\n```\n",
+      "language": "",
+      "code": "lift = shadows * smooth((shadowWidth - Y) / shadowWidth)\ndarken = highlights * smooth((Y - (1 - highlightWidth)) / highlightWidth)\noutput = clamp((input + lift * (1 - input)) * (1 - darken))\n",
+      "closed": true
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 88,
+      "end_line": 88,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 89,
+      "end_line": 92,
+      "raw": "Both masks use the original pixel luminance. Lift precedes darkening when their\nranges overlap. Neutral amounts are exact identity. This is a global tonal-mask\ncontract with no spatial radius or neighborhood analysis, unlike Photoshop's\nlocal Shadows/Highlights correction.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 93,
+      "end_line": 93,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "heading",
+      "start_line": 94,
+      "end_line": 94,
+      "raw": "## Invert, Posterize, and Threshold\n",
+      "level": 2,
+      "title": "Invert, Posterize, and Threshold"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 95,
+      "end_line": 95,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 96,
+      "end_line": 96,
+      "raw": "`invert(image)` maps each visible RGB channel to `1-input`.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 97,
+      "end_line": 97,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 98,
+      "end_line": 101,
+      "raw": "`posterize(image, levelCount)` accepts integer counts from 2 to 65,536. It rounds\neach visible channel to the nearest of `levelCount` evenly spaced normalized\nlevels: `round(input*(levelCount-1))/(levelCount-1)`. Halfway ties round upward.\nThis is float quantization, not Photoshop's 8-bit bucket quantization.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 102,
+      "end_line": 102,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 103,
+      "end_line": 105,
+      "raw": "`threshold(image, level)` accepts a finite normalized level, defaulting to 0.5.\nIt compares encoded Rec.709-weighted luminance to the threshold. Equality maps\nto white; lower values map to black. All RGB channels receive the same result.\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 106,
+      "end_line": 106,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "heading",
+      "start_line": 107,
+      "end_line": 107,
+      "raw": "## Equalize\n",
+      "level": 2,
+      "title": "Equalize"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 109,
+      "end_line": 111,
+      "raw": "`equalize(image)` constructs one 256-bin histogram by pooling the RGB channels of\nall visible pixels. The bin index is `round(channel*255)`. It applies the same\ncumulative distribution function to all three channels:\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 112,
+      "end_line": 112,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "fenced_code",
+      "start_line": 113,
+      "end_line": 116,
+      "raw": "```\ntable[bin] = clamp((cumulativeCount[bin] - firstOccupiedCount) /\n                   (totalCount - firstOccupiedCount))\n```\n",
+      "language": "",
+      "code": "table[bin] = clamp((cumulativeCount[bin] - firstOccupiedCount) /\n                   (totalCount - firstOccupiedCount))\n",
+      "closed": true
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 117,
+      "end_line": 117,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "paragraph",
+      "start_line": 118,
+      "end_line": 120,
+      "raw": "An empty or one-bin histogram returns an exact copy. This operation quantizes\nfloat color through the histogram bins and can change color balance; it is not\na luminance-only color-preserving equalizer.\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 121,
+      "end_line": 121,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "heading",
+      "start_line": 122,
+      "end_line": 122,
+      "raw": "## Automatic corrections\n",
+      "level": 2,
+      "title": "Automatic corrections"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 124,
+      "end_line": 127,
+      "raw": "All three automatic operations accept `AutoToneOptions`. `blackClip` and\n`whiteClip` are finite fractions in `[0,1)` whose sum is less than one. The\ndefaults are 0.005 on each side. The defaults are SDK policy and should not be\ninterpreted as identical defaults for every Adobe command.\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 128,
+      "end_line": 128,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "paragraph",
+      "start_line": 129,
+      "end_line": 134,
+      "raw": "Samples are sorted without histogram quantization. For `n` samples, black is\nthe sample at `floor(blackClip*(n-1))`, and white is the sample at\n`ceil((1-whiteClip)*(n-1))`. Tied quantiles are retained; if black equals white,\nthat channel is copied instead of dividing by zero. Other values map through\n`clamp((input-black)/(white-black))`. A clipping fraction denotes the requested\nrank and does not promise that exactly that fraction of tied samples will clip.\n"
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 135,
+      "end_line": 135,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "table",
+      "start_line": 136,
+      "end_line": 140,
+      "raw": "| Function | Statistical samples | Correction |\n| --- | --- | --- |\n| `autoLevels` | Separate R, G, and B arrays | Independent channel ranges; can change color casts |\n| `autoContrast` | One pooled RGB array | A common range for all channels |\n| `autoColor` | Separate R, G, and B arrays | Independent ranges, then channel median gamma |\n",
+      "columns": [
+        "Function",
+        "Statistical samples",
+        "Correction"
+      ],
+      "rows": [
+        [
+          "`autoLevels`",
+          "Separate R, G, and B arrays",
+          "Independent channel ranges; can change color casts"
+        ],
+        [
+          "`autoContrast`",
+          "One pooled RGB array",
+          "A common range for all channels"
+        ],
+        [
+          "`autoColor`",
+          "Separate R, G, and B arrays",
+          "Independent ranges, then channel median gamma"
+        ]
+      ]
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 141,
+      "end_line": 141,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "paragraph",
+      "start_line": 142,
+      "end_line": 152,
+      "raw": "For Auto Color, the original channel median is the middle sample for odd counts,\nor the mean of the two middle samples for even counts. After endpoint stretching,\nan interior median `m` determines `gamma = clamp(log(m)/log(0.5), 0.01, 100)`;\nthe corrected value is `pow(stretchedInput,1/gamma)`. This targets each channel's\nmedian to 0.5 while retaining endpoints. Endpoint medians skip gamma, and constant\nchannels are unchanged. This deterministic strategy is useful for removing\nchannel casts but may alter intentional colors and contrast. It is the SDK's\nalgorithm, not Adobe's Find Dark & Light Colors implementation. Neutral constant\nimages remain exact identity in every automatic mode. A color-constant image\nis unchanged by Auto Levels and Auto Color; Auto Contrast can expand its pooled\nRGB range.\n"
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 153,
+      "end_line": 153,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "heading",
+      "start_line": 154,
+      "end_line": 154,
+      "raw": "## References and implementation provenance\n",
+      "level": 2,
+      "title": "References and implementation provenance"
+    },
+    {
+      "id": "b000072",
+      "kind": "blank",
+      "start_line": 155,
+      "end_line": 155,
+      "raw": "\n"
+    },
+    {
+      "id": "b000073",
+      "kind": "paragraph",
+      "start_line": 156,
+      "end_line": 156,
+      "raw": "The command roles were checked against Adobe's primary documentation:\n"
+    },
+    {
+      "id": "b000074",
+      "kind": "blank",
+      "start_line": 157,
+      "end_line": 157,
+      "raw": "\n"
+    },
+    {
+      "id": "b000075",
+      "kind": "list",
+      "start_line": 158,
+      "end_line": 161,
+      "raw": "- [Levels](https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/adjust-levels-in-an-image.html)\n- [Curves](https://helpx.adobe.com/photoshop/using/curves-adjustment.html)\n- [Automatic tonal adjustments and Equalize](https://helpx.adobe.com/photoshop/using/making-quick-tonal-adjustments.html)\n- [Exposure and the command list](https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/color-adjustment-commands.html)\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[Levels](https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/adjust-levels-in-an-image.html)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Curves](https://helpx.adobe.com/photoshop/using/curves-adjustment.html)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Automatic tonal adjustments and Equalize](https://helpx.adobe.com/photoshop/using/making-quick-tonal-adjustments.html)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Exposure and the command list](https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/color-adjustment-commands.html)",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000076",
+      "kind": "blank",
+      "start_line": 162,
+      "end_line": 162,
+      "raw": "\n"
+    },
+    {
+      "id": "b000077",
+      "kind": "paragraph",
+      "start_line": 163,
+      "end_line": 167,
+      "raw": "The supplied [photocraft repository](https://github.com/storytold/photocraft),\ncommit `5896f0b63e6f342e0311920b4d2a0ea5a94330fc`, was inspected for command\ncoverage and differences in float/quantized Levels, cubic Curves, and Posterize.\n`Tone.cpp` is independently written from the numerical contracts in this document;\nno Rust code or fitted Photoshop coefficients were copied.\n"
+    },
+    {
+      "id": "b000078",
+      "kind": "blank",
+      "start_line": 168,
+      "end_line": 168,
+      "raw": "\n"
+    },
+    {
+      "id": "b000079",
+      "kind": "paragraph",
+      "start_line": 169,
+      "end_line": 172,
+      "raw": "`tests/tone.cpp` covers reference vectors, interpolation, channel composition,\nautomatic correction differences, histogram ties, endpoint medians, constant\nimages, detached storage, input immutability, alpha and hidden RGB preservation,\nfinite normalized output, and invalid images and parameters.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Tonal adjustments",
+      "anchor": "tonal-adjustments",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Brightness and Contrast",
+      "anchor": "brightness-and-contrast",
+      "start_line": 18
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Levels",
+      "anchor": "levels",
+      "start_line": 31
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Curves",
+      "anchor": "curves",
+      "start_line": 48
+    },
+    {
+      "block_id": "b000029",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Exposure",
+      "anchor": "exposure",
+      "start_line": 62
+    },
+    {
+      "block_id": "b000037",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Shadows and Highlights",
+      "anchor": "shadows-and-highlights",
+      "start_line": 77
+    },
+    {
+      "block_id": "b000045",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Invert, Posterize, and Threshold",
+      "anchor": "invert-posterize-and-threshold",
+      "start_line": 94
+    },
+    {
+      "block_id": "b000053",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Equalize",
+      "anchor": "equalize",
+      "start_line": 107
+    },
+    {
+      "block_id": "b000061",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Automatic corrections",
+      "anchor": "automatic-corrections",
+      "start_line": 122
+    },
+    {
+      "block_id": "b000071",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "References and implementation provenance",
+      "anchor": "references-and-implementation-provenance",
+      "start_line": 154
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "of the contracts below. They do not reproduce Adobe's private processing pipeline",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "and do not promise pixel-for-pixel Photoshop parity. In particular, this SDK",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 13,
+        "text": "retain their original hidden RGB and do not contribute to statistics. Every",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 36,
+        "text": "finite `gamma` in `[0.01,100]`. Input black must be strictly below input white.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 52,
+        "text": "Both coordinates are in `[0,1]`; input coordinates must already be strictly",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000063",
+        "line": 126,
+        "text": "defaults are 0.005 on each side. The defaults are SDK policy and should not be",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000075",
+        "label": "Levels",
+        "target": "https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/adjust-levels-in-an-image.html",
+        "kind": "external",
+        "line": 158
+      },
+      {
+        "block_id": "b000075",
+        "label": "Curves",
+        "target": "https://helpx.adobe.com/photoshop/using/curves-adjustment.html",
+        "kind": "external",
+        "line": 159
+      },
+      {
+        "block_id": "b000075",
+        "label": "Automatic tonal adjustments and Equalize",
+        "target": "https://helpx.adobe.com/photoshop/using/making-quick-tonal-adjustments.html",
+        "kind": "external",
+        "line": 160
+      },
+      {
+        "block_id": "b000075",
+        "label": "Exposure and the command list",
+        "target": "https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/color-adjustment-commands.html",
+        "kind": "external",
+        "line": 161
+      },
+      {
+        "block_id": "b000077",
+        "label": "photocraft repository",
+        "target": "https://github.com/storytold/photocraft",
+        "kind": "external",
+        "line": 163
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000067",
+        "columns": [
+          "Function",
+          "Statistical samples",
+          "Correction"
+        ],
+        "rows": [
+          [
+            "`autoLevels`",
+            "Separate R, G, and B arrays",
+            "Independent channel ranges; can change color casts"
+          ],
+          [
+            "`autoContrast`",
+            "One pooled RGB array",
+            "A common range for all channels"
+          ],
+          [
+            "`autoColor`",
+            "Separate R, G, and B arrays",
+            "Independent ranges, then channel median gamma"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

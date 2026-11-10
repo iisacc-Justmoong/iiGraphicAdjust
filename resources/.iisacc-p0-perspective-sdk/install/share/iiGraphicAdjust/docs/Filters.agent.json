@@ -1,0 +1,2973 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:1fbe74553b7004a7fd77bd810d8e0bc9543afc8dbb8485c54fabed843891e3e5",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/Filters.md",
+    "sha256": "25bbf65f6b7bbd1525569a8a72a8d5991916155fc1fb66671efcc5c96aa631d1",
+    "bytes": 32361,
+    "line_count": 172,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Filter inventory and processing contract — 0.4.0",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Filter inventory and processing contract — 0.4.0\n",
+      "level": 1,
+      "title": "Filter inventory and processing contract — 0.4.0"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "Both supplied repositories were re-fetched and inspected on 2026-10-08. PhotoCraft is pinned to [`5896f0b`](https://github.com/storytold/photocraft/tree/5896f0b63e6f342e0311920b4d2a0ea5a94330fc); LightCraft is pinned to [`629e3938`](https://github.com/storytold/lightcraft/tree/629e39380e296f588c64cd9c0053a8edc3528f36). The machine-readable [filter catalog](filter-catalog.json) preserves every registered reference command, its original parameter description, source location and corresponding SDK function.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "## Inventory rules\n",
+      "level": 2,
+      "title": "Inventory rules"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "list",
+      "start_line": 7,
+      "end_line": 10,
+      "raw": "- PhotoCraft: 120 distinct executable Filter-menu operations, including 47 Filter Gallery effects. Two executable Edit operations, Puppet Warp and Perspective Warp, are also recordable as smart filters. Their Smart Object command aliases are mapped to the same implementations and are not additional algorithms.\n- `FilterParams` contains 59 variants: 58 pixel operations and the composite Gallery container. Invert and Desaturate are already implemented in 0.2 and remain available; these two enum operations are outside the Filter-menu count. The enum, extended dispatch, procedural render commands, lens/warp commands and all 47 artistic definitions were inspected, not just strings containing “filter”.\n- LightCraft: 22 look entries (21 nonidentity looks plus identity Color), 41 built-in presets and four resampling kernels. Each look and preset has a named function; their full numeric recipes and all four kernels have independent fixtures. Existing 0.3 development/detail/local-mask kernels remain available. `guidedBlur` and `crossGuidedBlur` additionally expose reusable, box-window edge-preserving kernels.\n- The Gallery container is available as `filterGallery(ImageView, span<const GalleryEffect>)`, a bounded, ordered, typed stack of up to 64 effects. It does not replace the 47 individual APIs.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "PhotoCraft: 120 distinct executable Filter-menu operations, including 47 Filter Gallery effects. Two executable Edit operations, Puppet Warp and Perspective Warp, are also recordable as smart filters. Their Smart Object command aliases are mapped to the same implementations and are not additional algorithms.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`FilterParams` contains 59 variants: 58 pixel operations and the composite Gallery container. Invert and Desaturate are already implemented in 0.2 and remain available; these two enum operations are outside the Filter-menu count. The enum, extended dispatch, procedural render commands, lens/warp commands and all 47 artistic definitions were inspected, not just strings containing “filter”.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "LightCraft: 22 look entries (21 nonidentity looks plus identity Color), 41 built-in presets and four resampling kernels. Each look and preset has a named function; their full numeric recipes and all four kernels have independent fixtures. Existing 0.3 development/detail/local-mask kernels remain available. `guidedBlur` and `crossGuidedBlur` additionally expose reusable, box-window edge-preserving kernels.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "The Gallery container is available as `filterGallery(ImageView, span<const GalleryEffect>)`, a bounded, ordered, typed stack of up to 64 effects. It does not replace the 47 individual APIs.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "Last Filter, Convert for Smart Filters, plugin hosting, document selection/layer creation, clipboard access and history replay belong to an application host. Their existing executable pixel operations are included; command orchestration is not a new pixel algorithm. LightCraft `engine/src/cmd/filters.rs` filters a catalog by metadata/search conditions rather than filtering image pixels. Neural filters, Lens Blur/Enhance declarations without an executable implementation and unsupported imported effects are not executable reference filters. RAW demosaicing, HDR/panorama merging, camera profile databases, CMS and GUI texture upload remain separate processing systems.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "heading",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "## Shared contract and intentional adaptations\n",
+      "level": 2,
+      "title": "Shared contract and intentional adaptations"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "Inputs and outputs use the existing normalized, straight-alpha encoded-sRGB `ImageView`/`Image` contract. Every operation validates finite normalized pixels, dimensions and all options, returns detached storage through `Result<T>`, and does not write documents or mutate input. PhotoCraft geometry uses premultiplied encoded-sRGB interpolation so invisible RGB does not enter visible output. The coverage-preserving color kernels and Gallery operations retain source alpha and hidden RGB; spatial remapping transports coverage, while newly uncovered resampling output is canonical transparent black (morphology retains original hidden RGB at eroded pixels as documented). A validated neutral operation copies the original storage values exactly where its contract defines an identity.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "The new `filterGaussianBlur`, `filterSharpen` and `filterAddNoise` intentionally implement the menu's encoded-space/percentage contracts. Existing `gaussianBlur`, `sharpen` and `addNoise` retain their 0.1 linear-light and normalized-amount semantics. Large Gaussian windows use three variance-matched box passes; small sigma uses explicit separable Gaussian weights. This is approximate filtering, not bitwise PhotoCraft or Adobe parity.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "Algorithms and procedural models are ported from the reference but adapted to this SDK's alpha, allocation and finite-input contract. Median neighborhoods use alpha-weighted visible samples; minimum/maximum ignore hidden RGB and can transport alpha; custom convolution replaces invisible neighbor color with the visible center. The fixed image canvas clips procedural and mesh output instead of expanding an application layer surface. Shape Blur clamps borders. Lens Blur uses bounded kernel/depth levels, blur-gallery operations use bounded samples/levels, Wave permits the 64 generators actually used by the reference CPU path. Unsupported host-only fields do not silently become pixel effects. See the module documents for individual constraints and differences.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "`develop`-based look/preset output remains rendered SDR: intermediate stages normalize to sRGB. PhotoCraft Camera Raw has a separate relative-temperature pipeline in `CameraRawFilter`, rather than silently converting its relative temperature slider to the existing Kelvin `whiteBalance`. This SDK does not decode camera RAW files or claim Adobe renderer equivalence.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "## PhotoCraft command mapping\n",
+      "level": 2,
+      "title": "PhotoCraft command mapping"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "table",
+      "start_line": 26,
+      "end_line": 151,
+      "raw": "| Reference command | SDK function | Public header | Pinned source |\n| --- | --- | --- | --- |\n| `edit.perspectiveWarp` | `perspectiveWarp` | `MeshFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L402) |\n| `edit.puppetWarp` | `puppetWarp` | `MeshFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L382) |\n| `filter.adaptiveWideAngle` | `adaptiveWideAngle` | `MeshFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L401) |\n| `filter.blur.average` | `average` | `UtilityFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L742) |\n| `filter.blur.blur` | `blur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L276) |\n| `filter.blur.blurMore` | `blurMore` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L277) |\n| `filter.blur.boxBlur` | `boxBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L282) |\n| `filter.blur.gaussianBlur` | `filterGaussianBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L275) |\n| `filter.blur.lensBlur` | `lensBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L626) |\n| `filter.blur.motionBlur` | `motionBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L283) |\n| `filter.blur.radialBlur` | `radialBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L284) |\n| `filter.blur.shapeBlur` | `shapeBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L632) |\n| `filter.blur.smartBlur` | `smartBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L620) |\n| `filter.blur.surfaceBlur` | `surfaceBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L290) |\n| `filter.blurGallery.fieldBlur` | `fieldBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L651) |\n| `filter.blurGallery.irisBlur` | `irisBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L645) |\n| `filter.blurGallery.pathBlur` | `pathBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L663) |\n| `filter.blurGallery.spinBlur` | `spinBlur` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L657) |\n| `filter.blurGallery.tiltShift` | `tiltShift` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L639) |\n| `filter.cameraRaw` | `cameraRawFilter` | `CameraRawFilter.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L411) |\n| `filter.distort.displace` | `displace` | `DistortionFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L570) |\n| `filter.distort.pinch` | `pinch` | `DistortionFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L316) |\n| `filter.distort.polarCoordinates` | `polarCoordinates` | `DistortionFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L325) |\n| `filter.distort.ripple` | `ripple` | `DistortionFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L324) |\n| `filter.distort.shear` | `shear` | `DistortionFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L576) |\n| `filter.distort.spherize` | `spherize` | `DistortionFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L317) |\n| `filter.distort.twirl` | `twirl` | `DistortionFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L315) |\n| `filter.distort.wave` | `wave` | `DistortionFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L318) |\n| `filter.distort.zigZag` | `zigZag` | `DistortionFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L577) |\n| `filter.gallery.accentedEdges` | `accentedEdges` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L56) |\n| `filter.gallery.angledStrokes` | `angledStrokes` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L57) |\n| `filter.gallery.basRelief` | `basRelief` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L69) |\n| `filter.gallery.chalkCharcoal` | `chalkCharcoal` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L70) |\n| `filter.gallery.charcoal` | `charcoal` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L71) |\n| `filter.gallery.chrome` | `chrome` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L72) |\n| `filter.gallery.coloredPencil` | `coloredPencil` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L40) |\n| `filter.gallery.conteCrayon` | `conteCrayon` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L73) |\n| `filter.gallery.craquelure` | `craquelure` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L86) |\n| `filter.gallery.crosshatch` | `crosshatch` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L58) |\n| `filter.gallery.cutout` | `cutout` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L41) |\n| `filter.gallery.darkStrokes` | `darkStrokes` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L59) |\n| `filter.gallery.diffuseGlow` | `diffuseGlow` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L65) |\n| `filter.gallery.dryBrush` | `dryBrush` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L42) |\n| `filter.gallery.filmGrain` | `galleryFilmGrain` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L43) |\n| `filter.gallery.fresco` | `fresco` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L44) |\n| `filter.gallery.glass` | `glass` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L66) |\n| `filter.gallery.glowingEdges` | `glowingEdges` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L84) |\n| `filter.gallery.grain` | `grain` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L87) |\n| `filter.gallery.graphicPen` | `graphicPen` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L74) |\n| `filter.gallery.halftonePattern` | `halftonePattern` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L75) |\n| `filter.gallery.inkOutlines` | `inkOutlines` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L60) |\n| `filter.gallery.mosaicTiles` | `mosaicTiles` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L88) |\n| `filter.gallery.neonGlow` | `neonGlow` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L45) |\n| `filter.gallery.notePaper` | `notePaper` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L76) |\n| `filter.gallery.oceanRipple` | `oceanRipple` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L67) |\n| `filter.gallery.paintDaubs` | `paintDaubs` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L46) |\n| `filter.gallery.paletteKnife` | `paletteKnife` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L47) |\n| `filter.gallery.patchwork` | `patchwork` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L89) |\n| `filter.gallery.photocopy` | `photocopy` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L77) |\n| `filter.gallery.plaster` | `plaster` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L78) |\n| `filter.gallery.plasticWrap` | `plasticWrap` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L48) |\n| `filter.gallery.posterEdges` | `posterEdges` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L49) |\n| `filter.gallery.reticulation` | `reticulation` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L79) |\n| `filter.gallery.roughPastels` | `roughPastels` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L50) |\n| `filter.gallery.smudgeStick` | `smudgeStick` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L51) |\n| `filter.gallery.spatter` | `spatter` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L61) |\n| `filter.gallery.sponge` | `sponge` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L52) |\n| `filter.gallery.sprayedStrokes` | `sprayedStrokes` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L62) |\n| `filter.gallery.stainedGlass` | `stainedGlass` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L90) |\n| `filter.gallery.stamp` | `stamp` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L80) |\n| `filter.gallery.sumiE` | `sumiE` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L63) |\n| `filter.gallery.texturizer` | `texturizer` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L91) |\n| `filter.gallery.tornEdges` | `tornEdges` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L81) |\n| `filter.gallery.underpainting` | `underpainting` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L53) |\n| `filter.gallery.waterPaper` | `waterPaper` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L82) |\n| `filter.gallery.watercolor` | `watercolor` | `GalleryFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L54) |\n| `filter.lensCorrection` | `lensCorrection` | `LensFilter.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L391) |\n| `filter.liquify` | `liquify` | `MeshFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L372) |\n| `filter.noise.addNoise` | `filterAddNoise` | `UtilityFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L303) |\n| `filter.noise.despeckle` | `despeckle` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L281) |\n| `filter.noise.dustAndScratches` | `dustAndScratches` | `UtilityFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L310) |\n| `filter.noise.median` | `median` | `UtilityFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L309) |\n| `filter.noise.reduceNoise` | `reduceNoise` | `UtilityFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L613) |\n| `filter.other.custom` | `customFilter` | `UtilityFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L670) |\n| `filter.other.highPass` | `highPass` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L326) |\n| `filter.other.hsbHsl` | `hsbHsl` | `UtilityFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L671) |\n| `filter.other.maximum` | `maximum` | `UtilityFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L328) |\n| `filter.other.minimum` | `minimum` | `UtilityFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L327) |\n| `filter.other.offset` | `offset` | `DistortionFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L329) |\n| `filter.pixelate.colorHalftone` | `colorHalftone` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L531) |\n| `filter.pixelate.crystallize` | `crystallize` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L537) |\n| `filter.pixelate.facet` | `facet` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L538) |\n| `filter.pixelate.fragment` | `fragment` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L539) |\n| `filter.pixelate.mezzotint` | `mezzotint` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L540) |\n| `filter.pixelate.mosaic` | `mosaic` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L311) |\n| `filter.pixelate.pointillize` | `pointillize` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L546) |\n| `filter.render.clouds` | `clouds` | `RenderFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L743) |\n| `filter.render.differenceClouds` | `differenceClouds` | `RenderFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L744) |\n| `filter.render.fibers` | `fibers` | `RenderFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L584) |\n| `filter.render.flame` | `flame` | `RenderFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L187) |\n| `filter.render.lensFlare` | `lensFlare` | `RenderFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L590) |\n| `filter.render.lightingEffects` | `lightingEffects` | `RenderFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L596) |\n| `filter.render.pictureFrame` | `pictureFrame` | `RenderFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L197) |\n| `filter.render.relight` | `relight` | `RenderFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L603) |\n| `filter.render.tree` | `tree` | `RenderFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L207) |\n| `filter.sharpen.sharpen` | `filterSharpen` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L278) |\n| `filter.sharpen.sharpenEdges` | `sharpenEdges` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L280) |\n| `filter.sharpen.sharpenMore` | `sharpenMore` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L279) |\n| `filter.sharpen.smartSharpen` | `smartSharpen` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L297) |\n| `filter.sharpen.unsharpMask` | `unsharpMask` | `BlurFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L291) |\n| `filter.stylize.diffuse` | `diffuse` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L548) |\n| `filter.stylize.emboss` | `emboss` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L312) |\n| `filter.stylize.extrude` | `extrude` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L549) |\n| `filter.stylize.findEdges` | `findEdges` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L313) |\n| `filter.stylize.oilPaint` | `oilPaint` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L555) |\n| `filter.stylize.solarize` | `solarize` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L314) |\n| `filter.stylize.tiles` | `tiles` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L561) |\n| `filter.stylize.traceContour` | `traceContour` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L567) |\n| `filter.stylize.wind` | `wind` | `PixelFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L568) |\n| `filter.vanishingPoint` | `vanishingPoint` | `MeshFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/vp_cmds.rs#L199) |\n| `filter.video.deInterlace` | `deInterlace` | `UtilityFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L673) |\n| `filter.video.ntscColors` | `ntscColors` | `UtilityFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L679) |\n| `layer.smartObjects.perspectiveWarp` | `perspectiveWarp` | `MeshFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L412) |\n| `layer.smartObjects.puppetWarp` | `puppetWarp` | `MeshFilters.h` | [source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L392) |\n",
+      "columns": [
+        "Reference command",
+        "SDK function",
+        "Public header",
+        "Pinned source"
+      ],
+      "rows": [
+        [
+          "`edit.perspectiveWarp`",
+          "`perspectiveWarp`",
+          "`MeshFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L402)"
+        ],
+        [
+          "`edit.puppetWarp`",
+          "`puppetWarp`",
+          "`MeshFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L382)"
+        ],
+        [
+          "`filter.adaptiveWideAngle`",
+          "`adaptiveWideAngle`",
+          "`MeshFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L401)"
+        ],
+        [
+          "`filter.blur.average`",
+          "`average`",
+          "`UtilityFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L742)"
+        ],
+        [
+          "`filter.blur.blur`",
+          "`blur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L276)"
+        ],
+        [
+          "`filter.blur.blurMore`",
+          "`blurMore`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L277)"
+        ],
+        [
+          "`filter.blur.boxBlur`",
+          "`boxBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L282)"
+        ],
+        [
+          "`filter.blur.gaussianBlur`",
+          "`filterGaussianBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L275)"
+        ],
+        [
+          "`filter.blur.lensBlur`",
+          "`lensBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L626)"
+        ],
+        [
+          "`filter.blur.motionBlur`",
+          "`motionBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L283)"
+        ],
+        [
+          "`filter.blur.radialBlur`",
+          "`radialBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L284)"
+        ],
+        [
+          "`filter.blur.shapeBlur`",
+          "`shapeBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L632)"
+        ],
+        [
+          "`filter.blur.smartBlur`",
+          "`smartBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L620)"
+        ],
+        [
+          "`filter.blur.surfaceBlur`",
+          "`surfaceBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L290)"
+        ],
+        [
+          "`filter.blurGallery.fieldBlur`",
+          "`fieldBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L651)"
+        ],
+        [
+          "`filter.blurGallery.irisBlur`",
+          "`irisBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L645)"
+        ],
+        [
+          "`filter.blurGallery.pathBlur`",
+          "`pathBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L663)"
+        ],
+        [
+          "`filter.blurGallery.spinBlur`",
+          "`spinBlur`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L657)"
+        ],
+        [
+          "`filter.blurGallery.tiltShift`",
+          "`tiltShift`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L639)"
+        ],
+        [
+          "`filter.cameraRaw`",
+          "`cameraRawFilter`",
+          "`CameraRawFilter.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L411)"
+        ],
+        [
+          "`filter.distort.displace`",
+          "`displace`",
+          "`DistortionFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L570)"
+        ],
+        [
+          "`filter.distort.pinch`",
+          "`pinch`",
+          "`DistortionFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L316)"
+        ],
+        [
+          "`filter.distort.polarCoordinates`",
+          "`polarCoordinates`",
+          "`DistortionFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L325)"
+        ],
+        [
+          "`filter.distort.ripple`",
+          "`ripple`",
+          "`DistortionFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L324)"
+        ],
+        [
+          "`filter.distort.shear`",
+          "`shear`",
+          "`DistortionFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L576)"
+        ],
+        [
+          "`filter.distort.spherize`",
+          "`spherize`",
+          "`DistortionFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L317)"
+        ],
+        [
+          "`filter.distort.twirl`",
+          "`twirl`",
+          "`DistortionFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L315)"
+        ],
+        [
+          "`filter.distort.wave`",
+          "`wave`",
+          "`DistortionFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L318)"
+        ],
+        [
+          "`filter.distort.zigZag`",
+          "`zigZag`",
+          "`DistortionFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L577)"
+        ],
+        [
+          "`filter.gallery.accentedEdges`",
+          "`accentedEdges`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L56)"
+        ],
+        [
+          "`filter.gallery.angledStrokes`",
+          "`angledStrokes`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L57)"
+        ],
+        [
+          "`filter.gallery.basRelief`",
+          "`basRelief`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L69)"
+        ],
+        [
+          "`filter.gallery.chalkCharcoal`",
+          "`chalkCharcoal`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L70)"
+        ],
+        [
+          "`filter.gallery.charcoal`",
+          "`charcoal`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L71)"
+        ],
+        [
+          "`filter.gallery.chrome`",
+          "`chrome`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L72)"
+        ],
+        [
+          "`filter.gallery.coloredPencil`",
+          "`coloredPencil`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L40)"
+        ],
+        [
+          "`filter.gallery.conteCrayon`",
+          "`conteCrayon`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L73)"
+        ],
+        [
+          "`filter.gallery.craquelure`",
+          "`craquelure`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L86)"
+        ],
+        [
+          "`filter.gallery.crosshatch`",
+          "`crosshatch`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L58)"
+        ],
+        [
+          "`filter.gallery.cutout`",
+          "`cutout`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L41)"
+        ],
+        [
+          "`filter.gallery.darkStrokes`",
+          "`darkStrokes`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L59)"
+        ],
+        [
+          "`filter.gallery.diffuseGlow`",
+          "`diffuseGlow`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L65)"
+        ],
+        [
+          "`filter.gallery.dryBrush`",
+          "`dryBrush`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L42)"
+        ],
+        [
+          "`filter.gallery.filmGrain`",
+          "`galleryFilmGrain`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L43)"
+        ],
+        [
+          "`filter.gallery.fresco`",
+          "`fresco`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L44)"
+        ],
+        [
+          "`filter.gallery.glass`",
+          "`glass`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L66)"
+        ],
+        [
+          "`filter.gallery.glowingEdges`",
+          "`glowingEdges`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L84)"
+        ],
+        [
+          "`filter.gallery.grain`",
+          "`grain`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L87)"
+        ],
+        [
+          "`filter.gallery.graphicPen`",
+          "`graphicPen`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L74)"
+        ],
+        [
+          "`filter.gallery.halftonePattern`",
+          "`halftonePattern`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L75)"
+        ],
+        [
+          "`filter.gallery.inkOutlines`",
+          "`inkOutlines`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L60)"
+        ],
+        [
+          "`filter.gallery.mosaicTiles`",
+          "`mosaicTiles`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L88)"
+        ],
+        [
+          "`filter.gallery.neonGlow`",
+          "`neonGlow`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L45)"
+        ],
+        [
+          "`filter.gallery.notePaper`",
+          "`notePaper`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L76)"
+        ],
+        [
+          "`filter.gallery.oceanRipple`",
+          "`oceanRipple`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L67)"
+        ],
+        [
+          "`filter.gallery.paintDaubs`",
+          "`paintDaubs`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L46)"
+        ],
+        [
+          "`filter.gallery.paletteKnife`",
+          "`paletteKnife`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L47)"
+        ],
+        [
+          "`filter.gallery.patchwork`",
+          "`patchwork`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L89)"
+        ],
+        [
+          "`filter.gallery.photocopy`",
+          "`photocopy`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L77)"
+        ],
+        [
+          "`filter.gallery.plaster`",
+          "`plaster`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L78)"
+        ],
+        [
+          "`filter.gallery.plasticWrap`",
+          "`plasticWrap`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L48)"
+        ],
+        [
+          "`filter.gallery.posterEdges`",
+          "`posterEdges`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L49)"
+        ],
+        [
+          "`filter.gallery.reticulation`",
+          "`reticulation`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L79)"
+        ],
+        [
+          "`filter.gallery.roughPastels`",
+          "`roughPastels`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L50)"
+        ],
+        [
+          "`filter.gallery.smudgeStick`",
+          "`smudgeStick`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L51)"
+        ],
+        [
+          "`filter.gallery.spatter`",
+          "`spatter`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L61)"
+        ],
+        [
+          "`filter.gallery.sponge`",
+          "`sponge`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L52)"
+        ],
+        [
+          "`filter.gallery.sprayedStrokes`",
+          "`sprayedStrokes`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L62)"
+        ],
+        [
+          "`filter.gallery.stainedGlass`",
+          "`stainedGlass`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L90)"
+        ],
+        [
+          "`filter.gallery.stamp`",
+          "`stamp`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L80)"
+        ],
+        [
+          "`filter.gallery.sumiE`",
+          "`sumiE`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L63)"
+        ],
+        [
+          "`filter.gallery.texturizer`",
+          "`texturizer`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L91)"
+        ],
+        [
+          "`filter.gallery.tornEdges`",
+          "`tornEdges`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L81)"
+        ],
+        [
+          "`filter.gallery.underpainting`",
+          "`underpainting`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L53)"
+        ],
+        [
+          "`filter.gallery.waterPaper`",
+          "`waterPaper`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L82)"
+        ],
+        [
+          "`filter.gallery.watercolor`",
+          "`watercolor`",
+          "`GalleryFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L54)"
+        ],
+        [
+          "`filter.lensCorrection`",
+          "`lensCorrection`",
+          "`LensFilter.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L391)"
+        ],
+        [
+          "`filter.liquify`",
+          "`liquify`",
+          "`MeshFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L372)"
+        ],
+        [
+          "`filter.noise.addNoise`",
+          "`filterAddNoise`",
+          "`UtilityFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L303)"
+        ],
+        [
+          "`filter.noise.despeckle`",
+          "`despeckle`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L281)"
+        ],
+        [
+          "`filter.noise.dustAndScratches`",
+          "`dustAndScratches`",
+          "`UtilityFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L310)"
+        ],
+        [
+          "`filter.noise.median`",
+          "`median`",
+          "`UtilityFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L309)"
+        ],
+        [
+          "`filter.noise.reduceNoise`",
+          "`reduceNoise`",
+          "`UtilityFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L613)"
+        ],
+        [
+          "`filter.other.custom`",
+          "`customFilter`",
+          "`UtilityFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L670)"
+        ],
+        [
+          "`filter.other.highPass`",
+          "`highPass`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L326)"
+        ],
+        [
+          "`filter.other.hsbHsl`",
+          "`hsbHsl`",
+          "`UtilityFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L671)"
+        ],
+        [
+          "`filter.other.maximum`",
+          "`maximum`",
+          "`UtilityFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L328)"
+        ],
+        [
+          "`filter.other.minimum`",
+          "`minimum`",
+          "`UtilityFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L327)"
+        ],
+        [
+          "`filter.other.offset`",
+          "`offset`",
+          "`DistortionFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L329)"
+        ],
+        [
+          "`filter.pixelate.colorHalftone`",
+          "`colorHalftone`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L531)"
+        ],
+        [
+          "`filter.pixelate.crystallize`",
+          "`crystallize`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L537)"
+        ],
+        [
+          "`filter.pixelate.facet`",
+          "`facet`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L538)"
+        ],
+        [
+          "`filter.pixelate.fragment`",
+          "`fragment`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L539)"
+        ],
+        [
+          "`filter.pixelate.mezzotint`",
+          "`mezzotint`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L540)"
+        ],
+        [
+          "`filter.pixelate.mosaic`",
+          "`mosaic`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L311)"
+        ],
+        [
+          "`filter.pixelate.pointillize`",
+          "`pointillize`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L546)"
+        ],
+        [
+          "`filter.render.clouds`",
+          "`clouds`",
+          "`RenderFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L743)"
+        ],
+        [
+          "`filter.render.differenceClouds`",
+          "`differenceClouds`",
+          "`RenderFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L744)"
+        ],
+        [
+          "`filter.render.fibers`",
+          "`fibers`",
+          "`RenderFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L584)"
+        ],
+        [
+          "`filter.render.flame`",
+          "`flame`",
+          "`RenderFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L187)"
+        ],
+        [
+          "`filter.render.lensFlare`",
+          "`lensFlare`",
+          "`RenderFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L590)"
+        ],
+        [
+          "`filter.render.lightingEffects`",
+          "`lightingEffects`",
+          "`RenderFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L596)"
+        ],
+        [
+          "`filter.render.pictureFrame`",
+          "`pictureFrame`",
+          "`RenderFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L197)"
+        ],
+        [
+          "`filter.render.relight`",
+          "`relight`",
+          "`RenderFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L603)"
+        ],
+        [
+          "`filter.render.tree`",
+          "`tree`",
+          "`RenderFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L207)"
+        ],
+        [
+          "`filter.sharpen.sharpen`",
+          "`filterSharpen`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L278)"
+        ],
+        [
+          "`filter.sharpen.sharpenEdges`",
+          "`sharpenEdges`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L280)"
+        ],
+        [
+          "`filter.sharpen.sharpenMore`",
+          "`sharpenMore`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L279)"
+        ],
+        [
+          "`filter.sharpen.smartSharpen`",
+          "`smartSharpen`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L297)"
+        ],
+        [
+          "`filter.sharpen.unsharpMask`",
+          "`unsharpMask`",
+          "`BlurFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L291)"
+        ],
+        [
+          "`filter.stylize.diffuse`",
+          "`diffuse`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L548)"
+        ],
+        [
+          "`filter.stylize.emboss`",
+          "`emboss`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L312)"
+        ],
+        [
+          "`filter.stylize.extrude`",
+          "`extrude`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L549)"
+        ],
+        [
+          "`filter.stylize.findEdges`",
+          "`findEdges`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L313)"
+        ],
+        [
+          "`filter.stylize.oilPaint`",
+          "`oilPaint`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L555)"
+        ],
+        [
+          "`filter.stylize.solarize`",
+          "`solarize`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L314)"
+        ],
+        [
+          "`filter.stylize.tiles`",
+          "`tiles`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L561)"
+        ],
+        [
+          "`filter.stylize.traceContour`",
+          "`traceContour`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L567)"
+        ],
+        [
+          "`filter.stylize.wind`",
+          "`wind`",
+          "`PixelFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L568)"
+        ],
+        [
+          "`filter.vanishingPoint`",
+          "`vanishingPoint`",
+          "`MeshFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/vp_cmds.rs#L199)"
+        ],
+        [
+          "`filter.video.deInterlace`",
+          "`deInterlace`",
+          "`UtilityFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L673)"
+        ],
+        [
+          "`filter.video.ntscColors`",
+          "`ntscColors`",
+          "`UtilityFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L679)"
+        ],
+        [
+          "`layer.smartObjects.perspectiveWarp`",
+          "`perspectiveWarp`",
+          "`MeshFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L412)"
+        ],
+        [
+          "`layer.smartObjects.puppetWarp`",
+          "`puppetWarp`",
+          "`MeshFilters.h`",
+          "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L392)"
+        ]
+      ]
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 152,
+      "end_line": 152,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "heading",
+      "start_line": 153,
+      "end_line": 153,
+      "raw": "## Additional LightCraft retouch and diagnostics\n",
+      "level": 2,
+      "title": "Additional LightCraft retouch and diagnostics"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 154,
+      "end_line": 154,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "table",
+      "start_line": 155,
+      "end_line": 160,
+      "raw": "| Function | Executable source path | Contract |\n| --- | --- | --- |\n| `cloneSpot`, `healSpot`, `removeSpot`, `rankSpotSources` | [pipeline/spots.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/spots.rs) | Patch transport, tone matching/inpainting and ranked source selection |\n| `redEye`, `petEye`, `detectPupil` | [pipeline/redeye.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/redeye.rs) | Actual pupil detection and eye-pixel repair |\n| `visualizeSpots` | [pipeline/visualize.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/visualize.rs) | Diagnostic rendered image for spot inspection |\n| `detectDustSpots` | [pipeline/dust.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/dust.rs) | Returns detected candidate positions/radii, not an invented image-look filter |\n",
+      "columns": [
+        "Function",
+        "Executable source path",
+        "Contract"
+      ],
+      "rows": [
+        [
+          "`cloneSpot`, `healSpot`, `removeSpot`, `rankSpotSources`",
+          "[pipeline/spots.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/spots.rs)",
+          "Patch transport, tone matching/inpainting and ranked source selection"
+        ],
+        [
+          "`redEye`, `petEye`, `detectPupil`",
+          "[pipeline/redeye.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/redeye.rs)",
+          "Actual pupil detection and eye-pixel repair"
+        ],
+        [
+          "`visualizeSpots`",
+          "[pipeline/visualize.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/visualize.rs)",
+          "Diagnostic rendered image for spot inspection"
+        ],
+        [
+          "`detectDustSpots`",
+          "[pipeline/dust.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/dust.rs)",
+          "Returns detected candidate positions/radii, not an invented image-look filter"
+        ]
+      ]
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 161,
+      "end_line": 161,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 162,
+      "end_line": 162,
+      "raw": "The additional retouch set has six image-processing functions and three analysis/selection functions. Its options and numerical adaptations are in [RetouchFilters.md](RetouchFilters.md).\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 163,
+      "end_line": 163,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "heading",
+      "start_line": 164,
+      "end_line": 164,
+      "raw": "## Additional display/selection diagnostics\n",
+      "level": 2,
+      "title": "Additional display/selection diagnostics"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 165,
+      "end_line": 165,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 166,
+      "end_line": 166,
+      "raw": "`DiagnosticFilters.h` exposes `pointColorRangePreview`, five individually named mask composites (`maskColorOverlay`, `maskColorOnBwOverlay`, `maskImageOnBlack`, `maskImageOnWhite`, `maskWhiteOnBlack`) and `destinationGamutWarning`/`displayGamutWarning`. These port real image branches in LightCraft `pipeline/visualize.rs`, `pipeline/finish.rs` and the output module. The caller supplies the selection/mask, optional pre-mapping scene-linear colors and a named proof color space; the SDK does not retain GUI state or guess an ICC display profile. [DiagnosticFilters.md](DiagnosticFilters.md) specifies formulas and limits. Histogram-based highlight/shadow clipping indicators are GUI border decorations with no separate spatial pixel filter and are excluded.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 167,
+      "end_line": 167,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "heading",
+      "start_line": 168,
+      "end_line": 168,
+      "raw": "## Module contracts\n",
+      "level": 2,
+      "title": "Module contracts"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 169,
+      "end_line": 169,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 170,
+      "end_line": 170,
+      "raw": "[Blur/distortion/utility contracts](CoreFilters.md), [Gallery effects](GalleryFilters.md), [Pixelate/Stylize](PixelFilters.md), [procedural/light rendering](RenderFilters.md), [Lens Correction](LensFilter.md), [Camera Raw](CameraRawFilter.md), [mesh/perspective filters](MeshFilters.md), and [LightCraft looks/presets/resampling](LightcraftFilters.md).\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 171,
+      "end_line": 171,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 172,
+      "end_line": 172,
+      "raw": "The inherited MIT licenses for the two references are distributed in `third_party/`. No Rust runtime, Qt, GUI framework or third-party processing dependency is linked. Final configuration, sanitizer and installed-consumer evidence is recorded in [Verification.md](Verification.md).\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Filter inventory and processing contract — 0.4.0",
+      "anchor": "filter-inventory-and-processing-contract--040",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Inventory rules",
+      "anchor": "inventory-rules",
+      "start_line": 5
+    },
+    {
+      "block_id": "b000011",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Shared contract and intentional adaptations",
+      "anchor": "shared-contract-and-intentional-adaptations",
+      "start_line": 14
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "PhotoCraft command mapping",
+      "anchor": "photocraft-command-mapping",
+      "start_line": 24
+    },
+    {
+      "block_id": "b000025",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Additional LightCraft retouch and diagnostics",
+      "anchor": "additional-lightcraft-retouch-and-diagnostics",
+      "start_line": 153
+    },
+    {
+      "block_id": "b000031",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Additional display/selection diagnostics",
+      "anchor": "additional-displayselection-diagnostics",
+      "start_line": 164
+    },
+    {
+      "block_id": "b000035",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Module contracts",
+      "anchor": "module-contracts",
+      "start_line": 168
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000017",
+        "line": 20,
+        "text": "Algorithms and procedural models are ported from the reference but adapted to this SDK's alpha, allocation and finite-input contract. Median neighborhoods use alpha-weighted visible samples; minimum/maximum ignore hidden RGB and can transport alpha; custom convolution replaces invisible neighbor color with the visible center. The fixed image canvas clips procedural and mesh output instead of expanding an application layer surface. Shape Blur clamps borders. Lens Blur uses bounded kernel/depth levels, blur-gallery operations use bounded samples/levels, Wave permits the 64 generators actually used by the reference CPU path. Unsupported host-only fields do not silently become pixel effects. See the module documents for individual constraints and differences.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "`5896f0b`",
+        "target": "https://github.com/storytold/photocraft/tree/5896f0b63e6f342e0311920b4d2a0ea5a94330fc",
+        "kind": "external",
+        "line": 3
+      },
+      {
+        "block_id": "b000003",
+        "label": "`629e3938`",
+        "target": "https://github.com/storytold/lightcraft/tree/629e39380e296f588c64cd9c0053a8edc3528f36",
+        "kind": "external",
+        "line": 3
+      },
+      {
+        "block_id": "b000003",
+        "label": "filter catalog",
+        "target": "filter-catalog.json",
+        "kind": "relative",
+        "line": 3
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L402",
+        "kind": "external",
+        "line": 28
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L382",
+        "kind": "external",
+        "line": 29
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L401",
+        "kind": "external",
+        "line": 30
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L742",
+        "kind": "external",
+        "line": 31
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L276",
+        "kind": "external",
+        "line": 32
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L277",
+        "kind": "external",
+        "line": 33
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L282",
+        "kind": "external",
+        "line": 34
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L275",
+        "kind": "external",
+        "line": 35
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L626",
+        "kind": "external",
+        "line": 36
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L283",
+        "kind": "external",
+        "line": 37
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L284",
+        "kind": "external",
+        "line": 38
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L632",
+        "kind": "external",
+        "line": 39
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L620",
+        "kind": "external",
+        "line": 40
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L290",
+        "kind": "external",
+        "line": 41
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L651",
+        "kind": "external",
+        "line": 42
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L645",
+        "kind": "external",
+        "line": 43
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L663",
+        "kind": "external",
+        "line": 44
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L657",
+        "kind": "external",
+        "line": 45
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L639",
+        "kind": "external",
+        "line": 46
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L411",
+        "kind": "external",
+        "line": 47
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L570",
+        "kind": "external",
+        "line": 48
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L316",
+        "kind": "external",
+        "line": 49
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L325",
+        "kind": "external",
+        "line": 50
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L324",
+        "kind": "external",
+        "line": 51
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L576",
+        "kind": "external",
+        "line": 52
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L317",
+        "kind": "external",
+        "line": 53
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L315",
+        "kind": "external",
+        "line": 54
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L318",
+        "kind": "external",
+        "line": 55
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L577",
+        "kind": "external",
+        "line": 56
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L56",
+        "kind": "external",
+        "line": 57
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L57",
+        "kind": "external",
+        "line": 58
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L69",
+        "kind": "external",
+        "line": 59
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L70",
+        "kind": "external",
+        "line": 60
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L71",
+        "kind": "external",
+        "line": 61
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L72",
+        "kind": "external",
+        "line": 62
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L40",
+        "kind": "external",
+        "line": 63
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L73",
+        "kind": "external",
+        "line": 64
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L86",
+        "kind": "external",
+        "line": 65
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L58",
+        "kind": "external",
+        "line": 66
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L41",
+        "kind": "external",
+        "line": 67
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L59",
+        "kind": "external",
+        "line": 68
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L65",
+        "kind": "external",
+        "line": 69
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L42",
+        "kind": "external",
+        "line": 70
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L43",
+        "kind": "external",
+        "line": 71
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L44",
+        "kind": "external",
+        "line": 72
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L66",
+        "kind": "external",
+        "line": 73
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L84",
+        "kind": "external",
+        "line": 74
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L87",
+        "kind": "external",
+        "line": 75
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L74",
+        "kind": "external",
+        "line": 76
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L75",
+        "kind": "external",
+        "line": 77
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L60",
+        "kind": "external",
+        "line": 78
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L88",
+        "kind": "external",
+        "line": 79
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L45",
+        "kind": "external",
+        "line": 80
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L76",
+        "kind": "external",
+        "line": 81
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L67",
+        "kind": "external",
+        "line": 82
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L46",
+        "kind": "external",
+        "line": 83
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L47",
+        "kind": "external",
+        "line": 84
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L89",
+        "kind": "external",
+        "line": 85
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L77",
+        "kind": "external",
+        "line": 86
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L78",
+        "kind": "external",
+        "line": 87
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L48",
+        "kind": "external",
+        "line": 88
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L49",
+        "kind": "external",
+        "line": 89
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L79",
+        "kind": "external",
+        "line": 90
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L50",
+        "kind": "external",
+        "line": 91
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L51",
+        "kind": "external",
+        "line": 92
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L61",
+        "kind": "external",
+        "line": 93
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L52",
+        "kind": "external",
+        "line": 94
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L62",
+        "kind": "external",
+        "line": 95
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L90",
+        "kind": "external",
+        "line": 96
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L80",
+        "kind": "external",
+        "line": 97
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L63",
+        "kind": "external",
+        "line": 98
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L91",
+        "kind": "external",
+        "line": 99
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L81",
+        "kind": "external",
+        "line": 100
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L53",
+        "kind": "external",
+        "line": 101
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L82",
+        "kind": "external",
+        "line": 102
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L54",
+        "kind": "external",
+        "line": 103
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L391",
+        "kind": "external",
+        "line": 104
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L372",
+        "kind": "external",
+        "line": 105
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L303",
+        "kind": "external",
+        "line": 106
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L281",
+        "kind": "external",
+        "line": 107
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L310",
+        "kind": "external",
+        "line": 108
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L309",
+        "kind": "external",
+        "line": 109
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L613",
+        "kind": "external",
+        "line": 110
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L670",
+        "kind": "external",
+        "line": 111
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L326",
+        "kind": "external",
+        "line": 112
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L671",
+        "kind": "external",
+        "line": 113
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L328",
+        "kind": "external",
+        "line": 114
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L327",
+        "kind": "external",
+        "line": 115
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L329",
+        "kind": "external",
+        "line": 116
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L531",
+        "kind": "external",
+        "line": 117
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L537",
+        "kind": "external",
+        "line": 118
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L538",
+        "kind": "external",
+        "line": 119
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L539",
+        "kind": "external",
+        "line": 120
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L540",
+        "kind": "external",
+        "line": 121
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L311",
+        "kind": "external",
+        "line": 122
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L546",
+        "kind": "external",
+        "line": 123
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L743",
+        "kind": "external",
+        "line": 124
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L744",
+        "kind": "external",
+        "line": 125
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L584",
+        "kind": "external",
+        "line": 126
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L187",
+        "kind": "external",
+        "line": 127
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L590",
+        "kind": "external",
+        "line": 128
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L596",
+        "kind": "external",
+        "line": 129
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L197",
+        "kind": "external",
+        "line": 130
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L603",
+        "kind": "external",
+        "line": 131
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L207",
+        "kind": "external",
+        "line": 132
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L278",
+        "kind": "external",
+        "line": 133
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L280",
+        "kind": "external",
+        "line": 134
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L279",
+        "kind": "external",
+        "line": 135
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L297",
+        "kind": "external",
+        "line": 136
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L291",
+        "kind": "external",
+        "line": 137
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L548",
+        "kind": "external",
+        "line": 138
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L312",
+        "kind": "external",
+        "line": 139
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L549",
+        "kind": "external",
+        "line": 140
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L313",
+        "kind": "external",
+        "line": 141
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L555",
+        "kind": "external",
+        "line": 142
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L314",
+        "kind": "external",
+        "line": 143
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L561",
+        "kind": "external",
+        "line": 144
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L567",
+        "kind": "external",
+        "line": 145
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L568",
+        "kind": "external",
+        "line": 146
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/vp_cmds.rs#L199",
+        "kind": "external",
+        "line": 147
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L673",
+        "kind": "external",
+        "line": 148
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L679",
+        "kind": "external",
+        "line": 149
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L412",
+        "kind": "external",
+        "line": 150
+      },
+      {
+        "block_id": "b000023",
+        "label": "source",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L392",
+        "kind": "external",
+        "line": 151
+      },
+      {
+        "block_id": "b000027",
+        "label": "pipeline/spots.rs",
+        "target": "https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/spots.rs",
+        "kind": "external",
+        "line": 157
+      },
+      {
+        "block_id": "b000027",
+        "label": "pipeline/redeye.rs",
+        "target": "https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/redeye.rs",
+        "kind": "external",
+        "line": 158
+      },
+      {
+        "block_id": "b000027",
+        "label": "pipeline/visualize.rs",
+        "target": "https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/visualize.rs",
+        "kind": "external",
+        "line": 159
+      },
+      {
+        "block_id": "b000027",
+        "label": "pipeline/dust.rs",
+        "target": "https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/dust.rs",
+        "kind": "external",
+        "line": 160
+      },
+      {
+        "block_id": "b000029",
+        "label": "RetouchFilters.md",
+        "target": "RetouchFilters.md",
+        "kind": "relative",
+        "line": 162
+      },
+      {
+        "block_id": "b000033",
+        "label": "DiagnosticFilters.md",
+        "target": "DiagnosticFilters.md",
+        "kind": "relative",
+        "line": 166
+      },
+      {
+        "block_id": "b000037",
+        "label": "Blur/distortion/utility contracts",
+        "target": "CoreFilters.md",
+        "kind": "relative",
+        "line": 170
+      },
+      {
+        "block_id": "b000037",
+        "label": "Gallery effects",
+        "target": "GalleryFilters.md",
+        "kind": "relative",
+        "line": 170
+      },
+      {
+        "block_id": "b000037",
+        "label": "Pixelate/Stylize",
+        "target": "PixelFilters.md",
+        "kind": "relative",
+        "line": 170
+      },
+      {
+        "block_id": "b000037",
+        "label": "procedural/light rendering",
+        "target": "RenderFilters.md",
+        "kind": "relative",
+        "line": 170
+      },
+      {
+        "block_id": "b000037",
+        "label": "Lens Correction",
+        "target": "LensFilter.md",
+        "kind": "relative",
+        "line": 170
+      },
+      {
+        "block_id": "b000037",
+        "label": "Camera Raw",
+        "target": "CameraRawFilter.md",
+        "kind": "relative",
+        "line": 170
+      },
+      {
+        "block_id": "b000037",
+        "label": "mesh/perspective filters",
+        "target": "MeshFilters.md",
+        "kind": "relative",
+        "line": 170
+      },
+      {
+        "block_id": "b000037",
+        "label": "LightCraft looks/presets/resampling",
+        "target": "LightcraftFilters.md",
+        "kind": "relative",
+        "line": 170
+      },
+      {
+        "block_id": "b000039",
+        "label": "Verification.md",
+        "target": "Verification.md",
+        "kind": "relative",
+        "line": 172
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000023",
+        "columns": [
+          "Reference command",
+          "SDK function",
+          "Public header",
+          "Pinned source"
+        ],
+        "rows": [
+          [
+            "`edit.perspectiveWarp`",
+            "`perspectiveWarp`",
+            "`MeshFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L402)"
+          ],
+          [
+            "`edit.puppetWarp`",
+            "`puppetWarp`",
+            "`MeshFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L382)"
+          ],
+          [
+            "`filter.adaptiveWideAngle`",
+            "`adaptiveWideAngle`",
+            "`MeshFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L401)"
+          ],
+          [
+            "`filter.blur.average`",
+            "`average`",
+            "`UtilityFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L742)"
+          ],
+          [
+            "`filter.blur.blur`",
+            "`blur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L276)"
+          ],
+          [
+            "`filter.blur.blurMore`",
+            "`blurMore`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L277)"
+          ],
+          [
+            "`filter.blur.boxBlur`",
+            "`boxBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L282)"
+          ],
+          [
+            "`filter.blur.gaussianBlur`",
+            "`filterGaussianBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L275)"
+          ],
+          [
+            "`filter.blur.lensBlur`",
+            "`lensBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L626)"
+          ],
+          [
+            "`filter.blur.motionBlur`",
+            "`motionBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L283)"
+          ],
+          [
+            "`filter.blur.radialBlur`",
+            "`radialBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L284)"
+          ],
+          [
+            "`filter.blur.shapeBlur`",
+            "`shapeBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L632)"
+          ],
+          [
+            "`filter.blur.smartBlur`",
+            "`smartBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L620)"
+          ],
+          [
+            "`filter.blur.surfaceBlur`",
+            "`surfaceBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L290)"
+          ],
+          [
+            "`filter.blurGallery.fieldBlur`",
+            "`fieldBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L651)"
+          ],
+          [
+            "`filter.blurGallery.irisBlur`",
+            "`irisBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L645)"
+          ],
+          [
+            "`filter.blurGallery.pathBlur`",
+            "`pathBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L663)"
+          ],
+          [
+            "`filter.blurGallery.spinBlur`",
+            "`spinBlur`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L657)"
+          ],
+          [
+            "`filter.blurGallery.tiltShift`",
+            "`tiltShift`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L639)"
+          ],
+          [
+            "`filter.cameraRaw`",
+            "`cameraRawFilter`",
+            "`CameraRawFilter.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L411)"
+          ],
+          [
+            "`filter.distort.displace`",
+            "`displace`",
+            "`DistortionFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L570)"
+          ],
+          [
+            "`filter.distort.pinch`",
+            "`pinch`",
+            "`DistortionFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L316)"
+          ],
+          [
+            "`filter.distort.polarCoordinates`",
+            "`polarCoordinates`",
+            "`DistortionFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L325)"
+          ],
+          [
+            "`filter.distort.ripple`",
+            "`ripple`",
+            "`DistortionFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L324)"
+          ],
+          [
+            "`filter.distort.shear`",
+            "`shear`",
+            "`DistortionFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L576)"
+          ],
+          [
+            "`filter.distort.spherize`",
+            "`spherize`",
+            "`DistortionFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L317)"
+          ],
+          [
+            "`filter.distort.twirl`",
+            "`twirl`",
+            "`DistortionFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L315)"
+          ],
+          [
+            "`filter.distort.wave`",
+            "`wave`",
+            "`DistortionFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L318)"
+          ],
+          [
+            "`filter.distort.zigZag`",
+            "`zigZag`",
+            "`DistortionFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L577)"
+          ],
+          [
+            "`filter.gallery.accentedEdges`",
+            "`accentedEdges`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L56)"
+          ],
+          [
+            "`filter.gallery.angledStrokes`",
+            "`angledStrokes`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L57)"
+          ],
+          [
+            "`filter.gallery.basRelief`",
+            "`basRelief`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L69)"
+          ],
+          [
+            "`filter.gallery.chalkCharcoal`",
+            "`chalkCharcoal`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L70)"
+          ],
+          [
+            "`filter.gallery.charcoal`",
+            "`charcoal`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L71)"
+          ],
+          [
+            "`filter.gallery.chrome`",
+            "`chrome`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L72)"
+          ],
+          [
+            "`filter.gallery.coloredPencil`",
+            "`coloredPencil`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L40)"
+          ],
+          [
+            "`filter.gallery.conteCrayon`",
+            "`conteCrayon`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L73)"
+          ],
+          [
+            "`filter.gallery.craquelure`",
+            "`craquelure`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L86)"
+          ],
+          [
+            "`filter.gallery.crosshatch`",
+            "`crosshatch`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L58)"
+          ],
+          [
+            "`filter.gallery.cutout`",
+            "`cutout`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L41)"
+          ],
+          [
+            "`filter.gallery.darkStrokes`",
+            "`darkStrokes`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L59)"
+          ],
+          [
+            "`filter.gallery.diffuseGlow`",
+            "`diffuseGlow`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L65)"
+          ],
+          [
+            "`filter.gallery.dryBrush`",
+            "`dryBrush`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L42)"
+          ],
+          [
+            "`filter.gallery.filmGrain`",
+            "`galleryFilmGrain`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L43)"
+          ],
+          [
+            "`filter.gallery.fresco`",
+            "`fresco`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L44)"
+          ],
+          [
+            "`filter.gallery.glass`",
+            "`glass`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L66)"
+          ],
+          [
+            "`filter.gallery.glowingEdges`",
+            "`glowingEdges`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L84)"
+          ],
+          [
+            "`filter.gallery.grain`",
+            "`grain`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L87)"
+          ],
+          [
+            "`filter.gallery.graphicPen`",
+            "`graphicPen`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L74)"
+          ],
+          [
+            "`filter.gallery.halftonePattern`",
+            "`halftonePattern`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L75)"
+          ],
+          [
+            "`filter.gallery.inkOutlines`",
+            "`inkOutlines`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L60)"
+          ],
+          [
+            "`filter.gallery.mosaicTiles`",
+            "`mosaicTiles`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L88)"
+          ],
+          [
+            "`filter.gallery.neonGlow`",
+            "`neonGlow`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L45)"
+          ],
+          [
+            "`filter.gallery.notePaper`",
+            "`notePaper`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L76)"
+          ],
+          [
+            "`filter.gallery.oceanRipple`",
+            "`oceanRipple`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L67)"
+          ],
+          [
+            "`filter.gallery.paintDaubs`",
+            "`paintDaubs`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L46)"
+          ],
+          [
+            "`filter.gallery.paletteKnife`",
+            "`paletteKnife`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L47)"
+          ],
+          [
+            "`filter.gallery.patchwork`",
+            "`patchwork`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L89)"
+          ],
+          [
+            "`filter.gallery.photocopy`",
+            "`photocopy`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L77)"
+          ],
+          [
+            "`filter.gallery.plaster`",
+            "`plaster`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L78)"
+          ],
+          [
+            "`filter.gallery.plasticWrap`",
+            "`plasticWrap`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L48)"
+          ],
+          [
+            "`filter.gallery.posterEdges`",
+            "`posterEdges`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L49)"
+          ],
+          [
+            "`filter.gallery.reticulation`",
+            "`reticulation`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L79)"
+          ],
+          [
+            "`filter.gallery.roughPastels`",
+            "`roughPastels`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L50)"
+          ],
+          [
+            "`filter.gallery.smudgeStick`",
+            "`smudgeStick`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L51)"
+          ],
+          [
+            "`filter.gallery.spatter`",
+            "`spatter`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L61)"
+          ],
+          [
+            "`filter.gallery.sponge`",
+            "`sponge`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L52)"
+          ],
+          [
+            "`filter.gallery.sprayedStrokes`",
+            "`sprayedStrokes`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L62)"
+          ],
+          [
+            "`filter.gallery.stainedGlass`",
+            "`stainedGlass`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L90)"
+          ],
+          [
+            "`filter.gallery.stamp`",
+            "`stamp`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L80)"
+          ],
+          [
+            "`filter.gallery.sumiE`",
+            "`sumiE`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L63)"
+          ],
+          [
+            "`filter.gallery.texturizer`",
+            "`texturizer`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L91)"
+          ],
+          [
+            "`filter.gallery.tornEdges`",
+            "`tornEdges`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L81)"
+          ],
+          [
+            "`filter.gallery.underpainting`",
+            "`underpainting`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L53)"
+          ],
+          [
+            "`filter.gallery.waterPaper`",
+            "`waterPaper`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L82)"
+          ],
+          [
+            "`filter.gallery.watercolor`",
+            "`watercolor`",
+            "`GalleryFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/artistic.rs#L54)"
+          ],
+          [
+            "`filter.lensCorrection`",
+            "`lensCorrection`",
+            "`LensFilter.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/lens_cmds.rs#L391)"
+          ],
+          [
+            "`filter.liquify`",
+            "`liquify`",
+            "`MeshFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L372)"
+          ],
+          [
+            "`filter.noise.addNoise`",
+            "`filterAddNoise`",
+            "`UtilityFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L303)"
+          ],
+          [
+            "`filter.noise.despeckle`",
+            "`despeckle`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L281)"
+          ],
+          [
+            "`filter.noise.dustAndScratches`",
+            "`dustAndScratches`",
+            "`UtilityFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L310)"
+          ],
+          [
+            "`filter.noise.median`",
+            "`median`",
+            "`UtilityFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L309)"
+          ],
+          [
+            "`filter.noise.reduceNoise`",
+            "`reduceNoise`",
+            "`UtilityFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L613)"
+          ],
+          [
+            "`filter.other.custom`",
+            "`customFilter`",
+            "`UtilityFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L670)"
+          ],
+          [
+            "`filter.other.highPass`",
+            "`highPass`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L326)"
+          ],
+          [
+            "`filter.other.hsbHsl`",
+            "`hsbHsl`",
+            "`UtilityFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L671)"
+          ],
+          [
+            "`filter.other.maximum`",
+            "`maximum`",
+            "`UtilityFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L328)"
+          ],
+          [
+            "`filter.other.minimum`",
+            "`minimum`",
+            "`UtilityFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L327)"
+          ],
+          [
+            "`filter.other.offset`",
+            "`offset`",
+            "`DistortionFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L329)"
+          ],
+          [
+            "`filter.pixelate.colorHalftone`",
+            "`colorHalftone`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L531)"
+          ],
+          [
+            "`filter.pixelate.crystallize`",
+            "`crystallize`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L537)"
+          ],
+          [
+            "`filter.pixelate.facet`",
+            "`facet`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L538)"
+          ],
+          [
+            "`filter.pixelate.fragment`",
+            "`fragment`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L539)"
+          ],
+          [
+            "`filter.pixelate.mezzotint`",
+            "`mezzotint`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L540)"
+          ],
+          [
+            "`filter.pixelate.mosaic`",
+            "`mosaic`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L311)"
+          ],
+          [
+            "`filter.pixelate.pointillize`",
+            "`pointillize`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L546)"
+          ],
+          [
+            "`filter.render.clouds`",
+            "`clouds`",
+            "`RenderFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L743)"
+          ],
+          [
+            "`filter.render.differenceClouds`",
+            "`differenceClouds`",
+            "`RenderFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/extra_cmds.rs#L744)"
+          ],
+          [
+            "`filter.render.fibers`",
+            "`fibers`",
+            "`RenderFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L584)"
+          ],
+          [
+            "`filter.render.flame`",
+            "`flame`",
+            "`RenderFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L187)"
+          ],
+          [
+            "`filter.render.lensFlare`",
+            "`lensFlare`",
+            "`RenderFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L590)"
+          ],
+          [
+            "`filter.render.lightingEffects`",
+            "`lightingEffects`",
+            "`RenderFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L596)"
+          ],
+          [
+            "`filter.render.pictureFrame`",
+            "`pictureFrame`",
+            "`RenderFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L197)"
+          ],
+          [
+            "`filter.render.relight`",
+            "`relight`",
+            "`RenderFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L603)"
+          ],
+          [
+            "`filter.render.tree`",
+            "`tree`",
+            "`RenderFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/render_cmds.rs#L207)"
+          ],
+          [
+            "`filter.sharpen.sharpen`",
+            "`filterSharpen`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L278)"
+          ],
+          [
+            "`filter.sharpen.sharpenEdges`",
+            "`sharpenEdges`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L280)"
+          ],
+          [
+            "`filter.sharpen.sharpenMore`",
+            "`sharpenMore`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L279)"
+          ],
+          [
+            "`filter.sharpen.smartSharpen`",
+            "`smartSharpen`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L297)"
+          ],
+          [
+            "`filter.sharpen.unsharpMask`",
+            "`unsharpMask`",
+            "`BlurFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L291)"
+          ],
+          [
+            "`filter.stylize.diffuse`",
+            "`diffuse`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L548)"
+          ],
+          [
+            "`filter.stylize.emboss`",
+            "`emboss`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L312)"
+          ],
+          [
+            "`filter.stylize.extrude`",
+            "`extrude`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L549)"
+          ],
+          [
+            "`filter.stylize.findEdges`",
+            "`findEdges`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L313)"
+          ],
+          [
+            "`filter.stylize.oilPaint`",
+            "`oilPaint`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L555)"
+          ],
+          [
+            "`filter.stylize.solarize`",
+            "`solarize`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters.rs#L314)"
+          ],
+          [
+            "`filter.stylize.tiles`",
+            "`tiles`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L561)"
+          ],
+          [
+            "`filter.stylize.traceContour`",
+            "`traceContour`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L567)"
+          ],
+          [
+            "`filter.stylize.wind`",
+            "`wind`",
+            "`PixelFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L568)"
+          ],
+          [
+            "`filter.vanishingPoint`",
+            "`vanishingPoint`",
+            "`MeshFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/vp_cmds.rs#L199)"
+          ],
+          [
+            "`filter.video.deInterlace`",
+            "`deInterlace`",
+            "`UtilityFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L673)"
+          ],
+          [
+            "`filter.video.ntscColors`",
+            "`ntscColors`",
+            "`UtilityFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/filters_ext.rs#L679)"
+          ],
+          [
+            "`layer.smartObjects.perspectiveWarp`",
+            "`perspectiveWarp`",
+            "`MeshFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L412)"
+          ],
+          [
+            "`layer.smartObjects.puppetWarp`",
+            "`puppetWarp`",
+            "`MeshFilters.h`",
+            "[source](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/distort_cmds.rs#L392)"
+          ]
+        ]
+      },
+      {
+        "block_id": "b000027",
+        "columns": [
+          "Function",
+          "Executable source path",
+          "Contract"
+        ],
+        "rows": [
+          [
+            "`cloneSpot`, `healSpot`, `removeSpot`, `rankSpotSources`",
+            "[pipeline/spots.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/spots.rs)",
+            "Patch transport, tone matching/inpainting and ranked source selection"
+          ],
+          [
+            "`redEye`, `petEye`, `detectPupil`",
+            "[pipeline/redeye.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/redeye.rs)",
+            "Actual pupil detection and eye-pixel repair"
+          ],
+          [
+            "`visualizeSpots`",
+            "[pipeline/visualize.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/visualize.rs)",
+            "Diagnostic rendered image for spot inspection"
+          ],
+          [
+            "`detectDustSpots`",
+            "[pipeline/dust.rs](https://github.com/storytold/lightcraft/blob/629e39380e296f588c64cd9c0053a8edc3528f36/crates/pipeline/src/dust.rs)",
+            "Returns detected candidate positions/radii, not an invented image-look filter"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

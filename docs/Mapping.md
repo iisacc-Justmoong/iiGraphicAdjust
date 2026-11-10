@@ -27,3 +27,8 @@ Each finite increasing domain interval normalizes the corresponding input RGB co
 HDR zero-alpha samples become transparent black because their unbounded hidden RGB cannot be preserved in the normalized output contract. The SDR overload keeps its original hidden RGB and returns an exact copy for neutral ExposureGamma. Alpha is unchanged in both overloads. Negative radiance, NaN, infinity, buffer mismatch, unknown methods and invalid settings fail.
 
 This SDK does not implement Photoshop's Local Adaptation or HDR histogram-equalization method, merge bracketed photographs, read HDR files, or reproduce its document flattening behavior. HDR Toning here names the supported exposure/gamma and global highlight-compression operations; it is not a full Photoshop dialog implementation.
+
+
+Cube numeric parsing uses the classic decimal locale on every platform, including macOS
+deployment targets predating floating-point `from_chars`. It accepts valid signed and scientific
+notation while rejecting malformed signs, trailing characters and locale-specific decimal commas.

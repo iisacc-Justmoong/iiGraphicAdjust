@@ -2,7 +2,7 @@
 """Verify pinned filter inventory, public exports and real consumer/unit coverage.
 
 Optional --references also checks the freshly fetched Rust command sources under
-build/references. The library/package has no Python runtime dependency.
+resources/dependencies/references. The library/package has no Python runtime dependency.
 """
 from pathlib import Path
 import argparse
@@ -26,7 +26,7 @@ assert len(catalog['lightcraft_looks']) == 22
 assert len(catalog['lightcraft_presets']) == 41
 assert len(catalog['resamplers']) == 4
 cmake = (ROOT / 'CMakeLists.txt').read_text()
-umbrella = (ROOT / 'src/iiGraphicAdjust/iiGraphicAdjust.h').read_text()
+umbrella = (ROOT / 'src/Core/iiGraphicAdjust.h').read_text()
 consumer = (ROOT / 'tests/consumer/filters.cpp').read_text()
 unit = '\n'.join(p.read_text() for p in (ROOT / 'tests').glob('*.cpp'))
 modules = ['BlurFilters', 'DistortionFilters', 'UtilityFilters', 'GalleryFilters',
@@ -35,7 +35,9 @@ modules = ['BlurFilters', 'DistortionFilters', 'UtilityFilters', 'GalleryFilters
 exports = {}
 for module in modules:
     header = module + '.h'
-    body = (ROOT / 'src/iiGraphicAdjust' / header).read_text()
+    matches = list((ROOT / 'src').rglob(header))
+    assert len(matches) == 1, f'expected one adjacent source header: {header}'
+    body = matches[0].read_text()
     assert header in cmake and header in umbrella, f'not installed/included: {header}'
     assert module + '.cpp' in cmake, f'not built: {module}'
     for name in re.findall(r'IIGRAPHICADJUST_EXPORT\s+Result<.*?>\s+(\w+)\(', body, re.S):
@@ -54,7 +56,7 @@ for name in catalog['lightcraft_looks'] + catalog['lightcraft_presets'] + catalo
     assert exports.get(name) == 'LightcraftFilters.h', f'missing LightCraft function: {name}'
 
 if args.references:
-    base = ROOT / 'build/references'
+    base = ROOT / 'resources/dependencies/references'
     photocraft = base / 'photocraft'
     lightcraft = base / 'lightcraft'
     for repo, commit in [(photocraft, catalog['reference_commit']),

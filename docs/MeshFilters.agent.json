@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/MeshFilters.md",
-    "sha256": "5ebf047acce56a69a5b73dfbd106273c056559dd85daf47f00acc0981455b007",
-    "bytes": 16455,
-    "line_count": 121,
+    "sha256": "a5507c95a9304db1417f3b124fe32cdfdf35ae3115b3d2fb3e1f1c1be9e8a053",
+    "bytes": 17535,
+    "line_count": 139,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -754,6 +754,64 @@
       "start_line": 121,
       "end_line": 121,
       "raw": "The validation selection checks all four camera models with subnormal focal lengths and three crop factors, both with and without a line constraint. It verifies finite geometry/constraint coordinates, normalized output, exact unconstrained identity and structured projection errors, including the fisheye overflow and focal-product-underflow regressions.\n"
+    },
+    {
+      "id": "b000072",
+      "kind": "blank",
+      "start_line": 122,
+      "end_line": 123,
+      "raw": "\n\n"
+    },
+    {
+      "id": "b000073",
+      "kind": "heading",
+      "start_line": 124,
+      "end_line": 124,
+      "raw": "## Perspective crop\n",
+      "level": 2,
+      "title": "Perspective crop"
+    },
+    {
+      "id": "b000074",
+      "kind": "blank",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "\n"
+    },
+    {
+      "id": "b000075",
+      "kind": "paragraph",
+      "start_line": 126,
+      "end_line": 130,
+      "raw": "`perspectiveCrop` rectifies a strictly convex, in-bounds source quadrilateral to a caller-selected\noutput width and height using the same continuous homography as the mesh tools. Every output pixel\ncenter is mapped back into the input; nearest, bilinear and bicubic sampling use premultiplied alpha\nand repeat the edge pixels at the image boundary. A full-image, same-size crop returns an exact\ncopy, including hidden RGB. The output is detached; input pixels are not changed.\n"
+    },
+    {
+      "id": "b000076",
+      "kind": "blank",
+      "start_line": 131,
+      "end_line": 131,
+      "raw": "\n"
+    },
+    {
+      "id": "b000077",
+      "kind": "paragraph",
+      "start_line": 132,
+      "end_line": 135,
+      "raw": "Zero, overflowing or greater-than-64MP output, nonfinite or out-of-bounds corners, crossed or\ndegenerate quadrilaterals, a projective pole and unsupported interpolation are rejected before\npublishing any pixels. This API is a raster operation: document layers, masks, animation, history,\nUI and color profiles remain the caller's responsibility.\n"
+    },
+    {
+      "id": "b000078",
+      "kind": "blank",
+      "start_line": 136,
+      "end_line": 136,
+      "raw": "\n"
+    },
+    {
+      "id": "b000079",
+      "kind": "paragraph",
+      "start_line": 137,
+      "end_line": 139,
+      "raw": "The installed SDK places its MIT license and the Photocraft and Lightcraft MIT notices under\n`share/licenses/iiGraphicAdjust`; applications that distribute the static library must include\nthese notices with their bundle or package.\n"
     }
   ],
   "outline": [
@@ -828,6 +886,14 @@
       "title": "Verification",
       "anchor": "verification",
       "start_line": 115
+    },
+    {
+      "block_id": "b000073",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Perspective crop",
+      "anchor": "perspective-crop",
+      "start_line": 124
     }
   ],
   "indexes": {
@@ -864,6 +930,13 @@
         "block_id": "b000063",
         "line": 113,
         "text": "A paste maps its source rectangle into the selected plane's metric coordinates, preserving source proportions, and clips to the plane. **The SDK composites ordered pastes over the input with premultiplied source-over**, while the upstream low-level `paste()` returns a separate transparent warped surface for its caller to composite. Clone strokes keep a fixed metric source/destination offset, including cross-plane metric scales. Each stroke snapshots the current image once, so dabs never recursively sample that same stroke's newly painted pixels. The image-space dab footprint is obtained by projecting 16 metric-circle samples; footprints wider/taller than 4096 pixels are skipped as in the reference. Clone interpolation and blending use premultiplied encoded RGBA, improving hidden-color isolation over the reference clone's straight-channel interpolation.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000079",
+        "line": 138,
+        "text": "`share/licenses/iiGraphicAdjust`; applications that distribute the static library must include",
         "basis": "lexical_match",
         "context": "paragraph"
       }

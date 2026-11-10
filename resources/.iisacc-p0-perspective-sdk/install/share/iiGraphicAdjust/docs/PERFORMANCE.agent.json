@@ -1,0 +1,99 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:e0cccb3d1530dd2ce96378eb42aa10ba949e23fa46d25cb9a2fc7591bbcc90e4",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/PERFORMANCE.md",
+    "sha256": "744ce935d30e4fb2ed090682717ae89bd4667ae9eb6b2875cbe49ef41a93db48",
+    "bytes": 918,
+    "line_count": 16,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Filter workspace reuse",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Filter workspace reuse\n",
+      "level": 1,
+      "title": "Filter workspace reuse"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 8,
+      "raw": "Box blur uses two premultiplied buffers and swaps their roles between axes.\nThe large-sigma Gaussian path reuses that workspace through all six existing\nbox passes. Peak storage remains two buffers, while repeated allocation and\nzero-initialization of a complete image are eliminated. Sample order, edge\nrepetition, premultiplication, Gaussian radii and floating-point operations are\nunchanged. Small-sigma convolution retains its zero-initialized accumulators.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 10,
+      "end_line": 12,
+      "raw": "Color halftone computes its three channel rotations once per invocation rather\nthan once per pixel. No persistent image cache or global mutable workspace is\nintroduced, so independent calls remain independent.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 14,
+      "end_line": 16,
+      "raw": "The blur oracle tests cover scalar box filtering, degenerate dimensions,\ntransparent pixels and chained Gaussian passes; the full filter suite checks\ninvalid parameters and the other users of the shared blur routines.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Filter workspace reuse",
+      "anchor": "filter-workspace-reuse",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

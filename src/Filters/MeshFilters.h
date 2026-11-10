@@ -104,6 +104,11 @@ struct PerspectiveWarpOptions final {
 mapPerspectiveWarpPoint(MeshPoint, const PerspectiveWarpOptions &);
 [[nodiscard]] IIGRAPHICADJUST_EXPORT Result<Image>
 perspectiveWarp(ImageView, const PerspectiveWarpOptions & = {});
+// Rectify one convex, in-bounds source quadrilateral into an explicitly sized image.
+// Sampling uses premultiplied interpolation; a full-size identity is byte-exact.
+[[nodiscard]] IIGRAPHICADJUST_EXPORT Result<Image>
+perspectiveCrop(ImageView, const MeshQuad& source, std::size_t width, std::size_t height,
+                MeshInterpolation interpolation = MeshInterpolation::Bilinear);
 
 struct VanishingPlane final {
     MeshQuad corners{};

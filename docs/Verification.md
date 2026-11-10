@@ -17,7 +17,11 @@ Version 0.4.0 adds filter-family suites for 47 individual Gallery functions, cor
 python3 -B tools/audit_filter_coverage.py --references
 ```
 
-The optional reference check reads the pinned local Git checkouts in `build/references/`; without `--references` it checks this SDK's catalog, public headers, CMake/umbrella installation and actual calls in the installed consumer/unit suites. Python is an audit tool dependency, not a library dependency.
+The optional reference check reads the pinned local Git checkouts in
+`resources/dependencies/references/`; without `--references` it checks this
+SDK's catalog, public headers, CMake/umbrella installation and actual calls in
+the installed consumer/unit suites. Python is an audit tool dependency, not a
+library dependency.
 
 
 Version 0.3.0 adds 20 Lightroom development suites, for 53 total. Tests cover radiometric Exposure, WB inverse/presets/Auto, monotone curve knots and clipping, 3600 hues of mixer partition, B&W Point Color disablement, calibration neutral-axis preservation, effect/detail behavior, seed repeatability, lens metadata and CA edge handling, guided masks, normalized local accumulation and zero-coverage exact identity. Deterministic randomized settings, NaN/Inf/enum/size rejection, hidden-color isolation and cancellation regressions supplement fixed numeric oracles. The additional mask suite compares 32-mask Exposure accumulation with an independent linear-light oracle and verifies Auto Mask selection across both luminance and equal-luminance chromatic boundaries.

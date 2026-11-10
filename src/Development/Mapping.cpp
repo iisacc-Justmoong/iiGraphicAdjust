@@ -1,6 +1,9 @@
 #include <iiGraphicAdjust/Mapping.h>
 #include "Internal.h"
 #include <charconv>
+#include <locale>
+#include <sstream>
+#include <type_traits>
 
 namespace iiGraphicAdjust {
 namespace {
@@ -83,8 +86,18 @@ template<class T> bool number(std::string_view s,T& value) {
         if (s.empty() || s.front()=='+' || s.front()=='-') return false;
     }
     if (s.empty()) return false;
-    const auto parsed=std::from_chars(s.data(),s.data()+s.size(),value);
-    return parsed.ec==std::errc{} && parsed.ptr==s.data()+s.size();
+    if constexpr (std::is_integral_v<T>) {
+        const auto parsed=std::from_chars(s.data(),s.data()+s.size(),value);
+        return parsed.ec==std::errc{} && parsed.ptr==s.data()+s.size();
+    } else {
+        // Floating from_chars is unavailable on macOS deployment targets
+        // before 26. Use an explicitly classic locale without accepting
+        // whitespace or trailing characters.
+        std::istringstream input{std::string(s)};
+        input.imbue(std::locale::classic());
+        input >> std::noskipws >> value;
+        return bool(input) && input.peek()==std::char_traits<char>::eof();
+    }
 }
 bool triple(std::string_view line,std::array<double,3>& values) {
     for (auto& v : values)

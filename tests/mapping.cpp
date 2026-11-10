@@ -3,6 +3,7 @@
 #include <array>
 #include <cmath>
 #include <iostream>
+#include <locale>
 #include <limits>
 #include <string_view>
 
@@ -105,6 +106,13 @@ DOMAIN_MAX 1 1 1
         check(result && near(result->pixels[0].r,.25) && near(result->pixels[0].g,.5) && near(result->pixels[0].b,.75),
               "One-dimensional LUT channels interpolate independently");
     }
+    struct Comma final : std::numpunct<char> { char do_decimal_point() const override { return ','; } };
+    const auto oldLocale=std::locale();std::locale::global(std::locale(oldLocale,new Comma));
+    const auto fraction=parseCubeLut("LUT_1D_SIZE +2\n+0 .25 5e-1\n1 1 1\n");
+    const auto comma=parseCubeLut("LUT_1D_SIZE 2\n0 0,25 0\n1 1 1\n");
+    std::locale::global(oldLocale);
+    check(fraction && near(fraction->values[0][1],.25) && near(fraction->values[0][2],.5),"Cube numbers must use classic decimal syntax");
+    check(!comma,"Locale decimal commas must not be accepted");
     for(auto bad:{"", "LUT_3D_SIZE 1\n", "LUT_3D_SIZE 999999999\n", "LUT_1D_SIZE 2\n0 0 0\n",
                  "LUT_1D_SIZE 2\n+-1 0 0\n1 1 1\n", "LUT_1D_SIZE 2\n++1 0 0\n1 1 1\n",
                  "LUT_1D_SIZE 2\n0 0 0\n1 1 1\n0 0 0\n", "LUT_1D_SIZE 2\n0 0 0\nNaN 1 1\n",

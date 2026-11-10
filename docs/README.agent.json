@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/README.md",
-    "sha256": "005dec9fa9f6e60b8a32036e7357db40215bae94ad3f7ec42dacdd0581d56300",
-    "bytes": 3146,
-    "line_count": 44,
+    "sha256": "ea5bf47842259082206af94388b0be41d02e3c6ed2d18a03313534e63918f8c1",
+    "bytes": 3223,
+    "line_count": 45,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -79,8 +79,8 @@
       "id": "b000008",
       "kind": "table",
       "start_line": 8,
-      "end_line": 43,
-      "raw": "| Document | Agent JSON |\n| --- | --- |\n| [`AGENT.md`](../AGENT.md) | [JSON](entrypoints/AGENT.agent.json) |\n| [`README.md`](../README.md) | [JSON](entrypoints/README.agent.json) |\n| [`docs/API.md`](API.md) | [JSON](API.agent.json) |\n| [`docs/Architecture.md`](Architecture.md) | [JSON](Architecture.agent.json) |\n| [`docs/CameraRawFilter.md`](CameraRawFilter.md) | [JSON](CameraRawFilter.agent.json) |\n| [`docs/Color.md`](Color.md) | [JSON](Color.agent.json) |\n| [`docs/CoreFilters.md`](CoreFilters.md) | [JSON](CoreFilters.agent.json) |\n| [`docs/DiagnosticFilters.md`](DiagnosticFilters.md) | [JSON](DiagnosticFilters.agent.json) |\n| [`docs/FILE_PROVIDER.md`](FILE_PROVIDER.md) | [JSON](FILE_PROVIDER.agent.json) |\n| [`docs/Filters.md`](Filters.md) | [JSON](Filters.agent.json) |\n| [`docs/GalleryFilters.md`](GalleryFilters.md) | [JSON](GalleryFilters.agent.json) |\n| [`docs/LensFilter.md`](LensFilter.md) | [JSON](LensFilter.agent.json) |\n| [`docs/LightcraftFilters.md`](LightcraftFilters.md) | [JSON](LightcraftFilters.agent.json) |\n| [`docs/Lightroom.md`](Lightroom.md) | [JSON](Lightroom.agent.json) |\n| [`docs/LocalCorrections.md`](LocalCorrections.md) | [JSON](LocalCorrections.agent.json) |\n| [`docs/LocalCorrectionsVerification.md`](LocalCorrectionsVerification.md) | [JSON](LocalCorrectionsVerification.agent.json) |\n| [`docs/Mapping.md`](Mapping.md) | [JSON](Mapping.agent.json) |\n| [`docs/MeshFilters.md`](MeshFilters.md) | [JSON](MeshFilters.agent.json) |\n| [`docs/OperationObjects.md`](OperationObjects.md) | [JSON](OperationObjects.agent.json) |\n| [`docs/OperationObjectsVerification.md`](OperationObjectsVerification.md) | [JSON](OperationObjectsVerification.agent.json) |\n| [`docs/PERFORMANCE.md`](PERFORMANCE.md) | [JSON](PERFORMANCE.agent.json) |\n| [`docs/PhotoOperations.md`](PhotoOperations.md) | [JSON](PhotoOperations.agent.json) |\n| [`docs/PhotoProcessingVerification.md`](PhotoProcessingVerification.md) | [JSON](PhotoProcessingVerification.agent.json) |\n| [`docs/PixelFilters.md`](PixelFilters.md) | [JSON](PixelFilters.agent.json) |\n| [`docs/RawProcessing.md`](RawProcessing.md) | [JSON](RawProcessing.agent.json) |\n| [`docs/References.md`](References.md) | [JSON](References.agent.json) |\n| [`docs/RenderFilters.md`](RenderFilters.md) | [JSON](RenderFilters.agent.json) |\n| [`docs/RetouchFilters.md`](RetouchFilters.md) | [JSON](RetouchFilters.agent.json) |\n| [`docs/SampleFilters.md`](SampleFilters.md) | [JSON](SampleFilters.agent.json) |\n| [`docs/SourceLayout.md`](SourceLayout.md) | [JSON](SourceLayout.agent.json) |\n| [`docs/Tone.md`](Tone.md) | [JSON](Tone.agent.json) |\n| [`docs/Verification.md`](Verification.md) | [JSON](Verification.agent.json) |\n| [`docs/WindowsBuildAndRun.md`](WindowsBuildAndRun.md) | [JSON](WindowsBuildAndRun.agent.json) |\n| [`docs/documentation-structure.md`](documentation-structure.md) | [JSON](documentation-structure.agent.json) |\n",
+      "end_line": 44,
+      "raw": "| Document | Agent JSON |\n| --- | --- |\n| [`AGENT.md`](../AGENT.md) | [JSON](entrypoints/AGENT.agent.json) |\n| [`README.md`](../README.md) | [JSON](entrypoints/README.agent.json) |\n| [`docs/API.md`](API.md) | [JSON](API.agent.json) |\n| [`docs/Architecture.md`](Architecture.md) | [JSON](Architecture.agent.json) |\n| [`docs/BuildLayout.md`](BuildLayout.md) | [JSON](BuildLayout.agent.json) |\n| [`docs/CameraRawFilter.md`](CameraRawFilter.md) | [JSON](CameraRawFilter.agent.json) |\n| [`docs/Color.md`](Color.md) | [JSON](Color.agent.json) |\n| [`docs/CoreFilters.md`](CoreFilters.md) | [JSON](CoreFilters.agent.json) |\n| [`docs/DiagnosticFilters.md`](DiagnosticFilters.md) | [JSON](DiagnosticFilters.agent.json) |\n| [`docs/FILE_PROVIDER.md`](FILE_PROVIDER.md) | [JSON](FILE_PROVIDER.agent.json) |\n| [`docs/Filters.md`](Filters.md) | [JSON](Filters.agent.json) |\n| [`docs/GalleryFilters.md`](GalleryFilters.md) | [JSON](GalleryFilters.agent.json) |\n| [`docs/LensFilter.md`](LensFilter.md) | [JSON](LensFilter.agent.json) |\n| [`docs/LightcraftFilters.md`](LightcraftFilters.md) | [JSON](LightcraftFilters.agent.json) |\n| [`docs/Lightroom.md`](Lightroom.md) | [JSON](Lightroom.agent.json) |\n| [`docs/LocalCorrections.md`](LocalCorrections.md) | [JSON](LocalCorrections.agent.json) |\n| [`docs/LocalCorrectionsVerification.md`](LocalCorrectionsVerification.md) | [JSON](LocalCorrectionsVerification.agent.json) |\n| [`docs/Mapping.md`](Mapping.md) | [JSON](Mapping.agent.json) |\n| [`docs/MeshFilters.md`](MeshFilters.md) | [JSON](MeshFilters.agent.json) |\n| [`docs/OperationObjects.md`](OperationObjects.md) | [JSON](OperationObjects.agent.json) |\n| [`docs/OperationObjectsVerification.md`](OperationObjectsVerification.md) | [JSON](OperationObjectsVerification.agent.json) |\n| [`docs/PERFORMANCE.md`](PERFORMANCE.md) | [JSON](PERFORMANCE.agent.json) |\n| [`docs/PhotoOperations.md`](PhotoOperations.md) | [JSON](PhotoOperations.agent.json) |\n| [`docs/PhotoProcessingVerification.md`](PhotoProcessingVerification.md) | [JSON](PhotoProcessingVerification.agent.json) |\n| [`docs/PixelFilters.md`](PixelFilters.md) | [JSON](PixelFilters.agent.json) |\n| [`docs/RawProcessing.md`](RawProcessing.md) | [JSON](RawProcessing.agent.json) |\n| [`docs/References.md`](References.md) | [JSON](References.agent.json) |\n| [`docs/RenderFilters.md`](RenderFilters.md) | [JSON](RenderFilters.agent.json) |\n| [`docs/RetouchFilters.md`](RetouchFilters.md) | [JSON](RetouchFilters.agent.json) |\n| [`docs/SampleFilters.md`](SampleFilters.md) | [JSON](SampleFilters.agent.json) |\n| [`docs/SourceLayout.md`](SourceLayout.md) | [JSON](SourceLayout.agent.json) |\n| [`docs/Tone.md`](Tone.md) | [JSON](Tone.agent.json) |\n| [`docs/Verification.md`](Verification.md) | [JSON](Verification.agent.json) |\n| [`docs/WindowsBuildAndRun.md`](WindowsBuildAndRun.md) | [JSON](WindowsBuildAndRun.agent.json) |\n| [`docs/documentation-structure.md`](documentation-structure.md) | [JSON](documentation-structure.agent.json) |\n",
       "columns": [
         "Document",
         "Agent JSON"
@@ -101,6 +101,10 @@
         [
           "[`docs/Architecture.md`](Architecture.md)",
           "[JSON](Architecture.agent.json)"
+        ],
+        [
+          "[`docs/BuildLayout.md`](BuildLayout.md)",
+          "[JSON](BuildLayout.agent.json)"
         ],
         [
           "[`docs/CameraRawFilter.md`](CameraRawFilter.md)",
@@ -227,8 +231,8 @@
     {
       "id": "b000009",
       "kind": "html",
-      "start_line": 44,
-      "end_line": 44,
+      "start_line": 45,
+      "end_line": 45,
       "raw": "<!-- workspace-docs:document-map:end -->\n"
     }
   ],
@@ -312,423 +316,437 @@
       },
       {
         "block_id": "b000008",
+        "label": "`docs/BuildLayout.md`",
+        "target": "BuildLayout.md",
+        "kind": "relative",
+        "line": 14
+      },
+      {
+        "block_id": "b000008",
+        "label": "JSON",
+        "target": "BuildLayout.agent.json",
+        "kind": "relative",
+        "line": 14
+      },
+      {
+        "block_id": "b000008",
         "label": "`docs/CameraRawFilter.md`",
         "target": "CameraRawFilter.md",
         "kind": "relative",
-        "line": 14
+        "line": 15
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "CameraRawFilter.agent.json",
         "kind": "relative",
-        "line": 14
+        "line": 15
       },
       {
         "block_id": "b000008",
         "label": "`docs/Color.md`",
         "target": "Color.md",
         "kind": "relative",
-        "line": 15
+        "line": 16
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "Color.agent.json",
         "kind": "relative",
-        "line": 15
+        "line": 16
       },
       {
         "block_id": "b000008",
         "label": "`docs/CoreFilters.md`",
         "target": "CoreFilters.md",
         "kind": "relative",
-        "line": 16
+        "line": 17
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "CoreFilters.agent.json",
         "kind": "relative",
-        "line": 16
+        "line": 17
       },
       {
         "block_id": "b000008",
         "label": "`docs/DiagnosticFilters.md`",
         "target": "DiagnosticFilters.md",
         "kind": "relative",
-        "line": 17
+        "line": 18
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "DiagnosticFilters.agent.json",
         "kind": "relative",
-        "line": 17
+        "line": 18
       },
       {
         "block_id": "b000008",
         "label": "`docs/FILE_PROVIDER.md`",
         "target": "FILE_PROVIDER.md",
         "kind": "relative",
-        "line": 18
+        "line": 19
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "FILE_PROVIDER.agent.json",
         "kind": "relative",
-        "line": 18
+        "line": 19
       },
       {
         "block_id": "b000008",
         "label": "`docs/Filters.md`",
         "target": "Filters.md",
         "kind": "relative",
-        "line": 19
+        "line": 20
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "Filters.agent.json",
         "kind": "relative",
-        "line": 19
+        "line": 20
       },
       {
         "block_id": "b000008",
         "label": "`docs/GalleryFilters.md`",
         "target": "GalleryFilters.md",
         "kind": "relative",
-        "line": 20
+        "line": 21
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "GalleryFilters.agent.json",
         "kind": "relative",
-        "line": 20
+        "line": 21
       },
       {
         "block_id": "b000008",
         "label": "`docs/LensFilter.md`",
         "target": "LensFilter.md",
         "kind": "relative",
-        "line": 21
+        "line": 22
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "LensFilter.agent.json",
         "kind": "relative",
-        "line": 21
+        "line": 22
       },
       {
         "block_id": "b000008",
         "label": "`docs/LightcraftFilters.md`",
         "target": "LightcraftFilters.md",
         "kind": "relative",
-        "line": 22
+        "line": 23
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "LightcraftFilters.agent.json",
         "kind": "relative",
-        "line": 22
+        "line": 23
       },
       {
         "block_id": "b000008",
         "label": "`docs/Lightroom.md`",
         "target": "Lightroom.md",
         "kind": "relative",
-        "line": 23
+        "line": 24
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "Lightroom.agent.json",
         "kind": "relative",
-        "line": 23
+        "line": 24
       },
       {
         "block_id": "b000008",
         "label": "`docs/LocalCorrections.md`",
         "target": "LocalCorrections.md",
         "kind": "relative",
-        "line": 24
+        "line": 25
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "LocalCorrections.agent.json",
         "kind": "relative",
-        "line": 24
+        "line": 25
       },
       {
         "block_id": "b000008",
         "label": "`docs/LocalCorrectionsVerification.md`",
         "target": "LocalCorrectionsVerification.md",
         "kind": "relative",
-        "line": 25
+        "line": 26
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "LocalCorrectionsVerification.agent.json",
         "kind": "relative",
-        "line": 25
+        "line": 26
       },
       {
         "block_id": "b000008",
         "label": "`docs/Mapping.md`",
         "target": "Mapping.md",
         "kind": "relative",
-        "line": 26
+        "line": 27
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "Mapping.agent.json",
         "kind": "relative",
-        "line": 26
+        "line": 27
       },
       {
         "block_id": "b000008",
         "label": "`docs/MeshFilters.md`",
         "target": "MeshFilters.md",
         "kind": "relative",
-        "line": 27
+        "line": 28
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "MeshFilters.agent.json",
         "kind": "relative",
-        "line": 27
+        "line": 28
       },
       {
         "block_id": "b000008",
         "label": "`docs/OperationObjects.md`",
         "target": "OperationObjects.md",
         "kind": "relative",
-        "line": 28
+        "line": 29
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "OperationObjects.agent.json",
         "kind": "relative",
-        "line": 28
+        "line": 29
       },
       {
         "block_id": "b000008",
         "label": "`docs/OperationObjectsVerification.md`",
         "target": "OperationObjectsVerification.md",
         "kind": "relative",
-        "line": 29
+        "line": 30
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "OperationObjectsVerification.agent.json",
         "kind": "relative",
-        "line": 29
+        "line": 30
       },
       {
         "block_id": "b000008",
         "label": "`docs/PERFORMANCE.md`",
         "target": "PERFORMANCE.md",
         "kind": "relative",
-        "line": 30
+        "line": 31
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "PERFORMANCE.agent.json",
         "kind": "relative",
-        "line": 30
+        "line": 31
       },
       {
         "block_id": "b000008",
         "label": "`docs/PhotoOperations.md`",
         "target": "PhotoOperations.md",
         "kind": "relative",
-        "line": 31
+        "line": 32
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "PhotoOperations.agent.json",
         "kind": "relative",
-        "line": 31
+        "line": 32
       },
       {
         "block_id": "b000008",
         "label": "`docs/PhotoProcessingVerification.md`",
         "target": "PhotoProcessingVerification.md",
         "kind": "relative",
-        "line": 32
+        "line": 33
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "PhotoProcessingVerification.agent.json",
         "kind": "relative",
-        "line": 32
+        "line": 33
       },
       {
         "block_id": "b000008",
         "label": "`docs/PixelFilters.md`",
         "target": "PixelFilters.md",
         "kind": "relative",
-        "line": 33
+        "line": 34
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "PixelFilters.agent.json",
         "kind": "relative",
-        "line": 33
+        "line": 34
       },
       {
         "block_id": "b000008",
         "label": "`docs/RawProcessing.md`",
         "target": "RawProcessing.md",
         "kind": "relative",
-        "line": 34
+        "line": 35
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "RawProcessing.agent.json",
         "kind": "relative",
-        "line": 34
+        "line": 35
       },
       {
         "block_id": "b000008",
         "label": "`docs/References.md`",
         "target": "References.md",
         "kind": "relative",
-        "line": 35
+        "line": 36
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "References.agent.json",
         "kind": "relative",
-        "line": 35
+        "line": 36
       },
       {
         "block_id": "b000008",
         "label": "`docs/RenderFilters.md`",
         "target": "RenderFilters.md",
         "kind": "relative",
-        "line": 36
+        "line": 37
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "RenderFilters.agent.json",
         "kind": "relative",
-        "line": 36
+        "line": 37
       },
       {
         "block_id": "b000008",
         "label": "`docs/RetouchFilters.md`",
         "target": "RetouchFilters.md",
         "kind": "relative",
-        "line": 37
+        "line": 38
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "RetouchFilters.agent.json",
         "kind": "relative",
-        "line": 37
+        "line": 38
       },
       {
         "block_id": "b000008",
         "label": "`docs/SampleFilters.md`",
         "target": "SampleFilters.md",
         "kind": "relative",
-        "line": 38
+        "line": 39
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "SampleFilters.agent.json",
         "kind": "relative",
-        "line": 38
+        "line": 39
       },
       {
         "block_id": "b000008",
         "label": "`docs/SourceLayout.md`",
         "target": "SourceLayout.md",
         "kind": "relative",
-        "line": 39
+        "line": 40
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "SourceLayout.agent.json",
         "kind": "relative",
-        "line": 39
+        "line": 40
       },
       {
         "block_id": "b000008",
         "label": "`docs/Tone.md`",
         "target": "Tone.md",
         "kind": "relative",
-        "line": 40
+        "line": 41
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "Tone.agent.json",
         "kind": "relative",
-        "line": 40
+        "line": 41
       },
       {
         "block_id": "b000008",
         "label": "`docs/Verification.md`",
         "target": "Verification.md",
         "kind": "relative",
-        "line": 41
+        "line": 42
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "Verification.agent.json",
         "kind": "relative",
-        "line": 41
+        "line": 42
       },
       {
         "block_id": "b000008",
         "label": "`docs/WindowsBuildAndRun.md`",
         "target": "WindowsBuildAndRun.md",
         "kind": "relative",
-        "line": 42
+        "line": 43
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "WindowsBuildAndRun.agent.json",
         "kind": "relative",
-        "line": 42
+        "line": 43
       },
       {
         "block_id": "b000008",
         "label": "`docs/documentation-structure.md`",
         "target": "documentation-structure.md",
         "kind": "relative",
-        "line": 43
+        "line": 44
       },
       {
         "block_id": "b000008",
         "label": "JSON",
         "target": "documentation-structure.agent.json",
         "kind": "relative",
-        "line": 43
+        "line": 44
       }
     ],
     "tables": [
@@ -754,6 +772,10 @@
           [
             "[`docs/Architecture.md`](Architecture.md)",
             "[JSON](Architecture.agent.json)"
+          ],
+          [
+            "[`docs/BuildLayout.md`](BuildLayout.md)",
+            "[JSON](BuildLayout.agent.json)"
           ],
           [
             "[`docs/CameraRawFilter.md`](CameraRawFilter.md)",

@@ -1,0 +1,126 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:5369c0d601f214c2b4420b121d3e97dcde6e82bc3947381c8bb20dd6e056ca83",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/SourceLayout.md",
+    "sha256": "ac099b3eb3148ce0e24ba6c08af6228e7262670aa250eb91d2bfa860c4d175d2",
+    "bytes": 729,
+    "line_count": 11,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "소스 책임 분류",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 소스 책임 분류\n",
+      "level": 1,
+      "title": "소스 책임 분류"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "공개 헤더와 구현은 `src/` 아래 책임에 따라 함께 배치한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "list",
+      "start_line": 5,
+      "end_line": 9,
+      "raw": "- `Core`: 이미지, 연산 계약, 객체 카탈로그와 헤더 전용 객체 인터페이스.\n- `Development`: 색상, 톤, 합성, 광학 및 현상 처리.\n- `Masks`: 마스크와 국소 보정.\n- `Raw`: RAW 처리와 카메라 RAW 필터.\n- `Filters`: 흐림, 왜곡, 진단, 렌더링 및 리터치 등 필터.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`Core`: 이미지, 연산 계약, 객체 카탈로그와 헤더 전용 객체 인터페이스.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Development`: 색상, 톤, 합성, 광학 및 현상 처리.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Masks`: 마스크와 국소 보정.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Raw`: RAW 처리와 카메라 RAW 필터.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Filters`: 흐림, 왜곡, 진단, 렌더링 및 리터치 등 필터.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "빌드에서 생성하는 forwarding 헤더와 설치된 공개 헤더는 `<iiGraphicAdjust/...>` 및 `<iiGraphicAdjust/objects/...>` 경로를 유지한다. 생성된 `Export.h`는 계속 빌드 산출물이다. `tests/source_layout.cmake`와 SDK 공통 경계 테스트가 구조 회귀를 검사한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "소스 책임 분류",
+      "anchor": "소스-책임-분류",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

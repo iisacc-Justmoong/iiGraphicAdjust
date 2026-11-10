@@ -1,0 +1,85 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:44ccc65a69e41cfb044a7eabdc9372b447684c152fc573ba260e109df4ef1925",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/BuildLayout.md",
+    "sha256": "a2bcdd18f0b465755631b55a7309ba432607a659cfb7dd162b438b7b359aada7",
+    "bytes": 1114,
+    "line_count": 18,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Build and test resources",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Build and test resources\n",
+      "level": 1,
+      "title": "Build and test resources"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "The C++23 module and test executables use `build/`. The package stage used by\nan existing Dreamscapes cache is retained under `resources/dependencies/stage`;\nUnix builds recreate a guarded `build/stage` link when that stage exists.\nExisting data, links pointing elsewhere and resources escaping the project are\nnot replaced.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 18,
+      "raw": "License and installed-consumer checks use unique `resources/.t` workspaces.\nThe checks redirect CMake's installation manifest rather than overwriting the\nproject's manifest and reject unsafe absolute or escaping install paths. The\nconsumer compiles in a temporary `build/.graphic-consumer-*` directory; normal\ncompletion and test failure remove both owned locations. A forced termination\ncan leave its workspace for review. `iiGraphicAdjust.objects.installed_build`\nchecks the installed consumer's compilation without running it; the original\n`iiGraphicAdjust.objects.installed_package` also executes its tests when\nexplicitly selected. Prior user-authored probes and potentially\nprivate data are retained under `resources/.recovery/graphic-history-20261031`.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Build and test resources",
+      "anchor": "build-and-test-resources",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

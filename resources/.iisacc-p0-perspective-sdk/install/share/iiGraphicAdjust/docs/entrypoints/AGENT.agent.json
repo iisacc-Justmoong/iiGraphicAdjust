@@ -1,0 +1,220 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:eceba21bf8dda3d788a34109f00d0236cb2c3ff825292e6f5f414f26039ec097",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "AGENT.md",
+    "sha256": "9c1d55a7256216389a8df9ffcc7b1b7320cd46cbabfaba839ba534e046294fb0",
+    "bytes": 1692,
+    "line_count": 22,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "iiGraphicAdjust 에이전트 지침",
+    "role": "instructions",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# iiGraphicAdjust 에이전트 지침\n",
+      "level": 1,
+      "title": "iiGraphicAdjust 에이전트 지침"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 4,
+      "raw": "처리 라이브러리는 다른 SDK를 직접 찾거나 링크하지 않는다. 파일을 만드는\n예제는 독립 소비자 프로젝트로 구성하고 iiFileProvider를 앱에서 직접 연결한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "html",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "<!-- workspace-docs:agent:start -->\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "## 문서 구조와 에이전트 탐색\n",
+      "level": 2,
+      "title": "문서 구조와 에이전트 탐색"
+    },
+    {
+      "id": "b000007",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "list",
+      "start_line": 9,
+      "end_line": 15,
+      "raw": "- 프로젝트 루트의 `README.md`는 사람용 영문 진입 문서이며 `AGENT.md`는 에이전트 진입점이다.\n- 하위 인간용 Markdown과 구조화된 agent JSON을 함께 유지한다. Markdown이 원본이며 JSON은 원문 해시와 줄 범위를 가진 파생 문서이다.\n- 먼저 [docs/agent-index.json](docs/agent-index.json)에서 관련 문서와 JSON 투영을 찾는다. 원문 SHA-256이 다르면 현재 Markdown을 읽고 투영을 갱신한다.\n- JSON의 규칙 후보는 검색용 어휘 일치 결과이다. 과거 기록·예제·실패 상태를 현재 지시나 검증 완료로 자동 해석하지 않는다.\n- 기존 프로젝트별 규칙, 동결된 증거, 라이선스, 외부 원본, 사용자 데이터와 다른 작업의 변경을 보존한다.\n- 이 문서 재편 지침은 과거 작업의 기능 구현·배포를 자동 재개하라는 요청이 아니다. 현재 사용자의 작업 범위를 우선한다.\n- 문서를 수정하면 JSON 쌍·색인을 함께 갱신하고 검증한다. 기존 소스 변경에 대한 빌드·테스트 규칙은 계속 따른다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "프로젝트 루트의 `README.md`는 사람용 영문 진입 문서이며 `AGENT.md`는 에이전트 진입점이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "하위 인간용 Markdown과 구조화된 agent JSON을 함께 유지한다. Markdown이 원본이며 JSON은 원문 해시와 줄 범위를 가진 파생 문서이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "먼저 [docs/agent-index.json](docs/agent-index.json)에서 관련 문서와 JSON 투영을 찾는다. 원문 SHA-256이 다르면 현재 Markdown을 읽고 투영을 갱신한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "JSON의 규칙 후보는 검색용 어휘 일치 결과이다. 과거 기록·예제·실패 상태를 현재 지시나 검증 완료로 자동 해석하지 않는다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기존 프로젝트별 규칙, 동결된 증거, 라이선스, 외부 원본, 사용자 데이터와 다른 작업의 변경을 보존한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "이 문서 재편 지침은 과거 작업의 기능 구현·배포를 자동 재개하라는 요청이 아니다. 현재 사용자의 작업 범위를 우선한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "문서를 수정하면 JSON 쌍·색인을 함께 갱신하고 검증한다. 기존 소스 변경에 대한 빌드·테스트 규칙은 계속 따른다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000009",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "Workspace에서 이 프로젝트의 문서를 갱신하는 명령은 다음과 같다.\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "fenced_code",
+      "start_line": 19,
+      "end_line": 21,
+      "raw": "```sh\npython3 ../../Engineering/WorkspaceDocumentation/App/workspace_docs.py --workspace ../.. sync --project SDK/iiGraphicAdjust\n```\n",
+      "language": "sh",
+      "code": "python3 ../../Engineering/WorkspaceDocumentation/App/workspace_docs.py --workspace ../.. sync --project SDK/iiGraphicAdjust\n",
+      "closed": true
+    },
+    {
+      "id": "b000013",
+      "kind": "html",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "<!-- workspace-docs:agent:end -->\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "iiGraphicAdjust 에이전트 지침",
+      "anchor": "iigraphicadjust-에이전트-지침",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000006",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "문서 구조와 에이전트 탐색",
+      "anchor": "문서-구조와-에이전트-탐색",
+      "start_line": 7
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 3,
+        "text": "처리 라이브러리는 다른 SDK를 직접 찾거나 링크하지 않는다. 파일을 만드는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000008",
+        "line": 12,
+        "text": "- JSON의 규칙 후보는 검색용 어휘 일치 결과이다. 과거 기록·예제·실패 상태를 현재 지시나 검증 완료로 자동 해석하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      }
+    ],
+    "commands": [
+      {
+        "block_id": "b000012",
+        "language": "sh",
+        "code": "python3 ../../Engineering/WorkspaceDocumentation/App/workspace_docs.py --workspace ../.. sync --project SDK/iiGraphicAdjust\n"
+      }
+    ],
+    "links": [
+      {
+        "block_id": "b000008",
+        "label": "docs/agent-index.json",
+        "target": "docs/agent-index.json",
+        "kind": "relative",
+        "line": 11
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

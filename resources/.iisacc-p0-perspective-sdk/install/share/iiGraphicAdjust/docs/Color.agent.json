@@ -1,0 +1,841 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:4cea28ed6a8b01b65fd7959ac8ee7d2066d4fb1a4bd30ba59c8b3f573b0c271c",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/Color.md",
+    "sha256": "e2d186bc94084f89a1d6f5b18dd4d586351c041b21785d08e612e17d3dbaf218",
+    "bytes": 10919,
+    "line_count": 202,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Color adjustments",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Color adjustments\n",
+      "level": 1,
+      "title": "Color adjustments"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 9,
+      "raw": "Include `<iiGraphicAdjust/Color.h>` or the umbrella `<iiGraphicAdjust/iiGraphicAdjust.h>`.\nThese operations are independent C++23 implementations of familiar adjustment concepts.\nThey do not reproduce Photoshop's private algorithms or claim Photoshop pixel parity.\nThe feature names follow the [official Adobe adjustment command overview](https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/color-adjustment-commands.html);\nthe formulas below are this SDK's explicit contracts.\nAll images use normalized encoded sRGB and straight alpha. No ICC profile conversion,\nactual CMYK profile processing, HDR color management, or skin detection is performed.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 11,
+      "end_line": 17,
+      "raw": "Every function validates all input pixels and all settings, including inactive controls.\nIt returns a detached `Result<Image>`, preserves dimensions and alpha exactly, and\ncopies RGB at zero alpha without processing it. An invalid image returns its\n`InvalidDimensions`, `InvalidBuffer`, or `InvalidPixel` error; invalid settings return\n`InvalidParameter`; failed allocations return `AllocationFailure`. Neutral settings\nfor hue/saturation, vibrance, color balance, zero-density photo filter, default RGB\nchannel mixer, selective color, and replace color produce exact copies.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "## Hue/Saturation and Colorize\n",
+      "level": 2,
+      "title": "Hue/Saturation and Colorize"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "fenced_code",
+      "start_line": 21,
+      "end_line": 27,
+      "raw": "```cpp\nHueSaturationOptions options;\noptions.hue = 30;\noptions.saturation = .2;\noptions.range = HueRange::Reds;\nauto result = hueSaturation(image.view(), options);\n```\n",
+      "language": "cpp",
+      "code": "HueSaturationOptions options;\noptions.hue = 30;\noptions.saturation = .2;\noptions.range = HueRange::Reds;\nauto result = hueSaturation(image.view(), options);\n",
+      "closed": true
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 29,
+      "end_line": 33,
+      "raw": "The implementation converts encoded RGB to HSL. For a value `v` and signed control\n`a`, saturation and lightness use `v + a * (a >= 0 ? 1-v : v)`.\nHue rotation is `[-180,180]` degrees, saturation and lightness offsets are `[-1,1]`.\nAchromatic pixels remain achromatic under saturation changes unless Colorize is on.\nLightness zero is unchanged; -1 produces black; +1 produces white.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 42,
+      "raw": "`HueRange::Master` has full influence on every visible pixel. The six other sectors\nare centered at 0, 60, 120, 180, 240 and 300 degrees for red, yellow, green, cyan,\nblue and magenta. Circular hue distances through 30 degrees have full influence.\nThe next `falloff` degrees, in `[0,60]`, smoothly decay to zero with\n`1 - smoothstep((distance-30)/falloff)`, where `smoothstep(t)=t*t*(3-2*t)`.\nA zero falloff produces a hard sector boundary. Achromatic pixels have zero influence\nin a selected hue sector. The mask is evaluated on the source, then the original and\nadjusted encoded RGB are interpolated by that mask.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 44,
+      "end_line": 46,
+      "raw": "Colorize sets a wrapped absolute hue from the same degree control and sets absolute\nsaturation in `[0,1]`; its saturation cannot be negative. Source HSL lightness is\nretained before the optional signed lightness control. To tint gray pixels, use Master.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "## Vibrance\n",
+      "level": 2,
+      "title": "Vibrance"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 55,
+      "raw": "`vibrance(image, VibranceOptions{vibrance, saturation})` operates in HSL.\nBoth controls are `[-1,1]`. First `s' = clamp(s + vibrance*s*(1-s))` adds a\nrelative emphasis to muted colors; the saturation control then applies the signed\ninterpolation described above. An original zero-saturation pixel remains gray.\nA fully saturated pixel is unchanged by the vibrance control alone, including negative\nvibrance. This explicitly bounded contract is not a skin-protecting Photoshop model.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "## Color Balance\n",
+      "level": 2,
+      "title": "Color Balance"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 59,
+      "end_line": 61,
+      "raw": "`ColorBalanceOptions` contains independent `shadows`, `midtones` and `highlights`\n`ToneBalance` values. Each has `cyanRed`, `magentaGreen` and `yellowBlue` controls\nin `[-1,1]`; positive values respectively add red, green and blue.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 63,
+      "end_line": 67,
+      "raw": "For encoded luminance `y = .2126*r + .7152*g + .0722*b`, the tone weights are\n`shadows=(1-y)^2`, `midtones=2*y*(1-y)`, and `highlights=y^2`. Their sum is one.\nEach output channel receives half the weighted control value. For example, a .5-gray\npixel and a midtone cyan/red control of +1 produce RGB `(.75,.5,.5)` when\n`preserveLuminosity` is false.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 68,
+      "end_line": 68,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 69,
+      "end_line": 72,
+      "raw": "`preserveLuminosity` is true by default. It subtracts the new luminance from each\nadjusted channel, restores the original luminance, and uniformly reduces chroma as\nneeded to fit `[0,1]`. This preserves encoded weighted luminance even at gamut limits.\nIt preserves neither HSL lightness nor physical linear-light energy.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "heading",
+      "start_line": 74,
+      "end_line": 74,
+      "raw": "## Black & White and tint\n",
+      "level": 2,
+      "title": "Black & White and tint"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 75,
+      "end_line": 75,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 76,
+      "end_line": 82,
+      "raw": "`BlackWhiteOptions::weights` stores six coefficients in red, yellow, green, cyan,\nblue, magenta order. The defaults are `.4,.6,.4,.6,.2,.8` and each is accepted in\n`[-2,3]`. A source hue linearly interpolates adjacent coefficients around the hue\ncircle. The grayscale result is\n`clamp(minimum RGB + (maximum RGB - minimum RGB) * coefficient)`.\nConsequently pure red becomes .4 gray, pure blue .2 gray, and gray pixels retain their\nsource gray value. Negative and large coefficients intentionally clip the result.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 84,
+      "end_line": 86,
+      "raw": "With `tint=true`, the grayscale output becomes the HSL lightness of a color with\n`tintHue` in `[0,360]` and `tintSaturation` in `[0,1]`. Tinting is an HSL operation\nand does not promise constant weighted luminance after adding chroma.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 87,
+      "end_line": 87,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "heading",
+      "start_line": 88,
+      "end_line": 88,
+      "raw": "## Photo Filter\n",
+      "level": 2,
+      "title": "Photo Filter"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 89,
+      "end_line": 89,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 90,
+      "end_line": 92,
+      "raw": "`PhotoFilterOptions::color` is an encoded sRGB triplet in `[0,1]` representing\nfilter transmittance. Density is `[0,1]`, default .25. Each channel is transformed as\n`channel * (1-density + density*filterChannel)`.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 93,
+      "end_line": 93,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 94,
+      "end_line": 97,
+      "raw": "`preserveLuminosity=true` uses the same luminance restoration and gamut compression\nas Color Balance. With it disabled, a red filter `(1,0,0)` at density .5 changes\n`.5-gray` to `(.5,.25,.25)`. The explicit RGB filter is not a physical spectral\ncamera-filter simulation or a Kelvin white-balance control.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 98,
+      "end_line": 98,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "heading",
+      "start_line": 99,
+      "end_line": 99,
+      "raw": "## Channel Mixer\n",
+      "level": 2,
+      "title": "Channel Mixer"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 101,
+      "end_line": 104,
+      "raw": "`ChannelMixerOptions` has separate `ChannelMix` settings named `red`, `green` and\n`blue`. Each contains three RGB `coefficients` in `[-2,2]` and a `constant` in\n`[-1,1]`. Each output channel is the source RGB dot product plus that constant,\nclamped into `[0,1]`. The RGB defaults are an identity transform.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 105,
+      "end_line": 105,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 106,
+      "end_line": 108,
+      "raw": "`monochrome=true` uses the `gray` mix, whose defaults are `(.4,.4,.2)` with no\nconstant, and copies its result to all output channels. Coefficients need not sum\nto one: exposure changes and clipping are deliberate, documented behavior.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 109,
+      "end_line": 109,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "heading",
+      "start_line": 110,
+      "end_line": 110,
+      "raw": "## Selective Color\n",
+      "level": 2,
+      "title": "Selective Color"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 111,
+      "end_line": 111,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 112,
+      "end_line": 115,
+      "raw": "`SelectiveColorOptions::ranges` has nine `SelectiveColorAdjustment` entries indexed\nby `ColorRange`: Reds, Yellows, Greens, Cyans, Blues, Magentas, Whites, Neutrals and\nBlacks. Every entry has cyan, magenta, yellow and black controls in `[-1,1]`.\nThe default method is Relative; Absolute is also supported.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 116,
+      "end_line": 116,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 117,
+      "end_line": 117,
+      "raw": "The independent source RGB weights are:\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 118,
+      "end_line": 118,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "table",
+      "start_line": 119,
+      "end_line": 129,
+      "raw": "| Range | Weight |\n| --- | --- |\n| Reds | `max(0,r-max(g,b))` |\n| Yellows | `max(0,min(r,g)-b)` |\n| Greens | `max(0,g-max(r,b))` |\n| Cyans | `max(0,min(g,b)-r)` |\n| Blues | `max(0,b-max(r,g))` |\n| Magentas | `max(0,min(r,b)-g)` |\n| Whites | `max(0,2*min(r,g,b)-1)` |\n| Neutrals | `(1-chroma)*(1-abs(2*HSL_lightness-1))` |\n| Blacks | `max(0,1-2*max(r,g,b))` |\n",
+      "columns": [
+        "Range",
+        "Weight"
+      ],
+      "rows": [
+        [
+          "Reds",
+          "`max(0,r-max(g,b))`"
+        ],
+        [
+          "Yellows",
+          "`max(0,min(r,g)-b)`"
+        ],
+        [
+          "Greens",
+          "`max(0,g-max(r,b))`"
+        ],
+        [
+          "Cyans",
+          "`max(0,min(g,b)-r)`"
+        ],
+        [
+          "Blues",
+          "`max(0,b-max(r,g))`"
+        ],
+        [
+          "Magentas",
+          "`max(0,min(r,b)-g)`"
+        ],
+        [
+          "Whites",
+          "`max(0,2*min(r,g,b)-1)`"
+        ],
+        [
+          "Neutrals",
+          "`(1-chroma)*(1-abs(2*HSL_lightness-1))`"
+        ],
+        [
+          "Blacks",
+          "`max(0,1-2*max(r,g,b))`"
+        ]
+      ]
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 130,
+      "end_line": 130,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 131,
+      "end_line": 137,
+      "raw": "Weights may overlap and are not normalized against each other. They are all computed\nfrom the source, so the array order does not make adjustment order affect the result.\nLet `ink` be the sum of weighted cyan controls for red, magenta controls for green,\nand yellow controls for blue; let `key` be the sum of weighted black controls.\nFor each original channel `c`, Relative produces\n`clamp(c - ink*(1-c) - key*c)`, while Absolute produces\n`clamp(c - ink - key)`.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 138,
+      "end_line": 138,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 139,
+      "end_line": 143,
+      "raw": "This is a defined RGB complement / black-intensity CMYK-style adjustment. It does not\nconvert to a CMYK space or approximate the behavior of a particular CMYK ICC profile.\nRelative cyan therefore scales existing red-complement ink, while relative black\nscales source red intensity. A red-range cyan control of .4 on RGB `(.75,.25,.25)`\nchanges red to .7 in Relative and .55 in Absolute.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 144,
+      "end_line": 144,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "heading",
+      "start_line": 145,
+      "end_line": 145,
+      "raw": "## Desaturate and Replace Color\n",
+      "level": 2,
+      "title": "Desaturate and Replace Color"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 146,
+      "end_line": 146,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "paragraph",
+      "start_line": 147,
+      "end_line": 149,
+      "raw": "`desaturate(image)` uses HSL lightness `(minimum RGB + maximum RGB)/2` as its gray.\nIt is intentionally distinct from the legacy `adjust()` saturation control, which\nuses encoded weighted luminance.\n"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 150,
+      "end_line": 150,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 151,
+      "end_line": 157,
+      "raw": "`ReplaceColorOptions::target` is an encoded RGB triplet in `[0,1]`. Selection distance\nis `sqrt(((r-tr)^2+(g-tg)^2+(b-tb)^2)/3)`, so its normalized range is `[0,1]`.\n`fuzziness` is the selection radius in `[0,1]`; `softness` is the fraction of that\nradius occupied by a smoothstep falloff, also `[0,1]`. Pixels inside\n`fuzziness*(1-softness)` have full influence. Influence falls to zero at the selection\nradius. A zero softness selects a hard radius; an exact radius endpoint has zero\ninfluence. A zero fuzziness matches only distances through `1e-12`.\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 158,
+      "end_line": 158,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "paragraph",
+      "start_line": 159,
+      "end_line": 161,
+      "raw": "The hue, saturation and lightness offsets have the same ranges and HSL semantics as\nHue/Saturation, and the original and transformed encoded RGB are interpolated by the\nselection influence. Replace Color does not use perceptual Delta E or an image mask.\n"
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 162,
+      "end_line": 162,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "heading",
+      "start_line": 163,
+      "end_line": 163,
+      "raw": "## Match Color\n",
+      "level": 2,
+      "title": "Match Color"
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 164,
+      "end_line": 164,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "fenced_code",
+      "start_line": 165,
+      "end_line": 169,
+      "raw": "```cpp\nMatchColorOptions options;\noptions.fade = .25;\nauto result = matchColor(source.view(), reference.view(), options);\n```\n",
+      "language": "cpp",
+      "code": "MatchColorOptions options;\noptions.fade = .25;\nauto result = matchColor(source.view(), reference.view(), options);\n",
+      "closed": true
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 170,
+      "end_line": 170,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "paragraph",
+      "start_line": 171,
+      "end_line": 174,
+      "raw": "Source and reference may have different dimensions. Both are validated and must have\nat least one pixel with positive alpha. If either has no visible sample, the function\nreturns `InvalidParameter`, including at full fade. It validates settings even when\n`fade=1` would otherwise preserve the source unchanged.\n"
+    },
+    {
+      "id": "b000072",
+      "kind": "blank",
+      "start_line": 175,
+      "end_line": 175,
+      "raw": "\n"
+    },
+    {
+      "id": "b000073",
+      "kind": "paragraph",
+      "start_line": 176,
+      "end_line": 182,
+      "raw": "Each image's mean and population standard deviation are computed per channel in\nlinear sRGB with each sample weighted by alpha. Hidden RGB never enters statistics.\nThe variance uses a two-pass centered sum. Each visible source channel is mapped to\n`referenceMean + (linearSource - sourceMean) * referenceStd/sourceStd`.\nA source standard deviation through `1e-12` uses ratio one, avoiding an undefined\nzero-variance division. Constant source pixels consequently map to reference means;\nno detail is fabricated from a constant channel.\n"
+    },
+    {
+      "id": "b000074",
+      "kind": "blank",
+      "start_line": 183,
+      "end_line": 183,
+      "raw": "\n"
+    },
+    {
+      "id": "b000075",
+      "kind": "paragraph",
+      "start_line": 184,
+      "end_line": 190,
+      "raw": "`neutralize=true` replaces all three target means with the reference's weighted linear\nluminance mean, removing the mean color cast of the matched result. It does not\nperform an independent white-balance estimate. `luminance` in `[0,2]` multiplies the\nmatched linear weighted luminance. `colorIntensity` in `[0,2]` scales deviations from\nthat luminance. The resulting linear channels are clipped and sRGB encoded once.\n`fade` in `[0,1]` then interpolates encoded RGB back to the original; full fade is an\nexact copy. Default luminance and color intensity are one, and default fade is zero.\n"
+    },
+    {
+      "id": "b000076",
+      "kind": "blank",
+      "start_line": 191,
+      "end_line": 191,
+      "raw": "\n"
+    },
+    {
+      "id": "b000077",
+      "kind": "paragraph",
+      "start_line": 192,
+      "end_line": 193,
+      "raw": "The statistical match is per channel in linear RGB, not a Photoshop or perceptual\nLab transfer. It can clip out-of-gamut channels and does not transfer local texture.\n"
+    },
+    {
+      "id": "b000078",
+      "kind": "blank",
+      "start_line": 194,
+      "end_line": 194,
+      "raw": "\n"
+    },
+    {
+      "id": "b000079",
+      "kind": "heading",
+      "start_line": 195,
+      "end_line": 195,
+      "raw": "## Validation coverage\n",
+      "level": 2,
+      "title": "Validation coverage"
+    },
+    {
+      "id": "b000080",
+      "kind": "blank",
+      "start_line": 196,
+      "end_line": 196,
+      "raw": "\n"
+    },
+    {
+      "id": "b000081",
+      "kind": "paragraph",
+      "start_line": 197,
+      "end_line": 202,
+      "raw": "`iiGraphicAdjustColorTests` exposes `hue`, `vibrance`, `balance`, `black-white`,\n`filter`, `mixer`, `selective`, `replace`, `match`, `validation` and `invariants`.\nTests include independent numerical vectors, smooth falloff values, linear mean and\nvariance transfer, alpha-weighted statistics, finite extreme settings, gray protection,\nsubnormal RGB, invalid enums/NaN/inactive controls, exact neutral copies, detached\nstorage, input immutability, alpha preservation and hidden-RGB preservation.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Color adjustments",
+      "anchor": "color-adjustments",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Hue/Saturation and Colorize",
+      "anchor": "huesaturation-and-colorize",
+      "start_line": 19
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Vibrance",
+      "anchor": "vibrance",
+      "start_line": 48
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Color Balance",
+      "anchor": "color-balance",
+      "start_line": 57
+    },
+    {
+      "block_id": "b000029",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Black & White and tint",
+      "anchor": "black--white-and-tint",
+      "start_line": 74
+    },
+    {
+      "block_id": "b000035",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Photo Filter",
+      "anchor": "photo-filter",
+      "start_line": 88
+    },
+    {
+      "block_id": "b000041",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Channel Mixer",
+      "anchor": "channel-mixer",
+      "start_line": 99
+    },
+    {
+      "block_id": "b000047",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Selective Color",
+      "anchor": "selective-color",
+      "start_line": 110
+    },
+    {
+      "block_id": "b000059",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Desaturate and Replace Color",
+      "anchor": "desaturate-and-replace-color",
+      "start_line": 145
+    },
+    {
+      "block_id": "b000067",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Match Color",
+      "anchor": "match-color",
+      "start_line": 163
+    },
+    {
+      "block_id": "b000079",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Validation coverage",
+      "anchor": "validation-coverage",
+      "start_line": 195
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "They do not reproduce Photoshop's private algorithms or claim Photoshop pixel parity.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000071",
+        "line": 171,
+        "text": "Source and reference may have different dimensions. Both are validated and must have",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000073",
+        "line": 177,
+        "text": "linear sRGB with each sample weighted by alpha. Hidden RGB never enters statistics.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "official Adobe adjustment command overview",
+        "target": "https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/color-adjustment-commands.html",
+        "kind": "external",
+        "line": 6
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000053",
+        "columns": [
+          "Range",
+          "Weight"
+        ],
+        "rows": [
+          [
+            "Reds",
+            "`max(0,r-max(g,b))`"
+          ],
+          [
+            "Yellows",
+            "`max(0,min(r,g)-b)`"
+          ],
+          [
+            "Greens",
+            "`max(0,g-max(r,b))`"
+          ],
+          [
+            "Cyans",
+            "`max(0,min(g,b)-r)`"
+          ],
+          [
+            "Blues",
+            "`max(0,b-max(r,g))`"
+          ],
+          [
+            "Magentas",
+            "`max(0,min(r,b)-g)`"
+          ],
+          [
+            "Whites",
+            "`max(0,2*min(r,g,b)-1)`"
+          ],
+          [
+            "Neutrals",
+            "`(1-chroma)*(1-abs(2*HSL_lightness-1))`"
+          ],
+          [
+            "Blacks",
+            "`max(0,1-2*max(r,g,b))`"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -1,0 +1,619 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:5361f2d67c6a5b681af5a91b13cb5c088de380d986d12f56858bcb45c668ff35",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/OperationObjectsVerification.md",
+    "sha256": "8ce7274689404d9cbf9b3245317d3f0091498f66c36505dc14bf1181368caf82",
+    "bytes": 6831,
+    "line_count": 119,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Operation object and correction verification",
+    "role": "evidence",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Operation object and correction verification\n",
+      "level": 1,
+      "title": "Operation object and correction verification"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "Verified on 2026-10-19 on macOS arm64. Source package/ABI is 0.6.0/0.6.\nThe source work and generated evidence remain inside the Workspace module.\nNo host SDK installation or active product was replaced.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "## Confirmed results\n",
+      "level": 2,
+      "title": "Confirmed results"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "table",
+      "start_line": 9,
+      "end_line": 22,
+      "raw": "| Check | Result |\n| --- | --- |\n| Pre-change Release baseline | 163/163 passed |\n| Final Release CTest | **202/202 passed** |\n| Final ASan/UBSan/float-cast-overflow CTest | **202/202 passed** |\n| Isolated Release installed consumer | Existing API consumer and complete 309-object consumer passed |\n| Isolated instrumented installed consumer | Both consumers passed; object runner reports `Executed 309 objects` |\n| Standalone installed object headers | **34/34** compile separately with C++23 |\n| Exported processing coverage | Every exported adjustment/filter/mask/analysis/RAW/resource/sample function maps to a concrete object |\n| C++ standard | 68/68 Release and 64/64 instrumented translation units use C++23 |\n| Instrumentation | All 64 instrumented translation units have address, undefined and float-cast-overflow sanitizers |\n| Qt check | No direct Qt dependency in the engine or its existing native file provider |\n| Retained filtering audit | Existing pinned filter/recipe/resampling/retouch/diagnostic inventory passed |\n| Patch formatting | `git diff --check` passed |\n",
+      "columns": [
+        "Check",
+        "Result"
+      ],
+      "rows": [
+        [
+          "Pre-change Release baseline",
+          "163/163 passed"
+        ],
+        [
+          "Final Release CTest",
+          "**202/202 passed**"
+        ],
+        [
+          "Final ASan/UBSan/float-cast-overflow CTest",
+          "**202/202 passed**"
+        ],
+        [
+          "Isolated Release installed consumer",
+          "Existing API consumer and complete 309-object consumer passed"
+        ],
+        [
+          "Isolated instrumented installed consumer",
+          "Both consumers passed; object runner reports `Executed 309 objects`"
+        ],
+        [
+          "Standalone installed object headers",
+          "**34/34** compile separately with C++23"
+        ],
+        [
+          "Exported processing coverage",
+          "Every exported adjustment/filter/mask/analysis/RAW/resource/sample function maps to a concrete object"
+        ],
+        [
+          "C++ standard",
+          "68/68 Release and 64/64 instrumented translation units use C++23"
+        ],
+        [
+          "Instrumentation",
+          "All 64 instrumented translation units have address, undefined and float-cast-overflow sanitizers"
+        ],
+        [
+          "Qt check",
+          "No direct Qt dependency in the engine or its existing native file provider"
+        ],
+        [
+          "Retained filtering audit",
+          "Existing pinned filter/recipe/resampling/retouch/diagnostic inventory passed"
+        ],
+        [
+          "Patch formatting",
+          "`git diff --check` passed"
+        ]
+      ]
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 24,
+      "end_line": 28,
+      "raw": "There are 309 concrete objects, not 309 newly implemented algorithms. Existing\nprocessing kernels remain covered by the original suites. New object execution\nsuites cover every concrete type, including actual typed mask, analysis, RAW,\nresource and sample-plane calls. Metadata cardinality and execution cardinality\nare checked for equality. Pixel converters keep their low-level utility APIs.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 30,
+      "end_line": 34,
+      "raw": "The package still links the existing iiFileProviderNative (current local 0.8.0)\nfor native file integration. It does not add a new third-party runtime or Qt.\nThe provider uses native macOS frameworks and SQLite; CPU kernels and the new\nobject implementation use C++23 standard-library facilities. These host results\ndo not verify other operating systems or third-party consumers in production.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "heading",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "## Behavioral evidence\n",
+      "level": 2,
+      "title": "Behavioral evidence"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "list",
+      "start_line": 38,
+      "end_line": 56,
+      "raw": "- Object snapshots survive source edits/destruction and own curve/LUT/reference/\n  mask/depth data. Source input remains immutable; outputs are detached.\n- Stack order has an independently computed exposure/inversion oracle. Empty,\n  disabled, invalid, moved-from and over-budget cases have explicit behavior.\n- Mask/amount interpolation checks encoded and linear-light midpoints, exact\n  zero coverage and premultiplied-alpha isolation from invisible source RGB.\n- Geometry-changing full stages work. Partial geometry is rejected at the exact\n  stage; kernel errors retain the operation identity and original cause.\n- Color-to-alpha tests recomposition over randomized keys against the independent\n  compositing equation, existing alpha, transparent pixels and threshold steps.\n- Flat-field tests recover a known uniform linear scene from nonuniform response,\n  verify gain interpolation and reject coverage/dimension errors.\n- Gradient fills have an independent transfer-function midpoint check. All five\n  geometries execute; pattern wrapping/pixel centers and bounded large offsets\n  are exercised.\n- Sharpen Radius/Detail and Luminance NR Contrast each measurably change pixels;\n  default legacy oracles still pass and inactive invalid controls are rejected.\n- Recovered sample-plane objects check integer/float average/fill values and\n  Solarize integer thresholds without converting through normalized RGBA.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Object snapshots survive source edits/destruction and own curve/LUT/reference/",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Stack order has an independently computed exposure/inversion oracle. Empty,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Mask/amount interpolation checks encoded and linear-light midpoints, exact",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Geometry-changing full stages work. Partial geometry is rejected at the exact",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Color-to-alpha tests recomposition over randomized keys against the independent",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Flat-field tests recover a known uniform linear scene from nonuniform response,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Gradient fills have an independent transfer-function midpoint check. All five",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Sharpen Radius/Detail and Luminance NR Contrast each measurably change pixels;",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Recovered sample-plane objects check integer/float average/fill values and",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 58,
+      "end_line": 59,
+      "raw": "`build/objects-initial-red.log` records the initial missing-object-API failure.\nFinal evidence is separate from that TDD checkpoint.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "heading",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "## Evidence files\n",
+      "level": 2,
+      "title": "Evidence files"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "list",
+      "start_line": 63,
+      "end_line": 72,
+      "raw": "- `build/objects-baseline-build.log`, `build/objects-baseline-tests.log`\n- `build/objects-configure.log`, `build/objects-build.log`, `build/objects-tests.log`\n- `build/objects-sanitizer-configure.log`, `build/objects-sanitizer-build.log`,\n  `build/objects-sanitizer-tests.log`\n- `build/objects-package-{install,configure,build,test}.log`\n- `build/objects-sanitized/build/objects-package-{install,configure,build,test}.log`\n- `build/objects-package/build/Testing/Temporary/LastTest.log`\n- `build/objects-sanitized/build/objects-package/build/Testing/Temporary/LastTest.log`\n- `build/objects-header-check.log`, `build/objects-linked-libraries.log`\n- `build/objects-retained-filter-audit.log`, `build/objects-validation.json`\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`build/objects-baseline-build.log`, `build/objects-baseline-tests.log`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`build/objects-configure.log`, `build/objects-build.log`, `build/objects-tests.log`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`build/objects-sanitizer-configure.log`, `build/objects-sanitizer-build.log`,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`build/objects-package-{install,configure,build,test}.log`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`build/objects-sanitized/build/objects-package-{install,configure,build,test}.log`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`build/objects-package/build/Testing/Temporary/LastTest.log`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`build/objects-sanitized/build/objects-package/build/Testing/Temporary/LastTest.log`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`build/objects-header-check.log`, `build/objects-linked-libraries.log`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`build/objects-retained-filter-audit.log`, `build/objects-validation.json`",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 74,
+      "end_line": 77,
+      "raw": "`objects-validation.json` records final source/document/log/library hashes and\nscope boundaries. Build outputs are local evidence and are not installed as API.\nInstalled documentation and public headers are checked against their final source\ncontents after the final documentation update.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "heading",
+      "start_line": 79,
+      "end_line": 79,
+      "raw": "## Reproduction\n",
+      "level": 2,
+      "title": "Reproduction"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 80,
+      "end_line": 80,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 81,
+      "end_line": 81,
+      "raw": "Run from the module directory with iiFileProviderNative >= 0.6 discoverable.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "fenced_code",
+      "start_line": 83,
+      "end_line": 87,
+      "raw": "```sh\ncmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure --parallel 4\n```\n",
+      "language": "sh",
+      "code": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure --parallel 4\n",
+      "closed": true
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 88,
+      "end_line": 88,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 89,
+      "end_line": 92,
+      "raw": "The installed-package CTest installs under `build/objects-package/install`, builds\nan independent consumer under `build/objects-package/build`, and runs both its\nlegacy API and complete object tests. It never uses the default host install\nprefix for this check.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 93,
+      "end_line": 93,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "fenced_code",
+      "start_line": 94,
+      "end_line": 102,
+      "raw": "```sh\ncmake -S . -B build/objects-sanitized/build \\\n  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DIIGRAPHICADJUST_BUILD_EXAMPLES=OFF \\\n  -DCMAKE_CXX_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow -fno-omit-frame-pointer\" \\\n  -DCMAKE_EXE_LINKER_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow\" \\\n  -DCMAKE_SHARED_LINKER_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow\"\ncmake --build build/objects-sanitized/build --parallel 4\nctest --test-dir build/objects-sanitized/build --output-on-failure --parallel 4\n```\n",
+      "language": "sh",
+      "code": "cmake -S . -B build/objects-sanitized/build \\\n  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DIIGRAPHICADJUST_BUILD_EXAMPLES=OFF \\\n  -DCMAKE_CXX_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow -fno-omit-frame-pointer\" \\\n  -DCMAKE_EXE_LINKER_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow\" \\\n  -DCMAKE_SHARED_LINKER_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow\"\ncmake --build build/objects-sanitized/build --parallel 4\nctest --test-dir build/objects-sanitized/build --output-on-failure --parallel 4\n",
+      "closed": true
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 103,
+      "end_line": 103,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 104,
+      "end_line": 108,
+      "raw": "`iiGraphicAdjustObjectsExample` renders a procedural four-panel comparison to\n`build/operation-objects.ppm`: original, global exposure/grading/detail, local\nmasked monochrome, and watercolor. The corresponding PNG is a lossless format\nconversion of those actual output pixels. It is an SDK demonstration, not an\nAdobe oracle or performance benchmark.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 109,
+      "end_line": 109,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "heading",
+      "start_line": 110,
+      "end_line": 110,
+      "raw": "## Unverified and incomplete\n",
+      "level": 2,
+      "title": "Unverified and incomplete"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 111,
+      "end_line": 111,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 112,
+      "end_line": 119,
+      "raw": "This verifies independently implemented CPU contracts, public object ownership\nand packaging. It does **not** verify complete Photoshop/Lightroom functionality,\nall Adobe option/depth semantics, original-application pixel equivalence,\nlearned/semantic/generative operations, complete RAW file/profile handling,\nscene-linear wide-gamut/HDR output, preset/smart-filter persistence, panorama/HDR\nmerge, hardware performance or non-macOS behavior. The exact category/remaining\nmapping is in [adobe-feature-coverage.json](adobe-feature-coverage.json); no\nunsupported neural placeholder is counted among the 309 executable objects.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Operation object and correction verification",
+      "anchor": "operation-object-and-correction-verification",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Confirmed results",
+      "anchor": "confirmed-results",
+      "start_line": 7
+    },
+    {
+      "block_id": "b000013",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Behavioral evidence",
+      "anchor": "behavioral-evidence",
+      "start_line": 36
+    },
+    {
+      "block_id": "b000019",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Evidence files",
+      "anchor": "evidence-files",
+      "start_line": 61
+    },
+    {
+      "block_id": "b000025",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Reproduction",
+      "anchor": "reproduction",
+      "start_line": 79
+    },
+    {
+      "block_id": "b000037",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Unverified and incomplete",
+      "anchor": "unverified-and-incomplete",
+      "start_line": 110
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000011",
+        "line": 34,
+        "text": "do not verify other operating systems or third-party consumers in production.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 91,
+        "text": "legacy API and complete object tests. It never uses the default host install",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [
+      {
+        "block_id": "b000029",
+        "language": "sh",
+        "code": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure --parallel 4\n"
+      },
+      {
+        "block_id": "b000033",
+        "language": "sh",
+        "code": "cmake -S . -B build/objects-sanitized/build \\\n  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DIIGRAPHICADJUST_BUILD_EXAMPLES=OFF \\\n  -DCMAKE_CXX_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow -fno-omit-frame-pointer\" \\\n  -DCMAKE_EXE_LINKER_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow\" \\\n  -DCMAKE_SHARED_LINKER_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow\"\ncmake --build build/objects-sanitized/build --parallel 4\nctest --test-dir build/objects-sanitized/build --output-on-failure --parallel 4\n"
+      }
+    ],
+    "links": [
+      {
+        "block_id": "b000039",
+        "label": "adobe-feature-coverage.json",
+        "target": "adobe-feature-coverage.json",
+        "kind": "relative",
+        "line": 118
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000007",
+        "columns": [
+          "Check",
+          "Result"
+        ],
+        "rows": [
+          [
+            "Pre-change Release baseline",
+            "163/163 passed"
+          ],
+          [
+            "Final Release CTest",
+            "**202/202 passed**"
+          ],
+          [
+            "Final ASan/UBSan/float-cast-overflow CTest",
+            "**202/202 passed**"
+          ],
+          [
+            "Isolated Release installed consumer",
+            "Existing API consumer and complete 309-object consumer passed"
+          ],
+          [
+            "Isolated instrumented installed consumer",
+            "Both consumers passed; object runner reports `Executed 309 objects`"
+          ],
+          [
+            "Standalone installed object headers",
+            "**34/34** compile separately with C++23"
+          ],
+          [
+            "Exported processing coverage",
+            "Every exported adjustment/filter/mask/analysis/RAW/resource/sample function maps to a concrete object"
+          ],
+          [
+            "C++ standard",
+            "68/68 Release and 64/64 instrumented translation units use C++23"
+          ],
+          [
+            "Instrumentation",
+            "All 64 instrumented translation units have address, undefined and float-cast-overflow sanitizers"
+          ],
+          [
+            "Qt check",
+            "No direct Qt dependency in the engine or its existing native file provider"
+          ],
+          [
+            "Retained filtering audit",
+            "Existing pinned filter/recipe/resampling/retouch/diagnostic inventory passed"
+          ],
+          [
+            "Patch formatting",
+            "`git diff --check` passed"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

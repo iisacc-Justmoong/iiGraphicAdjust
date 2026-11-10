@@ -27,7 +27,8 @@ See [object API and contracts](docs/OperationObjects.md), the
 All existing CPU operations are objectified; Adobe neural/generative functions,
 full RAW/HDR color workflows and Adobe rendering equivalence remain incomplete.
 This is not a recovery of Adobe's original source. Public detail settings changed
-layout, so **0.6 consumers must rebuild**. Validation installs only to `build/`.
+layout, so **0.6 consumers must rebuild**. Package validation uses an isolated
+resource workspace described in [Build layout](docs/BuildLayout.md).
 
 Version 0.5.1 adds two explicitly separate processing contracts without changing existing correction models or the ABI series:
 
@@ -101,7 +102,8 @@ python3 -B ../install_all.py --only iiGraphicAdjust --dry-run
 python3 -B ../install_all.py --only iiGraphicAdjust
 ```
 
-Builds, staged packages, consumer checks and generated examples stay under `build/`.
+Module and test compilation stays in `build/`. Package checks stage their
+temporary installations in `resources/` and remove them after completion.
 
 ## Consume the installed package
 

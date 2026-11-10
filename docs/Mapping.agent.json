@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/Mapping.md",
-    "sha256": "efc6001c00a69689323c329af2ba59c99bdaefef36d4befc9dd89ffd703c8a03",
-    "bytes": 4282,
-    "line_count": 29,
+    "sha256": "6e259923db3debaf881ddc2685afe1bbf2ccb382eadbdb3194b9ad93b3a3f0e5",
+    "bytes": 4567,
+    "line_count": 34,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -232,6 +232,20 @@
       "start_line": 29,
       "end_line": 29,
       "raw": "This SDK does not implement Photoshop's Local Adaptation or HDR histogram-equalization method, merge bracketed photographs, read HDR files, or reproduce its document flattening behavior. HDR Toning here names the supported exposure/gamma and global highlight-compression operations; it is not a full Photoshop dialog implementation.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 31,
+      "raw": "\n\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 32,
+      "end_line": 34,
+      "raw": "Cube numeric parsing uses the classic decimal locale on every platform, including macOS\ndeployment targets predating floating-point `from_chars`. It accepts valid signed and scientific\nnotation while rejecting malformed signs, trailing characters and locale-specific decimal commas.\n"
     }
   ],
   "outline": [

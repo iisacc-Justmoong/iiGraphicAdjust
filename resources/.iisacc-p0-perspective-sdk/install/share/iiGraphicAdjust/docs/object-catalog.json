@@ -1,0 +1,2169 @@
+{
+  "schema": 1,
+  "scope": "Typed C++23 objects for the existing rendered-image processing APIs plus explicit mask, analysis, RAW, resource builders and independent correction extensions. Not complete Adobe application parity.",
+  "objects": [
+    {
+      "object": "Adjust",
+      "function": "adjust",
+      "header": "objects/AdjustmentsObjects.h",
+      "family": "adjustment",
+      "id": "adjustment.adjust"
+    },
+    {
+      "object": "AutoWhiteBalance",
+      "function": "autoWhiteBalance",
+      "header": "objects/AnalysisObjects.h",
+      "family": "develop",
+      "id": "develop.autoWhiteBalance"
+    },
+    {
+      "object": "SampledWhiteBalance",
+      "function": "sampledWhiteBalance",
+      "header": "objects/AnalysisObjects.h",
+      "family": "develop",
+      "id": "develop.sampledWhiteBalance"
+    },
+    {
+      "object": "PresetWhiteBalance",
+      "function": "whiteBalancePreset",
+      "header": "objects/AnalysisObjects.h",
+      "family": "develop",
+      "id": "develop.whiteBalancePreset"
+    },
+    {
+      "object": "AutoDevelopLight",
+      "function": "autoDevelopLight",
+      "header": "objects/AnalysisObjects.h",
+      "family": "develop",
+      "id": "develop.autoDevelopLight"
+    },
+    {
+      "object": "AutoBlackAndWhiteMix",
+      "function": "autoBlackAndWhiteMix",
+      "header": "objects/AnalysisObjects.h",
+      "family": "develop",
+      "id": "develop.autoBlackAndWhiteMix"
+    },
+    {
+      "object": "Histogram",
+      "function": "imageHistogram",
+      "header": "objects/AnalysisObjects.h",
+      "family": "analysis",
+      "id": "analysis.imageHistogram"
+    },
+    {
+      "object": "ChromaticAberrationEstimate",
+      "function": "estimateChromaticAberration",
+      "header": "objects/AnalysisObjects.h",
+      "family": "analysis",
+      "id": "analysis.estimateChromaticAberration"
+    },
+    {
+      "object": "RankSpotSources",
+      "function": "rankSpotSources",
+      "header": "objects/AnalysisObjects.h",
+      "family": "analysis",
+      "id": "analysis.rankSpotSources"
+    },
+    {
+      "object": "PupilDetector",
+      "function": "detectPupil",
+      "header": "objects/AnalysisObjects.h",
+      "family": "analysis",
+      "id": "analysis.detectPupil"
+    },
+    {
+      "object": "DustDetector",
+      "function": "detectDustSpots",
+      "header": "objects/AnalysisObjects.h",
+      "family": "analysis",
+      "id": "analysis.detectDustSpots"
+    },
+    {
+      "object": "AutoLensScale",
+      "function": "autoLensScale",
+      "header": "objects/AnalysisObjects.h",
+      "family": "analysis",
+      "id": "analysis.autoLensScale"
+    },
+    {
+      "object": "AdaptiveWideAngleGeometry",
+      "function": "solveAdaptiveWideAngle",
+      "header": "objects/AnalysisObjects.h",
+      "family": "analysis",
+      "id": "analysis.solveAdaptiveWideAngle"
+    },
+    {
+      "object": "PuppetWarpGeometry",
+      "function": "solvePuppetWarp",
+      "header": "objects/AnalysisObjects.h",
+      "family": "analysis",
+      "id": "analysis.solvePuppetWarp"
+    },
+    {
+      "object": "PerspectiveWarpPoint",
+      "function": "mapPerspectiveWarpPoint",
+      "header": "objects/AnalysisObjects.h",
+      "family": "analysis",
+      "id": "analysis.mapPerspectiveWarpPoint"
+    },
+    {
+      "object": "Blend",
+      "function": "blend",
+      "header": "objects/BlendObjects.h",
+      "family": "composite",
+      "id": "composite.blend"
+    },
+    {
+      "object": "FilterGaussianBlur",
+      "function": "filterGaussianBlur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.filterGaussianBlur"
+    },
+    {
+      "object": "BoxBlur",
+      "function": "boxBlur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.boxBlur"
+    },
+    {
+      "object": "Blur",
+      "function": "blur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.blur"
+    },
+    {
+      "object": "BlurMore",
+      "function": "blurMore",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.blurMore"
+    },
+    {
+      "object": "MotionBlur",
+      "function": "motionBlur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.motionBlur"
+    },
+    {
+      "object": "RadialBlur",
+      "function": "radialBlur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.radialBlur"
+    },
+    {
+      "object": "SurfaceBlur",
+      "function": "surfaceBlur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.surfaceBlur"
+    },
+    {
+      "object": "UnsharpMask",
+      "function": "unsharpMask",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.unsharpMask"
+    },
+    {
+      "object": "FilterSharpen",
+      "function": "filterSharpen",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.filterSharpen"
+    },
+    {
+      "object": "SharpenMore",
+      "function": "sharpenMore",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.sharpenMore"
+    },
+    {
+      "object": "SharpenEdges",
+      "function": "sharpenEdges",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.sharpenEdges"
+    },
+    {
+      "object": "SmartSharpen",
+      "function": "smartSharpen",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.smartSharpen"
+    },
+    {
+      "object": "HighPass",
+      "function": "highPass",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.highPass"
+    },
+    {
+      "object": "Despeckle",
+      "function": "despeckle",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.despeckle"
+    },
+    {
+      "object": "SmartBlur",
+      "function": "smartBlur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.smartBlur"
+    },
+    {
+      "object": "ShapeBlur",
+      "function": "shapeBlur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.shapeBlur"
+    },
+    {
+      "object": "TiltShift",
+      "function": "tiltShift",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.tiltShift"
+    },
+    {
+      "object": "IrisBlur",
+      "function": "irisBlur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.irisBlur"
+    },
+    {
+      "object": "FieldBlur",
+      "function": "fieldBlur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.fieldBlur"
+    },
+    {
+      "object": "SpinBlur",
+      "function": "spinBlur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.spinBlur"
+    },
+    {
+      "object": "PathBlur",
+      "function": "pathBlur",
+      "header": "objects/BlurFiltersObjects.h",
+      "family": "blur",
+      "id": "blur.pathBlur"
+    },
+    {
+      "object": "CameraRawFilter",
+      "function": "cameraRawFilter",
+      "header": "objects/CameraRawFilterObjects.h",
+      "family": "cameraRaw",
+      "id": "cameraRaw.cameraRawFilter"
+    },
+    {
+      "object": "HueSaturation",
+      "function": "hueSaturation",
+      "header": "objects/ColorObjects.h",
+      "family": "color",
+      "id": "color.hueSaturation"
+    },
+    {
+      "object": "Vibrance",
+      "function": "vibrance",
+      "header": "objects/ColorObjects.h",
+      "family": "color",
+      "id": "color.vibrance"
+    },
+    {
+      "object": "ColorBalance",
+      "function": "colorBalance",
+      "header": "objects/ColorObjects.h",
+      "family": "color",
+      "id": "color.colorBalance"
+    },
+    {
+      "object": "BlackAndWhite",
+      "function": "blackAndWhite",
+      "header": "objects/ColorObjects.h",
+      "family": "color",
+      "id": "color.blackAndWhite"
+    },
+    {
+      "object": "PhotoFilter",
+      "function": "photoFilter",
+      "header": "objects/ColorObjects.h",
+      "family": "color",
+      "id": "color.photoFilter"
+    },
+    {
+      "object": "ChannelMixer",
+      "function": "channelMixer",
+      "header": "objects/ColorObjects.h",
+      "family": "color",
+      "id": "color.channelMixer"
+    },
+    {
+      "object": "SelectiveColor",
+      "function": "selectiveColor",
+      "header": "objects/ColorObjects.h",
+      "family": "color",
+      "id": "color.selectiveColor"
+    },
+    {
+      "object": "Desaturate",
+      "function": "desaturate",
+      "header": "objects/ColorObjects.h",
+      "family": "color",
+      "id": "color.desaturate"
+    },
+    {
+      "object": "ReplaceColor",
+      "function": "replaceColor",
+      "header": "objects/ColorObjects.h",
+      "family": "color",
+      "id": "color.replaceColor"
+    },
+    {
+      "object": "MatchColor",
+      "function": "matchColor",
+      "header": "objects/ColorObjects.h",
+      "family": "color",
+      "id": "color.matchColor"
+    },
+    {
+      "object": "ColorToAlpha",
+      "function": "colorToAlpha",
+      "header": "objects/CorrectionExtensionsObjects.h",
+      "family": "correction",
+      "id": "correction.colorToAlpha"
+    },
+    {
+      "object": "FlatFieldCorrection",
+      "function": "flatFieldCorrection",
+      "header": "objects/CorrectionExtensionsObjects.h",
+      "family": "correction",
+      "id": "correction.flatFieldCorrection"
+    },
+    {
+      "object": "SolidFill",
+      "function": "solidFill",
+      "header": "objects/CorrectionExtensionsObjects.h",
+      "family": "correction",
+      "id": "correction.solidFill"
+    },
+    {
+      "object": "GradientFill",
+      "function": "gradientFill",
+      "header": "objects/CorrectionExtensionsObjects.h",
+      "family": "correction",
+      "id": "correction.gradientFill"
+    },
+    {
+      "object": "PatternFill",
+      "function": "patternFill",
+      "header": "objects/CorrectionExtensionsObjects.h",
+      "family": "correction",
+      "id": "correction.patternFill"
+    },
+    {
+      "object": "DevelopColor",
+      "function": "developColor",
+      "header": "objects/DevelopColorObjects.h",
+      "family": "develop",
+      "id": "develop.developColor"
+    },
+    {
+      "object": "Calibrate",
+      "function": "calibrate",
+      "header": "objects/DevelopColorObjects.h",
+      "family": "develop",
+      "id": "develop.calibrate"
+    },
+    {
+      "object": "DevelopEffects",
+      "function": "developEffects",
+      "header": "objects/DevelopEffectsObjects.h",
+      "family": "develop",
+      "id": "develop.developEffects"
+    },
+    {
+      "object": "PostCropVignette",
+      "function": "postCropVignette",
+      "header": "objects/DevelopEffectsObjects.h",
+      "family": "develop",
+      "id": "develop.postCropVignette"
+    },
+    {
+      "object": "FilmGrain",
+      "function": "filmGrain",
+      "header": "objects/DevelopEffectsObjects.h",
+      "family": "develop",
+      "id": "develop.filmGrain"
+    },
+    {
+      "object": "DevelopDetail",
+      "function": "developDetail",
+      "header": "objects/DevelopEffectsObjects.h",
+      "family": "develop",
+      "id": "develop.developDetail"
+    },
+    {
+      "object": "Texture",
+      "function": "texture",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "develop",
+      "id": "develop.texture"
+    },
+    {
+      "object": "Clarity",
+      "function": "clarity",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "develop",
+      "id": "develop.clarity"
+    },
+    {
+      "object": "Dehaze",
+      "function": "dehaze",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "develop",
+      "id": "develop.dehaze"
+    },
+    {
+      "object": "ColorMixer",
+      "function": "colorMixer",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "develop",
+      "id": "develop.colorMixer"
+    },
+    {
+      "object": "PointColor",
+      "function": "pointColor",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "develop",
+      "id": "develop.pointColor"
+    },
+    {
+      "object": "ColorGrading",
+      "function": "colorGrading",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "develop",
+      "id": "develop.colorGrading"
+    },
+    {
+      "object": "DevelopBlackAndWhite",
+      "function": "blackAndWhiteMix",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "develop",
+      "id": "develop.blackAndWhiteMix"
+    },
+    {
+      "object": "DevelopVibrance",
+      "function": "vibrance",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "develop",
+      "id": "develop.vibrance"
+    },
+    {
+      "object": "Sharpening",
+      "function": "sharpening",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "develop",
+      "id": "develop.sharpening"
+    },
+    {
+      "object": "LuminanceNoiseReduction",
+      "function": "luminanceNoiseReduction",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "develop",
+      "id": "develop.luminanceNoiseReduction"
+    },
+    {
+      "object": "ColorNoiseReduction",
+      "function": "colorNoiseReduction",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "develop",
+      "id": "develop.colorNoiseReduction"
+    },
+    {
+      "object": "Defringe",
+      "function": "defringe",
+      "header": "objects/DevelopFeatureObjects.h",
+      "family": "optics",
+      "id": "optics.defringe"
+    },
+    {
+      "object": "Develop",
+      "function": "develop",
+      "header": "objects/DevelopObjects.h",
+      "family": "develop",
+      "id": "develop.develop"
+    },
+    {
+      "object": "WhiteBalance",
+      "function": "whiteBalance",
+      "header": "objects/DevelopToneObjects.h",
+      "family": "develop",
+      "id": "develop.whiteBalance"
+    },
+    {
+      "object": "DevelopLight",
+      "function": "developLight",
+      "header": "objects/DevelopToneObjects.h",
+      "family": "develop",
+      "id": "develop.developLight"
+    },
+    {
+      "object": "DevelopCurve",
+      "function": "developCurve",
+      "header": "objects/DevelopToneObjects.h",
+      "family": "develop",
+      "id": "develop.developCurve"
+    },
+    {
+      "object": "PointColorRangePreview",
+      "function": "pointColorRangePreview",
+      "header": "objects/DiagnosticFiltersObjects.h",
+      "family": "diagnostic",
+      "id": "diagnostic.pointColorRangePreview"
+    },
+    {
+      "object": "MaskColorOverlay",
+      "function": "maskColorOverlay",
+      "header": "objects/DiagnosticFiltersObjects.h",
+      "family": "diagnostic",
+      "id": "diagnostic.maskColorOverlay"
+    },
+    {
+      "object": "MaskColorOnBwOverlay",
+      "function": "maskColorOnBwOverlay",
+      "header": "objects/DiagnosticFiltersObjects.h",
+      "family": "diagnostic",
+      "id": "diagnostic.maskColorOnBwOverlay"
+    },
+    {
+      "object": "MaskImageOnBlack",
+      "function": "maskImageOnBlack",
+      "header": "objects/DiagnosticFiltersObjects.h",
+      "family": "diagnostic",
+      "id": "diagnostic.maskImageOnBlack"
+    },
+    {
+      "object": "MaskImageOnWhite",
+      "function": "maskImageOnWhite",
+      "header": "objects/DiagnosticFiltersObjects.h",
+      "family": "diagnostic",
+      "id": "diagnostic.maskImageOnWhite"
+    },
+    {
+      "object": "MaskWhiteOnBlack",
+      "function": "maskWhiteOnBlack",
+      "header": "objects/DiagnosticFiltersObjects.h",
+      "family": "diagnostic",
+      "id": "diagnostic.maskWhiteOnBlack"
+    },
+    {
+      "object": "Offset",
+      "function": "offset",
+      "header": "objects/DistortionFiltersObjects.h",
+      "family": "distortion",
+      "id": "distortion.offset"
+    },
+    {
+      "object": "Twirl",
+      "function": "twirl",
+      "header": "objects/DistortionFiltersObjects.h",
+      "family": "distortion",
+      "id": "distortion.twirl"
+    },
+    {
+      "object": "Pinch",
+      "function": "pinch",
+      "header": "objects/DistortionFiltersObjects.h",
+      "family": "distortion",
+      "id": "distortion.pinch"
+    },
+    {
+      "object": "Spherize",
+      "function": "spherize",
+      "header": "objects/DistortionFiltersObjects.h",
+      "family": "distortion",
+      "id": "distortion.spherize"
+    },
+    {
+      "object": "Wave",
+      "function": "wave",
+      "header": "objects/DistortionFiltersObjects.h",
+      "family": "distortion",
+      "id": "distortion.wave"
+    },
+    {
+      "object": "Ripple",
+      "function": "ripple",
+      "header": "objects/DistortionFiltersObjects.h",
+      "family": "distortion",
+      "id": "distortion.ripple"
+    },
+    {
+      "object": "PolarCoordinates",
+      "function": "polarCoordinates",
+      "header": "objects/DistortionFiltersObjects.h",
+      "family": "distortion",
+      "id": "distortion.polarCoordinates"
+    },
+    {
+      "object": "Displace",
+      "function": "displace",
+      "header": "objects/DistortionFiltersObjects.h",
+      "family": "distortion",
+      "id": "distortion.displace"
+    },
+    {
+      "object": "Shear",
+      "function": "shear",
+      "header": "objects/DistortionFiltersObjects.h",
+      "family": "distortion",
+      "id": "distortion.shear"
+    },
+    {
+      "object": "ZigZag",
+      "function": "zigZag",
+      "header": "objects/DistortionFiltersObjects.h",
+      "family": "distortion",
+      "id": "distortion.zigZag"
+    },
+    {
+      "object": "GaussianBlur",
+      "function": "gaussianBlur",
+      "header": "objects/EffectsObjects.h",
+      "family": "effects",
+      "id": "effects.gaussianBlur"
+    },
+    {
+      "object": "Sharpen",
+      "function": "sharpen",
+      "header": "objects/EffectsObjects.h",
+      "family": "effects",
+      "id": "effects.sharpen"
+    },
+    {
+      "object": "AddNoise",
+      "function": "addNoise",
+      "header": "objects/EffectsObjects.h",
+      "family": "effects",
+      "id": "effects.addNoise"
+    },
+    {
+      "object": "ColoredPencil",
+      "function": "coloredPencil",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.coloredPencil"
+    },
+    {
+      "object": "Cutout",
+      "function": "cutout",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.cutout"
+    },
+    {
+      "object": "DryBrush",
+      "function": "dryBrush",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.dryBrush"
+    },
+    {
+      "object": "GalleryFilmGrain",
+      "function": "galleryFilmGrain",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.galleryFilmGrain"
+    },
+    {
+      "object": "Fresco",
+      "function": "fresco",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.fresco"
+    },
+    {
+      "object": "NeonGlow",
+      "function": "neonGlow",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.neonGlow"
+    },
+    {
+      "object": "PaintDaubs",
+      "function": "paintDaubs",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.paintDaubs"
+    },
+    {
+      "object": "PaletteKnife",
+      "function": "paletteKnife",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.paletteKnife"
+    },
+    {
+      "object": "PlasticWrap",
+      "function": "plasticWrap",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.plasticWrap"
+    },
+    {
+      "object": "PosterEdges",
+      "function": "posterEdges",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.posterEdges"
+    },
+    {
+      "object": "RoughPastels",
+      "function": "roughPastels",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.roughPastels"
+    },
+    {
+      "object": "SmudgeStick",
+      "function": "smudgeStick",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.smudgeStick"
+    },
+    {
+      "object": "Sponge",
+      "function": "sponge",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.sponge"
+    },
+    {
+      "object": "Underpainting",
+      "function": "underpainting",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.underpainting"
+    },
+    {
+      "object": "Watercolor",
+      "function": "watercolor",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.watercolor"
+    },
+    {
+      "object": "AccentedEdges",
+      "function": "accentedEdges",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.accentedEdges"
+    },
+    {
+      "object": "AngledStrokes",
+      "function": "angledStrokes",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.angledStrokes"
+    },
+    {
+      "object": "Crosshatch",
+      "function": "crosshatch",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.crosshatch"
+    },
+    {
+      "object": "DarkStrokes",
+      "function": "darkStrokes",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.darkStrokes"
+    },
+    {
+      "object": "InkOutlines",
+      "function": "inkOutlines",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.inkOutlines"
+    },
+    {
+      "object": "Spatter",
+      "function": "spatter",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.spatter"
+    },
+    {
+      "object": "SprayedStrokes",
+      "function": "sprayedStrokes",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.sprayedStrokes"
+    },
+    {
+      "object": "SumiE",
+      "function": "sumiE",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.sumiE"
+    },
+    {
+      "object": "DiffuseGlow",
+      "function": "diffuseGlow",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.diffuseGlow"
+    },
+    {
+      "object": "Glass",
+      "function": "glass",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.glass"
+    },
+    {
+      "object": "OceanRipple",
+      "function": "oceanRipple",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.oceanRipple"
+    },
+    {
+      "object": "BasRelief",
+      "function": "basRelief",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.basRelief"
+    },
+    {
+      "object": "ChalkCharcoal",
+      "function": "chalkCharcoal",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.chalkCharcoal"
+    },
+    {
+      "object": "Charcoal",
+      "function": "charcoal",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.charcoal"
+    },
+    {
+      "object": "Chrome",
+      "function": "chrome",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.chrome"
+    },
+    {
+      "object": "ConteCrayon",
+      "function": "conteCrayon",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.conteCrayon"
+    },
+    {
+      "object": "GraphicPen",
+      "function": "graphicPen",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.graphicPen"
+    },
+    {
+      "object": "HalftonePattern",
+      "function": "halftonePattern",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.halftonePattern"
+    },
+    {
+      "object": "NotePaper",
+      "function": "notePaper",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.notePaper"
+    },
+    {
+      "object": "Photocopy",
+      "function": "photocopy",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.photocopy"
+    },
+    {
+      "object": "Plaster",
+      "function": "plaster",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.plaster"
+    },
+    {
+      "object": "Reticulation",
+      "function": "reticulation",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.reticulation"
+    },
+    {
+      "object": "Stamp",
+      "function": "stamp",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.stamp"
+    },
+    {
+      "object": "TornEdges",
+      "function": "tornEdges",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.tornEdges"
+    },
+    {
+      "object": "WaterPaper",
+      "function": "waterPaper",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.waterPaper"
+    },
+    {
+      "object": "GlowingEdges",
+      "function": "glowingEdges",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.glowingEdges"
+    },
+    {
+      "object": "Craquelure",
+      "function": "craquelure",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.craquelure"
+    },
+    {
+      "object": "Grain",
+      "function": "grain",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.grain"
+    },
+    {
+      "object": "MosaicTiles",
+      "function": "mosaicTiles",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.mosaicTiles"
+    },
+    {
+      "object": "Patchwork",
+      "function": "patchwork",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.patchwork"
+    },
+    {
+      "object": "StainedGlass",
+      "function": "stainedGlass",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.stainedGlass"
+    },
+    {
+      "object": "Texturizer",
+      "function": "texturizer",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.texturizer"
+    },
+    {
+      "object": "FilterGallery",
+      "function": "filterGallery",
+      "header": "objects/GalleryFiltersObjects.h",
+      "family": "gallery",
+      "id": "gallery.filterGallery"
+    },
+    {
+      "object": "HdrToning",
+      "function": "hdrToning",
+      "header": "objects/HdrObjects.h",
+      "family": "hdr",
+      "id": "hdr.hdrToning"
+    },
+    {
+      "object": "LensCorrection",
+      "function": "lensCorrection",
+      "header": "objects/LensFilterObjects.h",
+      "family": "optics",
+      "id": "optics.lensCorrection"
+    },
+    {
+      "object": "ApplyLightcraftLook",
+      "function": "applyLightcraftLook",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.applyLightcraftLook"
+    },
+    {
+      "object": "ApplyLightcraftPreset",
+      "function": "applyLightcraftPreset",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.applyLightcraftPreset"
+    },
+    {
+      "object": "LightcraftLookColor",
+      "function": "lightcraftLookColor",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookColor"
+    },
+    {
+      "object": "LightcraftLookNeutral",
+      "function": "lightcraftLookNeutral",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookNeutral"
+    },
+    {
+      "object": "LightcraftLookVivid",
+      "function": "lightcraftLookVivid",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookVivid"
+    },
+    {
+      "object": "LightcraftLookLandscape",
+      "function": "lightcraftLookLandscape",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookLandscape"
+    },
+    {
+      "object": "LightcraftLookPortrait",
+      "function": "lightcraftLookPortrait",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookPortrait"
+    },
+    {
+      "object": "LightcraftLookMono",
+      "function": "lightcraftLookMono",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookMono"
+    },
+    {
+      "object": "LightcraftLookFilmWarmPrint",
+      "function": "lightcraftLookFilmWarmPrint",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookFilmWarmPrint"
+    },
+    {
+      "object": "LightcraftLookFilmCoolFade",
+      "function": "lightcraftLookFilmCoolFade",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookFilmCoolFade"
+    },
+    {
+      "object": "LightcraftLookFilmGoldenHour",
+      "function": "lightcraftLookFilmGoldenHour",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookFilmGoldenHour"
+    },
+    {
+      "object": "LightcraftLookFilmFadedSlide",
+      "function": "lightcraftLookFilmFadedSlide",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookFilmFadedSlide"
+    },
+    {
+      "object": "LightcraftLookCineTealAmber",
+      "function": "lightcraftLookCineTealAmber",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookCineTealAmber"
+    },
+    {
+      "object": "LightcraftLookCineNightBlue",
+      "function": "lightcraftLookCineNightBlue",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookCineNightBlue"
+    },
+    {
+      "object": "LightcraftLookCineDesertHeat",
+      "function": "lightcraftLookCineDesertHeat",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookCineDesertHeat"
+    },
+    {
+      "object": "LightcraftLookCineNeonDusk",
+      "function": "lightcraftLookCineNeonDusk",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookCineNeonDusk"
+    },
+    {
+      "object": "LightcraftLookMutedMatteSoft",
+      "function": "lightcraftLookMutedMatteSoft",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookMutedMatteSoft"
+    },
+    {
+      "object": "LightcraftLookMutedBleached",
+      "function": "lightcraftLookMutedBleached",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookMutedBleached"
+    },
+    {
+      "object": "LightcraftLookMutedPastelHaze",
+      "function": "lightcraftLookMutedPastelHaze",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookMutedPastelHaze"
+    },
+    {
+      "object": "LightcraftLookMutedQuietGreen",
+      "function": "lightcraftLookMutedQuietGreen",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookMutedQuietGreen"
+    },
+    {
+      "object": "LightcraftLookBwMonoRich",
+      "function": "lightcraftLookBwMonoRich",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookBwMonoRich"
+    },
+    {
+      "object": "LightcraftLookBwRedFilter",
+      "function": "lightcraftLookBwRedFilter",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookBwRedFilter"
+    },
+    {
+      "object": "LightcraftLookBwSoft",
+      "function": "lightcraftLookBwSoft",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookBwSoft"
+    },
+    {
+      "object": "LightcraftLookBwSepia",
+      "function": "lightcraftLookBwSepia",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftLookBwSepia"
+    },
+    {
+      "object": "LightcraftPresetWarmGlow",
+      "function": "lightcraftPresetWarmGlow",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetWarmGlow"
+    },
+    {
+      "object": "LightcraftPresetCoolMorning",
+      "function": "lightcraftPresetCoolMorning",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetCoolMorning"
+    },
+    {
+      "object": "LightcraftPresetTealOrange",
+      "function": "lightcraftPresetTealOrange",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetTealOrange"
+    },
+    {
+      "object": "LightcraftPresetVividPop",
+      "function": "lightcraftPresetVividPop",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetVividPop"
+    },
+    {
+      "object": "LightcraftPresetSoftPastel",
+      "function": "lightcraftPresetSoftPastel",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetSoftPastel"
+    },
+    {
+      "object": "LightcraftPresetFadedMatte",
+      "function": "lightcraftPresetFadedMatte",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetFadedMatte"
+    },
+    {
+      "object": "LightcraftPresetWarmFilm",
+      "function": "lightcraftPresetWarmFilm",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetWarmFilm"
+    },
+    {
+      "object": "LightcraftPresetMutedFilm",
+      "function": "lightcraftPresetMutedFilm",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetMutedFilm"
+    },
+    {
+      "object": "LightcraftPresetBwHighContrast",
+      "function": "lightcraftPresetBwHighContrast",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetBwHighContrast"
+    },
+    {
+      "object": "LightcraftPresetBwSoft",
+      "function": "lightcraftPresetBwSoft",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetBwSoft"
+    },
+    {
+      "object": "LightcraftPresetBwSelenium",
+      "function": "lightcraftPresetBwSelenium",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetBwSelenium"
+    },
+    {
+      "object": "LightcraftPresetCrispLandscape",
+      "function": "lightcraftPresetCrispLandscape",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetCrispLandscape"
+    },
+    {
+      "object": "LightcraftPresetGoldenHour",
+      "function": "lightcraftPresetGoldenHour",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetGoldenHour"
+    },
+    {
+      "object": "LightcraftPresetBlueHour",
+      "function": "lightcraftPresetBlueHour",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetBlueHour"
+    },
+    {
+      "object": "LightcraftPresetSoftSkin",
+      "function": "lightcraftPresetSoftSkin",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetSoftSkin"
+    },
+    {
+      "object": "LightcraftPresetBrightAiry",
+      "function": "lightcraftPresetBrightAiry",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetBrightAiry"
+    },
+    {
+      "object": "LightcraftPresetMoody",
+      "function": "lightcraftPresetMoody",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetMoody"
+    },
+    {
+      "object": "LightcraftPresetCinematic",
+      "function": "lightcraftPresetCinematic",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetCinematic"
+    },
+    {
+      "object": "LightcraftPresetMoodyPortrait",
+      "function": "lightcraftPresetMoodyPortrait",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetMoodyPortrait"
+    },
+    {
+      "object": "LightcraftPresetGoldenGlow",
+      "function": "lightcraftPresetGoldenGlow",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetGoldenGlow"
+    },
+    {
+      "object": "LightcraftPresetCleanStudio",
+      "function": "lightcraftPresetCleanStudio",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetCleanStudio"
+    },
+    {
+      "object": "LightcraftPresetCrispVista",
+      "function": "lightcraftPresetCrispVista",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetCrispVista"
+    },
+    {
+      "object": "LightcraftPresetDeepSky",
+      "function": "lightcraftPresetDeepSky",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetDeepSky"
+    },
+    {
+      "object": "LightcraftPresetLushGreens",
+      "function": "lightcraftPresetLushGreens",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetLushGreens"
+    },
+    {
+      "object": "LightcraftPresetDesertWarmth",
+      "function": "lightcraftPresetDesertWarmth",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetDesertWarmth"
+    },
+    {
+      "object": "LightcraftPresetMistyMorning",
+      "function": "lightcraftPresetMistyMorning",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetMistyMorning"
+    },
+    {
+      "object": "LightcraftPresetGrittyStreet",
+      "function": "lightcraftPresetGrittyStreet",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetGrittyStreet"
+    },
+    {
+      "object": "LightcraftPresetNeonNight",
+      "function": "lightcraftPresetNeonNight",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetNeonNight"
+    },
+    {
+      "object": "LightcraftPresetConcreteCool",
+      "function": "lightcraftPresetConcreteCool",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetConcreteCool"
+    },
+    {
+      "object": "LightcraftPresetFadedUrban",
+      "function": "lightcraftPresetFadedUrban",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetFadedUrban"
+    },
+    {
+      "object": "LightcraftPresetFreshBright",
+      "function": "lightcraftPresetFreshBright",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetFreshBright"
+    },
+    {
+      "object": "LightcraftPresetWarmTable",
+      "function": "lightcraftPresetWarmTable",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetWarmTable"
+    },
+    {
+      "object": "LightcraftPresetDarkMoodyFood",
+      "function": "lightcraftPresetDarkMoodyFood",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetDarkMoodyFood"
+    },
+    {
+      "object": "LightcraftPresetAutumnGold",
+      "function": "lightcraftPresetAutumnGold",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetAutumnGold"
+    },
+    {
+      "object": "LightcraftPresetWinterBlue",
+      "function": "lightcraftPresetWinterBlue",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetWinterBlue"
+    },
+    {
+      "object": "LightcraftPresetSpringFresh",
+      "function": "lightcraftPresetSpringFresh",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetSpringFresh"
+    },
+    {
+      "object": "LightcraftPresetSummerHaze",
+      "function": "lightcraftPresetSummerHaze",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetSummerHaze"
+    },
+    {
+      "object": "LightcraftPresetInstant70s",
+      "function": "lightcraftPresetInstant70s",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetInstant70s"
+    },
+    {
+      "object": "LightcraftPresetCrossProcess",
+      "function": "lightcraftPresetCrossProcess",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetCrossProcess"
+    },
+    {
+      "object": "LightcraftPresetBleachBypass",
+      "function": "lightcraftPresetBleachBypass",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetBleachBypass"
+    },
+    {
+      "object": "LightcraftPresetBwSepia",
+      "function": "lightcraftPresetBwSepia",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.lightcraftPresetBwSepia"
+    },
+    {
+      "object": "ResizeBox",
+      "function": "resizeBox",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.resizeBox"
+    },
+    {
+      "object": "ResizeBilinear",
+      "function": "resizeBilinear",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.resizeBilinear"
+    },
+    {
+      "object": "ResizeMitchell",
+      "function": "resizeMitchell",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.resizeMitchell"
+    },
+    {
+      "object": "ResizeLanczos3",
+      "function": "resizeLanczos3",
+      "header": "objects/LightcraftFiltersObjects.h",
+      "family": "look",
+      "id": "look.resizeLanczos3"
+    },
+    {
+      "object": "ApplyMaskedCorrection",
+      "function": "applyMaskedCorrection",
+      "header": "objects/LocalCorrectionsObjects.h",
+      "family": "local",
+      "id": "local.applyMaskedCorrection"
+    },
+    {
+      "object": "GradientMap",
+      "function": "gradientMap",
+      "header": "objects/MappingObjects.h",
+      "family": "mapping",
+      "id": "mapping.gradientMap"
+    },
+    {
+      "object": "ColorLookup",
+      "function": "colorLookup",
+      "header": "objects/MappingObjects.h",
+      "family": "mapping",
+      "id": "mapping.colorLookup"
+    },
+    {
+      "object": "LinearMask",
+      "function": "linearMask",
+      "header": "objects/MaskObjects.h",
+      "family": "mask",
+      "id": "mask.linearMask"
+    },
+    {
+      "object": "RadialMask",
+      "function": "radialMask",
+      "header": "objects/MaskObjects.h",
+      "family": "mask",
+      "id": "mask.radialMask"
+    },
+    {
+      "object": "BrushMask",
+      "function": "brushMask",
+      "header": "objects/MaskObjects.h",
+      "family": "mask",
+      "id": "mask.brushMask"
+    },
+    {
+      "object": "LuminanceRangeMask",
+      "function": "luminanceRangeMask",
+      "header": "objects/MaskObjects.h",
+      "family": "mask",
+      "id": "mask.luminanceRangeMask"
+    },
+    {
+      "object": "ColorRangeMask",
+      "function": "colorRangeMask",
+      "header": "objects/MaskObjects.h",
+      "family": "mask",
+      "id": "mask.colorRangeMask"
+    },
+    {
+      "object": "CombineMasks",
+      "function": "combineMasks",
+      "header": "objects/MaskObjects.h",
+      "family": "mask",
+      "id": "mask.combineMasks"
+    },
+    {
+      "object": "InvertMask",
+      "function": "invertMask",
+      "header": "objects/MaskObjects.h",
+      "family": "mask",
+      "id": "mask.invertMask"
+    },
+    {
+      "object": "RefineMask",
+      "function": "refineMask",
+      "header": "objects/MaskObjects.h",
+      "family": "mask",
+      "id": "mask.refineMask"
+    },
+    {
+      "object": "Liquify",
+      "function": "liquify",
+      "header": "objects/MeshFiltersObjects.h",
+      "family": "geometry",
+      "id": "geometry.liquify"
+    },
+    {
+      "object": "AdaptiveWideAngle",
+      "function": "adaptiveWideAngle",
+      "header": "objects/MeshFiltersObjects.h",
+      "family": "geometry",
+      "id": "geometry.adaptiveWideAngle"
+    },
+    {
+      "object": "PuppetWarp",
+      "function": "puppetWarp",
+      "header": "objects/MeshFiltersObjects.h",
+      "family": "geometry",
+      "id": "geometry.puppetWarp"
+    },
+    {
+      "object": "PerspectiveWarp",
+      "function": "perspectiveWarp",
+      "header": "objects/MeshFiltersObjects.h",
+      "family": "geometry",
+      "id": "geometry.perspectiveWarp"
+    },
+    {
+      "object": "CorrectOptics",
+      "function": "correctOptics",
+      "header": "objects/OpticsObjects.h",
+      "family": "optics",
+      "id": "optics.correctOptics"
+    },
+    {
+      "object": "LensBlur",
+      "function": "lensBlur",
+      "header": "objects/OwnedResourceObjects.h",
+      "family": "blur",
+      "id": "blur.lensBlur"
+    },
+    {
+      "object": "DestinationGamutWarning",
+      "function": "destinationGamutWarning",
+      "header": "objects/OwnedResourceObjects.h",
+      "family": "diagnostic",
+      "id": "diagnostic.destinationGamutWarning"
+    },
+    {
+      "object": "DisplayGamutWarning",
+      "function": "displayGamutWarning",
+      "header": "objects/OwnedResourceObjects.h",
+      "family": "diagnostic",
+      "id": "diagnostic.displayGamutWarning"
+    },
+    {
+      "object": "VanishingPoint",
+      "function": "vanishingPoint",
+      "header": "objects/OwnedResourceObjects.h",
+      "family": "geometry",
+      "id": "geometry.vanishingPoint"
+    },
+    {
+      "object": "ApplyLocalAdjustments",
+      "function": "applyLocalAdjustments",
+      "header": "objects/OwnedResourceObjects.h",
+      "family": "local",
+      "id": "local.applyLocalAdjustments"
+    },
+    {
+      "object": "Orientation",
+      "function": "applyOrientation",
+      "header": "objects/PhotoOperationsObjects.h",
+      "family": "geometry",
+      "id": "geometry.applyOrientation"
+    },
+    {
+      "object": "Crop",
+      "function": "crop",
+      "header": "objects/PhotoOperationsObjects.h",
+      "family": "geometry",
+      "id": "geometry.crop"
+    },
+    {
+      "object": "ColorHalftone",
+      "function": "colorHalftone",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.colorHalftone"
+    },
+    {
+      "object": "Crystallize",
+      "function": "crystallize",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.crystallize"
+    },
+    {
+      "object": "Facet",
+      "function": "facet",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.facet"
+    },
+    {
+      "object": "Fragment",
+      "function": "fragment",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.fragment"
+    },
+    {
+      "object": "Mezzotint",
+      "function": "mezzotint",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.mezzotint"
+    },
+    {
+      "object": "Pointillize",
+      "function": "pointillize",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.pointillize"
+    },
+    {
+      "object": "Mosaic",
+      "function": "mosaic",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.mosaic"
+    },
+    {
+      "object": "Emboss",
+      "function": "emboss",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.emboss"
+    },
+    {
+      "object": "FindEdges",
+      "function": "findEdges",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.findEdges"
+    },
+    {
+      "object": "Solarize",
+      "function": "solarize",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.solarize"
+    },
+    {
+      "object": "Diffuse",
+      "function": "diffuse",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.diffuse"
+    },
+    {
+      "object": "Extrude",
+      "function": "extrude",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.extrude"
+    },
+    {
+      "object": "OilPaint",
+      "function": "oilPaint",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.oilPaint"
+    },
+    {
+      "object": "Tiles",
+      "function": "tiles",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.tiles"
+    },
+    {
+      "object": "TraceContour",
+      "function": "traceContour",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.traceContour"
+    },
+    {
+      "object": "Wind",
+      "function": "wind",
+      "header": "objects/PixelFiltersObjects.h",
+      "family": "pixel",
+      "id": "pixel.wind"
+    },
+    {
+      "object": "RawDevelopment",
+      "function": "developRaw",
+      "header": "objects/RawObjects.h",
+      "family": "raw",
+      "id": "raw.developRaw"
+    },
+    {
+      "object": "RawRender",
+      "function": "renderRaw",
+      "header": "objects/RawObjects.h",
+      "family": "raw",
+      "id": "raw.renderRaw"
+    },
+    {
+      "object": "Clouds",
+      "function": "clouds",
+      "header": "objects/RenderFiltersObjects.h",
+      "family": "render",
+      "id": "render.clouds"
+    },
+    {
+      "object": "DifferenceClouds",
+      "function": "differenceClouds",
+      "header": "objects/RenderFiltersObjects.h",
+      "family": "render",
+      "id": "render.differenceClouds"
+    },
+    {
+      "object": "Fibers",
+      "function": "fibers",
+      "header": "objects/RenderFiltersObjects.h",
+      "family": "render",
+      "id": "render.fibers"
+    },
+    {
+      "object": "LensFlare",
+      "function": "lensFlare",
+      "header": "objects/RenderFiltersObjects.h",
+      "family": "render",
+      "id": "render.lensFlare"
+    },
+    {
+      "object": "LightingEffects",
+      "function": "lightingEffects",
+      "header": "objects/RenderFiltersObjects.h",
+      "family": "render",
+      "id": "render.lightingEffects"
+    },
+    {
+      "object": "Relight",
+      "function": "relight",
+      "header": "objects/RenderFiltersObjects.h",
+      "family": "render",
+      "id": "render.relight"
+    },
+    {
+      "object": "Flame",
+      "function": "flame",
+      "header": "objects/RenderFiltersObjects.h",
+      "family": "render",
+      "id": "render.flame"
+    },
+    {
+      "object": "Tree",
+      "function": "tree",
+      "header": "objects/RenderFiltersObjects.h",
+      "family": "render",
+      "id": "render.tree"
+    },
+    {
+      "object": "PictureFrame",
+      "function": "pictureFrame",
+      "header": "objects/RenderFiltersObjects.h",
+      "family": "render",
+      "id": "render.pictureFrame"
+    },
+    {
+      "object": "IdentityLut",
+      "function": "identityLut",
+      "header": "objects/ResourceBuilderObjects.h",
+      "family": "resource",
+      "id": "resource.identityLut"
+    },
+    {
+      "object": "CubeLut",
+      "function": "parseCubeLut",
+      "header": "objects/ResourceBuilderObjects.h",
+      "family": "resource",
+      "id": "resource.parseCubeLut"
+    },
+    {
+      "object": "PointColorSample",
+      "function": "samplePointColor",
+      "header": "objects/ResourceBuilderObjects.h",
+      "family": "resource",
+      "id": "resource.samplePointColor"
+    },
+    {
+      "object": "LookRecipe",
+      "function": "lightcraftLookOptions",
+      "header": "objects/ResourceBuilderObjects.h",
+      "family": "resource",
+      "id": "resource.lightcraftLookOptions"
+    },
+    {
+      "object": "PresetRecipe",
+      "function": "lightcraftPresetOptions",
+      "header": "objects/ResourceBuilderObjects.h",
+      "family": "resource",
+      "id": "resource.lightcraftPresetOptions"
+    },
+    {
+      "object": "GenericLensProfile",
+      "function": "genericLensProfile",
+      "header": "objects/ResourceBuilderObjects.h",
+      "family": "resource",
+      "id": "resource.genericLensProfile"
+    },
+    {
+      "object": "VanishingPointPlanes",
+      "function": "vanishingPointPlanes",
+      "header": "objects/ResourceBuilderObjects.h",
+      "family": "analysis",
+      "id": "analysis.vanishingPointPlanes"
+    },
+    {
+      "object": "CloneSpot",
+      "function": "cloneSpot",
+      "header": "objects/RetouchFiltersObjects.h",
+      "family": "retouch",
+      "id": "retouch.cloneSpot"
+    },
+    {
+      "object": "HealSpot",
+      "function": "healSpot",
+      "header": "objects/RetouchFiltersObjects.h",
+      "family": "retouch",
+      "id": "retouch.healSpot"
+    },
+    {
+      "object": "RemoveSpot",
+      "function": "removeSpot",
+      "header": "objects/RetouchFiltersObjects.h",
+      "family": "retouch",
+      "id": "retouch.removeSpot"
+    },
+    {
+      "object": "RedEye",
+      "function": "redEye",
+      "header": "objects/RetouchFiltersObjects.h",
+      "family": "retouch",
+      "id": "retouch.redEye"
+    },
+    {
+      "object": "PetEye",
+      "function": "petEye",
+      "header": "objects/RetouchFiltersObjects.h",
+      "family": "retouch",
+      "id": "retouch.petEye"
+    },
+    {
+      "object": "VisualizeSpots",
+      "function": "visualizeSpots",
+      "header": "objects/RetouchFiltersObjects.h",
+      "family": "retouch",
+      "id": "retouch.visualizeSpots"
+    },
+    {
+      "object": "SampleAverage8",
+      "function": "sampleAverage8",
+      "header": "objects/SampleFilterObjects.h",
+      "family": "sample",
+      "id": "sample.sampleAverage8"
+    },
+    {
+      "object": "SampleAverage16",
+      "function": "sampleAverage16",
+      "header": "objects/SampleFilterObjects.h",
+      "family": "sample",
+      "id": "sample.sampleAverage16"
+    },
+    {
+      "object": "SampleAverageFloat32",
+      "function": "sampleAverageFloat32",
+      "header": "objects/SampleFilterObjects.h",
+      "family": "sample",
+      "id": "sample.sampleAverageFloat32"
+    },
+    {
+      "object": "FillSampleAverage8",
+      "function": "fillSampleAverage8",
+      "header": "objects/SampleFilterObjects.h",
+      "family": "sample",
+      "id": "sample.fillSampleAverage8"
+    },
+    {
+      "object": "FillSampleAverage16",
+      "function": "fillSampleAverage16",
+      "header": "objects/SampleFilterObjects.h",
+      "family": "sample",
+      "id": "sample.fillSampleAverage16"
+    },
+    {
+      "object": "FillSampleAverageFloat32",
+      "function": "fillSampleAverageFloat32",
+      "header": "objects/SampleFilterObjects.h",
+      "family": "sample",
+      "id": "sample.fillSampleAverageFloat32"
+    },
+    {
+      "object": "SolarizeSamples8",
+      "function": "solarizeSamples8",
+      "header": "objects/SampleFilterObjects.h",
+      "family": "sample",
+      "id": "sample.solarizeSamples8"
+    },
+    {
+      "object": "SolarizeSamples16",
+      "function": "solarizeSamples16",
+      "header": "objects/SampleFilterObjects.h",
+      "family": "sample",
+      "id": "sample.solarizeSamples16"
+    },
+    {
+      "object": "BrightnessContrast",
+      "function": "brightnessContrast",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.brightnessContrast"
+    },
+    {
+      "object": "Levels",
+      "function": "levels",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.levels"
+    },
+    {
+      "object": "Curves",
+      "function": "curves",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.curves"
+    },
+    {
+      "object": "Exposure",
+      "function": "exposure",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.exposure"
+    },
+    {
+      "object": "ShadowsHighlights",
+      "function": "shadowsHighlights",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.shadowsHighlights"
+    },
+    {
+      "object": "Invert",
+      "function": "invert",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.invert"
+    },
+    {
+      "object": "Posterize",
+      "function": "posterize",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.posterize"
+    },
+    {
+      "object": "Threshold",
+      "function": "threshold",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.threshold"
+    },
+    {
+      "object": "Equalize",
+      "function": "equalize",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.equalize"
+    },
+    {
+      "object": "AutoLevels",
+      "function": "autoLevels",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.autoLevels"
+    },
+    {
+      "object": "AutoContrast",
+      "function": "autoContrast",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.autoContrast"
+    },
+    {
+      "object": "AutoColor",
+      "function": "autoColor",
+      "header": "objects/ToneObjects.h",
+      "family": "tone",
+      "id": "tone.autoColor"
+    },
+    {
+      "object": "Average",
+      "function": "average",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.average"
+    },
+    {
+      "object": "FilterAddNoise",
+      "function": "filterAddNoise",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.filterAddNoise"
+    },
+    {
+      "object": "Median",
+      "function": "median",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.median"
+    },
+    {
+      "object": "DustAndScratches",
+      "function": "dustAndScratches",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.dustAndScratches"
+    },
+    {
+      "object": "Minimum",
+      "function": "minimum",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.minimum"
+    },
+    {
+      "object": "Maximum",
+      "function": "maximum",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.maximum"
+    },
+    {
+      "object": "ReduceNoise",
+      "function": "reduceNoise",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.reduceNoise"
+    },
+    {
+      "object": "CustomFilter",
+      "function": "customFilter",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.customFilter"
+    },
+    {
+      "object": "HsbHsl",
+      "function": "hsbHsl",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.hsbHsl"
+    },
+    {
+      "object": "DeInterlace",
+      "function": "deInterlace",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.deInterlace"
+    },
+    {
+      "object": "NtscColors",
+      "function": "ntscColors",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.ntscColors"
+    },
+    {
+      "object": "GuidedBlur",
+      "function": "guidedBlur",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.guidedBlur"
+    },
+    {
+      "object": "CrossGuidedBlur",
+      "function": "crossGuidedBlur",
+      "header": "objects/UtilityFiltersObjects.h",
+      "family": "utility",
+      "id": "utility.crossGuidedBlur"
+    }
+  ]
+}

@@ -1540,6 +1540,39 @@ Result<Image> perspectiveWarp(ImageView image, const PerspectiveWarpOptions &o) 
         return renderMesh(image, mesh, o.interpolation);
     });
 }
+Result<Image> perspectiveCrop(ImageView image, const MeshQuad& source,
+                              std::size_t width, std::size_t height,
+                              MeshInterpolation mode) {
+    if (auto valid = imageValid(image); !valid) return std::unexpected(valid.error());
+    const auto count = detail::pixelCount(width, height);
+    if (!count || width > std::size_t(limit) || height > std::size_t(limit) ||
+        *count > 64ULL * 1024 * 1024)
+        return std::unexpected(Error{ErrorCode::InvalidDimensions, "Perspective crop output exceeds its bounds"});
+    if (!interpolation(mode) || !quadValid(source)) return std::unexpected(fd::invalid());
+    for (const auto& p : source)
+        if (p[0] < 0 || p[1] < 0 || p[0] > double(image.width) || p[1] > double(image.height))
+            return std::unexpected(fd::invalid());
+    const auto map = unitQuad(source);
+    if (!map) return std::unexpected(fd::invalid());
+    // The projective denominator is linear on the unit square. All four
+    // corners must have the same nonzero sign to exclude an interior pole.
+    const auto& h = map->m;
+    const std::array<double,4> denominators{h[8],h[6]+h[8],h[6]+h[7]+h[8],h[7]+h[8]};
+    for (double value : denominators)
+        if (!std::isfinite(value) || std::abs(value) < 1e-12 || value * denominators[0] <= 0)
+            return std::unexpected(fd::invalid());
+    const MeshQuad full{{{0,0},{double(image.width),0},{double(image.width),double(image.height)},{0,double(image.height)}}};
+    return guardedResult([&]() -> Result<Image> {
+        if (source == full && width == image.width && height == image.height) return detail::copy(image);
+        Image out{width,height,std::vector<Rgba>(*count)};
+        for (std::size_t y=0;y<height;++y) for (std::size_t x=0;x<width;++x) {
+            const auto p=map->apply({(double(x)+.5)/double(width),(double(y)+.5)/double(height)});
+            if (!std::isfinite(p[0]) || !std::isfinite(p[1])) return std::unexpected(fd::invalid());
+            out.pixels[y*width+x]=sample(image,p,mode,fd::Edge::Repeat);
+        }
+        return out;
+    });
+}
 namespace {
 V3 meet(P a, P b, P c, P d) {
     return cross3(cross3({a[0], a[1], 1}, {b[0], b[1], 1}),

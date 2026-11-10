@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.24)
-project(iiGraphicAdjust VERSION 0.6.1 LANGUAGES CXX)
+project(iiGraphicAdjust VERSION 0.6.2 LANGUAGES CXX)
+if(UNIX AND PROJECT_IS_TOP_LEVEL)
+    include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/ResourceLinks.cmake")
+    iiGraphicAdjust_compat_links("${CMAKE_CURRENT_SOURCE_DIR}/resources" "${CMAKE_CURRENT_BINARY_DIR}")
+endif()
 
 
 
@@ -151,25 +155,57 @@ write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/iiGraphicAdjustCon
     VERSION ${PROJECT_VERSION} COMPATIBILITY SameMinorVersion)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/iiGraphicAdjustConfig.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/iiGraphicAdjustConfigVersion.cmake" DESTINATION "${_package_dir}")
+install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/iiGraphicAdjust)
+install(FILES third_party/photocraft/LICENSE-MIT DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/iiGraphicAdjust/photocraft)
+install(FILES third_party/lightcraft/LICENSE-MIT DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/iiGraphicAdjust/lightcraft)
 install(FILES README.md DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust)
 install(DIRECTORY docs/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/docs)
 install(DIRECTORY third_party/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/third_party)
 
 if(BUILD_TESTING)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    set(_graphic_test_runner "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/resource_runner.py" auto
+        "${CMAKE_CURRENT_SOURCE_DIR}/resources")
+    add_test(NAME iiGraphicAdjust.resource_workspace COMMAND ${_graphic_test_runner}
+        "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_resource_runner.py")
+    add_test(NAME iiGraphicAdjust.package_isolation COMMAND ${_graphic_test_runner}
+        "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_installed_checks.py")
+    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/resources/dependencies/references/photocraft/.git" AND
+       EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/resources/dependencies/references/lightcraft/.git")
+        add_test(NAME iiGraphicAdjust.reference_audit COMMAND "${Python3_EXECUTABLE}" -B
+            "${CMAKE_CURRENT_SOURCE_DIR}/tools/audit_filter_coverage.py" --references)
+    endif()
+    if(UNIX)
+        add_test(NAME iiGraphicAdjust.resource_links COMMAND ${_graphic_test_runner}
+            "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_resource_links.py"
+            "${CMAKE_COMMAND}" @WORK@)
+    endif()
+    add_test(NAME iiGraphicAdjust.install_licenses COMMAND ${_graphic_test_runner} "${Python3_EXECUTABLE}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/installed_checks.py" --mode licenses
+        --source "${CMAKE_CURRENT_SOURCE_DIR}" --build "${CMAKE_CURRENT_BINARY_DIR}"
+        --workspace @WORK@ --cmake "${CMAKE_COMMAND}" --config "$<CONFIG>")
+    set_tests_properties(iiGraphicAdjust.install_licenses PROPERTIES TIMEOUT 180)
     add_test(NAME iiGraphicAdjust.source_layout COMMAND ${CMAKE_COMMAND}
         "-DSOURCE_ROOT=${CMAKE_CURRENT_SOURCE_DIR}" -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/source_layout.cmake")
     add_test(NAME iiGraphicAdjust.sdk_boundary
         COMMAND ${CMAKE_COMMAND} "-DSOURCE_ROOT=${CMAKE_CURRENT_SOURCE_DIR}"
             -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/sdk_boundary.cmake")
     add_test(NAME iiGraphicAdjust.objects.installed_package
-        COMMAND ${CMAKE_COMMAND}
-            "-DSOURCE_ROOT=${CMAKE_CURRENT_SOURCE_DIR}"
-            "-DBINARY_ROOT=${CMAKE_CURRENT_BINARY_DIR}"
-            "-DCXX_COMPILER=${CMAKE_CXX_COMPILER}"
-            "-DCXX_FLAGS=${CMAKE_CXX_FLAGS}"
-            "-DCTEST_COMMAND=${CMAKE_CTEST_COMMAND}"
-            -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/operation_package.cmake")
+        COMMAND ${_graphic_test_runner} "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/installed_checks.py" --mode consumer
+            --source "${CMAKE_CURRENT_SOURCE_DIR}" --build "${CMAKE_CURRENT_BINARY_DIR}"
+            --workspace @WORK@ --cmake "${CMAKE_COMMAND}" --config "$<CONFIG>"
+            --compiler "${CMAKE_CXX_COMPILER}" "--cxx-flags=${CMAKE_CXX_FLAGS}"
+            --ctest "${CMAKE_CTEST_COMMAND}")
     set_tests_properties(iiGraphicAdjust.objects.installed_package PROPERTIES TIMEOUT 240)
+    add_test(NAME iiGraphicAdjust.objects.installed_build
+        COMMAND ${_graphic_test_runner} "${Python3_EXECUTABLE}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/installed_checks.py" --mode consumer-build
+            --source "${CMAKE_CURRENT_SOURCE_DIR}" --build "${CMAKE_CURRENT_BINARY_DIR}"
+            --workspace @WORK@ --cmake "${CMAKE_COMMAND}" --config "$<CONFIG>"
+            --compiler "${CMAKE_CXX_COMPILER}" "--cxx-flags=${CMAKE_CXX_FLAGS}")
+    set_tests_properties(iiGraphicAdjust.objects.installed_build PROPERTIES TIMEOUT 240)
     add_executable(iiGraphicAdjustObjectCatalogTests tests/object_catalog_execution.cpp)
     target_link_libraries(iiGraphicAdjustObjectCatalogTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
     foreach(_case adjustment analysis blur cameraRaw color composite correction develop diagnostic distortion

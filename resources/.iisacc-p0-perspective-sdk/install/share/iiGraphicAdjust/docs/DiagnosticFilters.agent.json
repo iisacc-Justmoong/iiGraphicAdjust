@@ -1,0 +1,701 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:d983960d1bcb15d135032752ffa4bca487e58d68987d99788cbd8ac05d079c5b",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/DiagnosticFilters.md",
+    "sha256": "dddc408485e5c63a4a8252229eae7628b4345c634082268b2938ce8612689859",
+    "bytes": 9947,
+    "line_count": 84,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Diagnostic filters",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Diagnostic filters\n",
+      "level": 1,
+      "title": "Diagnostic filters"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "`<iiGraphicAdjust/DiagnosticFilters.h>` exposes eight leaf CPU APIs for the actual Lightcraft image diagnostic kernels found at commit `629e39380e296f588c64cd9c0053a8edc3528f36`. The six range/mask previews come from `crates/pipeline/src/visualize.rs::point_color_range` and `mask_view`; destination and display gamut classification comes from the per-pixel branch of `finish.rs`, its `gamut_map`/`out_of_gamut` functions and `output.rs::Proof`. Both CPU and GPU renderers call the visualizer; the GPU finish stage has matching proof parameters.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "table",
+      "start_line": 5,
+      "end_line": 14,
+      "raw": "| API | Explicit inputs | Output |\n| --- | --- | --- |\n| `pointColorRangePreview` | Display image, existing `PointColorOptions` | Selection keeps the photo's color; unselected pixels become grey. |\n| `maskColorOverlay` | Display image, existing `MaskView`, `MaskOverlayOptions` | Encoded-color tint weighted by evaluated mask and opacity. |\n| `maskColorOnBwOverlay` | Same | Grey photo with the same tint. |\n| `maskImageOnBlack` | Display image, existing `MaskView` | Photo composited onto black according to evaluated mask. |\n| `maskImageOnWhite` | Same | Photo composited onto white. |\n| `maskWhiteOnBlack` | Same | Evaluated mask rendered as grey. |\n| `destinationGamutWarning` | Display image, `GamutWarningOptions` | Pixels outside the proof destination gamut become red. |\n| `displayGamutWarning` | Same | Proofed pixels outside the sRGB display gamut become blue. |\n",
+      "columns": [
+        "API",
+        "Explicit inputs",
+        "Output"
+      ],
+      "rows": [
+        [
+          "`pointColorRangePreview`",
+          "Display image, existing `PointColorOptions`",
+          "Selection keeps the photo's color; unselected pixels become grey."
+        ],
+        [
+          "`maskColorOverlay`",
+          "Display image, existing `MaskView`, `MaskOverlayOptions`",
+          "Encoded-color tint weighted by evaluated mask and opacity."
+        ],
+        [
+          "`maskColorOnBwOverlay`",
+          "Same",
+          "Grey photo with the same tint."
+        ],
+        [
+          "`maskImageOnBlack`",
+          "Display image, existing `MaskView`",
+          "Photo composited onto black according to evaluated mask."
+        ],
+        [
+          "`maskImageOnWhite`",
+          "Same",
+          "Photo composited onto white."
+        ],
+        [
+          "`maskWhiteOnBlack`",
+          "Same",
+          "Evaluated mask rendered as grey."
+        ],
+        [
+          "`destinationGamutWarning`",
+          "Display image, `GamutWarningOptions`",
+          "Pixels outside the proof destination gamut become red."
+        ],
+        [
+          "`displayGamutWarning`",
+          "Same",
+          "Proofed pixels outside the sRGB display gamut become blue."
+        ]
+      ]
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "The diagnostic image retains the input width, height and every input alpha value. Input and output use finite normalized encoded sRGB. Fully transparent pixels retain their original hidden RGB and alpha; there are no neighbor operations that could propagate hidden RGB. Unlike the reference's opaque 8-bit mask overlays, these APIs retain float precision and source coverage. They do not implicitly construct masks, access a selected document, modify adjustment settings or draw editor handles.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "## Point Color range\n",
+      "level": 2,
+      "title": "Point Color range"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "The existing 0.3 `PointColorOptions` is reused directly. `lightness` accepts [0,1], `chroma` [0,.5], `hue` [-180,360] degrees, and `range`, `hueRange`, `saturationRange`, `luminanceRange` [0,100]. The defaults remain the existing type's defaults. Adjustment sliders `hueShift`, `saturationShift`, `luminanceShift`, and `variance` accept [-100,100] and are validated; this selection preview does not execute those adjustments.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "The host must supply the finished photo with this selected sample's own adjustments omitted. The reference achieves that by changing copied `DevelopSettings` before rendering. A leaf image API cannot undo an adjustment that has already been applied to its input, so this responsibility is explicit.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "The image's linear sRGB is converted to OKLab with the SDK's existing `develop_detail::lab` math. This keeps preview sampling consistent with `samplePointColor` and `developColor`. The reference takes the equivalent path through linear Rec.2020, XYZ and its OKLab matrices; direct matrix coefficients and double precision can differ slightly from the reference's f32 chain. No 8-bit quantization or rounding is introduced.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "For `k=max(.05,range/50)`, the selection half-widths are:\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "list",
+      "start_line": 28,
+      "end_line": 30,
+      "raw": "- Hue radians: `(.1+.6*hueRange/100)*k`.\n- Chroma: `(.02+.12*saturationRange/100)*k`.\n- Lightness: `(.05+.4*luminanceRange/100)*k`.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Hue radians: `(.1+.6*hueRange/100)*k`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Chroma: `(.02+.12*saturationRange/100)*k`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Lightness: `(.05+.4*luminanceRange/100)*k`.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "Each box axis has full weight up to half its half-width, then a smoothstep falloff to zero at the full half-width. Hue differences wrap at ±π. A sample chroma below .02 ignores hue; a chromatic sample adds a .005–.025 smooth gate to exclude near-neutral pixels. The three axis weights multiply. Encoded luminance is `g=.2126*R+.7152*G+.0722*B`; each output channel is `g+(channel−g)*weight`.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "## Mask previews\n",
+      "level": 2,
+      "title": "Mask previews"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "All five APIs consume an already evaluated `MaskView` from `<iiGraphicAdjust/Masks.h>`. The mask must have the same dimensions as the image, one finite normalized coverage sample per pixel, and valid nonempty dimensions. Existing `linearMask`, `radialMask`, `brushMask`, range masks or a host-supplied segmentation plane can provide it. Visibility flags and component composition remain the host's responsibility; a hidden editor mask may still be supplied for preview, as in the reference.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "`MaskOverlayOptions` uses normalized encoded RGB `color` (default red `[1,0,0]`) and `opacity` [0,100] (default 50). The source receives byte RGB and byte integer percent from UI state; this SDK keeps the channels and opacity in floating-point. For mask `a`, opacity `o=opacity/100`, image channel `p` and encoded luminance `g`:\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "table",
+      "start_line": 40,
+      "end_line": 46,
+      "raw": "| Function | Channel formula |\n| --- | --- |\n| `maskColorOverlay` | `p+(color−p)*a*o` |\n| `maskColorOnBwOverlay` | `g+(color−g)*a*o` |\n| `maskImageOnBlack` | `p*a` |\n| `maskImageOnWhite` | `p*a+1−a` |\n| `maskWhiteOnBlack` | `a` |\n",
+      "columns": [
+        "Function",
+        "Channel formula"
+      ],
+      "rows": [
+        [
+          "`maskColorOverlay`",
+          "`p+(color−p)*a*o`"
+        ],
+        [
+          "`maskColorOnBwOverlay`",
+          "`g+(color−g)*a*o`"
+        ],
+        [
+          "`maskImageOnBlack`",
+          "`p*a`"
+        ],
+        [
+          "`maskImageOnWhite`",
+          "`p*a+1−a`"
+        ],
+        [
+          "`maskWhiteOnBlack`",
+          "`a`"
+        ]
+      ]
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "Zero tint opacity is an exact identity for Color; ColorOnBw still renders its grey base. The three non-color modes do not accept irrelevant tint/opacity options. No mask ID lookup, UI color, GPU texture or `Plan` is required.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "heading",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "## Destination and display gamut warnings\n",
+      "level": 2,
+      "title": "Destination and display gamut warnings"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "`GamutWarningOptions::proofSpace` is one of `DiagnosticColorSpace::{Srgb,DisplayP3,AdobeRgb,ProPhoto,Rec2020}`; the default is Srgb. The published primary/white-point definitions and Bradford white adaptation follow `lightcraft_color` and `output.rs`. ProPhoto uses D50, while the other spaces use D65. AdobeRgb names the published 1998 compatible space; no Adobe ICC profile or proprietary engine is included.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "`linearRec2020` is an optional borrowed span of pre-gamut scene-linear Rec.2020/D65 triples. When present, its count must equal the image pixel count and every channel must be finite in [-64,64]. This is a bounded diagnostic working buffer; it does not change the display image's sRGB/SDR contract. The host should pass the corresponding colors before destination/display gamut mapping. When absent, the SDK decodes the supplied sRGB image into linear Rec.2020. An already clipped sRGB display image contains no evidence of discarded RAW or wide-gamut colors; the empty-span fallback does not recover that information.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "The reference gamut mapper converts RGB towards its clamped luminance until all channels fit [0,1], and records the resulting chroma scale. A color triggers a warning only when this scale is below .995, its channel spread exceeds both .001 and 2% of the larger channel's magnitude, and a channel is meaningfully outside the gamut (`min<−.001` or `max>1` with `min<1`). Neutral highlight/shadow clipping is deliberately excluded, matching the source predicate.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "Destination Warning evaluates the original color after conversion into the proof space and paints encoded red `[1,0,0]` when it fails. Display Warning first gamut-maps into the proof space, converts that mapped color into linear sRGB, evaluates the display mapper and paints encoded blue `[0,.25,1]` when it fails. These are separate warning-only previews: pixels without a warning retain the caller's displayed color, rather than implicitly replacing the whole photo with a soft-proof render. They match the respective standalone source warning branches; a host that combines both should give the red destination warning priority, as the reference does.\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "heading",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "## Excluded state and GUI branches\n",
+      "level": 2,
+      "title": "Excluded state and GUI branches"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "The source audit found no independent spatial highlight/shadow clipping image kernel. `ui-egui/src/panels/detail.rs::clipping_overlay` at line 730 examines approximate histogram edge-bin fractions and draws red/blue strokes outside the displayed image when the fraction exceeds .003. `view.clipping` only toggles this UI state. Painting a pixel warning mask from those fractions would invent a new algorithm, so neither branch is exposed as an image filter.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "`Overlay::None`, mask-ID lookup, unknown-mask handling, `MaskView::next`/labels/parsing, overlay packing, cache keys, and `adjust_settings` are state/routing operations with no separate pixel formula. Histogram generation and assisted-culling clipping scores return statistics and are not overlay kernels. Crop guides, eye/spot handles, file-information overlays and paper-white preview surrounds are GUI drawings. They are outside this CPU image diagnostic module. `visualizeSpots` already implements the remaining actual `visualize.rs` image branch in `<iiGraphicAdjust/RetouchFilters.h>` and is not duplicated here.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "heading",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "## Validation and verification\n",
+      "level": 2,
+      "title": "Validation and verification"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 68,
+      "end_line": 68,
+      "raw": "All API fields are validated, including inactive Point Color adjustments and a tint color at zero opacity. Invalid option/coverage values return `InvalidParameter`; malformed mask buffers return `InvalidBuffer`; mismatched mask or pre-gamut plane dimensions/counts return `SizeMismatch`. Images use normal SDK validation and are limited to 64,000,000 pixels. All operations are linear in pixel count, use bounded per-pixel work, and translate storage failures to `AllocationFailure`.\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 69,
+      "end_line": 69,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "fenced_code",
+      "start_line": 70,
+      "end_line": 82,
+      "raw": "```cpp\n#include <iiGraphicAdjust/DiagnosticFilters.h>\nusing namespace iiGraphicAdjust;\nauto sample = samplePointColor({.8F,.3F,.1F,1});\nif (sample) {\n    auto selection = pointColorRangePreview(input.view(), *sample);\n}\nauto tint = maskColorOverlay(input.view(), evaluatedMask.view(), {{1,0,0},40});\nGamutWarningOptions warning;\nwarning.proofSpace = DiagnosticColorSpace::ProPhoto;\nwarning.linearRec2020 = preGamutColors;\nauto monitorWarning = displayGamutWarning(input.view(), warning);\n```\n",
+      "language": "cpp",
+      "code": "#include <iiGraphicAdjust/DiagnosticFilters.h>\nusing namespace iiGraphicAdjust;\nauto sample = samplePointColor({.8F,.3F,.1F,1});\nif (sample) {\n    auto selection = pointColorRangePreview(input.view(), *sample);\n}\nauto tint = maskColorOverlay(input.view(), evaluatedMask.view(), {{1,0,0},40});\nGamutWarningOptions warning;\nwarning.proofSpace = DiagnosticColorSpace::ProPhoto;\nwarning.linearRec2020 = preGamutColors;\nauto monitorWarning = displayGamutWarning(input.view(), warning);\n",
+      "closed": true
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 84,
+      "end_line": 84,
+      "raw": "`tests/diagnostic_filters.cpp` has `point`, `masks`, `gamut`, and `validation` modes. It independently checks a .5 smoothstep membership, sample retention and distant-color greying, neutral/hue-wrap selection, all five mask formulas, zero opacity, Rec.2020-primary red/blue warning classification, neutral clipping exclusions, the .995 gamut boundary, all five profile white points, invalid nested values, buffer/count mismatches, input normalization, hidden RGB and 1×1/1×N/N×1 images. Normal and ASan/UBSan standalone builds were run. The reference Rust executable and Adobe renderer were not used as pixel oracles.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Diagnostic filters",
+      "anchor": "diagnostic-filters",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Point Color range",
+      "anchor": "point-color-range",
+      "start_line": 18
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Mask previews",
+      "anchor": "mask-previews",
+      "start_line": 34
+    },
+    {
+      "block_id": "b000033",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Destination and display gamut warnings",
+      "anchor": "destination-and-display-gamut-warnings",
+      "start_line": 50
+    },
+    {
+      "block_id": "b000043",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Excluded state and GUI branches",
+      "anchor": "excluded-state-and-gui-branches",
+      "start_line": 60
+    },
+    {
+      "block_id": "b000049",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Validation and verification",
+      "anchor": "validation-and-verification",
+      "start_line": 66
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 16,
+        "text": "The diagnostic image retains the input width, height and every input alpha value. Input and output use finite normalized encoded sRGB. Fully transparent pixels retain their original hidden RGB and alpha; there are no neighbor operations that could propagate hidden RGB. Unlike the reference's opaque 8-bit mask overlays, these APIs retain float precision and source coverage. They do not implicitly construct masks, access a selected document, modify adjustment settings or draw editor handles.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 22,
+        "text": "The host must supply the finished photo with this selected sample's own adjustments omitted. The reference achieves that by changing copied `DevelopSettings` before rendering. A leaf image API cannot undo an adjustment that has already been applied to its input, so this responsibility is explicit.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 36,
+        "text": "All five APIs consume an already evaluated `MaskView` from `<iiGraphicAdjust/Masks.h>`. The mask must have the same dimensions as the image, one finite normalized coverage sample per pixel, and valid nonempty dimensions. Existing `linearMask`, `radialMask`, `brushMask`, range masks or a host-supplied segmentation plane can provide it. Visibility flags and component composition remain the host's responsibility; a hidden editor mask may still be supplied for preview, as in the reference.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 48,
+        "text": "Zero tint opacity is an exact identity for Color; ColorOnBw still renders its grey base. The three non-color modes do not accept irrelevant tint/opacity options. No mask ID lookup, UI color, GPU texture or `Plan` is required.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000037",
+        "line": 54,
+        "text": "`linearRec2020` is an optional borrowed span of pre-gamut scene-linear Rec.2020/D65 triples. When present, its count must equal the image pixel count and every channel must be finite in [-64,64]. This is a bounded diagnostic working buffer; it does not change the display image's sRGB/SDR contract. The host should pass the corresponding colors before destination/display gamut mapping. When absent, the SDK decodes the supplied sRGB image into linear Rec.2020. An already clipped sRGB display image contains no evidence of discarded RAW or wide-gamut colors; the empty-span fallback does not recover that information.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000041",
+        "line": 58,
+        "text": "Destination Warning evaluates the original color after conversion into the proof space and paints encoded red `[1,0,0]` when it fails. Display Warning first gamut-maps into the proof space, converts that mapped color into linear sRGB, evaluates the display mapper and paints encoded blue `[0,.25,1]` when it fails. These are separate warning-only previews: pixels without a warning retain the caller's displayed color, rather than implicitly replacing the whole photo with a soft-proof render. They match the respective standalone source warning branches; a host that combines both should give the red destination warning priority, as the reference does.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": [
+      {
+        "block_id": "b000005",
+        "columns": [
+          "API",
+          "Explicit inputs",
+          "Output"
+        ],
+        "rows": [
+          [
+            "`pointColorRangePreview`",
+            "Display image, existing `PointColorOptions`",
+            "Selection keeps the photo's color; unselected pixels become grey."
+          ],
+          [
+            "`maskColorOverlay`",
+            "Display image, existing `MaskView`, `MaskOverlayOptions`",
+            "Encoded-color tint weighted by evaluated mask and opacity."
+          ],
+          [
+            "`maskColorOnBwOverlay`",
+            "Same",
+            "Grey photo with the same tint."
+          ],
+          [
+            "`maskImageOnBlack`",
+            "Display image, existing `MaskView`",
+            "Photo composited onto black according to evaluated mask."
+          ],
+          [
+            "`maskImageOnWhite`",
+            "Same",
+            "Photo composited onto white."
+          ],
+          [
+            "`maskWhiteOnBlack`",
+            "Same",
+            "Evaluated mask rendered as grey."
+          ],
+          [
+            "`destinationGamutWarning`",
+            "Display image, `GamutWarningOptions`",
+            "Pixels outside the proof destination gamut become red."
+          ],
+          [
+            "`displayGamutWarning`",
+            "Same",
+            "Proofed pixels outside the sRGB display gamut become blue."
+          ]
+        ]
+      },
+      {
+        "block_id": "b000029",
+        "columns": [
+          "Function",
+          "Channel formula"
+        ],
+        "rows": [
+          [
+            "`maskColorOverlay`",
+            "`p+(color−p)*a*o`"
+          ],
+          [
+            "`maskColorOnBwOverlay`",
+            "`g+(color−g)*a*o`"
+          ],
+          [
+            "`maskImageOnBlack`",
+            "`p*a`"
+          ],
+          [
+            "`maskImageOnWhite`",
+            "`p*a+1−a`"
+          ],
+          [
+            "`maskWhiteOnBlack`",
+            "`a`"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

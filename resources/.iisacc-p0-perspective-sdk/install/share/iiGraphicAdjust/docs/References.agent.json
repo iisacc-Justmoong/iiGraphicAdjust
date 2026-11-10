@@ -1,0 +1,694 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:46ee578206ff9e1e34ea3155c79fb54054cac72a27b1597c6a720cf0f686f598",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/References.md",
+    "sha256": "b6bfc6caa8c72518870f469e2771650c7fe0c7e62e2c15840fcf2825f8ee5e05",
+    "bytes": 6204,
+    "line_count": 58,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Photoshop adjustment reference and implementation scope",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Photoshop adjustment reference and implementation scope\n",
+      "level": 1,
+      "title": "Photoshop adjustment reference and implementation scope"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "Inspected on 2026-10-08 (Asia/Seoul). The user supplied [storytold/photocraft](https://github.com/storytold/photocraft) as a Rust Photoshop clone reference. The inspection is pinned to commit `5896f0b63e6f342e0311920b4d2a0ea5a94330fc`. The original 0.2 adjustment inspection did not run the upstream Rust project or Photoshop renderer. Version 0.4 includes a separately extracted Camera Raw Rust-kernel oracle; its limited scope is documented in [CameraRawFilter.md](CameraRawFilter.md). No full upstream test suite or Adobe render corpus was run.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "Adobe's [adjustment-layer list](https://helpx.adobe.com/ca/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/work-with-adjustment-and-fill-layers.html) and [color adjustment command reference](https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/color-adjustment-commands.html) were checked to establish the feature categories. These references describe behavior and purpose, not a public specification of Photoshop's exact processing algorithms.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "## Operation mapping\n",
+      "level": 2,
+      "title": "Operation mapping"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "PhotoCraft registers 16 layer adjustment kinds and 6 additional Image > Adjustments commands. The SDK provides the following corresponding operation categories, plus the three automatic Image-menu commands.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "table",
+      "start_line": 11,
+      "end_line": 37,
+      "raw": "| Reference command | SDK API | Contract documentation |\n| --- | --- | --- |\n| Brightness/Contrast | `brightnessContrast` | Tone.md |\n| Levels | `levels` | Tone.md |\n| Curves | `curves` | Tone.md |\n| Exposure | `exposure` | Tone.md |\n| Vibrance | `vibrance` | Color.md |\n| Hue/Saturation | `hueSaturation` | Color.md |\n| Color Balance | `colorBalance` | Color.md |\n| Black & White | `blackAndWhite` | Color.md |\n| Photo Filter | `photoFilter` | Color.md |\n| Channel Mixer | `channelMixer` | Color.md |\n| Invert | `invert` | Tone.md |\n| Posterize | `posterize` | Tone.md |\n| Threshold | `threshold` | Tone.md |\n| Gradient Map | `gradientMap` | Mapping.md |\n| Selective Color | `selectiveColor` | Color.md |\n| Color Lookup | `colorLookup`, `parseCubeLut` | Mapping.md |\n| Desaturate | `desaturate` | Color.md |\n| Equalize | `equalize` | Tone.md |\n| Shadows/Highlights | `shadowsHighlights` | Tone.md |\n| Replace Color | `replaceColor` | Color.md |\n| Match Color | `matchColor` | Color.md |\n| HDR Toning | `hdrToning` (ExposureGamma, HighlightCompression) | Mapping.md |\n| Auto Tone / Auto Levels | `autoLevels` | Tone.md |\n| Auto Contrast | `autoContrast` | Tone.md |\n| Auto Color | `autoColor` | Tone.md |\n",
+      "columns": [
+        "Reference command",
+        "SDK API",
+        "Contract documentation"
+      ],
+      "rows": [
+        [
+          "Brightness/Contrast",
+          "`brightnessContrast`",
+          "Tone.md"
+        ],
+        [
+          "Levels",
+          "`levels`",
+          "Tone.md"
+        ],
+        [
+          "Curves",
+          "`curves`",
+          "Tone.md"
+        ],
+        [
+          "Exposure",
+          "`exposure`",
+          "Tone.md"
+        ],
+        [
+          "Vibrance",
+          "`vibrance`",
+          "Color.md"
+        ],
+        [
+          "Hue/Saturation",
+          "`hueSaturation`",
+          "Color.md"
+        ],
+        [
+          "Color Balance",
+          "`colorBalance`",
+          "Color.md"
+        ],
+        [
+          "Black & White",
+          "`blackAndWhite`",
+          "Color.md"
+        ],
+        [
+          "Photo Filter",
+          "`photoFilter`",
+          "Color.md"
+        ],
+        [
+          "Channel Mixer",
+          "`channelMixer`",
+          "Color.md"
+        ],
+        [
+          "Invert",
+          "`invert`",
+          "Tone.md"
+        ],
+        [
+          "Posterize",
+          "`posterize`",
+          "Tone.md"
+        ],
+        [
+          "Threshold",
+          "`threshold`",
+          "Tone.md"
+        ],
+        [
+          "Gradient Map",
+          "`gradientMap`",
+          "Mapping.md"
+        ],
+        [
+          "Selective Color",
+          "`selectiveColor`",
+          "Color.md"
+        ],
+        [
+          "Color Lookup",
+          "`colorLookup`, `parseCubeLut`",
+          "Mapping.md"
+        ],
+        [
+          "Desaturate",
+          "`desaturate`",
+          "Color.md"
+        ],
+        [
+          "Equalize",
+          "`equalize`",
+          "Tone.md"
+        ],
+        [
+          "Shadows/Highlights",
+          "`shadowsHighlights`",
+          "Tone.md"
+        ],
+        [
+          "Replace Color",
+          "`replaceColor`",
+          "Color.md"
+        ],
+        [
+          "Match Color",
+          "`matchColor`",
+          "Color.md"
+        ],
+        [
+          "HDR Toning",
+          "`hdrToning` (ExposureGamma, HighlightCompression)",
+          "Mapping.md"
+        ],
+        [
+          "Auto Tone / Auto Levels",
+          "`autoLevels`",
+          "Tone.md"
+        ],
+        [
+          "Auto Contrast",
+          "`autoContrast`",
+          "Tone.md"
+        ],
+        [
+          "Auto Color",
+          "`autoColor`",
+          "Tone.md"
+        ]
+      ]
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "This is category coverage, not all options or exact Photoshop pixel parity. Curves uses documented linear segments instead of Photoshop's spline. Levels/Posterize do not reproduce document-depth quantization. Shadow/Highlights uses tonal masks without spatial adaptation. Match Color uses alpha-weighted linear RGB statistics rather than Photoshop's proprietary matching. HDR Toning has two global methods, not Local Adaptation or HDR histogram equalization. Color Lookup supports numeric tables and the documented `.cube` subset, not ICC or the reference application's other LUT file formats. RGB-derived Selective Color weights are not a CMYK print-separation engine.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "## Source inspection and attribution\n",
+      "level": 2,
+      "title": "Source inspection and attribution"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "Relevant pinned upstream files:\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "list",
+      "start_line": 45,
+      "end_line": 48,
+      "raw": "- [compose/src/adjust.rs](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/compose/src/adjust.rs): adjustment dispatch, levels/curves, hue ranges, blending-independent color math, gradient map and LUT interpolation.\n- [algo/src/tone.rs](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/tone.rs): shadows/highlights, replace/match color and local HDR toning.\n- [cms/src/lutfile.rs](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/cms/src/lutfile.rs): LUT row ordering and format conventions.\n- [engine/src/edit_cmds.rs](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/edit_cmds.rs): automatic corrections.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[compose/src/adjust.rs](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/compose/src/adjust.rs): adjustment dispatch, levels/curves, hue ranges, blending-independent color math, gradient map and LUT interpolation.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[algo/src/tone.rs](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/tone.rs): shadows/highlights, replace/match color and local HDR toning.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[cms/src/lutfile.rs](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/cms/src/lutfile.rs): LUT row ordering and format conventions.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[engine/src/edit_cmds.rs](https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/edit_cmds.rs): automatic corrections.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "The C++ implementation was written for iiGraphicAdjust's existing detached/normalized pixel contract. No Rust runtime, GUI, branding or other upstream dependencies are incorporated. The reference itself calls its processing formulas approximations; it is not a guarantee of Photoshop behavior. The upstream MIT license is preserved in `third_party/photocraft/LICENSE-MIT` and installed with this package as reference attribution. This does not change the license of unrelated SDK code or add a runtime dependency.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "## Current Adobe features beyond this reference\n",
+      "level": 2,
+      "title": "Current Adobe features beyond this reference"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "Version 0.3 adds separate Lightroom-style Light/Color/Clarity/Dehaze/Grain operations, selected from [LightCraft source](https://github.com/storytold/lightcraft/tree/629e39380e296f588c64cd9c0053a8edc3528f36). See [Lightroom development coverage](Lightroom.md). This adds processing APIs and does not prove current Photoshop adjustment-layer or Adobe pixel parity.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "Current Adobe documentation also describes newer [Light](https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/adjust-image-lighting-with-light.html), [Color and vibrance](https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/correct-color-balance-with-color-and-vibrance.html), [Clarity and Dehaze](https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/adjust-contrast-with-clarity-and-dehaze.html), and [Grain](https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/enhance-texture-with-grain.html) layers beyond PhotoCraft's adjustment enum. iiGraphicAdjust 0.2.0 does not claim complete current Photoshop layer/dialog coverage. Existing exposure, contrast, tonal masks, temperature/tint, vibrance/saturation and noise can be composed by a host, but do not reproduce those newer layer definitions.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "Version 0.4 re-inspects both repositories and implements their executable filtering paths. The complete named API/command mapping is in [Filters.md](Filters.md), including smart-filter aliases, looks/presets, retouch, resampling and diagnostics.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Photoshop adjustment reference and implementation scope",
+      "anchor": "photoshop-adjustment-reference-and-implementation-scope",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Operation mapping",
+      "anchor": "operation-mapping",
+      "start_line": 7
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Source inspection and attribution",
+      "anchor": "source-inspection-and-attribution",
+      "start_line": 41
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Current Adobe features beyond this reference",
+      "anchor": "current-adobe-features-beyond-this-reference",
+      "start_line": 52
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000013",
+        "line": 39,
+        "text": "This is category coverage, not all options or exact Photoshop pixel parity. Curves uses documented linear segments instead of Photoshop's spline. Levels/Posterize do not reproduce document-depth quantization. Shadow/Highlights uses tonal masks without spatial adaptation. Match Color uses alpha-weighted linear RGB statistics rather than Photoshop's proprietary matching. HDR Toning has two global methods, not Local Adaptation or HDR histogram equalization. Color Lookup supports numeric tables and the documented `.cube` subset, not ICC or the reference application's other LUT file formats. RGB-derived Selective Color weights are not a CMYK print-separation engine.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 56,
+        "text": "Current Adobe documentation also describes newer [Light](https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/adjust-image-lighting-with-light.html), [Color and vibrance](https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/correct-color-balance-with-color-and-vibrance.html), [Clarity and Dehaze](https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/adjust-contrast-with-clarity-and-dehaze.html), and [Grain](https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/enhance-texture-with-grain.html) layers beyond PhotoCraft's adjustment enum. iiGraphicAdjust 0.2.0 does not claim complete current Photoshop layer/dialog coverage. Existing exposure, contrast, tonal masks, temperature/tint, vibrance/saturation and noise can be composed by a host, but do not reproduce those newer layer definitions.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "storytold/photocraft",
+        "target": "https://github.com/storytold/photocraft",
+        "kind": "external",
+        "line": 3
+      },
+      {
+        "block_id": "b000003",
+        "label": "CameraRawFilter.md",
+        "target": "CameraRawFilter.md",
+        "kind": "relative",
+        "line": 3
+      },
+      {
+        "block_id": "b000005",
+        "label": "adjustment-layer list",
+        "target": "https://helpx.adobe.com/ca/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/work-with-adjustment-and-fill-layers.html",
+        "kind": "external",
+        "line": 5
+      },
+      {
+        "block_id": "b000005",
+        "label": "color adjustment command reference",
+        "target": "https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/color-adjustment-commands.html",
+        "kind": "external",
+        "line": 5
+      },
+      {
+        "block_id": "b000019",
+        "label": "compose/src/adjust.rs",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/compose/src/adjust.rs",
+        "kind": "external",
+        "line": 45
+      },
+      {
+        "block_id": "b000019",
+        "label": "algo/src/tone.rs",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/algo/src/tone.rs",
+        "kind": "external",
+        "line": 46
+      },
+      {
+        "block_id": "b000019",
+        "label": "cms/src/lutfile.rs",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/cms/src/lutfile.rs",
+        "kind": "external",
+        "line": 47
+      },
+      {
+        "block_id": "b000019",
+        "label": "engine/src/edit_cmds.rs",
+        "target": "https://github.com/storytold/photocraft/blob/5896f0b63e6f342e0311920b4d2a0ea5a94330fc/crates/engine/src/edit_cmds.rs",
+        "kind": "external",
+        "line": 48
+      },
+      {
+        "block_id": "b000025",
+        "label": "LightCraft source",
+        "target": "https://github.com/storytold/lightcraft/tree/629e39380e296f588c64cd9c0053a8edc3528f36",
+        "kind": "external",
+        "line": 54
+      },
+      {
+        "block_id": "b000025",
+        "label": "Lightroom development coverage",
+        "target": "Lightroom.md",
+        "kind": "relative",
+        "line": 54
+      },
+      {
+        "block_id": "b000027",
+        "label": "Light",
+        "target": "https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/adjust-image-lighting-with-light.html",
+        "kind": "external",
+        "line": 56
+      },
+      {
+        "block_id": "b000027",
+        "label": "Color and vibrance",
+        "target": "https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/correct-color-balance-with-color-and-vibrance.html",
+        "kind": "external",
+        "line": 56
+      },
+      {
+        "block_id": "b000027",
+        "label": "Clarity and Dehaze",
+        "target": "https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/adjust-contrast-with-clarity-and-dehaze.html",
+        "kind": "external",
+        "line": 56
+      },
+      {
+        "block_id": "b000027",
+        "label": "Grain",
+        "target": "https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/enhance-texture-with-grain.html",
+        "kind": "external",
+        "line": 56
+      },
+      {
+        "block_id": "b000029",
+        "label": "Filters.md",
+        "target": "Filters.md",
+        "kind": "relative",
+        "line": 58
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000011",
+        "columns": [
+          "Reference command",
+          "SDK API",
+          "Contract documentation"
+        ],
+        "rows": [
+          [
+            "Brightness/Contrast",
+            "`brightnessContrast`",
+            "Tone.md"
+          ],
+          [
+            "Levels",
+            "`levels`",
+            "Tone.md"
+          ],
+          [
+            "Curves",
+            "`curves`",
+            "Tone.md"
+          ],
+          [
+            "Exposure",
+            "`exposure`",
+            "Tone.md"
+          ],
+          [
+            "Vibrance",
+            "`vibrance`",
+            "Color.md"
+          ],
+          [
+            "Hue/Saturation",
+            "`hueSaturation`",
+            "Color.md"
+          ],
+          [
+            "Color Balance",
+            "`colorBalance`",
+            "Color.md"
+          ],
+          [
+            "Black & White",
+            "`blackAndWhite`",
+            "Color.md"
+          ],
+          [
+            "Photo Filter",
+            "`photoFilter`",
+            "Color.md"
+          ],
+          [
+            "Channel Mixer",
+            "`channelMixer`",
+            "Color.md"
+          ],
+          [
+            "Invert",
+            "`invert`",
+            "Tone.md"
+          ],
+          [
+            "Posterize",
+            "`posterize`",
+            "Tone.md"
+          ],
+          [
+            "Threshold",
+            "`threshold`",
+            "Tone.md"
+          ],
+          [
+            "Gradient Map",
+            "`gradientMap`",
+            "Mapping.md"
+          ],
+          [
+            "Selective Color",
+            "`selectiveColor`",
+            "Color.md"
+          ],
+          [
+            "Color Lookup",
+            "`colorLookup`, `parseCubeLut`",
+            "Mapping.md"
+          ],
+          [
+            "Desaturate",
+            "`desaturate`",
+            "Color.md"
+          ],
+          [
+            "Equalize",
+            "`equalize`",
+            "Tone.md"
+          ],
+          [
+            "Shadows/Highlights",
+            "`shadowsHighlights`",
+            "Tone.md"
+          ],
+          [
+            "Replace Color",
+            "`replaceColor`",
+            "Color.md"
+          ],
+          [
+            "Match Color",
+            "`matchColor`",
+            "Color.md"
+          ],
+          [
+            "HDR Toning",
+            "`hdrToning` (ExposureGamma, HighlightCompression)",
+            "Mapping.md"
+          ],
+          [
+            "Auto Tone / Auto Levels",
+            "`autoLevels`",
+            "Tone.md"
+          ],
+          [
+            "Auto Contrast",
+            "`autoContrast`",
+            "Tone.md"
+          ],
+          [
+            "Auto Color",
+            "`autoColor`",
+            "Tone.md"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

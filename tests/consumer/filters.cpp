@@ -40,6 +40,13 @@ int runFilterConsumer() {
     VanishingPointOptions vanishing;
     vanishing.planes = {VanishingPlane{MeshQuad{{{.5, .5}, {7.5, .5}, {7.5, 7.5}, {.5, 7.5}}}}};
     check(perspectiveWarp(image.view(), perspective), "perspectiveWarp");
+    const MeshQuad fullImage{{{0, 0}, {8, 0}, {8, 8}, {0, 8}}};
+    const auto identityCrop = perspectiveCrop(image.view(), fullImage, 8, 8);
+    check(identityCrop, "perspectiveCrop");
+    if (identityCrop && identityCrop->pixels != original) {
+        std::cerr << "Installed perspective crop changed an identity image\n";
+        ++failures;
+    }
     check(puppetWarp(image.view(), puppet), "puppetWarp");
     check(adaptiveWideAngle(image.view()), "adaptiveWideAngle");
     check(average(image.view()), "average");

@@ -1,0 +1,543 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:b1ccb8ce0c7c9f2871b25a3e228bf1efa090f1ede2e8564a7e4b05ffada3c439",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FiiGraphicAdjust",
+    "name": "iiGraphicAdjust",
+    "root": "SDK/iiGraphicAdjust",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/RenderFilters.md",
+    "sha256": "94fa455f60f423bbf2a3689f565367d25344056387171f8441e92e8cb94866c5",
+    "bytes": 9769,
+    "line_count": 57,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Render filters",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Render filters\n",
+      "level": 1,
+      "title": "Render filters"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "The nine APIs in `<iiGraphicAdjust/RenderFilters.h>` implement actual PhotoCraft render paths inspected at commit `5896f0b63e6f342e0311920b4d2a0ea5a94330fc`. Fibers, Lens Flare and Lighting Effects are in `crates/algo/src/render.rs`; photographic Relight is in `relight.rs`; Clouds and Difference Clouds are registered and implemented in `crates/engine/src/extra_cmds.rs`; Flame, Tree and Picture Frame are real seeded geometry renderers in `crates/algo/src/render2.rs`, registered by `crates/engine/src/render_cmds.rs`. They are not declarations or placeholders.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "Every API validates normalized finite straight sRGB RGBA, owns the returned `Image`, leaves the source unchanged and reports failures using `Result<Image>`. All render color math and compositing are encoded sRGB. Coordinates, bounds and seeds are image-local. Maximum coordinate extent per axis is 100,000,000 pixels, checked before integer conversions. Invalid options are rejected even when their branch is inactive.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "## Individual processing APIs\n",
+      "level": 2,
+      "title": "Individual processing APIs"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "table",
+      "start_line": 9,
+      "end_line": 16,
+      "raw": "| API | Contract | Processing |\n| --- | --- | --- |\n| `clouds` | Normalized foreground black/background white; uint32 seed 0 | Eight octaves of smooth value noise, base scale `clamp(long edge/4,16,512)`, range stretched between colors. Replaces RGB and coverage with the generated color. |\n| `differenceClouds` | Same options | Absolute per-channel difference between input and the cloud field; source coverage and fully hidden input values remain exact. |\n| `fibers` | Variance 16 and strength 4, each [1,64]; foreground/background and seed | Four anisotropic noise octaves plus fine column grain; variance sets cross-fiber frequency, strength stretches fibers vertically. Replaces color and coverage. |\n| `lensFlare` | Brightness 100%, [0,300]; center x/y 0.5, [-0.5,1.5]; Zoom/Prime35/Prime105/MoviePrime | Hot core, broad glow, angular rays, lens-specific ghosts, Prime35 ring or MoviePrime horizontal streak. Screen composite preserves alpha and white. Brightness zero returns the exact input. |\n| `lightingEffects` | Up to 64 typed `FilterLight`s; gloss/metallic/exposure/ambience [-100,100]; texture None/Red/Green/Blue/Alpha/Luminance; height [0,100], white-is-high boolean | Height-gradient surface normals; Spot cone/hotspot, Point radial attenuation or Infinite directional light; Lambertian color, gloss-based specular exponent, metallic tint, ambient and exposure. |\n| `relight` | Angle 45°, [-180,180]; elevation 40°, [0,90]; intensity 40 and ambient 55, [0,100]; warmth 0, [-100,100]; softness 25, [1,100] | Alpha-weighted blurred Rec.709 encoded luminance estimates shading. Finite differences at the blur scale produce normals; a replacement Lambertian lamp multiplies recovered albedo and warmth tint. Intensity zero is exact identity. |\n",
+      "columns": [
+        "API",
+        "Contract",
+        "Processing"
+      ],
+      "rows": [
+        [
+          "`clouds`",
+          "Normalized foreground black/background white; uint32 seed 0",
+          "Eight octaves of smooth value noise, base scale `clamp(long edge/4,16,512)`, range stretched between colors. Replaces RGB and coverage with the generated color."
+        ],
+        [
+          "`differenceClouds`",
+          "Same options",
+          "Absolute per-channel difference between input and the cloud field; source coverage and fully hidden input values remain exact."
+        ],
+        [
+          "`fibers`",
+          "Variance 16 and strength 4, each [1,64]; foreground/background and seed",
+          "Four anisotropic noise octaves plus fine column grain; variance sets cross-fiber frequency, strength stretches fibers vertically. Replaces color and coverage."
+        ],
+        [
+          "`lensFlare`",
+          "Brightness 100%, [0,300]; center x/y 0.5, [-0.5,1.5]; Zoom/Prime35/Prime105/MoviePrime",
+          "Hot core, broad glow, angular rays, lens-specific ghosts, Prime35 ring or MoviePrime horizontal streak. Screen composite preserves alpha and white. Brightness zero returns the exact input."
+        ],
+        [
+          "`lightingEffects`",
+          "Up to 64 typed `FilterLight`s; gloss/metallic/exposure/ambience [-100,100]; texture None/Red/Green/Blue/Alpha/Luminance; height [0,100], white-is-high boolean",
+          "Height-gradient surface normals; Spot cone/hotspot, Point radial attenuation or Infinite directional light; Lambertian color, gloss-based specular exponent, metallic tint, ambient and exposure."
+        ],
+        [
+          "`relight`",
+          "Angle 45°, [-180,180]; elevation 40°, [0,90]; intensity 40 and ambient 55, [0,100]; warmth 0, [-100,100]; softness 25, [1,100]",
+          "Alpha-weighted blurred Rec.709 encoded luminance estimates shading. Finite differences at the blur scale produce normals; a replacement Lambertian lamp multiplies recovered albedo and warmth tint. Intensity zero is exact identity."
+        ]
+      ]
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "Each `FilterLight` validates kind Spot/Point/Infinite, normalized x/y/target coordinates [-2,3], z [0,10] short-edge units, angle [-180,180], elevation [0,90], normalized three-channel color, intensity [-100,100], cone [1,89], hotspot [0,100], radius [0.01,10] short-edge units. These fields describe separate light branches, so cone/hotspot apply to Spot, radius to Point, angle/elevation to Infinite. Defaults match the source command's light.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "Relight's blur sigma is `clamp(softness/100 * 0.08 * short edge,2,96)`. Its finite difference step is rounded sigma, bounded to [1,32], preventing directional shading from disappearing on larger images. The SDK excludes hidden RGB with alpha-normalized whole-image blur. Any positive accumulated alpha contributes to the normalized field, including representable coverage below `1e-12`; uniform alpha scaling therefore preserves the computed shading. Broad Gaussian windows use the SDK's variance-matched box approximation; the reference uses exact Gaussian on a grown tile and has an 8-million-pixel temporary guard. The SDK does not silently return identity when that reference guard would have fired.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "## Procedural render APIs\n",
+      "level": 2,
+      "title": "Procedural render APIs"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "Flame, Tree and Picture Frame convert their typed options into antialiased tapered capsules and shaded ellipses, then composite the generated premultiplied paint over the input. They can therefore paint into transparent areas. The implementation retains the reference's seeded SplitMix64 stream, source-over/additive/maximum strand blending, and original geometric models. Colors and final coverage are bounded to the SDK's normalized contract; intermediate additive light may exceed one. Generated or composited pixels whose coverage rounds down to zero float alpha have canonical black RGB; untouched transparent source pixels retain their exact value. The reference's tiled raster infrastructure is not imported.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "heading",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "### Flame\n",
+      "level": 3,
+      "title": "Flame"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "`FlameOptions` supports all six source placements: OneAlongPath, MultipleAlongPath, PathDirections, VariousLengths, CandleLight, OneDirection. Options:\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "list",
+      "start_line": 30,
+      "end_line": 35,
+      "raw": "- Length 150 px and width 40 px, each [1,1000]; interval 60 px [1,1000]; angle 0° [-180,180]. Angle applies to OneDirection; length controls generated straight flames and candles, while a supplied OneAlongPath spine sets that flame's length.\n- RandomizeLength false; AdjustIntervalForLoops true, for multiple placements.\n- Optional normalized custom RGBA color; absent selects the five-stop natural flame gradient.\n- Turbulence 25, jaggedness 25, opacity 75 and bottomAlignment 20, each [0,100]; flameLines 20 [1,100].\n- Styles Normal/Violent/Flat; shapes Parallel/ToCenter/Spread/Oval/Pointed; RandomizeShapes false; seed 0; quality 2 [0,4]. CandleLight uses the source's oval shape and reduced turbulence.\n- Up to 256 flattened paths, at most 4,096 total points; point coordinates [-1,000,000,1,000,000] pixels. Empty paths select the source default arc, or a default candle origin. Complexity exceeding the documented 500,000 primitive estimate is rejected; a generated default path that exceeds the same budget reports allocation failure.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Length 150 px and width 40 px, each [1,1000]; interval 60 px [1,1000]; angle 0° [-180,180]. Angle applies to OneDirection; length controls generated straight flames and candles, while a supplied OneAlongPath spine sets that flame's length.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "RandomizeLength false; AdjustIntervalForLoops true, for multiple placements.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Optional normalized custom RGBA color; absent selects the five-stop natural flame gradient.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Turbulence 25, jaggedness 25, opacity 75 and bottomAlignment 20, each [0,100]; flameLines 20 [1,100].",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Styles Normal/Violent/Flat; shapes Parallel/ToCenter/Spread/Oval/Pointed; RandomizeShapes false; seed 0; quality 2 [0,4]. CandleLight uses the source's oval shape and reduced turbulence.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Up to 256 flattened paths, at most 4,096 total points; point coordinates [-1,000,000,1,000,000] pixels. Empty paths select the source default arc, or a default candle origin. Complexity exceeding the documented 500,000 primitive estimate is rejected; a generated default path that exceeds the same budget reports allocation failure.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "The flame model uses arc-length spines, two-octave sway, shorter outer lanes, per-line flicker, base fade and tapered strand tips. Multiple closed-path placement can spread the interval evenly. Opacity zero is an exact identity.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "### Tree\n",
+      "level": 3,
+      "title": "Tree"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "`TreeOptions` includes all 34 source tree types through 1-based `baseTreeType`, and lightDirection [1,5] from left to right via overhead. The types are Oak, Maple, Pine, Palm, Birch, Weeping Willow, Cherry Blossom, Bamboo, Cypress, Baobab, Ginkgo, Spruce, Bare Winter Tree, Apple, Acacia, Poplar, Elm, Magnolia, Banana, Bonsai, Jacaranda, Autumn Maple, Golden Autumn, Olive, Fir, Cedar, Lemon, Wisteria, Young Sapling, Dead Tree, Coconut Palm, Shrub, Plum Blossom, Cloud Pine.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "LeavesAmount 50 [0,100], LeavesSize 100 [0,200], BranchesHeight 100 [50,300], BranchesThickness 100 [50,200]; defaultLeaves true, customBranchColor false, normalized leaf/bark colors; flatShading false; seed 0; base x=0.5/y=0.95, each [-2,3]; height size=0.8 [0.05,2] times canvas height.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "The source type table supplies four architectural models: recursive branching, conifer whorls, palm fronds, bamboo stalks. Per-type spread, droop, taper, bark, leaf form and fruit/blossom accents are retained. Darker leaves paint first. The SDK applies zero leaf size/amount consistently to palm foliage and zero leaf size to other leaf shapes, where the source floors some leaves to a minimum size. Custom leaf/bark alpha is retained by this SDK, whereas the reference's shading helper makes those colors opaque.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "heading",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "### Picture Frame\n",
+      "level": 3,
+      "title": "Picture Frame"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "`PictureFrameOptions` provides VineWithFlowers, VineWithLeaves, Ivy, Roses, Daisies, Berries, Bamboo, Waves, Zigzag, Dots, Rope, Scallops, DoubleLine, Snowflakes, Stars, Hearts. Margin 4% [0,30] of short edge; size 50, arrangement 50, thickness 30, each [1,100]; lines 1 [1,5]; fade 0 [0,100]; normalized vine/flower/leaf colors; seed 0.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "The renderer walks a clockwise rectangle by arc length, places flowers/leaves/ornaments or parallel line patterns, then fades ornaments according to how far their primitive anchor reaches inward. `lines` applies to Waves, Zigzag, DoubleLine and Rope, as in the reference. Custom color alpha is retained; this corrects the reference shade helper's unconditional opaque alpha. Degenerate inset line rectangles are bounded to a positive extent for small canvases. The exact capsule/ellipse count of the selected recipe is computed before allocating or generating geometry. More than 500,000 primitives returns `InvalidParameter`; fade and transparent colors do not waive this budget. This bounds long thin canvases and dense ornament spacing without changing accepted recipes.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "heading",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "## Scope and verification\n",
+      "level": 2,
+      "title": "Scope and verification"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "These APIs implement source-derived independent looks, not exact Adobe output. They contain no path editor, document selection, layer creation, undo history, smart-object storage, color management, RAW decode, GPU or external file I/O. Hosts supply flattened Flame paths and call the filter on an image; layer/document services remain above this SDK. The same seed, image size and options give deterministic results.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "`tests/render_filters.cpp` has `noise`, `light`, `procedural`, and `validation` modes. It checks independent absolute-difference, ambient-light, exposure, Lambertian and flat-field Relight numerical oracles; all four flare lenses; all six flame placements; all 34 tree types; all 16 frame designs; opacity, seed, leaf amount and fade semantics; hidden RGB isolation; nested option validation and thin images. Regression checks cover canonical generated alpha underflow, tiny-alpha Relight invariance, and all sixteen Picture Frame primitive-count budgets, including transparent colors and full fade. Both normal and ASan/UBSan standalone test executables were run during implementation. An Adobe renderer and the reference Rust executable were not run as pixel oracles.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Render filters",
+      "anchor": "render-filters",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Individual processing APIs",
+      "anchor": "individual-processing-apis",
+      "start_line": 7
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Procedural render APIs",
+      "anchor": "procedural-render-apis",
+      "start_line": 22
+    },
+    {
+      "block_id": "b000019",
+      "parent_id": "b000015",
+      "level": 3,
+      "title": "Flame",
+      "anchor": "flame",
+      "start_line": 26
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000015",
+      "level": 3,
+      "title": "Tree",
+      "anchor": "tree",
+      "start_line": 39
+    },
+    {
+      "block_id": "b000035",
+      "parent_id": "b000015",
+      "level": 3,
+      "title": "Picture Frame",
+      "anchor": "picture-frame",
+      "start_line": 47
+    },
+    {
+      "block_id": "b000041",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Scope and verification",
+      "anchor": "scope-and-verification",
+      "start_line": 53
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000039",
+        "line": 51,
+        "text": "The renderer walks a clockwise rectangle by arc length, places flowers/leaves/ornaments or parallel line patterns, then fades ornaments according to how far their primitive anchor reaches inward. `lines` applies to Waves, Zigzag, DoubleLine and Rope, as in the reference. Custom color alpha is retained; this corrects the reference shade helper's unconditional opaque alpha. Degenerate inset line rectangles are bounded to a positive extent for small canvases. The exact capsule/ellipse count of the selected recipe is computed before allocating or generating geometry. More than 500,000 primitives returns `InvalidParameter`; fade and transparent colors do not waive this budget. This bounds long thin canvases and dense ornament spacing without changing accepted recipes.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": [
+      {
+        "block_id": "b000009",
+        "columns": [
+          "API",
+          "Contract",
+          "Processing"
+        ],
+        "rows": [
+          [
+            "`clouds`",
+            "Normalized foreground black/background white; uint32 seed 0",
+            "Eight octaves of smooth value noise, base scale `clamp(long edge/4,16,512)`, range stretched between colors. Replaces RGB and coverage with the generated color."
+          ],
+          [
+            "`differenceClouds`",
+            "Same options",
+            "Absolute per-channel difference between input and the cloud field; source coverage and fully hidden input values remain exact."
+          ],
+          [
+            "`fibers`",
+            "Variance 16 and strength 4, each [1,64]; foreground/background and seed",
+            "Four anisotropic noise octaves plus fine column grain; variance sets cross-fiber frequency, strength stretches fibers vertically. Replaces color and coverage."
+          ],
+          [
+            "`lensFlare`",
+            "Brightness 100%, [0,300]; center x/y 0.5, [-0.5,1.5]; Zoom/Prime35/Prime105/MoviePrime",
+            "Hot core, broad glow, angular rays, lens-specific ghosts, Prime35 ring or MoviePrime horizontal streak. Screen composite preserves alpha and white. Brightness zero returns the exact input."
+          ],
+          [
+            "`lightingEffects`",
+            "Up to 64 typed `FilterLight`s; gloss/metallic/exposure/ambience [-100,100]; texture None/Red/Green/Blue/Alpha/Luminance; height [0,100], white-is-high boolean",
+            "Height-gradient surface normals; Spot cone/hotspot, Point radial attenuation or Infinite directional light; Lambertian color, gloss-based specular exponent, metallic tint, ambient and exposure."
+          ],
+          [
+            "`relight`",
+            "Angle 45°, [-180,180]; elevation 40°, [0,90]; intensity 40 and ambient 55, [0,100]; warmth 0, [-100,100]; softness 25, [1,100]",
+            "Alpha-weighted blurred Rec.709 encoded luminance estimates shading. Finite differences at the blur scale produce normals; a replacement Lambertian lamp multiplies recovered albedo and warmth tint. Intensity zero is exact identity."
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

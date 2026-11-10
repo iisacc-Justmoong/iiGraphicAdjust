@@ -463,6 +463,29 @@ void puppetTests() {
 void perspectiveTests() {
     const auto in = image();
     require(perspectiveWarp(in.view())->pixels == in.pixels, "Empty perspective not identity");
+    const MeshQuad full{{{0,0},{64,0},{64,48},{0,48}}};
+    const auto neutral=perspectiveCrop(in.view(),full,64,48);
+    require(neutral && neutral->pixels==in.pixels,"Perspective crop identity must preserve hidden RGB");
+    auto tile=image(8,8);for(auto& p:tile.pixels)p.a=1;
+    const MeshQuad rectangle{{{2,1},{6,1},{6,5},{2,5}}};
+    auto cut=perspectiveCrop(tile.view(),rectangle,4,4,MeshInterpolation::Nearest);
+    require(cut && cut->width==4 && cut->height==4,"Perspective crop dimensions incorrect");
+    for(std::size_t y=0;y<4;++y)for(std::size_t x=0;x<4;++x)
+        require(cut->pixels[y*4+x]==tile.pixels[(y+1)*8+x+2],"Axis-aligned crop pixels differ");
+    auto oracle=image(100,100);for(auto& p:oracle.pixels)p.a=1;
+    const MeshQuad trapezoid{{{20,0},{80,0},{100,100},{0,100}}};
+    auto cropCenter=perspectiveCrop(oracle.view(),trapezoid,1,1,MeshInterpolation::Bilinear);
+    require(cropCenter && std::abs(cropCenter->pixels[0].r-.495)<1e-6 && std::abs(cropCenter->pixels[0].g-.37)<1e-6,
+            "Perspective crop inverse homography center incorrect");
+    Image cropAlpha{2,1,{{1,0,0,1},{0,0,1,0}}};const MeshQuad strip{{{0,0},{2,0},{2,1},{0,1}}};
+    auto cropMixed=perspectiveCrop(cropAlpha.view(),strip,1,1,MeshInterpolation::Bilinear);
+    require(cropMixed && std::abs(cropMixed->pixels[0].a-.5)<1e-6 && cropMixed->pixels[0].r>.999 && cropMixed->pixels[0].b<.001,
+            "Transparent source RGB leaked through crop interpolation");
+    auto crossed=rectangle;std::swap(crossed[1],crossed[2]);auto outside=rectangle;outside[0][0]=-1;
+    require(!perspectiveCrop(tile.view(),crossed,4,4) && !perspectiveCrop(tile.view(),outside,4,4) &&
+            !perspectiveCrop(tile.view(),rectangle,0,4) && !perspectiveCrop(tile.view(),rectangle,65537,1024) &&
+            !perspectiveCrop(tile.view(),rectangle,4,4,static_cast<MeshInterpolation>(999)),
+            "Invalid perspective crop must be rejected");
     const MeshQuad source{{{0, 0}, {100, 0}, {100, 100}, {0, 100}}},
         destination{{{20, 0}, {80, 0}, {100, 100}, {0, 100}}};
     PerspectiveWarpOptions o;

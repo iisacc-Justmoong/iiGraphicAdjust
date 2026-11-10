@@ -119,3 +119,21 @@ A paste maps its source rectangle into the selected plane's metric coordinates, 
 Independent perspective oracles check all quad corners and a known trapezoid's exact center `(50,37.5)`, linked-edge continuity, straighten behavior and a premultiplied fractional-translation alpha case. Vanishing tests check source-aspect-preserving paste, plane clipping, a projected tilted plane's 3-D tear-off/shared edge and known metric clone transfer. All five operations check neutral identity, finite normalized output, deterministic replay, hidden RGB isolation, malformed input/controls and thin images. These are source/SDK and numerical guarantees; no Adobe screenshot parity, extended-document-canvas output, editor interaction, other-platform runtime or RAW camera-metadata workflow is claimed.
 
 The validation selection checks all four camera models with subnormal focal lengths and three crop factors, both with and without a line constraint. It verifies finite geometry/constraint coordinates, normalized output, exact unconstrained identity and structured projection errors, including the fisheye overflow and focal-product-underflow regressions.
+
+
+## Perspective crop
+
+`perspectiveCrop` rectifies a strictly convex, in-bounds source quadrilateral to a caller-selected
+output width and height using the same continuous homography as the mesh tools. Every output pixel
+center is mapped back into the input; nearest, bilinear and bicubic sampling use premultiplied alpha
+and repeat the edge pixels at the image boundary. A full-image, same-size crop returns an exact
+copy, including hidden RGB. The output is detached; input pixels are not changed.
+
+Zero, overflowing or greater-than-64MP output, nonfinite or out-of-bounds corners, crossed or
+degenerate quadrilaterals, a projective pole and unsupported interpolation are rejected before
+publishing any pixels. This API is a raster operation: document layers, masks, animation, history,
+UI and color profiles remain the caller's responsibility.
+
+The installed SDK places its MIT license and the Photocraft and Lightcraft MIT notices under
+`share/licenses/iiGraphicAdjust`; applications that distribute the static library must include
+these notices with their bundle or package.
