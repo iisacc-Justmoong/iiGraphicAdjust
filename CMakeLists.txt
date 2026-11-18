@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 project(iiGraphicAdjust VERSION 0.6.2 LANGUAGES CXX)
+include(./cmake/ModuleImports.cmake)
 if(UNIX AND PROJECT_IS_TOP_LEVEL)
     include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/ResourceLinks.cmake")
     iiGraphicAdjust_compat_links("${CMAKE_CURRENT_SOURCE_DIR}/resources" "${CMAKE_CURRENT_BINARY_DIR}")
