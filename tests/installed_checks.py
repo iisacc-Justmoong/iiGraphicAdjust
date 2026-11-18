@@ -10,11 +10,17 @@ import ii_file_provider as provider
 
 
 def redirect_manifest(content, build, workspace):
+    found = 0
     for name in ("install_local_manifest.txt", "${CMAKE_INSTALL_MANIFEST}"):
         old = build.as_posix() + "/" + name
-        if content.count(old) != 1:
+        count = content.count(old)
+        if count > 1:
             raise ValueError("Cannot safely redirect the installation manifest")
-        content = content.replace(old, workspace.as_posix() + "/" + name)
+        if count == 1:
+            content = content.replace(old, workspace.as_posix() + "/" + name)
+            found += 1
+    if found == 0:
+        raise ValueError("Cannot safely redirect the installation manifest")
     return content
 
 
@@ -59,12 +65,26 @@ def main():
     before = manifest.read_bytes() if manifest.is_file() else None
     subprocess.run([args.cmake, "-DCMAKE_INSTALL_LOCAL_ONLY=ON", "-DCMAKE_INSTALL_PREFIX=" + str(prefix),
                     "-DCMAKE_INSTALL_CONFIG_NAME=" + args.config, "-P", str(private_script)], env=env, check=True)
-    licenses = (("LICENSE", "LICENSE"), ("third_party/photocraft/LICENSE-MIT", "photocraft/LICENSE-MIT"),
+    license_text = (source / "LICENSE").read_text(encoding="utf-8")
+    if "Apache License" not in license_text or "Version 2.0, January 2004" not in license_text:
+        raise RuntimeError("LICENSE is not the Apache License, Version 2.0")
+    notice_text = (source / "NOTICE").read_text(encoding="utf-8")
+    if "Copyright (c) 2026 iisacc" not in notice_text:
+        raise RuntimeError("NOTICE is missing Copyright (c) 2026 iisacc")
+    licenses = (("LICENSE", "LICENSE"), ("NOTICE", "NOTICE"),
+                ("third_party/photocraft/LICENSE-MIT", "photocraft/LICENSE-MIT"),
                 ("third_party/lightcraft/LICENSE-MIT", "lightcraft/LICENSE-MIT"))
     for original, installed in licenses:
         actual = prefix / "share/licenses/iiGraphicAdjust" / installed
         if not actual.is_file() or hashlib.sha256(actual.read_bytes()).digest() != hashlib.sha256((source / original).read_bytes()).digest():
             raise RuntimeError("Installed license missing or different: " + installed)
+    libdir = "lib"
+    lib_match = re.search(r"^CMAKE_INSTALL_LIBDIR:[^=]*=(.*)$", cache, re.M)
+    if lib_match and lib_match[1]:
+        libdir = lib_match[1]
+    package_config = prefix / libdir / "cmake/iiGraphicAdjust/iiGraphicAdjustConfig.cmake"
+    if 'set(iiGraphicAdjust_SPDX_LICENSE "Apache-2.0")' not in package_config.read_text(encoding="utf-8"):
+        raise RuntimeError("Installed package config does not export iiGraphicAdjust_SPDX_LICENSE=Apache-2.0")
     if args.mode in ("consumer-build", "consumer"):
         for name in ("include/iiGraphicAdjust/Objects.h", "include/iiGraphicAdjust/Operation.h",
                      "include/iiGraphicAdjust/CorrectionExtensions.h", "include/iiGraphicAdjust/objects/OwnedResourceObjects.h",

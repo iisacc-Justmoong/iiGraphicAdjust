@@ -134,6 +134,6 @@ degenerate quadrilaterals, a projective pole and unsupported interpolation are r
 publishing any pixels. This API is a raster operation: document layers, masks, animation, history,
 UI and color profiles remain the caller's responsibility.
 
-The installed SDK places its MIT license and the Photocraft and Lightcraft MIT notices under
+The installed SDK places its Apache-2.0 license, NOTICE, and the Photocraft and Lightcraft MIT notices under
 `share/licenses/iiGraphicAdjust`; applications that distribute the static library must include
 these notices with their bundle or package.

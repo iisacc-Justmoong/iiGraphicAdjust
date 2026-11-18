@@ -106,7 +106,7 @@ Result<Image> addNoise(ImageView image,const NoiseOptions& options) {
         for (std::size_t i=0;i<result.pixels.size();++i) {
             auto& p=result.pixels[i];
             if (p.a==0) continue;
-            auto state=options.seed+std::uint64_t(i)*0x9e3779b97f4a7c15ULL;
+            std::uint64_t state=options.seed+std::uint64_t(i)*0x9e3779b97f4a7c15ULL;
             state=next(state); // Hash each pixel before drawing its independent channel sequence.
             const double nr=options.amount*random(state,options.distribution);
             const double ng=options.monochromatic ? nr : options.amount*random(state,options.distribution);

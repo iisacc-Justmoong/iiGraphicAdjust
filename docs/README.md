@@ -20,6 +20,7 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/Filters.md`](Filters.md) | [JSON](Filters.agent.json) |
 | [`docs/GalleryFilters.md`](GalleryFilters.md) | [JSON](GalleryFilters.agent.json) |
 | [`docs/LensFilter.md`](LensFilter.md) | [JSON](LensFilter.agent.json) |
+| [`docs/License.md`](License.md) | [JSON](License.agent.json) |
 | [`docs/LightcraftFilters.md`](LightcraftFilters.md) | [JSON](LightcraftFilters.agent.json) |
 | [`docs/Lightroom.md`](Lightroom.md) | [JSON](Lightroom.agent.json) |
 | [`docs/LocalCorrections.md`](LocalCorrections.md) | [JSON](LocalCorrections.agent.json) |
