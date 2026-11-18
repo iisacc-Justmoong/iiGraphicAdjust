@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 project(iiGraphicAdjust VERSION 0.6.2 LANGUAGES CXX)
+set(iiGraphicAdjust_SPDX_LICENSE "Apache-2.0")
 if(UNIX AND PROJECT_IS_TOP_LEVEL)
     include("${CMAKE_CURRENT_SOURCE_DIR}/cmake/ResourceLinks.cmake")
     iiGraphicAdjust_compat_links("${CMAKE_CURRENT_SOURCE_DIR}/resources" "${CMAKE_CURRENT_BINARY_DIR}")
@@ -155,7 +156,7 @@ write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/iiGraphicAdjustCon
     VERSION ${PROJECT_VERSION} COMPATIBILITY SameMinorVersion)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/iiGraphicAdjustConfig.cmake"
     "${CMAKE_CURRENT_BINARY_DIR}/iiGraphicAdjustConfigVersion.cmake" DESTINATION "${_package_dir}")
-install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/iiGraphicAdjust)
+install(FILES LICENSE NOTICE DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/iiGraphicAdjust)
 install(FILES third_party/photocraft/LICENSE-MIT DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/iiGraphicAdjust/photocraft)
 install(FILES third_party/lightcraft/LICENSE-MIT DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/iiGraphicAdjust/lightcraft)
 install(FILES README.md DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust)

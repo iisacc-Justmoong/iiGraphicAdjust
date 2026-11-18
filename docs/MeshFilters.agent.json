@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/MeshFilters.md",
-    "sha256": "a5507c95a9304db1417f3b124fe32cdfdf35ae3115b3d2fb3e1f1c1be9e8a053",
-    "bytes": 17535,
+    "sha256": "e5a1c8029b590c0a73d04c9ce2354dc6362d10dc5ed283dd3b930a632aa76384",
+    "bytes": 17551,
     "line_count": 139,
     "encoding": "utf-8",
     "language": "en"
@@ -811,7 +811,7 @@
       "kind": "paragraph",
       "start_line": 137,
       "end_line": 139,
-      "raw": "The installed SDK places its MIT license and the Photocraft and Lightcraft MIT notices under\n`share/licenses/iiGraphicAdjust`; applications that distribute the static library must include\nthese notices with their bundle or package.\n"
+      "raw": "The installed SDK places its Apache-2.0 license, NOTICE, and the Photocraft and Lightcraft MIT notices under\n`share/licenses/iiGraphicAdjust`; applications that distribute the static library must include\nthese notices with their bundle or package.\n"
     }
   ],
   "outline": [

@@ -14,14 +14,14 @@
       "document_id": "urn:iisacc:document:eceba21bf8dda3d788a34109f00d0236cb2c3ff825292e6f5f414f26039ec097",
       "source": "AGENT.md",
       "agent_json": "docs/entrypoints/AGENT.agent.json",
-      "source_sha256": "9c1d55a7256216389a8df9ffcc7b1b7320cd46cbabfaba839ba534e046294fb0",
+      "source_sha256": "808e3046137ebb64288c0f1f9f17312909b461945868f6171db11b888f0dc28e",
       "role": "instructions"
     },
     {
       "document_id": "urn:iisacc:document:0b079fc9bae7645d722a81a3006638badfc25439fb8a916f75b6669470c2619d",
       "source": "README.md",
       "agent_json": "docs/entrypoints/README.agent.json",
-      "source_sha256": "aa05a32345c9ceb5f76ac8efd8abbdb82da90501e5326849e9ac33862f535fa4",
+      "source_sha256": "fffb6ccc8bfbbc3128ee1daea6eaf45f0da06fac3d1c05562b4364cd7e8a0d19",
       "role": "overview"
     },
     {
@@ -102,6 +102,13 @@
       "role": "guide"
     },
     {
+      "document_id": "urn:iisacc:document:8b07696d50ab51c615335ff594e65537f419dba0a68bc52cd767f833a5bea355",
+      "source": "docs/License.md",
+      "agent_json": "docs/License.agent.json",
+      "source_sha256": "75558471151b07d8d85f9a9fbddaae46c697825c740dc7df181eb5f59643ee92",
+      "role": "guide"
+    },
+    {
       "document_id": "urn:iisacc:document:67b3b8a3539e141699cdff00c0f13cc8ff0549fd0ddbd5a85fba43de2fd30947",
       "source": "docs/LightcraftFilters.md",
       "agent_json": "docs/LightcraftFilters.agent.json",
@@ -140,7 +147,7 @@
       "document_id": "urn:iisacc:document:4f908d4a0d2be517618ee1351a595f77164ff420ed1053195d5a2bc998f61866",
       "source": "docs/MeshFilters.md",
       "agent_json": "docs/MeshFilters.agent.json",
-      "source_sha256": "a5507c95a9304db1417f3b124fe32cdfdf35ae3115b3d2fb3e1f1c1be9e8a053",
+      "source_sha256": "e5a1c8029b590c0a73d04c9ce2354dc6362d10dc5ed283dd3b930a632aa76384",
       "role": "guide"
     },
     {
@@ -189,7 +196,7 @@
       "document_id": "urn:iisacc:document:1285fde61fbe7dae994eb1ec3fa6834b225034ca5cce54092e95ed37588be789",
       "source": "docs/README.md",
       "agent_json": "docs/README.agent.json",
-      "source_sha256": "ea5bf47842259082206af94388b0be41d02e3c6ed2d18a03313534e63918f8c1",
+      "source_sha256": "3add87512a07e5a34ed7c5608b7a7d8cca84c0f07133e5532dc64d75056b0d7f",
       "role": "overview"
     },
     {
