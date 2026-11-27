@@ -6,14 +6,12 @@ Every API validates normalized finite straight sRGB RGBA, owns the returned `Ima
 
 ## Individual processing APIs
 
-| API | Contract | Processing |
-| --- | --- | --- |
-| `clouds` | Normalized foreground black/background white; uint32 seed 0 | Eight octaves of smooth value noise, base scale `clamp(long edge/4,16,512)`, range stretched between colors. Replaces RGB and coverage with the generated color. |
-| `differenceClouds` | Same options | Absolute per-channel difference between input and the cloud field; source coverage and fully hidden input values remain exact. |
-| `fibers` | Variance 16 and strength 4, each [1,64]; foreground/background and seed | Four anisotropic noise octaves plus fine column grain; variance sets cross-fiber frequency, strength stretches fibers vertically. Replaces color and coverage. |
-| `lensFlare` | Brightness 100%, [0,300]; center x/y 0.5, [-0.5,1.5]; Zoom/Prime35/Prime105/MoviePrime | Hot core, broad glow, angular rays, lens-specific ghosts, Prime35 ring or MoviePrime horizontal streak. Screen composite preserves alpha and white. Brightness zero returns the exact input. |
-| `lightingEffects` | Up to 64 typed `FilterLight`s; gloss/metallic/exposure/ambience [-100,100]; texture None/Red/Green/Blue/Alpha/Luminance; height [0,100], white-is-high boolean | Height-gradient surface normals; Spot cone/hotspot, Point radial attenuation or Infinite directional light; Lambertian color, gloss-based specular exponent, metallic tint, ambient and exposure. |
-| `relight` | Angle 45°, [-180,180]; elevation 40°, [0,90]; intensity 40 and ambient 55, [0,100]; warmth 0, [-100,100]; softness 25, [1,100] | Alpha-weighted blurred Rec.709 encoded luminance estimates shading. Finite differences at the blur scale produce normals; a replacement Lambertian lamp multiplies recovered albedo and warmth tint. Intensity zero is exact identity. |
+- API: `clouds`; Contract: Normalized foreground black/background white; uint32 seed 0; Processing: Eight octaves of smooth value noise, base scale `clamp(long edge/4,16,512)`, range stretched between colors. Replaces RGB and coverage with the generated color.
+- API: `differenceClouds`; Contract: Same options; Processing: Absolute per-channel difference between input and the cloud field; source coverage and fully hidden input values remain exact.
+- API: `fibers`; Contract: Variance 16 and strength 4, each [1,64]; foreground/background and seed; Processing: Four anisotropic noise octaves plus fine column grain; variance sets cross-fiber frequency, strength stretches fibers vertically. Replaces color and coverage.
+- API: `lensFlare`; Contract: Brightness 100%, [0,300]; center x/y 0.5, [-0.5,1.5]; Zoom/Prime35/Prime105/MoviePrime; Processing: Hot core, broad glow, angular rays, lens-specific ghosts, Prime35 ring or MoviePrime horizontal streak. Screen composite preserves alpha and white. Brightness zero returns the exact input.
+- API: `lightingEffects`; Contract: Up to 64 typed `FilterLight`s; gloss/metallic/exposure/ambience [-100,100]; texture None/Red/Green/Blue/Alpha/Luminance; height [0,100], white-is-high boolean; Processing: Height-gradient surface normals; Spot cone/hotspot, Point radial attenuation or Infinite directional light; Lambertian color, gloss-based specular exponent, metallic tint, ambient and exposure.
+- API: `relight`; Contract: Angle 45°, [-180,180]; elevation 40°, [0,90]; intensity 40 and ambient 55, [0,100]; warmth 0, [-100,100]; softness 25, [1,100]; Processing: Alpha-weighted blurred Rec.709 encoded luminance estimates shading. Finite differences at the blur scale produce normals; a replacement Lambertian lamp multiplies recovered albedo and warmth tint. Intensity zero is exact identity.
 
 Each `FilterLight` validates kind Spot/Point/Infinite, normalized x/y/target coordinates [-2,3], z [0,10] short-edge units, angle [-180,180], elevation [0,90], normalized three-channel color, intensity [-100,100], cone [1,89], hotspot [0,100], radius [0.01,10] short-edge units. These fields describe separate light branches, so cone/hotspot apply to Spot, radius to Point, angle/elevation to Infinite. Defaults match the source command's light.
 

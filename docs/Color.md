@@ -116,17 +116,15 @@ The default method is Relative; Absolute is also supported.
 
 The independent source RGB weights are:
 
-| Range | Weight |
-| --- | --- |
-| Reds | `max(0,r-max(g,b))` |
-| Yellows | `max(0,min(r,g)-b)` |
-| Greens | `max(0,g-max(r,b))` |
-| Cyans | `max(0,min(g,b)-r)` |
-| Blues | `max(0,b-max(r,g))` |
-| Magentas | `max(0,min(r,b)-g)` |
-| Whites | `max(0,2*min(r,g,b)-1)` |
-| Neutrals | `(1-chroma)*(1-abs(2*HSL_lightness-1))` |
-| Blacks | `max(0,1-2*max(r,g,b))` |
+- Range: Reds; Weight: `max(0,r-max(g,b))`
+- Range: Yellows; Weight: `max(0,min(r,g)-b)`
+- Range: Greens; Weight: `max(0,g-max(r,b))`
+- Range: Cyans; Weight: `max(0,min(g,b)-r)`
+- Range: Blues; Weight: `max(0,b-max(r,g))`
+- Range: Magentas; Weight: `max(0,min(r,b)-g)`
+- Range: Whites; Weight: `max(0,2*min(r,g,b)-1)`
+- Range: Neutrals; Weight: `(1-chroma)*(1-abs(2*HSL_lightness-1))`
+- Range: Blacks; Weight: `max(0,1-2*max(r,g,b))`
 
 Weights may overlap and are not normalized against each other. They are all computed
 from the source, so the array order does not make adjustment order affect the result.

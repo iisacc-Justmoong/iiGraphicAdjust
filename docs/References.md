@@ -8,33 +8,31 @@ Adobe's [adjustment-layer list](https://helpx.adobe.com/ca/photoshop/desktop/cre
 
 PhotoCraft registers 16 layer adjustment kinds and 6 additional Image > Adjustments commands. The SDK provides the following corresponding operation categories, plus the three automatic Image-menu commands.
 
-| Reference command | SDK API | Contract documentation |
-| --- | --- | --- |
-| Brightness/Contrast | `brightnessContrast` | Tone.md |
-| Levels | `levels` | Tone.md |
-| Curves | `curves` | Tone.md |
-| Exposure | `exposure` | Tone.md |
-| Vibrance | `vibrance` | Color.md |
-| Hue/Saturation | `hueSaturation` | Color.md |
-| Color Balance | `colorBalance` | Color.md |
-| Black & White | `blackAndWhite` | Color.md |
-| Photo Filter | `photoFilter` | Color.md |
-| Channel Mixer | `channelMixer` | Color.md |
-| Invert | `invert` | Tone.md |
-| Posterize | `posterize` | Tone.md |
-| Threshold | `threshold` | Tone.md |
-| Gradient Map | `gradientMap` | Mapping.md |
-| Selective Color | `selectiveColor` | Color.md |
-| Color Lookup | `colorLookup`, `parseCubeLut` | Mapping.md |
-| Desaturate | `desaturate` | Color.md |
-| Equalize | `equalize` | Tone.md |
-| Shadows/Highlights | `shadowsHighlights` | Tone.md |
-| Replace Color | `replaceColor` | Color.md |
-| Match Color | `matchColor` | Color.md |
-| HDR Toning | `hdrToning` (ExposureGamma, HighlightCompression) | Mapping.md |
-| Auto Tone / Auto Levels | `autoLevels` | Tone.md |
-| Auto Contrast | `autoContrast` | Tone.md |
-| Auto Color | `autoColor` | Tone.md |
+- Reference command: Brightness/Contrast; SDK API: `brightnessContrast`; Contract documentation: Tone.md
+- Reference command: Levels; SDK API: `levels`; Contract documentation: Tone.md
+- Reference command: Curves; SDK API: `curves`; Contract documentation: Tone.md
+- Reference command: Exposure; SDK API: `exposure`; Contract documentation: Tone.md
+- Reference command: Vibrance; SDK API: `vibrance`; Contract documentation: Color.md
+- Reference command: Hue/Saturation; SDK API: `hueSaturation`; Contract documentation: Color.md
+- Reference command: Color Balance; SDK API: `colorBalance`; Contract documentation: Color.md
+- Reference command: Black & White; SDK API: `blackAndWhite`; Contract documentation: Color.md
+- Reference command: Photo Filter; SDK API: `photoFilter`; Contract documentation: Color.md
+- Reference command: Channel Mixer; SDK API: `channelMixer`; Contract documentation: Color.md
+- Reference command: Invert; SDK API: `invert`; Contract documentation: Tone.md
+- Reference command: Posterize; SDK API: `posterize`; Contract documentation: Tone.md
+- Reference command: Threshold; SDK API: `threshold`; Contract documentation: Tone.md
+- Reference command: Gradient Map; SDK API: `gradientMap`; Contract documentation: Mapping.md
+- Reference command: Selective Color; SDK API: `selectiveColor`; Contract documentation: Color.md
+- Reference command: Color Lookup; SDK API: `colorLookup`, `parseCubeLut`; Contract documentation: Mapping.md
+- Reference command: Desaturate; SDK API: `desaturate`; Contract documentation: Color.md
+- Reference command: Equalize; SDK API: `equalize`; Contract documentation: Tone.md
+- Reference command: Shadows/Highlights; SDK API: `shadowsHighlights`; Contract documentation: Tone.md
+- Reference command: Replace Color; SDK API: `replaceColor`; Contract documentation: Color.md
+- Reference command: Match Color; SDK API: `matchColor`; Contract documentation: Color.md
+- Reference command: HDR Toning; SDK API: `hdrToning` (ExposureGamma, HighlightCompression); Contract documentation: Mapping.md
+- Reference command: Auto Tone / Auto Levels; SDK API: `autoLevels`; Contract documentation: Tone.md
+- Reference command: Auto Contrast; SDK API: `autoContrast`; Contract documentation: Tone.md
+- Reference command: Auto Color; SDK API: `autoColor`; Contract documentation: Tone.md
 
 This is category coverage, not all options or exact Photoshop pixel parity. Curves uses documented linear segments instead of Photoshop's spline. Levels/Posterize do not reproduce document-depth quantization. Shadow/Highlights uses tonal masks without spatial adaptation. Match Color uses alpha-weighted linear RGB statistics rather than Photoshop's proprietary matching. HDR Toning has two global methods, not Local Adaptation or HDR histogram equalization. Color Lookup supports numeric tables and the documented `.cube` subset, not ICC or the reference application's other LUT file formats. RGB-derived Selective Color weights are not a CMYK print-separation engine.
 

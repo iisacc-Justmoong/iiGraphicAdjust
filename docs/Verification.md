@@ -71,19 +71,17 @@ Physical verification recorded below is limited to the tested host and does not 
 
 macOS arm64 with AppleClang 21.0.0 and CMake 4.4.3:
 
-| Configuration/check | Result |
-| --- | --- |
-| Release shared library behavior | 8/8 passed |
-| Release static library behavior | 8/8 passed |
-| Debug AddressSanitizer + UndefinedBehaviorSanitizer | 8/8 passed, no sanitizer findings |
-| Shared staged-package consumer | 1/1 passed |
-| Static staged-package consumer | 1/1 passed |
-| Actual host-installed package consumer | 1/1 passed |
-| `otool -L` SDK and consumer | C++/system libraries, no Qt dependency |
-| `DYLD_PRINT_LIBRARIES=1` host consumer | Actual `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.1.0.dylib` loaded; no Qt |
-| Build vs host-installed SDK SHA-256 | Identical |
-| Parent SDK installer discovery | `iiGraphicAdjust: dependencies=-` |
-| Executed example output | Binary PPM, 256×128, 98,319 bytes |
+- Configuration/check: Release shared library behavior; Result: 8/8 passed
+- Configuration/check: Release static library behavior; Result: 8/8 passed
+- Configuration/check: Debug AddressSanitizer + UndefinedBehaviorSanitizer; Result: 8/8 passed, no sanitizer findings
+- Configuration/check: Shared staged-package consumer; Result: 1/1 passed
+- Configuration/check: Static staged-package consumer; Result: 1/1 passed
+- Configuration/check: Actual host-installed package consumer; Result: 1/1 passed
+- Configuration/check: `otool -L` SDK and consumer; Result: C++/system libraries, no Qt dependency
+- Configuration/check: `DYLD_PRINT_LIBRARIES=1` host consumer; Result: Actual `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.1.0.dylib` loaded; no Qt
+- Configuration/check: Build vs host-installed SDK SHA-256; Result: Identical
+- Configuration/check: Parent SDK installer discovery; Result: `iiGraphicAdjust: dependencies=-`
+- Configuration/check: Executed example output; Result: Binary PPM, 256×128, 98,319 bytes
 
 The 27 successful test executions above include repeated behavior coverage across three build configurations, not 27 unique algorithms. The original machine-readable report is retained as `build/verification-0.1.0.json`; current verification is recorded in `build/verification.json`. Windows, Linux, iOS, Android and integration into Dreamscapes/iiSharedCanvas remain unverified. No existing running product was restarted.
 
@@ -91,18 +89,16 @@ The 27 successful test executions above include repeated behavior coverage acros
 
 The final source was validated on the same macOS arm64/AppleClang 21.0.0 host:
 
-| Configuration/check | Result |
-| --- | --- |
-| Release shared library | 33/33 passed |
-| Release static library | 33/33 passed |
-| Debug AddressSanitizer + UndefinedBehaviorSanitizer | 33/33 passed, no findings |
-| Shared and static staged-package consumers | 1/1 each passed |
-| Actual host-installed package consumer | 1/1 passed |
-| SDK and consumer linkage / actual loaded libraries | No Qt |
-| Loaded SDK dylib | `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.2.0.dylib`, no 0.1 SDK loaded |
-| SDK build/installed SHA-256 and new public headers | Identical |
-| Upstream MIT attribution | Installed with package |
-| Parent SDK discovery | No local dependency edges |
+- Configuration/check: Release shared library; Result: 33/33 passed
+- Configuration/check: Release static library; Result: 33/33 passed
+- Configuration/check: Debug AddressSanitizer + UndefinedBehaviorSanitizer; Result: 33/33 passed, no findings
+- Configuration/check: Shared and static staged-package consumers; Result: 1/1 each passed
+- Configuration/check: Actual host-installed package consumer; Result: 1/1 passed
+- Configuration/check: SDK and consumer linkage / actual loaded libraries; Result: No Qt
+- Configuration/check: Loaded SDK dylib; Result: `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.2.0.dylib`, no 0.1 SDK loaded
+- Configuration/check: SDK build/installed SHA-256 and new public headers; Result: Identical
+- Configuration/check: Upstream MIT attribution; Result: Installed with package
+- Configuration/check: Parent SDK discovery; Result: No local dependency edges
 
 This is 33 suites exercised in three configurations plus three package consumers, totalling 102 successful final test executions. The installed consumer resolves every new operation, Cube parsing and the separate HDR input overload against the installed package. Numeric behavior is assessed by the unit suites, not by a Photoshop render.
 
@@ -112,19 +108,17 @@ Independent static review identified an HSL cancellation at tiny lightness and m
 
 The final Lightroom-style source was validated on macOS arm64 with AppleClang 21.0.0 and CMake 4.4.3:
 
-| Configuration/check | Result |
-| --- | --- |
-| Release shared library | 53/53 passed |
-| Release static library | 53/53 passed |
-| Debug AddressSanitizer + UndefinedBehaviorSanitizer | 53/53 passed, no findings |
-| Shared and static staged-package consumers | 1/1 each passed |
-| Actual host-installed package consumer | 1/1 passed |
-| Actual loaded SDK | `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.3.0.dylib` |
-| SDK and consumer linkage / loaded libraries | No Qt, no older iiGraphicAdjust loaded |
-| SDK build/installed SHA-256 and public headers | Identical |
-| Upstream attribution and updated documentation | Installed with package |
-| Parent SDK installer discovery | No dependency edges |
-| Development example | Binary PPM, 256×128, 98,319 bytes |
+- Configuration/check: Release shared library; Result: 53/53 passed
+- Configuration/check: Release static library; Result: 53/53 passed
+- Configuration/check: Debug AddressSanitizer + UndefinedBehaviorSanitizer; Result: 53/53 passed, no findings
+- Configuration/check: Shared and static staged-package consumers; Result: 1/1 each passed
+- Configuration/check: Actual host-installed package consumer; Result: 1/1 passed
+- Configuration/check: Actual loaded SDK; Result: `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.3.0.dylib`
+- Configuration/check: SDK and consumer linkage / loaded libraries; Result: No Qt, no older iiGraphicAdjust loaded
+- Configuration/check: SDK build/installed SHA-256 and public headers; Result: Identical
+- Configuration/check: Upstream attribution and updated documentation; Result: Installed with package
+- Configuration/check: Parent SDK installer discovery; Result: No dependency edges
+- Configuration/check: Development example; Result: Binary PPM, 256×128, 98,319 bytes
 
 There are 53 distinct CTest suites (33 retained and 20 new), exercised in three configurations plus three package consumers, totalling 162 final successful test executions. The installed consumer resolves all 27 new public operations through the installed CMake package. Tests include random slider combinations, 3600-hue mixer partition, independent radiometric Exposure oracles, normalized finite output, hidden-RGB isolation, exact zero-coverage/cancellation behavior, Auto Mask color/luminance boundary selection and thin-image optics/spatial cases. No sanitizer issue was reported.
 
@@ -140,22 +134,20 @@ The new APIs are rendered-image operations on normalized sRGB. The convenience p
 
 The final filter source was validated on macOS arm64, AppleClang 21.0.0 and CMake 4.4.3:
 
-| Configuration/check | Result |
-| --- | --- |
-| Release shared library | 140/140 passed, zero compiler warnings |
-| Release static library | 140/140 passed, zero compiler warnings |
-| Debug `-O1`, AddressSanitizer + UndefinedBehaviorSanitizer | 140/140 passed, no findings |
-| Shared staged-package consumer | 1/1 passed |
-| Static staged-package consumer | 1/1 passed |
-| Actual host-installed CMake package consumer | 1/1 passed |
-| New public filtering/helper exports | All 219 present in the shared library and called by the consumer |
-| Installed consumer image calls | 208 new image calls plus 11 new options/geometry/analysis helpers |
-| Actual loaded SDK | `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.4.0.dylib` |
-| SDK/consumer source, imported targets, linked and loaded libraries | No Qt or external processing dependencies; no older SDK loaded |
-| Build/installed dylib SHA-256 | Identical: `927a58fdeb2f9eb3b1695efa5c971f59d79ea39c3e3038b81a13a383720e7d71` |
-| Installed public headers | All 28 identical to source/generated headers |
-| Installed documentation and MIT attribution | Identical to source |
-| Parent SDK installer discovery | `iiGraphicAdjust: dependencies=-` |
+- Configuration/check: Release shared library; Result: 140/140 passed, zero compiler warnings
+- Configuration/check: Release static library; Result: 140/140 passed, zero compiler warnings
+- Configuration/check: Debug `-O1`, AddressSanitizer + UndefinedBehaviorSanitizer; Result: 140/140 passed, no findings
+- Configuration/check: Shared staged-package consumer; Result: 1/1 passed
+- Configuration/check: Static staged-package consumer; Result: 1/1 passed
+- Configuration/check: Actual host-installed CMake package consumer; Result: 1/1 passed
+- Configuration/check: New public filtering/helper exports; Result: All 219 present in the shared library and called by the consumer
+- Configuration/check: Installed consumer image calls; Result: 208 new image calls plus 11 new options/geometry/analysis helpers
+- Configuration/check: Actual loaded SDK; Result: `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.4.0.dylib`
+- Configuration/check: SDK/consumer source, imported targets, linked and loaded libraries; Result: No Qt or external processing dependencies; no older SDK loaded
+- Configuration/check: Build/installed dylib SHA-256; Result: Identical: `927a58fdeb2f9eb3b1695efa5c971f59d79ea39c3e3038b81a13a383720e7d71`
+- Configuration/check: Installed public headers; Result: All 28 identical to source/generated headers
+- Configuration/check: Installed documentation and MIT attribution; Result: Identical to source
+- Configuration/check: Parent SDK installer discovery; Result: `iiGraphicAdjust: dependencies=-`
 
 There are **140 distinct CTest suites: 53 retained and 87 added**. Three complete library configurations and three package consumers yield **423 final successful test executions**. The reference inventory audit independently confirms 120 Filter commands, two Edit operations and two duplicate Smart Object aliases; 47 Gallery effects; 22 looks, 41 presets and four resamplers; nine retouch/analysis and eight additional diagnostic APIs. `tools/audit_filter_coverage.py --references` checks the pinned Rust command strings and Gallery registrations against the catalog, then checks public installation, unit references and direct installed-consumer calls. Both reference checkouts still match their fetched origin/HEAD commits.
 

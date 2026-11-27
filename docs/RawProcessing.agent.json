@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/RawProcessing.md",
-    "sha256": "f41713097e2d2c248c2830d2d2acae703c7a0184e2592430135fb75ced920dfb",
-    "bytes": 7600,
-    "line_count": 130,
+    "sha256": "84a21caa2e36d3679a504d28a3c7323c6877e047d174139e2f4f520491ad527d",
+    "bytes": 7689,
+    "line_count": 128,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -366,53 +366,55 @@
     },
     {
       "id": "b000041",
-      "kind": "table",
       "start_line": 119,
-      "end_line": 126,
-      "raw": "| Case | Verified behavior |\n| --- | --- |\n| `patterns` | Distinct constant RGB through all four patterns, including edges and corners; detached output and immutable input |\n| `interpolation` | Independent affine RGB ramps in the interior, measured-site preservation, and explicit axial/diagonal/boundary arithmetic |\n| `calibration` | Separate green black levels, black/white endpoints, nonunit gains and nonidentity matrix oracle, and negative matrix policy |\n| `rendering` | Headroom preservation, negative toning exposure recovery, clipping/compression, and exact composition with `hdrToning` |\n| `layout` | Padded stride, odd dimensions, all Bayer/phase combinations, minimum 2x2, phased black levels, and ignored trailing samples |\n| `validation` | Invalid enum, phases, dimensions, truncation, addressing overflow, nonfinite calibration, gain/exposure ranges, and unrepresentable output |\n",
-      "columns": [
-        "Case",
-        "Verified behavior"
-      ],
-      "rows": [
-        [
-          "`patterns`",
-          "Distinct constant RGB through all four patterns, including edges and corners; detached output and immutable input"
-        ],
-        [
-          "`interpolation`",
-          "Independent affine RGB ramps in the interior, measured-site preservation, and explicit axial/diagonal/boundary arithmetic"
-        ],
-        [
-          "`calibration`",
-          "Separate green black levels, black/white endpoints, nonunit gains and nonidentity matrix oracle, and negative matrix policy"
-        ],
-        [
-          "`rendering`",
-          "Headroom preservation, negative toning exposure recovery, clipping/compression, and exact composition with `hdrToning`"
-        ],
-        [
-          "`layout`",
-          "Padded stride, odd dimensions, all Bayer/phase combinations, minimum 2x2, phased black levels, and ignored trailing samples"
-        ],
-        [
-          "`validation`",
-          "Invalid enum, phases, dimensions, truncation, addressing overflow, nonfinite calibration, gain/exposure ranges, and unrepresentable output"
-        ]
+      "end_line": 124,
+      "raw": "- Case: `patterns`; Verified behavior: Distinct constant RGB through all four patterns, including edges and corners; detached output and immutable input\n- Case: `interpolation`; Verified behavior: Independent affine RGB ramps in the interior, measured-site preservation, and explicit axial/diagonal/boundary arithmetic\n- Case: `calibration`; Verified behavior: Separate green black levels, black/white endpoints, nonunit gains and nonidentity matrix oracle, and negative matrix policy\n- Case: `rendering`; Verified behavior: Headroom preservation, negative toning exposure recovery, clipping/compression, and exact composition with `hdrToning`\n- Case: `layout`; Verified behavior: Padded stride, odd dimensions, all Bayer/phase combinations, minimum 2x2, phased black levels, and ignored trailing samples\n- Case: `validation`; Verified behavior: Invalid enum, phases, dimensions, truncation, addressing overflow, nonfinite calibration, gain/exposure ranges, and unrepresentable output\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Case: `patterns`; Verified behavior: Distinct constant RGB through all four patterns, including edges and corners; detached output and immutable input",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Case: `interpolation`; Verified behavior: Independent affine RGB ramps in the interior, measured-site preservation, and explicit axial/diagonal/boundary arithmetic",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Case: `calibration`; Verified behavior: Separate green black levels, black/white endpoints, nonunit gains and nonidentity matrix oracle, and negative matrix policy",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Case: `rendering`; Verified behavior: Headroom preservation, negative toning exposure recovery, clipping/compression, and exact composition with `hdrToning`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Case: `layout`; Verified behavior: Padded stride, odd dimensions, all Bayer/phase combinations, minimum 2x2, phased black levels, and ignored trailing samples",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Case: `validation`; Verified behavior: Invalid enum, phases, dimensions, truncation, addressing overflow, nonfinite calibration, gain/exposure ranges, and unrepresentable output",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000042",
       "kind": "blank",
-      "start_line": 127,
-      "end_line": 127,
+      "start_line": 125,
+      "end_line": 125,
       "raw": "\n"
     },
     {
       "id": "b000043",
       "kind": "paragraph",
-      "start_line": 128,
-      "end_line": 130,
+      "start_line": 126,
+      "end_line": 128,
       "raw": "These tests establish numeric behavior on synthetic sensor samples. Physical\ncamera calibration and hardware-captured RAW image quality remain outside this\nverification.\n"
     }
   ],
@@ -548,41 +550,7 @@
         "line": 99
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000041",
-        "columns": [
-          "Case",
-          "Verified behavior"
-        ],
-        "rows": [
-          [
-            "`patterns`",
-            "Distinct constant RGB through all four patterns, including edges and corners; detached output and immutable input"
-          ],
-          [
-            "`interpolation`",
-            "Independent affine RGB ramps in the interior, measured-site preservation, and explicit axial/diagonal/boundary arithmetic"
-          ],
-          [
-            "`calibration`",
-            "Separate green black levels, black/white endpoints, nonunit gains and nonidentity matrix oracle, and negative matrix policy"
-          ],
-          [
-            "`rendering`",
-            "Headroom preservation, negative toning exposure recovery, clipping/compression, and exact composition with `hdrToning`"
-          ],
-          [
-            "`layout`",
-            "Padded stride, odd dimensions, all Bayer/phase combinations, minimum 2x2, phased black levels, and ignored trailing samples"
-          ],
-          [
-            "`validation`",
-            "Invalid enum, phases, dimensions, truncation, addressing overflow, nonfinite calibration, gain/exposure ranges, and unrepresentable output"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

@@ -3,11 +3,9 @@
 On 2026-10-09 (Asia/Seoul), the C++23 source was built and executed on macOS
 arm64 with AppleClang 21.0.0. No Qt or external processing dependency was added.
 
-| Configuration | Library suites | Installed public-package consumer |
-| --- | ---: | ---: |
-| Release shared | 150/150 | 1/1 |
-| Release static | 150/150 | 1/1 |
-| Debug shared, AddressSanitizer + UndefinedBehaviorSanitizer | 150/150 | 1/1 |
+- Configuration: Release shared; Library suites: 150/150; Installed public-package consumer: 1/1
+- Configuration: Release static; Library suites: 150/150; Installed public-package consumer: 1/1
+- Configuration: Debug shared, AddressSanitizer + UndefinedBehaviorSanitizer; Library suites: 150/150; Installed public-package consumer: 1/1
 
 There are 140 retained rendered-image suites and ten added cases: six sensor RAW
 cases and four photo-operation cases. This is a suite count, not a count of all

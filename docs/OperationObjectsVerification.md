@@ -6,20 +6,18 @@ No host SDK installation or active product was replaced.
 
 ## Confirmed results
 
-| Check | Result |
-| --- | --- |
-| Pre-change Release baseline | 163/163 passed |
-| Final Release CTest | **202/202 passed** |
-| Final ASan/UBSan/float-cast-overflow CTest | **202/202 passed** |
-| Isolated Release installed consumer | Existing API consumer and complete 309-object consumer passed |
-| Isolated instrumented installed consumer | Both consumers passed; object runner reports `Executed 309 objects` |
-| Standalone installed object headers | **34/34** compile separately with C++23 |
-| Exported processing coverage | Every exported adjustment/filter/mask/analysis/RAW/resource/sample function maps to a concrete object |
-| C++ standard | 68/68 Release and 64/64 instrumented translation units use C++23 |
-| Instrumentation | All 64 instrumented translation units have address, undefined and float-cast-overflow sanitizers |
-| Qt check | No direct Qt dependency in the engine or its existing native file provider |
-| Retained filtering audit | Existing pinned filter/recipe/resampling/retouch/diagnostic inventory passed |
-| Patch formatting | `git diff --check` passed |
+- Check: Pre-change Release baseline; Result: 163/163 passed
+- Check: Final Release CTest; Result: **202/202 passed**
+- Check: Final ASan/UBSan/float-cast-overflow CTest; Result: **202/202 passed**
+- Check: Isolated Release installed consumer; Result: Existing API consumer and complete 309-object consumer passed
+- Check: Isolated instrumented installed consumer; Result: Both consumers passed; object runner reports `Executed 309 objects`
+- Check: Standalone installed object headers; Result: **34/34** compile separately with C++23
+- Check: Exported processing coverage; Result: Every exported adjustment/filter/mask/analysis/RAW/resource/sample function maps to a concrete object
+- Check: C++ standard; Result: 68/68 Release and 64/64 instrumented translation units use C++23
+- Check: Instrumentation; Result: All 64 instrumented translation units have address, undefined and float-cast-overflow sanitizers
+- Check: Qt check; Result: No direct Qt dependency in the engine or its existing native file provider
+- Check: Retained filtering audit; Result: Existing pinned filter/recipe/resampling/retouch/diagnostic inventory passed
+- Check: Patch formatting; Result: `git diff --check` passed
 
 There are 309 concrete objects, not 309 newly implemented algorithms. Existing
 processing kernels remain covered by the original suites. New object execution

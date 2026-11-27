@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/Color.md",
-    "sha256": "e2d186bc94084f89a1d6f5b18dd4d586351c041b21785d08e612e17d3dbaf218",
-    "bytes": 10919,
-    "line_count": 202,
+    "sha256": "05baa5e69591d20e492ee918fb0b70f8fd5a141c535426b7c58637ecb8da9d05",
+    "bytes": 10994,
+    "line_count": 200,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -407,93 +407,98 @@
     },
     {
       "id": "b000053",
-      "kind": "table",
       "start_line": 119,
-      "end_line": 129,
-      "raw": "| Range | Weight |\n| --- | --- |\n| Reds | `max(0,r-max(g,b))` |\n| Yellows | `max(0,min(r,g)-b)` |\n| Greens | `max(0,g-max(r,b))` |\n| Cyans | `max(0,min(g,b)-r)` |\n| Blues | `max(0,b-max(r,g))` |\n| Magentas | `max(0,min(r,b)-g)` |\n| Whites | `max(0,2*min(r,g,b)-1)` |\n| Neutrals | `(1-chroma)*(1-abs(2*HSL_lightness-1))` |\n| Blacks | `max(0,1-2*max(r,g,b))` |\n",
-      "columns": [
-        "Range",
-        "Weight"
-      ],
-      "rows": [
-        [
-          "Reds",
-          "`max(0,r-max(g,b))`"
-        ],
-        [
-          "Yellows",
-          "`max(0,min(r,g)-b)`"
-        ],
-        [
-          "Greens",
-          "`max(0,g-max(r,b))`"
-        ],
-        [
-          "Cyans",
-          "`max(0,min(g,b)-r)`"
-        ],
-        [
-          "Blues",
-          "`max(0,b-max(r,g))`"
-        ],
-        [
-          "Magentas",
-          "`max(0,min(r,b)-g)`"
-        ],
-        [
-          "Whites",
-          "`max(0,2*min(r,g,b)-1)`"
-        ],
-        [
-          "Neutrals",
-          "`(1-chroma)*(1-abs(2*HSL_lightness-1))`"
-        ],
-        [
-          "Blacks",
-          "`max(0,1-2*max(r,g,b))`"
-        ]
+      "end_line": 127,
+      "raw": "- Range: Reds; Weight: `max(0,r-max(g,b))`\n- Range: Yellows; Weight: `max(0,min(r,g)-b)`\n- Range: Greens; Weight: `max(0,g-max(r,b))`\n- Range: Cyans; Weight: `max(0,min(g,b)-r)`\n- Range: Blues; Weight: `max(0,b-max(r,g))`\n- Range: Magentas; Weight: `max(0,min(r,b)-g)`\n- Range: Whites; Weight: `max(0,2*min(r,g,b)-1)`\n- Range: Neutrals; Weight: `(1-chroma)*(1-abs(2*HSL_lightness-1))`\n- Range: Blacks; Weight: `max(0,1-2*max(r,g,b))`\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Range: Reds; Weight: `max(0,r-max(g,b))`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Range: Yellows; Weight: `max(0,min(r,g)-b)`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Range: Greens; Weight: `max(0,g-max(r,b))`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Range: Cyans; Weight: `max(0,min(g,b)-r)`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Range: Blues; Weight: `max(0,b-max(r,g))`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Range: Magentas; Weight: `max(0,min(r,b)-g)`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Range: Whites; Weight: `max(0,2*min(r,g,b)-1)`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Range: Neutrals; Weight: `(1-chroma)*(1-abs(2*HSL_lightness-1))`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Range: Blacks; Weight: `max(0,1-2*max(r,g,b))`",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000054",
       "kind": "blank",
-      "start_line": 130,
-      "end_line": 130,
+      "start_line": 128,
+      "end_line": 128,
       "raw": "\n"
     },
     {
       "id": "b000055",
       "kind": "paragraph",
-      "start_line": 131,
-      "end_line": 137,
+      "start_line": 129,
+      "end_line": 135,
       "raw": "Weights may overlap and are not normalized against each other. They are all computed\nfrom the source, so the array order does not make adjustment order affect the result.\nLet `ink` be the sum of weighted cyan controls for red, magenta controls for green,\nand yellow controls for blue; let `key` be the sum of weighted black controls.\nFor each original channel `c`, Relative produces\n`clamp(c - ink*(1-c) - key*c)`, while Absolute produces\n`clamp(c - ink - key)`.\n"
     },
     {
       "id": "b000056",
       "kind": "blank",
-      "start_line": 138,
-      "end_line": 138,
+      "start_line": 136,
+      "end_line": 136,
       "raw": "\n"
     },
     {
       "id": "b000057",
       "kind": "paragraph",
-      "start_line": 139,
-      "end_line": 143,
+      "start_line": 137,
+      "end_line": 141,
       "raw": "This is a defined RGB complement / black-intensity CMYK-style adjustment. It does not\nconvert to a CMYK space or approximate the behavior of a particular CMYK ICC profile.\nRelative cyan therefore scales existing red-complement ink, while relative black\nscales source red intensity. A red-range cyan control of .4 on RGB `(.75,.25,.25)`\nchanges red to .7 in Relative and .55 in Absolute.\n"
     },
     {
       "id": "b000058",
       "kind": "blank",
-      "start_line": 144,
-      "end_line": 144,
+      "start_line": 142,
+      "end_line": 142,
       "raw": "\n"
     },
     {
       "id": "b000059",
       "kind": "heading",
-      "start_line": 145,
-      "end_line": 145,
+      "start_line": 143,
+      "end_line": 143,
       "raw": "## Desaturate and Replace Color\n",
       "level": 2,
       "title": "Desaturate and Replace Color"
@@ -501,57 +506,57 @@
     {
       "id": "b000060",
       "kind": "blank",
-      "start_line": 146,
-      "end_line": 146,
+      "start_line": 144,
+      "end_line": 144,
       "raw": "\n"
     },
     {
       "id": "b000061",
       "kind": "paragraph",
-      "start_line": 147,
-      "end_line": 149,
+      "start_line": 145,
+      "end_line": 147,
       "raw": "`desaturate(image)` uses HSL lightness `(minimum RGB + maximum RGB)/2` as its gray.\nIt is intentionally distinct from the legacy `adjust()` saturation control, which\nuses encoded weighted luminance.\n"
     },
     {
       "id": "b000062",
       "kind": "blank",
-      "start_line": 150,
-      "end_line": 150,
+      "start_line": 148,
+      "end_line": 148,
       "raw": "\n"
     },
     {
       "id": "b000063",
       "kind": "paragraph",
-      "start_line": 151,
-      "end_line": 157,
+      "start_line": 149,
+      "end_line": 155,
       "raw": "`ReplaceColorOptions::target` is an encoded RGB triplet in `[0,1]`. Selection distance\nis `sqrt(((r-tr)^2+(g-tg)^2+(b-tb)^2)/3)`, so its normalized range is `[0,1]`.\n`fuzziness` is the selection radius in `[0,1]`; `softness` is the fraction of that\nradius occupied by a smoothstep falloff, also `[0,1]`. Pixels inside\n`fuzziness*(1-softness)` have full influence. Influence falls to zero at the selection\nradius. A zero softness selects a hard radius; an exact radius endpoint has zero\ninfluence. A zero fuzziness matches only distances through `1e-12`.\n"
     },
     {
       "id": "b000064",
       "kind": "blank",
-      "start_line": 158,
-      "end_line": 158,
+      "start_line": 156,
+      "end_line": 156,
       "raw": "\n"
     },
     {
       "id": "b000065",
       "kind": "paragraph",
-      "start_line": 159,
-      "end_line": 161,
+      "start_line": 157,
+      "end_line": 159,
       "raw": "The hue, saturation and lightness offsets have the same ranges and HSL semantics as\nHue/Saturation, and the original and transformed encoded RGB are interpolated by the\nselection influence. Replace Color does not use perceptual Delta E or an image mask.\n"
     },
     {
       "id": "b000066",
       "kind": "blank",
-      "start_line": 162,
-      "end_line": 162,
+      "start_line": 160,
+      "end_line": 160,
       "raw": "\n"
     },
     {
       "id": "b000067",
       "kind": "heading",
-      "start_line": 163,
-      "end_line": 163,
+      "start_line": 161,
+      "end_line": 161,
       "raw": "## Match Color\n",
       "level": 2,
       "title": "Match Color"
@@ -559,15 +564,15 @@
     {
       "id": "b000068",
       "kind": "blank",
-      "start_line": 164,
-      "end_line": 164,
+      "start_line": 162,
+      "end_line": 162,
       "raw": "\n"
     },
     {
       "id": "b000069",
       "kind": "fenced_code",
-      "start_line": 165,
-      "end_line": 169,
+      "start_line": 163,
+      "end_line": 167,
       "raw": "```cpp\nMatchColorOptions options;\noptions.fade = .25;\nauto result = matchColor(source.view(), reference.view(), options);\n```\n",
       "language": "cpp",
       "code": "MatchColorOptions options;\noptions.fade = .25;\nauto result = matchColor(source.view(), reference.view(), options);\n",
@@ -576,71 +581,71 @@
     {
       "id": "b000070",
       "kind": "blank",
-      "start_line": 170,
-      "end_line": 170,
+      "start_line": 168,
+      "end_line": 168,
       "raw": "\n"
     },
     {
       "id": "b000071",
       "kind": "paragraph",
-      "start_line": 171,
-      "end_line": 174,
+      "start_line": 169,
+      "end_line": 172,
       "raw": "Source and reference may have different dimensions. Both are validated and must have\nat least one pixel with positive alpha. If either has no visible sample, the function\nreturns `InvalidParameter`, including at full fade. It validates settings even when\n`fade=1` would otherwise preserve the source unchanged.\n"
     },
     {
       "id": "b000072",
       "kind": "blank",
-      "start_line": 175,
-      "end_line": 175,
+      "start_line": 173,
+      "end_line": 173,
       "raw": "\n"
     },
     {
       "id": "b000073",
       "kind": "paragraph",
-      "start_line": 176,
-      "end_line": 182,
+      "start_line": 174,
+      "end_line": 180,
       "raw": "Each image's mean and population standard deviation are computed per channel in\nlinear sRGB with each sample weighted by alpha. Hidden RGB never enters statistics.\nThe variance uses a two-pass centered sum. Each visible source channel is mapped to\n`referenceMean + (linearSource - sourceMean) * referenceStd/sourceStd`.\nA source standard deviation through `1e-12` uses ratio one, avoiding an undefined\nzero-variance division. Constant source pixels consequently map to reference means;\nno detail is fabricated from a constant channel.\n"
     },
     {
       "id": "b000074",
       "kind": "blank",
-      "start_line": 183,
-      "end_line": 183,
+      "start_line": 181,
+      "end_line": 181,
       "raw": "\n"
     },
     {
       "id": "b000075",
       "kind": "paragraph",
-      "start_line": 184,
-      "end_line": 190,
+      "start_line": 182,
+      "end_line": 188,
       "raw": "`neutralize=true` replaces all three target means with the reference's weighted linear\nluminance mean, removing the mean color cast of the matched result. It does not\nperform an independent white-balance estimate. `luminance` in `[0,2]` multiplies the\nmatched linear weighted luminance. `colorIntensity` in `[0,2]` scales deviations from\nthat luminance. The resulting linear channels are clipped and sRGB encoded once.\n`fade` in `[0,1]` then interpolates encoded RGB back to the original; full fade is an\nexact copy. Default luminance and color intensity are one, and default fade is zero.\n"
     },
     {
       "id": "b000076",
       "kind": "blank",
-      "start_line": 191,
-      "end_line": 191,
+      "start_line": 189,
+      "end_line": 189,
       "raw": "\n"
     },
     {
       "id": "b000077",
       "kind": "paragraph",
-      "start_line": 192,
-      "end_line": 193,
+      "start_line": 190,
+      "end_line": 191,
       "raw": "The statistical match is per channel in linear RGB, not a Photoshop or perceptual\nLab transfer. It can clip out-of-gamut channels and does not transfer local texture.\n"
     },
     {
       "id": "b000078",
       "kind": "blank",
-      "start_line": 194,
-      "end_line": 194,
+      "start_line": 192,
+      "end_line": 192,
       "raw": "\n"
     },
     {
       "id": "b000079",
       "kind": "heading",
-      "start_line": 195,
-      "end_line": 195,
+      "start_line": 193,
+      "end_line": 193,
       "raw": "## Validation coverage\n",
       "level": 2,
       "title": "Validation coverage"
@@ -648,15 +653,15 @@
     {
       "id": "b000080",
       "kind": "blank",
-      "start_line": 196,
-      "end_line": 196,
+      "start_line": 194,
+      "end_line": 194,
       "raw": "\n"
     },
     {
       "id": "b000081",
       "kind": "paragraph",
-      "start_line": 197,
-      "end_line": 202,
+      "start_line": 195,
+      "end_line": 200,
       "raw": "`iiGraphicAdjustColorTests` exposes `hue`, `vibrance`, `balance`, `black-white`,\n`filter`, `mixer`, `selective`, `replace`, `match`, `validation` and `invariants`.\nTests include independent numerical vectors, smooth falloff values, linear mean and\nvariance transfer, alpha-weighted statistics, finite extreme settings, gray protection,\nsubnormal RGB, invalid enums/NaN/inactive controls, exact neutral copies, detached\nstorage, input immutability, alpha preservation and hidden-RGB preservation.\n"
     }
   ],
@@ -731,7 +736,7 @@
       "level": 2,
       "title": "Desaturate and Replace Color",
       "anchor": "desaturate-and-replace-color",
-      "start_line": 145
+      "start_line": 143
     },
     {
       "block_id": "b000067",
@@ -739,7 +744,7 @@
       "level": 2,
       "title": "Match Color",
       "anchor": "match-color",
-      "start_line": 163
+      "start_line": 161
     },
     {
       "block_id": "b000079",
@@ -747,7 +752,7 @@
       "level": 2,
       "title": "Validation coverage",
       "anchor": "validation-coverage",
-      "start_line": 195
+      "start_line": 193
     }
   ],
   "indexes": {
@@ -761,14 +766,14 @@
       },
       {
         "block_id": "b000071",
-        "line": 171,
+        "line": 169,
         "text": "Source and reference may have different dimensions. Both are validated and must have",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000073",
-        "line": 177,
+        "line": 175,
         "text": "linear sRGB with each sample weighted by alpha. Hidden RGB never enters statistics.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -784,53 +789,7 @@
         "line": 6
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000053",
-        "columns": [
-          "Range",
-          "Weight"
-        ],
-        "rows": [
-          [
-            "Reds",
-            "`max(0,r-max(g,b))`"
-          ],
-          [
-            "Yellows",
-            "`max(0,min(r,g)-b)`"
-          ],
-          [
-            "Greens",
-            "`max(0,g-max(r,b))`"
-          ],
-          [
-            "Cyans",
-            "`max(0,min(g,b)-r)`"
-          ],
-          [
-            "Blues",
-            "`max(0,b-max(r,g))`"
-          ],
-          [
-            "Magentas",
-            "`max(0,min(r,b)-g)`"
-          ],
-          [
-            "Whites",
-            "`max(0,2*min(r,g,b)-1)`"
-          ],
-          [
-            "Neutrals",
-            "`(1-chroma)*(1-abs(2*HSL_lightness-1))`"
-          ],
-          [
-            "Blacks",
-            "`max(0,1-2*max(r,g,b))`"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

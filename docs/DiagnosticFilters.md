@@ -2,16 +2,14 @@
 
 `<iiGraphicAdjust/DiagnosticFilters.h>` exposes eight leaf CPU APIs for the actual Lightcraft image diagnostic kernels found at commit `629e39380e296f588c64cd9c0053a8edc3528f36`. The six range/mask previews come from `crates/pipeline/src/visualize.rs::point_color_range` and `mask_view`; destination and display gamut classification comes from the per-pixel branch of `finish.rs`, its `gamut_map`/`out_of_gamut` functions and `output.rs::Proof`. Both CPU and GPU renderers call the visualizer; the GPU finish stage has matching proof parameters.
 
-| API | Explicit inputs | Output |
-| --- | --- | --- |
-| `pointColorRangePreview` | Display image, existing `PointColorOptions` | Selection keeps the photo's color; unselected pixels become grey. |
-| `maskColorOverlay` | Display image, existing `MaskView`, `MaskOverlayOptions` | Encoded-color tint weighted by evaluated mask and opacity. |
-| `maskColorOnBwOverlay` | Same | Grey photo with the same tint. |
-| `maskImageOnBlack` | Display image, existing `MaskView` | Photo composited onto black according to evaluated mask. |
-| `maskImageOnWhite` | Same | Photo composited onto white. |
-| `maskWhiteOnBlack` | Same | Evaluated mask rendered as grey. |
-| `destinationGamutWarning` | Display image, `GamutWarningOptions` | Pixels outside the proof destination gamut become red. |
-| `displayGamutWarning` | Same | Proofed pixels outside the sRGB display gamut become blue. |
+- API: `pointColorRangePreview`; Explicit inputs: Display image, existing `PointColorOptions`; Output: Selection keeps the photo's color; unselected pixels become grey.
+- API: `maskColorOverlay`; Explicit inputs: Display image, existing `MaskView`, `MaskOverlayOptions`; Output: Encoded-color tint weighted by evaluated mask and opacity.
+- API: `maskColorOnBwOverlay`; Explicit inputs: Same; Output: Grey photo with the same tint.
+- API: `maskImageOnBlack`; Explicit inputs: Display image, existing `MaskView`; Output: Photo composited onto black according to evaluated mask.
+- API: `maskImageOnWhite`; Explicit inputs: Same; Output: Photo composited onto white.
+- API: `maskWhiteOnBlack`; Explicit inputs: Same; Output: Evaluated mask rendered as grey.
+- API: `destinationGamutWarning`; Explicit inputs: Display image, `GamutWarningOptions`; Output: Pixels outside the proof destination gamut become red.
+- API: `displayGamutWarning`; Explicit inputs: Same; Output: Proofed pixels outside the sRGB display gamut become blue.
 
 The diagnostic image retains the input width, height and every input alpha value. Input and output use finite normalized encoded sRGB. Fully transparent pixels retain their original hidden RGB and alpha; there are no neighbor operations that could propagate hidden RGB. Unlike the reference's opaque 8-bit mask overlays, these APIs retain float precision and source coverage. They do not implicitly construct masks, access a selected document, modify adjustment settings or draw editor handles.
 
@@ -37,13 +35,11 @@ All five APIs consume an already evaluated `MaskView` from `<iiGraphicAdjust/Mas
 
 `MaskOverlayOptions` uses normalized encoded RGB `color` (default red `[1,0,0]`) and `opacity` [0,100] (default 50). The source receives byte RGB and byte integer percent from UI state; this SDK keeps the channels and opacity in floating-point. For mask `a`, opacity `o=opacity/100`, image channel `p` and encoded luminance `g`:
 
-| Function | Channel formula |
-| --- | --- |
-| `maskColorOverlay` | `p+(color−p)*a*o` |
-| `maskColorOnBwOverlay` | `g+(color−g)*a*o` |
-| `maskImageOnBlack` | `p*a` |
-| `maskImageOnWhite` | `p*a+1−a` |
-| `maskWhiteOnBlack` | `a` |
+- Function: `maskColorOverlay`; Channel formula: `p+(color−p)*a*o`
+- Function: `maskColorOnBwOverlay`; Channel formula: `g+(color−g)*a*o`
+- Function: `maskImageOnBlack`; Channel formula: `p*a`
+- Function: `maskImageOnWhite`; Channel formula: `p*a+1−a`
+- Function: `maskWhiteOnBlack`; Channel formula: `a`
 
 Zero tint opacity is an exact identity for Color; ColorOnBw still renders its grey base. The three non-color modes do not accept irrelevant tint/opacity options. No mask ID lookup, UI color, GPU texture or `Plan` is required.
 

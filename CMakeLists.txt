@@ -25,9 +25,29 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(GenerateExportHeader)
 include(CTest)
+# A native build may use the SDK's conventional per-user installation.
+# Cross builds must supply the target package explicitly through the kit.
+set(_adjust_core_hints)
+if(NOT CMAKE_CROSSCOMPILING)
+    if(DEFINED ENV{HOME} AND NOT "$ENV{HOME}" STREQUAL "")
+        list(APPEND _adjust_core_hints "$ENV{HOME}/.local/SDK/iiSDKCore")
+    elseif(DEFINED ENV{USERPROFILE} AND NOT "$ENV{USERPROFILE}" STREQUAL "")
+        list(APPEND _adjust_core_hints "$ENV{USERPROFILE}/.local/SDK/iiSDKCore")
+    endif()
+endif()
+find_package(iiSDKCore 0.20 CONFIG REQUIRED COMPONENTS Contracts HINTS ${_adjust_core_hints})
 option(BUILD_SHARED_LIBS "Build iiGraphicAdjust as a shared library" ON)
+if(CMAKE_CROSSCOMPILING)
+    set(_adjust_python_default OFF)
+else()
+    set(_adjust_python_default ON)
+endif()
+option(IIGRAPHICADJUST_BUILD_PYTHON "Build the native Python editing API" ${_adjust_python_default})
 
 set(_adjust_public_headers
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Advanced/ContentAware.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Advanced/LayerCompositing.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Advanced/Preview.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Objects.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Core/Operation.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Development/CorrectionExtensions.h"
@@ -76,6 +96,9 @@ foreach(_header IN LISTS _adjust_object_headers)
 endforeach()
 
 add_library(iiGraphicAdjust
+    src/Advanced/ContentAware.cpp
+    src/Advanced/LayerCompositing.cpp
+    src/Advanced/Preview.cpp
     src/Core/Operation.cpp
     src/Core/ObjectCatalog.cpp
     src/Core/OwnedResourceObjects.cpp
@@ -112,6 +135,7 @@ add_library(iiGraphicAdjust
     src/Filters/DiagnosticFilters.cpp
     src/Development/Blend.cpp)
 add_library(iiGraphicAdjust::iiGraphicAdjust ALIAS iiGraphicAdjust)
+target_link_libraries(iiGraphicAdjust PUBLIC iiSDKCore::Contracts)
 if(MSVC)
     set_source_files_properties(src/Filters/SampleFilters.cpp PROPERTIES
         COMPILE_OPTIONS /fp:strict)
@@ -138,6 +162,41 @@ else()
     target_compile_options(iiGraphicAdjust PRIVATE -Wall -Wextra -Wpedantic)
 endif()
 
+if(IIGRAPHICADJUST_BUILD_PYTHON)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
+    set_target_properties(iiGraphicAdjust PROPERTIES POSITION_INDEPENDENT_CODE ON)
+    Python3_add_library(_iigraphicadjust MODULE WITH_SOABI
+        src/Python/AdvancedPython.cpp
+        src/Python/ContentPython.cpp
+        src/Python/LayerPython.cpp
+        src/Python/GeometryPython.cpp
+        src/Python/GalleryAPython.cpp
+        src/Python/GalleryBPython.cpp
+        src/Python/GalleryCPython.cpp
+        src/Python/PreviewPython.cpp)
+    target_compile_features(_iigraphicadjust PRIVATE cxx_std_23)
+    target_include_directories(_iigraphicadjust PRIVATE third_party/pybind11/include)
+    target_link_libraries(_iigraphicadjust PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    if(MSVC)
+        target_compile_options(_iigraphicadjust PRIVATE /O1)
+    else()
+        target_compile_options(_iigraphicadjust PRIVATE -O1)
+    endif()
+    if(APPLE)
+        set_target_properties(_iigraphicadjust PROPERTIES INSTALL_RPATH "@loader_path/../..")
+    elseif(UNIX)
+        set_target_properties(_iigraphicadjust PROPERTIES INSTALL_RPATH "$ORIGIN/../..")
+    endif()
+    if(WIN32)
+        set(_adjust_python_install_dir "${CMAKE_INSTALL_BINDIR}/iiGraphicAdjust/python")
+    else()
+        set(_adjust_python_install_dir "${CMAKE_INSTALL_LIBDIR}/iiGraphicAdjust/python")
+    endif()
+    install(TARGETS _iigraphicadjust LIBRARY DESTINATION "${_adjust_python_install_dir}"
+        RUNTIME DESTINATION "${_adjust_python_install_dir}")
+    install(FILES src/Python/iigraphicadjust.py DESTINATION "${_adjust_python_install_dir}")
+endif()
+
 set(_package_dir "${CMAKE_INSTALL_LIBDIR}/cmake/iiGraphicAdjust")
 install(TARGETS iiGraphicAdjust EXPORT iiGraphicAdjustTargets
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -159,12 +218,33 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/iiGraphicAdjustConfig.cmake"
 install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/iiGraphicAdjust)
 install(FILES third_party/photocraft/LICENSE-MIT DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/iiGraphicAdjust/photocraft)
 install(FILES third_party/lightcraft/LICENSE-MIT DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/iiGraphicAdjust/lightcraft)
+install(FILES third_party/pybind11/LICENSE DESTINATION ${CMAKE_INSTALL_DATADIR}/licenses/iiGraphicAdjust/pybind11)
 install(FILES README.md DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust)
 install(DIRECTORY docs/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/docs)
 install(DIRECTORY third_party/ DESTINATION ${CMAKE_INSTALL_DATADIR}/iiGraphicAdjust/third_party)
 
 if(BUILD_TESTING)
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    set(_adjust_python_installed_check)
+    if(IIGRAPHICADJUST_BUILD_PYTHON)
+        list(APPEND _adjust_python_installed_check --python "${Python3_EXECUTABLE}"
+            --python-dir "${_adjust_python_install_dir}")
+    endif()
+    add_executable(iiGraphicAdjustAdvancedEditingTests tests/advanced_editing.cpp)
+    target_link_libraries(iiGraphicAdjustAdvancedEditingTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)
+    foreach(_case content layers previews)
+        add_test(NAME iiGraphicAdjust.advanced.${_case} COMMAND iiGraphicAdjustAdvancedEditingTests ${_case})
+        set_tests_properties(iiGraphicAdjust.advanced.${_case} PROPERTIES TIMEOUT 120)
+    endforeach()
+    add_test(NAME iiGraphicAdjust.advanced.documentation
+        COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/sync_editing_docs.py" --check)
+    if(IIGRAPHICADJUST_BUILD_PYTHON)
+        add_test(NAME iiGraphicAdjust.advanced.python
+            COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tests/advanced_python.py"
+                "$<TARGET_FILE_DIR:_iigraphicadjust>" "${CMAKE_CURRENT_SOURCE_DIR}/src/Python")
+        add_test(NAME iiGraphicAdjust.advanced.python_bindings_current
+            COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_gallery_python.py" --check)
+    endif()
     set(_graphic_test_runner "${Python3_EXECUTABLE}"
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/resource_runner.py" auto
         "${CMAKE_CURRENT_SOURCE_DIR}/resources")
@@ -198,6 +278,8 @@ if(BUILD_TESTING)
             --source "${CMAKE_CURRENT_SOURCE_DIR}" --build "${CMAKE_CURRENT_BINARY_DIR}"
             --workspace @WORK@ --cmake "${CMAKE_COMMAND}" --config "$<CONFIG>"
             --compiler "${CMAKE_CXX_COMPILER}" "--cxx-flags=${CMAKE_CXX_FLAGS}"
+            --core-dir "${iiSDKCore_DIR}"
+            ${_adjust_python_installed_check}
             --ctest "${CMAKE_CTEST_COMMAND}")
     set_tests_properties(iiGraphicAdjust.objects.installed_package PROPERTIES TIMEOUT 240)
     add_test(NAME iiGraphicAdjust.objects.installed_build
@@ -205,7 +287,8 @@ if(BUILD_TESTING)
             "${CMAKE_CURRENT_SOURCE_DIR}/tests/installed_checks.py" --mode consumer-build
             --source "${CMAKE_CURRENT_SOURCE_DIR}" --build "${CMAKE_CURRENT_BINARY_DIR}"
             --workspace @WORK@ --cmake "${CMAKE_COMMAND}" --config "$<CONFIG>"
-            --compiler "${CMAKE_CXX_COMPILER}" "--cxx-flags=${CMAKE_CXX_FLAGS}")
+            --compiler "${CMAKE_CXX_COMPILER}" "--cxx-flags=${CMAKE_CXX_FLAGS}"
+            --core-dir "${iiSDKCore_DIR}")
     set_tests_properties(iiGraphicAdjust.objects.installed_build PROPERTIES TIMEOUT 240)
     add_executable(iiGraphicAdjustObjectCatalogTests tests/object_catalog_execution.cpp)
     target_link_libraries(iiGraphicAdjustObjectCatalogTests PRIVATE iiGraphicAdjust::iiGraphicAdjust)

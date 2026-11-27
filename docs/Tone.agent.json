@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/Tone.md",
-    "sha256": "07cbd14e87948d095cb81783b15aab20269c6fc08c06894b1f91ee3b2fa9b3d4",
-    "bytes": 8632,
-    "line_count": 172,
+    "sha256": "45e65688377560b810166ef0c0d4aa3357010e794b955e9b90ebd7b1f41d227d",
+    "bytes": 8681,
+    "line_count": 170,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -519,59 +519,54 @@
     },
     {
       "id": "b000067",
-      "kind": "table",
       "start_line": 136,
-      "end_line": 140,
-      "raw": "| Function | Statistical samples | Correction |\n| --- | --- | --- |\n| `autoLevels` | Separate R, G, and B arrays | Independent channel ranges; can change color casts |\n| `autoContrast` | One pooled RGB array | A common range for all channels |\n| `autoColor` | Separate R, G, and B arrays | Independent ranges, then channel median gamma |\n",
-      "columns": [
-        "Function",
-        "Statistical samples",
-        "Correction"
-      ],
-      "rows": [
-        [
-          "`autoLevels`",
-          "Separate R, G, and B arrays",
-          "Independent channel ranges; can change color casts"
-        ],
-        [
-          "`autoContrast`",
-          "One pooled RGB array",
-          "A common range for all channels"
-        ],
-        [
-          "`autoColor`",
-          "Separate R, G, and B arrays",
-          "Independent ranges, then channel median gamma"
-        ]
+      "end_line": 138,
+      "raw": "- Function: `autoLevels`; Statistical samples: Separate R, G, and B arrays; Correction: Independent channel ranges; can change color casts\n- Function: `autoContrast`; Statistical samples: One pooled RGB array; Correction: A common range for all channels\n- Function: `autoColor`; Statistical samples: Separate R, G, and B arrays; Correction: Independent ranges, then channel median gamma\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Function: `autoLevels`; Statistical samples: Separate R, G, and B arrays; Correction: Independent channel ranges; can change color casts",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Function: `autoContrast`; Statistical samples: One pooled RGB array; Correction: A common range for all channels",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Function: `autoColor`; Statistical samples: Separate R, G, and B arrays; Correction: Independent ranges, then channel median gamma",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000068",
       "kind": "blank",
-      "start_line": 141,
-      "end_line": 141,
+      "start_line": 139,
+      "end_line": 139,
       "raw": "\n"
     },
     {
       "id": "b000069",
       "kind": "paragraph",
-      "start_line": 142,
-      "end_line": 152,
+      "start_line": 140,
+      "end_line": 150,
       "raw": "For Auto Color, the original channel median is the middle sample for odd counts,\nor the mean of the two middle samples for even counts. After endpoint stretching,\nan interior median `m` determines `gamma = clamp(log(m)/log(0.5), 0.01, 100)`;\nthe corrected value is `pow(stretchedInput,1/gamma)`. This targets each channel's\nmedian to 0.5 while retaining endpoints. Endpoint medians skip gamma, and constant\nchannels are unchanged. This deterministic strategy is useful for removing\nchannel casts but may alter intentional colors and contrast. It is the SDK's\nalgorithm, not Adobe's Find Dark & Light Colors implementation. Neutral constant\nimages remain exact identity in every automatic mode. A color-constant image\nis unchanged by Auto Levels and Auto Color; Auto Contrast can expand its pooled\nRGB range.\n"
     },
     {
       "id": "b000070",
       "kind": "blank",
-      "start_line": 153,
-      "end_line": 153,
+      "start_line": 151,
+      "end_line": 151,
       "raw": "\n"
     },
     {
       "id": "b000071",
       "kind": "heading",
-      "start_line": 154,
-      "end_line": 154,
+      "start_line": 152,
+      "end_line": 152,
       "raw": "## References and implementation provenance\n",
       "level": 2,
       "title": "References and implementation provenance"
@@ -579,29 +574,29 @@
     {
       "id": "b000072",
       "kind": "blank",
-      "start_line": 155,
-      "end_line": 155,
+      "start_line": 153,
+      "end_line": 153,
       "raw": "\n"
     },
     {
       "id": "b000073",
       "kind": "paragraph",
-      "start_line": 156,
-      "end_line": 156,
+      "start_line": 154,
+      "end_line": 154,
       "raw": "The command roles were checked against Adobe's primary documentation:\n"
     },
     {
       "id": "b000074",
       "kind": "blank",
-      "start_line": 157,
-      "end_line": 157,
+      "start_line": 155,
+      "end_line": 155,
       "raw": "\n"
     },
     {
       "id": "b000075",
       "kind": "list",
-      "start_line": 158,
-      "end_line": 161,
+      "start_line": 156,
+      "end_line": 159,
       "raw": "- [Levels](https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/adjust-levels-in-an-image.html)\n- [Curves](https://helpx.adobe.com/photoshop/using/curves-adjustment.html)\n- [Automatic tonal adjustments and Equalize](https://helpx.adobe.com/photoshop/using/making-quick-tonal-adjustments.html)\n- [Exposure and the command list](https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/color-adjustment-commands.html)\n",
       "items": [
         {
@@ -629,29 +624,29 @@
     {
       "id": "b000076",
       "kind": "blank",
-      "start_line": 162,
-      "end_line": 162,
+      "start_line": 160,
+      "end_line": 160,
       "raw": "\n"
     },
     {
       "id": "b000077",
       "kind": "paragraph",
-      "start_line": 163,
-      "end_line": 167,
+      "start_line": 161,
+      "end_line": 165,
       "raw": "The supplied [photocraft repository](https://github.com/storytold/photocraft),\ncommit `5896f0b63e6f342e0311920b4d2a0ea5a94330fc`, was inspected for command\ncoverage and differences in float/quantized Levels, cubic Curves, and Posterize.\n`Tone.cpp` is independently written from the numerical contracts in this document;\nno Rust code or fitted Photoshop coefficients were copied.\n"
     },
     {
       "id": "b000078",
       "kind": "blank",
-      "start_line": 168,
-      "end_line": 168,
+      "start_line": 166,
+      "end_line": 166,
       "raw": "\n"
     },
     {
       "id": "b000079",
       "kind": "paragraph",
-      "start_line": 169,
-      "end_line": 172,
+      "start_line": 167,
+      "end_line": 170,
       "raw": "`tests/tone.cpp` covers reference vectors, interpolation, channel composition,\nautomatic correction differences, histogram ties, endpoint medians, constant\nimages, detached storage, input immutability, alpha and hidden RGB preservation,\nfinite normalized output, and invalid images and parameters.\n"
     }
   ],
@@ -734,7 +729,7 @@
       "level": 2,
       "title": "References and implementation provenance",
       "anchor": "references-and-implementation-provenance",
-      "start_line": 154
+      "start_line": 152
     }
   ],
   "indexes": {
@@ -789,64 +784,38 @@
         "label": "Levels",
         "target": "https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/adjust-levels-in-an-image.html",
         "kind": "external",
-        "line": 158
+        "line": 156
       },
       {
         "block_id": "b000075",
         "label": "Curves",
         "target": "https://helpx.adobe.com/photoshop/using/curves-adjustment.html",
         "kind": "external",
-        "line": 159
+        "line": 157
       },
       {
         "block_id": "b000075",
         "label": "Automatic tonal adjustments and Equalize",
         "target": "https://helpx.adobe.com/photoshop/using/making-quick-tonal-adjustments.html",
         "kind": "external",
-        "line": 160
+        "line": 158
       },
       {
         "block_id": "b000075",
         "label": "Exposure and the command list",
         "target": "https://helpx.adobe.com/photoshop/desktop/adjust-color/color-corrections/color-adjustment-commands.html",
         "kind": "external",
-        "line": 161
+        "line": 159
       },
       {
         "block_id": "b000077",
         "label": "photocraft repository",
         "target": "https://github.com/storytold/photocraft",
         "kind": "external",
-        "line": 163
+        "line": 161
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000067",
-        "columns": [
-          "Function",
-          "Statistical samples",
-          "Correction"
-        ],
-        "rows": [
-          [
-            "`autoLevels`",
-            "Separate R, G, and B arrays",
-            "Independent channel ranges; can change color casts"
-          ],
-          [
-            "`autoContrast`",
-            "One pooled RGB array",
-            "A common range for all channels"
-          ],
-          [
-            "`autoColor`",
-            "Separate R, G, and B arrays",
-            "Independent ranges, then channel median gamma"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

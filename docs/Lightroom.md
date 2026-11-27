@@ -4,13 +4,11 @@ Reference: [storytold/lightcraft](https://github.com/storytold/lightcraft), insp
 
 ## Implementation order and source audit
 
-| Order | Target | Actual reference processing |
-| --- | --- | --- |
-| 1 | Kelvin/tint WB, presets, auto/eyedropper; six Light sliders and Auto; parametric/cubic point curves and Refine Saturation | `color/src/cct.rs`, `color/src/spline.rs`, `pipeline/src/local.rs`, `tone.rs`, `auto.rs`, `finish.rs` |
-| 2 | Eight-band Color Mixer/B&W; Point Color; skin-protected Vibrance/Saturation; four-wheel grading; Calibration | `pipeline/src/colorops.rs` |
-| 3 | Texture, Clarity, Dehaze; post-crop vignette and grain; detail sharpening and luminance/color NR | `pipeline/src/local.rs`, `finish.rs` |
-| 4 | Manual distortion, manual/automatic lateral CA, supplied lens coefficients, lens vignetting and purple/green defringe | `pipeline/src/optics.rs` |
-| 5 | Composed development and deterministic local masks/coverage | `pipeline/src/lib.rs`, `masks.rs`, `finish.rs` |
+- Order: 1; Target: Kelvin/tint WB, presets, auto/eyedropper; six Light sliders and Auto; parametric/cubic point curves and Refine Saturation; Actual reference processing: `color/src/cct.rs`, `color/src/spline.rs`, `pipeline/src/local.rs`, `tone.rs`, `auto.rs`, `finish.rs`
+- Order: 2; Target: Eight-band Color Mixer/B&W; Point Color; skin-protected Vibrance/Saturation; four-wheel grading; Calibration; Actual reference processing: `pipeline/src/colorops.rs`
+- Order: 3; Target: Texture, Clarity, Dehaze; post-crop vignette and grain; detail sharpening and luminance/color NR; Actual reference processing: `pipeline/src/local.rs`, `finish.rs`
+- Order: 4; Target: Manual distortion, manual/automatic lateral CA, supplied lens coefficients, lens vignetting and purple/green defringe; Actual reference processing: `pipeline/src/optics.rs`
+- Order: 5; Target: Composed development and deterministic local masks/coverage; Actual reference processing: `pipeline/src/lib.rs`, `masks.rs`, `finish.rs`
 
 The pinned reference declared Sharpen Radius, Sharpen Detail, NR Contrast, Lens Blur and Enhance settings without reading them in that inspected pipeline. Version 0.6 independently implements active Radius/Detail/NR Contrast controls and supplies an owned-depth-map Lens Blur object. These are functional CPU implementations, not learned Enhance or automatic depth inference; see [OperationObjects.md](OperationObjects.md). RAW decoding, camera/lens profile registries, AI segmentation, healing, red-eye, crop/geometry, catalog/preset persistence and GUI are separate host concerns. Existing Cube LUT APIs supply creative looks without importing the reference's preset database. Embedded DNG lens metadata is not decoded by this module.
 

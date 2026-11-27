@@ -34,6 +34,9 @@ def main():
     parser.add_argument("--compiler", default="")
     parser.add_argument("--cxx-flags", default="")
     parser.add_argument("--ctest", default="")
+    parser.add_argument("--core-dir", default="")
+    parser.add_argument("--python", default="")
+    parser.add_argument("--python-dir", default="")
     args = parser.parse_args()
     source = Path(args.source).resolve(strict=True)
     raw_build, raw_workspace = Path(args.build), Path(args.workspace)
@@ -60,29 +63,41 @@ def main():
     subprocess.run([args.cmake, "-DCMAKE_INSTALL_LOCAL_ONLY=ON", "-DCMAKE_INSTALL_PREFIX=" + str(prefix),
                     "-DCMAKE_INSTALL_CONFIG_NAME=" + args.config, "-P", str(private_script)], env=env, check=True)
     licenses = (("LICENSE", "LICENSE"), ("third_party/photocraft/LICENSE-MIT", "photocraft/LICENSE-MIT"),
-                ("third_party/lightcraft/LICENSE-MIT", "lightcraft/LICENSE-MIT"))
+                ("third_party/lightcraft/LICENSE-MIT", "lightcraft/LICENSE-MIT"),
+                ("third_party/pybind11/LICENSE", "pybind11/LICENSE"))
     for original, installed in licenses:
         actual = prefix / "share/licenses/iiGraphicAdjust" / installed
         if not actual.is_file() or hashlib.sha256(actual.read_bytes()).digest() != hashlib.sha256((source / original).read_bytes()).digest():
             raise RuntimeError("Installed license missing or different: " + installed)
     if args.mode in ("consumer-build", "consumer"):
         for name in ("include/iiGraphicAdjust/Objects.h", "include/iiGraphicAdjust/Operation.h",
+                     "include/iiGraphicAdjust/ContentAware.h", "include/iiGraphicAdjust/LayerCompositing.h",
+                     "include/iiGraphicAdjust/Preview.h", "share/iiGraphicAdjust/docs/AdvancedEditing.md",
                      "include/iiGraphicAdjust/CorrectionExtensions.h", "include/iiGraphicAdjust/objects/OwnedResourceObjects.h",
                      "include/iiGraphicAdjust/objects/DevelopFeatureObjects.h", "share/iiGraphicAdjust/docs/OperationObjects.md",
                      "share/iiGraphicAdjust/docs/object-catalog.json", "share/iiGraphicAdjust/docs/adobe-feature-coverage.json"):
             if not (prefix / name).is_file():
                 raise RuntimeError("Missing installed object contract: " + name)
-        if not args.compiler or (args.mode == "consumer" and not args.ctest):
-            raise ValueError("Consumer mode requires its compiler and, for execution, ctest")
+        if not args.compiler or not args.core_dir or (args.mode == "consumer" and not args.ctest):
+            raise ValueError("Consumer mode requires a compiler, iiSDKCore package and, for execution, ctest")
         consumer = reserve_build(build, workspace.name)
         try:
             subprocess.run([args.cmake, "-S", str(source / "tests/consumer"), "-B", str(consumer),
                             "-DCMAKE_PREFIX_PATH=" + str(prefix), "-DCMAKE_DISABLE_FIND_PACKAGE_iiFileProviderNative=TRUE",
+                            "-DiiSDKCore_DIR=" + args.core_dir,
                             "-DCMAKE_CXX_COMPILER=" + args.compiler, "-DCMAKE_CXX_FLAGS=" + args.cxx_flags,
                             "-DCMAKE_BUILD_TYPE=Release"], env=env, check=True)
             subprocess.run([args.cmake, "--build", str(consumer), "--parallel", "2"], env=env, check=True)
             if args.mode == "consumer":
                 subprocess.run([args.ctest, "--test-dir", str(consumer), "--output-on-failure"], env=env, check=True)
+                if args.python:
+                    python_dir = Path(args.python_dir)
+                    if not args.python_dir or python_dir.is_absolute() or ".." in python_dir.parts:
+                        raise ValueError("Python install directory must be a safe relative path")
+                    if os.name == "nt":
+                        env["IIGRAPHICADJUST_TEST_DLL_DIR"] = str((prefix / python_dir).parent.parent)
+                    subprocess.run([args.python, "-B", str(source / "tests/advanced_python.py"),
+                                    str(prefix / python_dir)], env=env, check=True)
         finally:
             shutil.rmtree(consumer)
     after = manifest.read_bytes() if manifest.is_file() else None

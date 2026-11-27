@@ -2,15 +2,13 @@
 
 `<iiGraphicAdjust/RetouchFilters.h>` implements the executable Lightcraft retouch and spot-diagnostic algorithms at commit `629e39380e296f588c64cd9c0053a8edc3528f36`. The reference sources are `crates/pipeline/src/spots.rs`, `redeye.rs`, `visualize.rs`, `dust.rs`, and the three-box blur in `crates/raster/src/blur.rs`. `pipeline/src/lib.rs::lin_cpu` actually applies the spot and eye kernels; `visualize::apply` runs on finished CPU and GPU renders; `engine/src/cmd/masks.rs` exposes spot editing, source refresh, eye correction and `spot.findDust`. None of the seven operations below is a declaration-only feature.
 
-| API | Result | Actual operation |
-| --- | --- | --- |
-| `cloneSpot` | `Result<Image>` | Bilinear source patch copied through the point-stroke feather mask. |
-| `healSpot` | `Result<Image>` | Source detail plus the normalized low-frequency target–source difference from outside the stroke. |
-| `removeSpot` | `Result<Image>` | Heal using the best nearby ring-matched source when no offset is supplied. |
-| `redEye` | `Result<Image>` | Detect the red pupil, gate by red dominance, neutralize and darken the pupil. |
-| `petEye` | `Result<Image>` | Detect the brightest pupil glow, replace its disc with a dark neutral pupil and optionally add a catchlight. |
-| `visualizeSpots` | `Result<Image>` | Threshold the absolute high-pass of encoded luminance into black/white. |
-| `detectDustSpots` | `Result<vector<DustSpot>>` | Find small, dark, round connected components on locally smooth image regions. |
+- API: `cloneSpot`; Result: `Result<Image>`; Actual operation: Bilinear source patch copied through the point-stroke feather mask.
+- API: `healSpot`; Result: `Result<Image>`; Actual operation: Source detail plus the normalized low-frequency target–source difference from outside the stroke.
+- API: `removeSpot`; Result: `Result<Image>`; Actual operation: Heal using the best nearby ring-matched source when no offset is supplied.
+- API: `redEye`; Result: `Result<Image>`; Actual operation: Detect the red pupil, gate by red dominance, neutralize and darken the pupil.
+- API: `petEye`; Result: `Result<Image>`; Actual operation: Detect the brightest pupil glow, replace its disc with a dark neutral pupil and optionally add a catchlight.
+- API: `visualizeSpots`; Result: `Result<Image>`; Actual operation: Threshold the absolute high-pass of encoded luminance into black/white.
+- API: `detectDustSpots`; Result: `Result<vector<DustSpot>>`; Actual operation: Find small, dark, round connected components on locally smooth image regions.
 
 Two helper APIs expose the algorithms needed for editor interaction: `rankSpotSources` returns scored source offsets, and `detectPupil` returns the pupil center, radius and `found` flag before the size slider is applied. The APIs do not create layers, change document selections or store undo records.
 

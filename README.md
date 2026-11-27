@@ -9,9 +9,15 @@ concurrently completed 0.6.0 object API implementation. Build, full tests and
 installation are verified together against this final source snapshot.
 
 
-Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.6.1**. Processing uses the C++ standard library and caller-provided image data; the library neither creates files nor depends on other SDK modules. Applications provide file loading and publishing separately, for example through iiFileProvider. There is no Qt dependency.
+C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.6.1**. Processing uses caller-provided image data and the standard-only iiSDKCore Contracts foundation. The library does not create files; applications provide file loading and publishing separately, for example through iiFileProvider. There is no Qt dependency.
 
 ## Features
+
+The advanced editing objects provide exemplar-based inpainting, seam-aware
+resizing, translation registration, layer compositing, mask refinement and color
+decontamination. Transform and Filter Gallery previews retain undo/redo history;
+the host controls scheduling and cache identities. An optional native Python API
+exposes these objects. See [advanced editing contracts](docs/AdvancedEditing.md).
 
 Version **0.6.0** adds **309 typed value objects** for the full existing processing
 surface, owned resources, automatic analysis, masks, RAW and LUT/profile recipes.
@@ -84,7 +90,23 @@ Normalized image and mask processing returns new storage and leaves inputs uncha
 
 ## Build and test
 
-CMake 3.24 or later and a C++23 compiler/standard library with `std::expected` are required. No third-party packages are discovered or linked.
+CMake 3.24 or later, iiSDKCore 0.20 Contracts, and a C++23 compiler/standard library with `std::expected` are required. No additional third-party packages are discovered or linked.
+
+The Python API is built by default on native hosts using the Python interpreter
+and development module plus the bundled BSD-3-Clause pybind11 3.1.0 headers. Set
+`-DIIGRAPHICADJUST_BUILD_PYTHON=OFF` to omit it; cross-compilation defaults to
+off until a matching target Python development environment is supplied. The
+installed module lives in `<prefix>/lib/iiGraphicAdjust/python` and can be
+imported as `iigraphicadjust` when that directory is on `PYTHONPATH`; Windows
+uses `<prefix>/bin/iiGraphicAdjust/python`. On Windows, explicitly add
+`<prefix>/bin` to Python's DLL search path with `os.add_dll_directory()` before
+importing the module.
+
+```sh
+iisdk-builder build --mode library --project . --platform host
+```
+
+To run the complete automated test suite in the project build directory:
 
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON
@@ -92,6 +114,11 @@ cmake --build build --config Release --parallel 2
 ctest --test-dir build -C Release --output-on-failure
 cmake --install build --config Release
 ```
+
+Native builds search the standard per-user iiSDKCore prefix; alternatively pass
+`-DiiSDKCore_DIR="$HOME/.local/SDK/iiSDKCore/lib/cmake/iiSDKCore"` when
+configuring. Cross builds must supply the matching target prefix through the
+iiSDKBuilder kit. Installed consumers also need iiSDKCore available to CMake.
 
 The standalone default installation prefix is `~/.local/SDK/iiGraphicAdjust`. Set `-DCMAKE_INSTALL_PREFIX=/your/prefix` to override it. Shared libraries are enabled by default; `-DBUILD_SHARED_LIBS=OFF` builds a static library. Set `-DBUILD_TESTING=OFF` for a library-only build. The examples are separately configured applications rather than targets in the SDK build.
 

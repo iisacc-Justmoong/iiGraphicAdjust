@@ -1,45 +1,43 @@
 # Architecture
 
-`iiGraphicAdjust` is an independent processing SDK. Kernels use C++23 and the standard library and receive caller-owned image data. Product state, GUI types, document persistence, font shaping and file decoding remain responsibilities of callers. Applications may combine image processing with iiFileProvider without linking one SDK into the other.
+`iiGraphicAdjust` is a processing SDK built on iiSDKCore Contracts. Kernels use C++23 and the standard library and receive caller-owned image data. Product state, GUI types, document persistence, font shaping and file decoding remain responsibilities of callers. Applications may combine image processing with iiFileProvider without linking those two SDKs into each other.
 
 ## Change boundaries
 
-| File | Responsibility |
-| --- | --- |
-| `RawProcessing.h/.cpp` | Unpacked Bayer normalization, demosaicing and supplied sensor calibration |
-| `PhotoOperations.h/.cpp` | Integer orientation/crop and alpha-aware photo histograms |
-| `Image.h/.cpp` | Borrowed/owned pixel contract and byte/word conversion |
-| `Adjustments.h/.cpp` | Color and opacity adjustments |
-| `Effects.h/.cpp` | Blur, unsharp mask and deterministic noise |
-| `Blend.h/.cpp` | Blend modes, working space and alpha composition |
-| `Tone.h/.cpp` | Tonal, discrete and automatic corrections |
-| `Color.h/.cpp` | Color-range operations and reference statistics |
-| `Mapping.h/.cpp` | Gradient mapping, LUT tables and strict Cube parsing |
-| `Hdr.h/.cpp` | Separate linear HDR input and normalized tone-mapped output |
-| `BlurFilters.h/.cpp` | Menu blur/sharpen and typed Blur Gallery pins/paths |
-| `DistortionFilters.h/.cpp` | Inverse mapping, displacement maps and border handling |
-| `UtilityFilters.h/.cpp` | Menu noise, morphology, convolution, video and box-guided kernels |
-| `PixelFilters.h/.cpp` | Pixelate and Stylize algorithms |
-| `RenderFilters.h/.cpp` | Procedural noise/light/Flame/Tree/Frame raster processing |
-| `GalleryFilters.h/.cpp` | 47 named artistic effects and typed ordered Gallery stack |
-| `LensFilter.h/.cpp` | PhotoCraft encoded Lens Correction, profiles and auto scale |
-| `CameraRawFilter.h/.cpp` | Separate relative-WB rendered Camera Raw pipeline |
-| `MeshFilters.h/.cpp` | Liquify fields, constrained projections, ARAP and metric planes |
-| `LightcraftFilters.h/.cpp` | 22 look/41 preset recipes and four linear-premultiplied resamplers |
-| `RetouchFilters.h/.cpp` | Clone/Heal/Remove, eye repair, spot visualization and dust detection |
-| `DiagnosticFilters.h/.cpp` | Selection/mask previews and explicit proof-space gamut warning overlays |
-| `FilterInternal.h`, `PixelRenderInternal.h` | Private encoded-space sampling, windows and procedural helpers |
-| `Internal.h` | Private validation, allocation handling and transfer functions |
-| `DevelopTone.h/.cpp` | Rendered-image white balance, Light, auto estimation and cubic/parametric curves |
-| `DevelopColor.h/.cpp` | Perceptual eight-band color, grading, Point Color and calibration |
-| `DevelopEffects.h/.cpp` | Spatial detail, denoise, dehaze, vignette and grain |
-| `Optics.h/.cpp` | Alpha-aware lens resampling, CA estimation and defringe |
-| `Masks.h/.cpp` | Normalized coverage generation, combination, refinement and local adjustments |
-| `LocalCorrections.h/.cpp` | Caller-supplied corrected RGB composed through normalized coverage, without alpha composition or correction-kernel dependencies |
-| `MaskInternal.h` | Shared private mask storage/coverage validation used by actual mask and correction consumers |
-| `SampleFilters.h/.cpp` | Separately typed recovered sample-plane Average/Solarize kernels with explicit mutable outputs and strict accumulation order |
-| `Develop.h/.cpp` | Explicit composition of the existing public development stages |
-| `DevelopInternal.h` | Shared private linear/OkLab math and alpha-weighted spatial primitives |
+- File: `RawProcessing.h/.cpp`; Responsibility: Unpacked Bayer normalization, demosaicing and supplied sensor calibration
+- File: `PhotoOperations.h/.cpp`; Responsibility: Integer orientation/crop and alpha-aware photo histograms
+- File: `Image.h/.cpp`; Responsibility: Borrowed/owned pixel contract and byte/word conversion
+- File: `Adjustments.h/.cpp`; Responsibility: Color and opacity adjustments
+- File: `Effects.h/.cpp`; Responsibility: Blur, unsharp mask and deterministic noise
+- File: `Blend.h/.cpp`; Responsibility: Blend modes, working space and alpha composition
+- File: `Tone.h/.cpp`; Responsibility: Tonal, discrete and automatic corrections
+- File: `Color.h/.cpp`; Responsibility: Color-range operations and reference statistics
+- File: `Mapping.h/.cpp`; Responsibility: Gradient mapping, LUT tables and strict Cube parsing
+- File: `Hdr.h/.cpp`; Responsibility: Separate linear HDR input and normalized tone-mapped output
+- File: `BlurFilters.h/.cpp`; Responsibility: Menu blur/sharpen and typed Blur Gallery pins/paths
+- File: `DistortionFilters.h/.cpp`; Responsibility: Inverse mapping, displacement maps and border handling
+- File: `UtilityFilters.h/.cpp`; Responsibility: Menu noise, morphology, convolution, video and box-guided kernels
+- File: `PixelFilters.h/.cpp`; Responsibility: Pixelate and Stylize algorithms
+- File: `RenderFilters.h/.cpp`; Responsibility: Procedural noise/light/Flame/Tree/Frame raster processing
+- File: `GalleryFilters.h/.cpp`; Responsibility: 47 named artistic effects and typed ordered Gallery stack
+- File: `LensFilter.h/.cpp`; Responsibility: PhotoCraft encoded Lens Correction, profiles and auto scale
+- File: `CameraRawFilter.h/.cpp`; Responsibility: Separate relative-WB rendered Camera Raw pipeline
+- File: `MeshFilters.h/.cpp`; Responsibility: Liquify fields, constrained projections, ARAP and metric planes
+- File: `LightcraftFilters.h/.cpp`; Responsibility: 22 look/41 preset recipes and four linear-premultiplied resamplers
+- File: `RetouchFilters.h/.cpp`; Responsibility: Clone/Heal/Remove, eye repair, spot visualization and dust detection
+- File: `DiagnosticFilters.h/.cpp`; Responsibility: Selection/mask previews and explicit proof-space gamut warning overlays
+- File: `FilterInternal.h`, `PixelRenderInternal.h`; Responsibility: Private encoded-space sampling, windows and procedural helpers
+- File: `Internal.h`; Responsibility: Private validation, allocation handling and transfer functions
+- File: `DevelopTone.h/.cpp`; Responsibility: Rendered-image white balance, Light, auto estimation and cubic/parametric curves
+- File: `DevelopColor.h/.cpp`; Responsibility: Perceptual eight-band color, grading, Point Color and calibration
+- File: `DevelopEffects.h/.cpp`; Responsibility: Spatial detail, denoise, dehaze, vignette and grain
+- File: `Optics.h/.cpp`; Responsibility: Alpha-aware lens resampling, CA estimation and defringe
+- File: `Masks.h/.cpp`; Responsibility: Normalized coverage generation, combination, refinement and local adjustments
+- File: `LocalCorrections.h/.cpp`; Responsibility: Caller-supplied corrected RGB composed through normalized coverage, without alpha composition or correction-kernel dependencies
+- File: `MaskInternal.h`; Responsibility: Shared private mask storage/coverage validation used by actual mask and correction consumers
+- File: `SampleFilters.h/.cpp`; Responsibility: Separately typed recovered sample-plane Average/Solarize kernels with explicit mutable outputs and strict accumulation order
+- File: `Develop.h/.cpp`; Responsibility: Explicit composition of the existing public development stages
+- File: `DevelopInternal.h`; Responsibility: Shared private linear/OkLab math and alpha-weighted spatial primitives
 
 Synchronous free functions retain value settings and borrowed const spans. Version 0.6 additionally provides concrete final value objects under `objects/`, with owned arrays and auxiliary resources. `Operation` uses a small const type-erased capture for immutable snapshots; virtual dispatch occurs once per image operation, not per pixel. `OperationStack` composes those captures in caller-selected order and reports precise failures. There is no algorithm backend, plugin factory or application history dependency. New numerical behavior remains in the kernel family owning its change reason. See [OperationObjects.md](OperationObjects.md).
 
@@ -53,7 +51,7 @@ Color adjustment, noise, composition and format conversion cost O(N) for N pixel
 
 The package target is `iiGraphicAdjust::iiGraphicAdjust`; CMake propagates C++23 and the installed public include path. `GenerateExportHeader` supports shared-library visibility and static definitions. ABI series 0.6 uses `SameMinorVersion` package compatibility. Consumers must use a compatible compiler/standard-library ABI when crossing a shared-library boundary with standard containers.
 
-The default install prefix is `~/.local/SDK/iiGraphicAdjust`. The parent `SDK/install_all.py` discovers this directory from `CMakeLists.txt`; no central module list or duplicated install script is needed. The exported package does not discover or link another SDK. Independence must be verified from source, exported CMake targets, linked binaries and a separately configured installed consumer.
+The default install prefix is `~/.local/SDK/iiGraphicAdjust`. The parent `SDK/install_all.py` discovers this directory from `CMakeLists.txt`; no central module list or duplicated install script is needed. The exported package discovers iiSDKCore 0.20 Contracts as its common foundation. The processing library does not link iiFileProvider; installed consumers verify the package and foundation together.
 
 No existing product or SDK adapter is rewritten in this release. Integrating a host means adapting its actual pixel format and ownership contract to `ImageView` or the documented converters, then calling the desired operations explicitly.
 

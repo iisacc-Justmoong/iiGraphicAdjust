@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/OperationObjectsVerification.md",
-    "sha256": "8ce7274689404d9cbf9b3245317d3f0091498f66c36505dc14bf1181368caf82",
-    "bytes": 6831,
-    "line_count": 119,
+    "sha256": "7155c179951027c513e9173775a7a85090dc00c46fe31f4735870008cfce8b9d",
+    "bytes": 6942,
+    "line_count": 117,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -70,105 +70,113 @@
     },
     {
       "id": "b000007",
-      "kind": "table",
       "start_line": 9,
-      "end_line": 22,
-      "raw": "| Check | Result |\n| --- | --- |\n| Pre-change Release baseline | 163/163 passed |\n| Final Release CTest | **202/202 passed** |\n| Final ASan/UBSan/float-cast-overflow CTest | **202/202 passed** |\n| Isolated Release installed consumer | Existing API consumer and complete 309-object consumer passed |\n| Isolated instrumented installed consumer | Both consumers passed; object runner reports `Executed 309 objects` |\n| Standalone installed object headers | **34/34** compile separately with C++23 |\n| Exported processing coverage | Every exported adjustment/filter/mask/analysis/RAW/resource/sample function maps to a concrete object |\n| C++ standard | 68/68 Release and 64/64 instrumented translation units use C++23 |\n| Instrumentation | All 64 instrumented translation units have address, undefined and float-cast-overflow sanitizers |\n| Qt check | No direct Qt dependency in the engine or its existing native file provider |\n| Retained filtering audit | Existing pinned filter/recipe/resampling/retouch/diagnostic inventory passed |\n| Patch formatting | `git diff --check` passed |\n",
-      "columns": [
-        "Check",
-        "Result"
-      ],
-      "rows": [
-        [
-          "Pre-change Release baseline",
-          "163/163 passed"
-        ],
-        [
-          "Final Release CTest",
-          "**202/202 passed**"
-        ],
-        [
-          "Final ASan/UBSan/float-cast-overflow CTest",
-          "**202/202 passed**"
-        ],
-        [
-          "Isolated Release installed consumer",
-          "Existing API consumer and complete 309-object consumer passed"
-        ],
-        [
-          "Isolated instrumented installed consumer",
-          "Both consumers passed; object runner reports `Executed 309 objects`"
-        ],
-        [
-          "Standalone installed object headers",
-          "**34/34** compile separately with C++23"
-        ],
-        [
-          "Exported processing coverage",
-          "Every exported adjustment/filter/mask/analysis/RAW/resource/sample function maps to a concrete object"
-        ],
-        [
-          "C++ standard",
-          "68/68 Release and 64/64 instrumented translation units use C++23"
-        ],
-        [
-          "Instrumentation",
-          "All 64 instrumented translation units have address, undefined and float-cast-overflow sanitizers"
-        ],
-        [
-          "Qt check",
-          "No direct Qt dependency in the engine or its existing native file provider"
-        ],
-        [
-          "Retained filtering audit",
-          "Existing pinned filter/recipe/resampling/retouch/diagnostic inventory passed"
-        ],
-        [
-          "Patch formatting",
-          "`git diff --check` passed"
-        ]
+      "end_line": 20,
+      "raw": "- Check: Pre-change Release baseline; Result: 163/163 passed\n- Check: Final Release CTest; Result: **202/202 passed**\n- Check: Final ASan/UBSan/float-cast-overflow CTest; Result: **202/202 passed**\n- Check: Isolated Release installed consumer; Result: Existing API consumer and complete 309-object consumer passed\n- Check: Isolated instrumented installed consumer; Result: Both consumers passed; object runner reports `Executed 309 objects`\n- Check: Standalone installed object headers; Result: **34/34** compile separately with C++23\n- Check: Exported processing coverage; Result: Every exported adjustment/filter/mask/analysis/RAW/resource/sample function maps to a concrete object\n- Check: C++ standard; Result: 68/68 Release and 64/64 instrumented translation units use C++23\n- Check: Instrumentation; Result: All 64 instrumented translation units have address, undefined and float-cast-overflow sanitizers\n- Check: Qt check; Result: No direct Qt dependency in the engine or its existing native file provider\n- Check: Retained filtering audit; Result: Existing pinned filter/recipe/resampling/retouch/diagnostic inventory passed\n- Check: Patch formatting; Result: `git diff --check` passed\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Check: Pre-change Release baseline; Result: 163/163 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Check: Final Release CTest; Result: **202/202 passed**",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Check: Final ASan/UBSan/float-cast-overflow CTest; Result: **202/202 passed**",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Check: Isolated Release installed consumer; Result: Existing API consumer and complete 309-object consumer passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Check: Isolated instrumented installed consumer; Result: Both consumers passed; object runner reports `Executed 309 objects`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Check: Standalone installed object headers; Result: **34/34** compile separately with C++23",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Check: Exported processing coverage; Result: Every exported adjustment/filter/mask/analysis/RAW/resource/sample function maps to a concrete object",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Check: C++ standard; Result: 68/68 Release and 64/64 instrumented translation units use C++23",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Check: Instrumentation; Result: All 64 instrumented translation units have address, undefined and float-cast-overflow sanitizers",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Check: Qt check; Result: No direct Qt dependency in the engine or its existing native file provider",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Check: Retained filtering audit; Result: Existing pinned filter/recipe/resampling/retouch/diagnostic inventory passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Check: Patch formatting; Result: `git diff --check` passed",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 23,
-      "end_line": 23,
+      "start_line": 21,
+      "end_line": 21,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 24,
-      "end_line": 28,
+      "start_line": 22,
+      "end_line": 26,
       "raw": "There are 309 concrete objects, not 309 newly implemented algorithms. Existing\nprocessing kernels remain covered by the original suites. New object execution\nsuites cover every concrete type, including actual typed mask, analysis, RAW,\nresource and sample-plane calls. Metadata cardinality and execution cardinality\nare checked for equality. Pixel converters keep their low-level utility APIs.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 29,
-      "end_line": 29,
+      "start_line": 27,
+      "end_line": 27,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 30,
-      "end_line": 34,
+      "start_line": 28,
+      "end_line": 32,
       "raw": "The package still links the existing iiFileProviderNative (current local 0.8.0)\nfor native file integration. It does not add a new third-party runtime or Qt.\nThe provider uses native macOS frameworks and SQLite; CPU kernels and the new\nobject implementation use C++23 standard-library facilities. These host results\ndo not verify other operating systems or third-party consumers in production.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 35,
-      "end_line": 35,
+      "start_line": 33,
+      "end_line": 33,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "heading",
-      "start_line": 36,
-      "end_line": 36,
+      "start_line": 34,
+      "end_line": 34,
       "raw": "## Behavioral evidence\n",
       "level": 2,
       "title": "Behavioral evidence"
@@ -176,15 +184,15 @@
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 37,
-      "end_line": 37,
+      "start_line": 35,
+      "end_line": 35,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "list",
-      "start_line": 38,
-      "end_line": 56,
+      "start_line": 36,
+      "end_line": 54,
       "raw": "- Object snapshots survive source edits/destruction and own curve/LUT/reference/\n  mask/depth data. Source input remains immutable; outputs are detached.\n- Stack order has an independently computed exposure/inversion oracle. Empty,\n  disabled, invalid, moved-from and over-budget cases have explicit behavior.\n- Mask/amount interpolation checks encoded and linear-light midpoints, exact\n  zero coverage and premultiplied-alpha isolation from invisible source RGB.\n- Geometry-changing full stages work. Partial geometry is rejected at the exact\n  stage; kernel errors retain the operation identity and original cause.\n- Color-to-alpha tests recomposition over randomized keys against the independent\n  compositing equation, existing alpha, transparent pixels and threshold steps.\n- Flat-field tests recover a known uniform linear scene from nonuniform response,\n  verify gain interpolation and reject coverage/dimension errors.\n- Gradient fills have an independent transfer-function midpoint check. All five\n  geometries execute; pattern wrapping/pixel centers and bounded large offsets\n  are exercised.\n- Sharpen Radius/Detail and Luminance NR Contrast each measurably change pixels;\n  default legacy oracles still pass and inactive invalid controls are rejected.\n- Recovered sample-plane objects check integer/float average/fill values and\n  Solarize integer thresholds without converting through normalized RGBA.\n",
       "items": [
         {
@@ -237,29 +245,29 @@
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 57,
-      "end_line": 57,
+      "start_line": 55,
+      "end_line": 55,
       "raw": "\n"
     },
     {
       "id": "b000017",
       "kind": "paragraph",
-      "start_line": 58,
-      "end_line": 59,
+      "start_line": 56,
+      "end_line": 57,
       "raw": "`build/objects-initial-red.log` records the initial missing-object-API failure.\nFinal evidence is separate from that TDD checkpoint.\n"
     },
     {
       "id": "b000018",
       "kind": "blank",
-      "start_line": 60,
-      "end_line": 60,
+      "start_line": 58,
+      "end_line": 58,
       "raw": "\n"
     },
     {
       "id": "b000019",
       "kind": "heading",
-      "start_line": 61,
-      "end_line": 61,
+      "start_line": 59,
+      "end_line": 59,
       "raw": "## Evidence files\n",
       "level": 2,
       "title": "Evidence files"
@@ -267,15 +275,15 @@
     {
       "id": "b000020",
       "kind": "blank",
-      "start_line": 62,
-      "end_line": 62,
+      "start_line": 60,
+      "end_line": 60,
       "raw": "\n"
     },
     {
       "id": "b000021",
       "kind": "list",
-      "start_line": 63,
-      "end_line": 72,
+      "start_line": 61,
+      "end_line": 70,
       "raw": "- `build/objects-baseline-build.log`, `build/objects-baseline-tests.log`\n- `build/objects-configure.log`, `build/objects-build.log`, `build/objects-tests.log`\n- `build/objects-sanitizer-configure.log`, `build/objects-sanitizer-build.log`,\n  `build/objects-sanitizer-tests.log`\n- `build/objects-package-{install,configure,build,test}.log`\n- `build/objects-sanitized/build/objects-package-{install,configure,build,test}.log`\n- `build/objects-package/build/Testing/Temporary/LastTest.log`\n- `build/objects-sanitized/build/objects-package/build/Testing/Temporary/LastTest.log`\n- `build/objects-header-check.log`, `build/objects-linked-libraries.log`\n- `build/objects-retained-filter-audit.log`, `build/objects-validation.json`\n",
       "items": [
         {
@@ -328,29 +336,29 @@
     {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 73,
-      "end_line": 73,
+      "start_line": 71,
+      "end_line": 71,
       "raw": "\n"
     },
     {
       "id": "b000023",
       "kind": "paragraph",
-      "start_line": 74,
-      "end_line": 77,
+      "start_line": 72,
+      "end_line": 75,
       "raw": "`objects-validation.json` records final source/document/log/library hashes and\nscope boundaries. Build outputs are local evidence and are not installed as API.\nInstalled documentation and public headers are checked against their final source\ncontents after the final documentation update.\n"
     },
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 78,
-      "end_line": 78,
+      "start_line": 76,
+      "end_line": 76,
       "raw": "\n"
     },
     {
       "id": "b000025",
       "kind": "heading",
-      "start_line": 79,
-      "end_line": 79,
+      "start_line": 77,
+      "end_line": 77,
       "raw": "## Reproduction\n",
       "level": 2,
       "title": "Reproduction"
@@ -358,29 +366,29 @@
     {
       "id": "b000026",
       "kind": "blank",
-      "start_line": 80,
-      "end_line": 80,
+      "start_line": 78,
+      "end_line": 78,
       "raw": "\n"
     },
     {
       "id": "b000027",
       "kind": "paragraph",
-      "start_line": 81,
-      "end_line": 81,
+      "start_line": 79,
+      "end_line": 79,
       "raw": "Run from the module directory with iiFileProviderNative >= 0.6 discoverable.\n"
     },
     {
       "id": "b000028",
       "kind": "blank",
-      "start_line": 82,
-      "end_line": 82,
+      "start_line": 80,
+      "end_line": 80,
       "raw": "\n"
     },
     {
       "id": "b000029",
       "kind": "fenced_code",
-      "start_line": 83,
-      "end_line": 87,
+      "start_line": 81,
+      "end_line": 85,
       "raw": "```sh\ncmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure --parallel 4\n```\n",
       "language": "sh",
       "code": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure --parallel 4\n",
@@ -389,29 +397,29 @@
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 88,
-      "end_line": 88,
+      "start_line": 86,
+      "end_line": 86,
       "raw": "\n"
     },
     {
       "id": "b000031",
       "kind": "paragraph",
-      "start_line": 89,
-      "end_line": 92,
+      "start_line": 87,
+      "end_line": 90,
       "raw": "The installed-package CTest installs under `build/objects-package/install`, builds\nan independent consumer under `build/objects-package/build`, and runs both its\nlegacy API and complete object tests. It never uses the default host install\nprefix for this check.\n"
     },
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 93,
-      "end_line": 93,
+      "start_line": 91,
+      "end_line": 91,
       "raw": "\n"
     },
     {
       "id": "b000033",
       "kind": "fenced_code",
-      "start_line": 94,
-      "end_line": 102,
+      "start_line": 92,
+      "end_line": 100,
       "raw": "```sh\ncmake -S . -B build/objects-sanitized/build \\\n  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DIIGRAPHICADJUST_BUILD_EXAMPLES=OFF \\\n  -DCMAKE_CXX_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow -fno-omit-frame-pointer\" \\\n  -DCMAKE_EXE_LINKER_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow\" \\\n  -DCMAKE_SHARED_LINKER_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow\"\ncmake --build build/objects-sanitized/build --parallel 4\nctest --test-dir build/objects-sanitized/build --output-on-failure --parallel 4\n```\n",
       "language": "sh",
       "code": "cmake -S . -B build/objects-sanitized/build \\\n  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DIIGRAPHICADJUST_BUILD_EXAMPLES=OFF \\\n  -DCMAKE_CXX_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow -fno-omit-frame-pointer\" \\\n  -DCMAKE_EXE_LINKER_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow\" \\\n  -DCMAKE_SHARED_LINKER_FLAGS=\"-fsanitize=address,undefined,float-cast-overflow\"\ncmake --build build/objects-sanitized/build --parallel 4\nctest --test-dir build/objects-sanitized/build --output-on-failure --parallel 4\n",
@@ -420,29 +428,29 @@
     {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 103,
-      "end_line": 103,
+      "start_line": 101,
+      "end_line": 101,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "paragraph",
-      "start_line": 104,
-      "end_line": 108,
+      "start_line": 102,
+      "end_line": 106,
       "raw": "`iiGraphicAdjustObjectsExample` renders a procedural four-panel comparison to\n`build/operation-objects.ppm`: original, global exposure/grading/detail, local\nmasked monochrome, and watercolor. The corresponding PNG is a lossless format\nconversion of those actual output pixels. It is an SDK demonstration, not an\nAdobe oracle or performance benchmark.\n"
     },
     {
       "id": "b000036",
       "kind": "blank",
-      "start_line": 109,
-      "end_line": 109,
+      "start_line": 107,
+      "end_line": 107,
       "raw": "\n"
     },
     {
       "id": "b000037",
       "kind": "heading",
-      "start_line": 110,
-      "end_line": 110,
+      "start_line": 108,
+      "end_line": 108,
       "raw": "## Unverified and incomplete\n",
       "level": 2,
       "title": "Unverified and incomplete"
@@ -450,15 +458,15 @@
     {
       "id": "b000038",
       "kind": "blank",
-      "start_line": 111,
-      "end_line": 111,
+      "start_line": 109,
+      "end_line": 109,
       "raw": "\n"
     },
     {
       "id": "b000039",
       "kind": "paragraph",
-      "start_line": 112,
-      "end_line": 119,
+      "start_line": 110,
+      "end_line": 117,
       "raw": "This verifies independently implemented CPU contracts, public object ownership\nand packaging. It does **not** verify complete Photoshop/Lightroom functionality,\nall Adobe option/depth semantics, original-application pixel equivalence,\nlearned/semantic/generative operations, complete RAW file/profile handling,\nscene-linear wide-gamut/HDR output, preset/smart-filter persistence, panorama/HDR\nmerge, hardware performance or non-macOS behavior. The exact category/remaining\nmapping is in [adobe-feature-coverage.json](adobe-feature-coverage.json); no\nunsupported neural placeholder is counted among the 309 executable objects.\n"
     }
   ],
@@ -485,7 +493,7 @@
       "level": 2,
       "title": "Behavioral evidence",
       "anchor": "behavioral-evidence",
-      "start_line": 36
+      "start_line": 34
     },
     {
       "block_id": "b000019",
@@ -493,7 +501,7 @@
       "level": 2,
       "title": "Evidence files",
       "anchor": "evidence-files",
-      "start_line": 61
+      "start_line": 59
     },
     {
       "block_id": "b000025",
@@ -501,7 +509,7 @@
       "level": 2,
       "title": "Reproduction",
       "anchor": "reproduction",
-      "start_line": 79
+      "start_line": 77
     },
     {
       "block_id": "b000037",
@@ -509,21 +517,21 @@
       "level": 2,
       "title": "Unverified and incomplete",
       "anchor": "unverified-and-incomplete",
-      "start_line": 110
+      "start_line": 108
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
         "block_id": "b000011",
-        "line": 34,
+        "line": 32,
         "text": "do not verify other operating systems or third-party consumers in production.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000031",
-        "line": 91,
+        "line": 89,
         "text": "legacy API and complete object tests. It never uses the default host install",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -547,68 +555,10 @@
         "label": "adobe-feature-coverage.json",
         "target": "adobe-feature-coverage.json",
         "kind": "relative",
-        "line": 118
+        "line": 116
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000007",
-        "columns": [
-          "Check",
-          "Result"
-        ],
-        "rows": [
-          [
-            "Pre-change Release baseline",
-            "163/163 passed"
-          ],
-          [
-            "Final Release CTest",
-            "**202/202 passed**"
-          ],
-          [
-            "Final ASan/UBSan/float-cast-overflow CTest",
-            "**202/202 passed**"
-          ],
-          [
-            "Isolated Release installed consumer",
-            "Existing API consumer and complete 309-object consumer passed"
-          ],
-          [
-            "Isolated instrumented installed consumer",
-            "Both consumers passed; object runner reports `Executed 309 objects`"
-          ],
-          [
-            "Standalone installed object headers",
-            "**34/34** compile separately with C++23"
-          ],
-          [
-            "Exported processing coverage",
-            "Every exported adjustment/filter/mask/analysis/RAW/resource/sample function maps to a concrete object"
-          ],
-          [
-            "C++ standard",
-            "68/68 Release and 64/64 instrumented translation units use C++23"
-          ],
-          [
-            "Instrumentation",
-            "All 64 instrumented translation units have address, undefined and float-cast-overflow sanitizers"
-          ],
-          [
-            "Qt check",
-            "No direct Qt dependency in the engine or its existing native file provider"
-          ],
-          [
-            "Retained filtering audit",
-            "Existing pinned filter/recipe/resampling/retouch/diagnostic inventory passed"
-          ],
-          [
-            "Patch formatting",
-            "`git diff --check` passed"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

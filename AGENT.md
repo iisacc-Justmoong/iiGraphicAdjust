@@ -1,6 +1,6 @@
 # iiGraphicAdjust 에이전트 지침
 
-처리 라이브러리는 다른 SDK를 직접 찾거나 링크하지 않는다. 파일을 만드는
+처리 라이브러리는 공통 기반으로 iiSDKCore `Contracts`를 사용한다. 파일을 만드는
 예제는 독립 소비자 프로젝트로 구성하고 iiFileProvider를 앱에서 직접 연결한다.
 
 <!-- workspace-docs:agent:start -->

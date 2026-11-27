@@ -26,29 +26,27 @@ Scalar Gaussian stages preserve the reference's three-box approximation and its 
 
 `CameraRawWheel` contains `hue`, `saturation` and `luminance`. `CameraRawVignetteStyle` contains `HighlightPriority`, `ColorPriority` and `PaintOverlay`. `CameraRawOptions` has the following complete set of controls; none is silently mapped to an unrelated Develop control.
 
-| Fields | Defaults | Accepted range or meaning |
-| --- | --- | --- |
-| `temperature`, `tint` | 0, 0 | Relative sliders, `[-100,100]` |
-| `exposure` | 0 | `[-5,5]` stops |
-| `contrast`, `highlights`, `shadows`, `whites`, `blacks` | 0 | `[-100,100]` |
-| `texture`, `clarity`, `dehaze`, `vibrance`, `saturation` | 0 | `[-100,100]` |
-| `curveHighlights`, `curveLights`, `curveDarks`, `curveShadows` | 0 | `[-100,100]` |
-| `curveSplits` | `{25,50,75}` | Each `[5,95]`, strictly increasing |
-| `pointCurve`, `pointCurveRed`, `pointCurveGreen`, `pointCurveBlue` | Empty | Empty or 2–16 `[input,output]` pairs, each `[0,255]`, input gap at least 1 |
-| `hslHue`, `hslSaturation`, `hslLuminance` | Eight zeroes each | `[-100,100]`, in red/orange/yellow/green/aqua/blue/purple/magenta order |
-| `gradeShadows`, `gradeMidtones`, `gradeHighlights`, `gradeGlobal` | Neutral wheels | Hue `[0,360]`, saturation `[0,100]`, luminance `[-100,100]` |
-| `gradeBlending`, `gradeBalance` | 50, 0 | `[0,100]`, `[-100,100]` |
-| `sharpenAmount` | 0 | `[0,150]` |
-| `sharpenRadius` | 1 | `[.5,3]` pixels before Pixel Scale |
-| `sharpenDetail`, `sharpenMasking` | 25, 0 | `[0,100]` |
-| `noiseLuminance`, `noiseLuminanceDetail` | 0, 50 | `[0,100]` |
-| `noiseColor`, `noiseColorDetail` | 0, 50 | `[0,100]` |
-| `grainAmount`, `grainSize`, `grainRoughness` | 0, 25, 50 | `[0,100]` |
-| `vignetteAmount`, `vignetteRoundness` | 0, 0 | `[-100,100]` |
-| `vignetteMidpoint`, `vignetteFeather`, `vignetteHighlights` | 50, 50, 0 | `[0,100]` |
-| `vignetteStyle` | `HighlightPriority` | One of the three enum values |
-| `seed` | 0 | Unsigned 32-bit grain seed |
-| `pixelScale` | 1 | `[.01,1]`, scales detail radii and preview grain coordinates |
+- Fields: `temperature`, `tint`; Defaults: 0, 0; Accepted range or meaning: Relative sliders, `[-100,100]`
+- Fields: `exposure`; Defaults: 0; Accepted range or meaning: `[-5,5]` stops
+- Fields: `contrast`, `highlights`, `shadows`, `whites`, `blacks`; Defaults: 0; Accepted range or meaning: `[-100,100]`
+- Fields: `texture`, `clarity`, `dehaze`, `vibrance`, `saturation`; Defaults: 0; Accepted range or meaning: `[-100,100]`
+- Fields: `curveHighlights`, `curveLights`, `curveDarks`, `curveShadows`; Defaults: 0; Accepted range or meaning: `[-100,100]`
+- Fields: `curveSplits`; Defaults: `{25,50,75}`; Accepted range or meaning: Each `[5,95]`, strictly increasing
+- Fields: `pointCurve`, `pointCurveRed`, `pointCurveGreen`, `pointCurveBlue`; Defaults: Empty; Accepted range or meaning: Empty or 2–16 `[input,output]` pairs, each `[0,255]`, input gap at least 1
+- Fields: `hslHue`, `hslSaturation`, `hslLuminance`; Defaults: Eight zeroes each; Accepted range or meaning: `[-100,100]`, in red/orange/yellow/green/aqua/blue/purple/magenta order
+- Fields: `gradeShadows`, `gradeMidtones`, `gradeHighlights`, `gradeGlobal`; Defaults: Neutral wheels; Accepted range or meaning: Hue `[0,360]`, saturation `[0,100]`, luminance `[-100,100]`
+- Fields: `gradeBlending`, `gradeBalance`; Defaults: 50, 0; Accepted range or meaning: `[0,100]`, `[-100,100]`
+- Fields: `sharpenAmount`; Defaults: 0; Accepted range or meaning: `[0,150]`
+- Fields: `sharpenRadius`; Defaults: 1; Accepted range or meaning: `[.5,3]` pixels before Pixel Scale
+- Fields: `sharpenDetail`, `sharpenMasking`; Defaults: 25, 0; Accepted range or meaning: `[0,100]`
+- Fields: `noiseLuminance`, `noiseLuminanceDetail`; Defaults: 0, 50; Accepted range or meaning: `[0,100]`
+- Fields: `noiseColor`, `noiseColorDetail`; Defaults: 0, 50; Accepted range or meaning: `[0,100]`
+- Fields: `grainAmount`, `grainSize`, `grainRoughness`; Defaults: 0, 25, 50; Accepted range or meaning: `[0,100]`
+- Fields: `vignetteAmount`, `vignetteRoundness`; Defaults: 0, 0; Accepted range or meaning: `[-100,100]`
+- Fields: `vignetteMidpoint`, `vignetteFeather`, `vignetteHighlights`; Defaults: 50, 50, 0; Accepted range or meaning: `[0,100]`
+- Fields: `vignetteStyle`; Defaults: `HighlightPriority`; Accepted range or meaning: One of the three enum values
+- Fields: `seed`; Defaults: 0; Accepted range or meaning: Unsigned 32-bit grain seed
+- Fields: `pixelScale`; Defaults: 1; Accepted range or meaning: `[.01,1]`, scales detail radii and preview grain coordinates
 
 Every floating parameter must be finite, including inactive dependent controls. Curves require ascending input coordinates; this public API does not accept malformed legacy saved curves. Y coordinates may descend, as the reference's validator allows. Empty curves and points that lie entirely on the identity diagonal are treated as linear, matching the reference's stage-neutral rule. Unknown style enums and values outside the ranges are rejected with `InvalidParameter` rather than clamped silently.
 

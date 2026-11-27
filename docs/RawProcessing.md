@@ -116,14 +116,12 @@ and use existing image adjustments after SDR rendering.
 
 `iiGraphicAdjust.raw.*` contains six independent CTest cases:
 
-| Case | Verified behavior |
-| --- | --- |
-| `patterns` | Distinct constant RGB through all four patterns, including edges and corners; detached output and immutable input |
-| `interpolation` | Independent affine RGB ramps in the interior, measured-site preservation, and explicit axial/diagonal/boundary arithmetic |
-| `calibration` | Separate green black levels, black/white endpoints, nonunit gains and nonidentity matrix oracle, and negative matrix policy |
-| `rendering` | Headroom preservation, negative toning exposure recovery, clipping/compression, and exact composition with `hdrToning` |
-| `layout` | Padded stride, odd dimensions, all Bayer/phase combinations, minimum 2x2, phased black levels, and ignored trailing samples |
-| `validation` | Invalid enum, phases, dimensions, truncation, addressing overflow, nonfinite calibration, gain/exposure ranges, and unrepresentable output |
+- Case: `patterns`; Verified behavior: Distinct constant RGB through all four patterns, including edges and corners; detached output and immutable input
+- Case: `interpolation`; Verified behavior: Independent affine RGB ramps in the interior, measured-site preservation, and explicit axial/diagonal/boundary arithmetic
+- Case: `calibration`; Verified behavior: Separate green black levels, black/white endpoints, nonunit gains and nonidentity matrix oracle, and negative matrix policy
+- Case: `rendering`; Verified behavior: Headroom preservation, negative toning exposure recovery, clipping/compression, and exact composition with `hdrToning`
+- Case: `layout`; Verified behavior: Padded stride, odd dimensions, all Bayer/phase combinations, minimum 2x2, phased black levels, and ignored trailing samples
+- Case: `validation`; Verified behavior: Invalid enum, phases, dimensions, truncation, addressing overflow, nonfinite calibration, gain/exposure ranges, and unrepresentable output
 
 These tests establish numeric behavior on synthetic sensor samples. Physical
 camera calibration and hardware-captured RAW image quality remain outside this

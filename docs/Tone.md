@@ -133,11 +133,9 @@ that channel is copied instead of dividing by zero. Other values map through
 `clamp((input-black)/(white-black))`. A clipping fraction denotes the requested
 rank and does not promise that exactly that fraction of tied samples will clip.
 
-| Function | Statistical samples | Correction |
-| --- | --- | --- |
-| `autoLevels` | Separate R, G, and B arrays | Independent channel ranges; can change color casts |
-| `autoContrast` | One pooled RGB array | A common range for all channels |
-| `autoColor` | Separate R, G, and B arrays | Independent ranges, then channel median gamma |
+- Function: `autoLevels`; Statistical samples: Separate R, G, and B arrays; Correction: Independent channel ranges; can change color casts
+- Function: `autoContrast`; Statistical samples: One pooled RGB array; Correction: A common range for all channels
+- Function: `autoColor`; Statistical samples: Separate R, G, and B arrays; Correction: Independent ranges, then channel median gamma
 
 For Auto Color, the original channel median is the middle sample for odd counts,
 or the mean of the two middle samples for even counts. After endpoint stretching,

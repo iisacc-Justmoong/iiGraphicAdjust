@@ -1,5 +1,8 @@
 #pragma once
 #include <iiGraphicAdjust/Operation.h>
+#include <iiGraphicAdjust/ContentAware.h>
+#include <iiGraphicAdjust/LayerCompositing.h>
+#include <iiGraphicAdjust/Preview.h>
 #include <iiGraphicAdjust/objects/AdjustmentsObjects.h>
 #include <iiGraphicAdjust/objects/AnalysisObjects.h>
 #include <iiGraphicAdjust/objects/BlendObjects.h>

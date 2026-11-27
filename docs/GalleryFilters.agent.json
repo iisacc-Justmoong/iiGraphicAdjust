@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/GalleryFilters.md",
-    "sha256": "67483fe03c20e3e623cebabe05fcf394592e2840a1040e03cae2736c69c134ff",
-    "bytes": 18530,
-    "line_count": 109,
+    "sha256": "399577fe5e8e42f65bd4df0015a784b0be56f59f6c8c593daf2c5cc3b9f1b085",
+    "bytes": 20439,
+    "line_count": 107,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -192,265 +192,260 @@
     },
     {
       "id": "b000017",
-      "kind": "table",
       "start_line": 39,
-      "end_line": 87,
-      "raw": "| Category | Function / option type | Parameters |\n|---|---|---|\n| Artistic | `coloredPencil` / `GalleryColoredPencilOptions` | `pencilWidth` [1,24] = 4; `strokePressure` [0,15] = 8; `paperBrightness` [0,50] = 25; `background` RGB = `{1,1,1}`; `seed` = 0 |\n| Artistic | `cutout` / `GalleryCutoutOptions` | `numberOfLevels` [2,8] = 4; `edgeSimplicity` [0,10] = 4; `edgeFidelity` [1,3] = 2 |\n| Artistic | `dryBrush` / `GalleryDryBrushOptions` | `brushSize` [0,10] = 2; `brushDetail` [0,10] = 8; `texture` [1,3] = 1; `seed` = 0 |\n| Artistic | `galleryFilmGrain` / `GalleryFilmGrainOptions` | `grain` [0,20] = 4; `highlightArea` [0,20] = 0; `intensity` [0,10] = 10; `seed` = 0 |\n| Artistic | `fresco` / `GalleryFrescoOptions` | `brushSize` [0,10] = 2; `brushDetail` [0,10] = 8; `texture` [1,3] = 1; `seed` = 0 |\n| Artistic | `neonGlow` / `GalleryNeonGlowOptions` | `glowSize` [-24,24] = 5; `glowBrightness` [0,50] = 15; `glowColor` RGB = `{0,.62,1}`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}` |\n| Artistic | `paintDaubs` / `GalleryPaintDaubsOptions` | `brushSize` [1,50] = 8; `sharpness` [0,40] = 7; `brushType` (GalleryBrushType): `Simple`, `LightRough`, `DarkRough`, `WideSharp`, `WideBlurry`, `Sparkle`; `seed` = 0 |\n| Artistic | `paletteKnife` / `GalleryPaletteKnifeOptions` | `strokeSize` [1,50] = 25; `strokeDetail` [1,3] = 3; `softness` [0,10] = 0 |\n| Artistic | `plasticWrap` / `GalleryPlasticWrapOptions` | `highlightStrength` [0,20] = 15; `detail` [1,15] = 9; `smoothness` [1,15] = 7 |\n| Artistic | `posterEdges` / `GalleryPosterEdgesOptions` | `edgeThickness` [0,10] = 2; `edgeIntensity` [0,10] = 1; `posterization` [0,6] = 2 |\n| Artistic | `roughPastels` / `GalleryRoughPastelsOptions` | `strokeLength` [0,40] = 6; `strokeDetail` [1,20] = 4; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 20; `light` (GalleryLightDirection): `Bottom`, `BottomLeft`, `Left`, `TopLeft`, `Top`, `TopRight`, `Right`, `BottomRight`; `invert` = false; `seed` = 0 |\n| Artistic | `smudgeStick` / `GallerySmudgeStickOptions` | `strokeLength` [0,10] = 2; `highlightArea` [0,20] = 0; `intensity` [0,10] = 10 |\n| Artistic | `sponge` / `GallerySpongeOptions` | `brushSize` [0,10] = 2; `definition` [0,25] = 12; `smoothness` [1,15] = 5; `seed` = 0 |\n| Artistic | `underpainting` / `GalleryUnderpaintingOptions` | `brushSize` [0,40] = 6; `textureCoverage` [0,40] = 16; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `seed` = 0 |\n| Artistic | `watercolor` / `GalleryWatercolorOptions` | `brushDetail` [1,14] = 9; `shadowIntensity` [0,10] = 1; `texture` [1,3] = 1; `seed` = 0 |\n| Brush Strokes | `accentedEdges` / `GalleryAccentedEdgesOptions` | `edgeWidth` [1,14] = 2; `edgeBrightness` [0,50] = 38; `smoothness` [1,15] = 5 |\n| Brush Strokes | `angledStrokes` / `GalleryAngledStrokesOptions` | `directionBalance` [0,100] = 50; `strokeLength` [3,50] = 15; `sharpness` [0,10] = 3; `seed` = 0 |\n| Brush Strokes | `crosshatch` / `GalleryCrosshatchOptions` | `strokeLength` [3,50] = 9; `sharpness` [0,20] = 6; `strength` [1,3] = 1; `seed` = 0 |\n| Brush Strokes | `darkStrokes` / `GalleryDarkStrokesOptions` | `balance` [0,10] = 5; `blackIntensity` [0,10] = 6; `whiteIntensity` [0,10] = 2 |\n| Brush Strokes | `inkOutlines` / `GalleryInkOutlinesOptions` | `strokeLength` [1,50] = 4; `darkIntensity` [0,50] = 20; `lightIntensity` [0,50] = 10 |\n| Brush Strokes | `spatter` / `GallerySpatterOptions` | `sprayRadius` [0,25] = 10; `smoothness` [1,15] = 5; `seed` = 0 |\n| Brush Strokes | `sprayedStrokes` / `GallerySprayedStrokesOptions` | `strokeLength` [0,20] = 12; `sprayRadius` [0,25] = 7; `strokeDirection` (GalleryStrokeDirection): `RightDiagonal`, `Horizontal`, `LeftDiagonal`, `Vertical`; `seed` = 0 |\n| Brush Strokes | `sumiE` / `GallerySumiEOptions` | `strokeWidth` [3,15] = 10; `strokePressure` [0,15] = 2; `contrast` [0,40] = 16 |\n| Distort | `diffuseGlow` / `GalleryDiffuseGlowOptions` | `graininess` [0,10] = 6; `glowAmount` [0,20] = 10; `clearAmount` [0,20] = 15; `background` RGB = `{1,1,1}`; `seed` = 0 |\n| Distort | `glass` / `GalleryGlassOptions` | `distortion` [0,20] = 5; `smoothness` [1,15] = 3; `texture` (GalleryGlassTexture): `Frosted`, `Blocks`, `Canvas`, `TinyLens`; `scaling` [50,200] = 100; `invert` = false; `seed` = 0 |\n| Distort | `oceanRipple` / `GalleryOceanRippleOptions` | `rippleSize` [1,15] = 9; `rippleMagnitude` [0,20] = 9; `seed` = 0 |\n| Sketch | `basRelief` / `GalleryBasReliefOptions` | `detail` [1,15] = 13; `smoothness` [1,15] = 3; `light` (GalleryLightDirection): `Bottom`, `BottomLeft`, `Left`, `TopLeft`, `Top`, `TopRight`, `Right`, `BottomRight`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}` |\n| Sketch | `chalkCharcoal` / `GalleryChalkCharcoalOptions` | `charcoalArea` [0,20] = 6; `chalkArea` [0,20] = 6; `strokePressure` [0,5] = 1; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0 |\n| Sketch | `charcoal` / `GalleryCharcoalOptions` | `charcoalThickness` [1,7] = 1; `detail` [0,5] = 5; `lightDarkBalance` [0,100] = 50; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0 |\n| Sketch | `chrome` / `GalleryChromeOptions` | `detail` [0,10] = 4; `smoothness` [0,10] = 7 |\n| Sketch | `conteCrayon` / `GalleryConteCrayonOptions` | `foregroundLevel` [1,15] = 11; `backgroundLevel` [1,15] = 7; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0 |\n| Sketch | `graphicPen` / `GalleryGraphicPenOptions` | `strokeLength` [1,15] = 15; `lightDarkBalance` [0,100] = 50; `strokeDirection` (GalleryStrokeDirection): `RightDiagonal`, `Horizontal`, `LeftDiagonal`, `Vertical`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0 |\n| Sketch | `halftonePattern` / `GalleryHalftonePatternOptions` | `size` [1,12] = 1; `contrast` [0,50] = 5; `patternType` (GalleryPatternType): `Dot`, `Circle`, `Line`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}` |\n| Sketch | `notePaper` / `GalleryNotePaperOptions` | `imageBalance` [0,50] = 25; `graininess` [0,20] = 10; `relief` [0,25] = 11; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0 |\n| Sketch | `photocopy` / `GalleryPhotocopyOptions` | `detail` [1,24] = 7; `darkness` [1,50] = 8; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}` |\n| Sketch | `plaster` / `GalleryPlasterOptions` | `imageBalance` [0,50] = 20; `smoothness` [1,15] = 2; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}` |\n| Sketch | `reticulation` / `GalleryReticulationOptions` | `density` [0,50] = 12; `foregroundLevel` [0,50] = 40; `backgroundLevel` [0,50] = 5; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0 |\n| Sketch | `stamp` / `GalleryStampOptions` | `lightDarkBalance` [0,50] = 25; `smoothness` [1,50] = 5; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}` |\n| Sketch | `tornEdges` / `GalleryTornEdgesOptions` | `imageBalance` [0,50] = 25; `smoothness` [1,15] = 11; `contrast` [1,25] = 17; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0 |\n| Sketch | `waterPaper` / `GalleryWaterPaperOptions` | `fiberLength` [3,50] = 15; `brightness` [0,100] = 60; `contrast` [0,100] = 80; `seed` = 0 |\n| Stylize | `glowingEdges` / `GalleryGlowingEdgesOptions` | `edgeWidth` [1,14] = 2; `edgeBrightness` [0,20] = 6; `smoothness` [1,15] = 5 |\n| Texture | `craquelure` / `GalleryCraquelureOptions` | `crackSpacing` [2,100] = 15; `crackDepth` [0,10] = 6; `crackBrightness` [0,10] = 9; `seed` = 0 |\n| Texture | `grain` / `GalleryGrainOptions` | `intensity` [0,100] = 40; `contrast` [0,100] = 50; `grainType` (GalleryGrainType): `Regular`, `Soft`, `Sprinkles`, `Clumped`, `Contrasty`, `Enlarged`, `Stippled`, `Horizontal`, `Vertical`, `Speckle`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0 |\n| Texture | `mosaicTiles` / `GalleryMosaicTilesOptions` | `tileSize` [2,100] = 12; `groutWidth` [1,15] = 3; `lightenGrout` [0,10] = 9; `seed` = 0 |\n| Texture | `patchwork` / `GalleryPatchworkOptions` | `squareSize` [0,10] = 4; `relief` [0,25] = 8; `seed` = 0 |\n| Texture | `stainedGlass` / `GalleryStainedGlassOptions` | `cellSize` [2,50] = 10; `borderThickness` [1,20] = 4; `lightIntensity` [0,10] = 3; `foreground` RGB = `{0,0,0}`; `seed` = 0 |\n| Texture | `texturizer` / `GalleryTexturizerOptions` | `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `seed` = 0 |\n",
-      "columns": [
-        "Category",
-        "Function / option type",
-        "Parameters"
-      ],
-      "rows": [
-        [
-          "Artistic",
-          "`coloredPencil` / `GalleryColoredPencilOptions`",
-          "`pencilWidth` [1,24] = 4; `strokePressure` [0,15] = 8; `paperBrightness` [0,50] = 25; `background` RGB = `{1,1,1}`; `seed` = 0"
-        ],
-        [
-          "Artistic",
-          "`cutout` / `GalleryCutoutOptions`",
-          "`numberOfLevels` [2,8] = 4; `edgeSimplicity` [0,10] = 4; `edgeFidelity` [1,3] = 2"
-        ],
-        [
-          "Artistic",
-          "`dryBrush` / `GalleryDryBrushOptions`",
-          "`brushSize` [0,10] = 2; `brushDetail` [0,10] = 8; `texture` [1,3] = 1; `seed` = 0"
-        ],
-        [
-          "Artistic",
-          "`galleryFilmGrain` / `GalleryFilmGrainOptions`",
-          "`grain` [0,20] = 4; `highlightArea` [0,20] = 0; `intensity` [0,10] = 10; `seed` = 0"
-        ],
-        [
-          "Artistic",
-          "`fresco` / `GalleryFrescoOptions`",
-          "`brushSize` [0,10] = 2; `brushDetail` [0,10] = 8; `texture` [1,3] = 1; `seed` = 0"
-        ],
-        [
-          "Artistic",
-          "`neonGlow` / `GalleryNeonGlowOptions`",
-          "`glowSize` [-24,24] = 5; `glowBrightness` [0,50] = 15; `glowColor` RGB = `{0,.62,1}`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-        ],
-        [
-          "Artistic",
-          "`paintDaubs` / `GalleryPaintDaubsOptions`",
-          "`brushSize` [1,50] = 8; `sharpness` [0,40] = 7; `brushType` (GalleryBrushType): `Simple`, `LightRough`, `DarkRough`, `WideSharp`, `WideBlurry`, `Sparkle`; `seed` = 0"
-        ],
-        [
-          "Artistic",
-          "`paletteKnife` / `GalleryPaletteKnifeOptions`",
-          "`strokeSize` [1,50] = 25; `strokeDetail` [1,3] = 3; `softness` [0,10] = 0"
-        ],
-        [
-          "Artistic",
-          "`plasticWrap` / `GalleryPlasticWrapOptions`",
-          "`highlightStrength` [0,20] = 15; `detail` [1,15] = 9; `smoothness` [1,15] = 7"
-        ],
-        [
-          "Artistic",
-          "`posterEdges` / `GalleryPosterEdgesOptions`",
-          "`edgeThickness` [0,10] = 2; `edgeIntensity` [0,10] = 1; `posterization` [0,6] = 2"
-        ],
-        [
-          "Artistic",
-          "`roughPastels` / `GalleryRoughPastelsOptions`",
-          "`strokeLength` [0,40] = 6; `strokeDetail` [1,20] = 4; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 20; `light` (GalleryLightDirection): `Bottom`, `BottomLeft`, `Left`, `TopLeft`, `Top`, `TopRight`, `Right`, `BottomRight`; `invert` = false; `seed` = 0"
-        ],
-        [
-          "Artistic",
-          "`smudgeStick` / `GallerySmudgeStickOptions`",
-          "`strokeLength` [0,10] = 2; `highlightArea` [0,20] = 0; `intensity` [0,10] = 10"
-        ],
-        [
-          "Artistic",
-          "`sponge` / `GallerySpongeOptions`",
-          "`brushSize` [0,10] = 2; `definition` [0,25] = 12; `smoothness` [1,15] = 5; `seed` = 0"
-        ],
-        [
-          "Artistic",
-          "`underpainting` / `GalleryUnderpaintingOptions`",
-          "`brushSize` [0,40] = 6; `textureCoverage` [0,40] = 16; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `seed` = 0"
-        ],
-        [
-          "Artistic",
-          "`watercolor` / `GalleryWatercolorOptions`",
-          "`brushDetail` [1,14] = 9; `shadowIntensity` [0,10] = 1; `texture` [1,3] = 1; `seed` = 0"
-        ],
-        [
-          "Brush Strokes",
-          "`accentedEdges` / `GalleryAccentedEdgesOptions`",
-          "`edgeWidth` [1,14] = 2; `edgeBrightness` [0,50] = 38; `smoothness` [1,15] = 5"
-        ],
-        [
-          "Brush Strokes",
-          "`angledStrokes` / `GalleryAngledStrokesOptions`",
-          "`directionBalance` [0,100] = 50; `strokeLength` [3,50] = 15; `sharpness` [0,10] = 3; `seed` = 0"
-        ],
-        [
-          "Brush Strokes",
-          "`crosshatch` / `GalleryCrosshatchOptions`",
-          "`strokeLength` [3,50] = 9; `sharpness` [0,20] = 6; `strength` [1,3] = 1; `seed` = 0"
-        ],
-        [
-          "Brush Strokes",
-          "`darkStrokes` / `GalleryDarkStrokesOptions`",
-          "`balance` [0,10] = 5; `blackIntensity` [0,10] = 6; `whiteIntensity` [0,10] = 2"
-        ],
-        [
-          "Brush Strokes",
-          "`inkOutlines` / `GalleryInkOutlinesOptions`",
-          "`strokeLength` [1,50] = 4; `darkIntensity` [0,50] = 20; `lightIntensity` [0,50] = 10"
-        ],
-        [
-          "Brush Strokes",
-          "`spatter` / `GallerySpatterOptions`",
-          "`sprayRadius` [0,25] = 10; `smoothness` [1,15] = 5; `seed` = 0"
-        ],
-        [
-          "Brush Strokes",
-          "`sprayedStrokes` / `GallerySprayedStrokesOptions`",
-          "`strokeLength` [0,20] = 12; `sprayRadius` [0,25] = 7; `strokeDirection` (GalleryStrokeDirection): `RightDiagonal`, `Horizontal`, `LeftDiagonal`, `Vertical`; `seed` = 0"
-        ],
-        [
-          "Brush Strokes",
-          "`sumiE` / `GallerySumiEOptions`",
-          "`strokeWidth` [3,15] = 10; `strokePressure` [0,15] = 2; `contrast` [0,40] = 16"
-        ],
-        [
-          "Distort",
-          "`diffuseGlow` / `GalleryDiffuseGlowOptions`",
-          "`graininess` [0,10] = 6; `glowAmount` [0,20] = 10; `clearAmount` [0,20] = 15; `background` RGB = `{1,1,1}`; `seed` = 0"
-        ],
-        [
-          "Distort",
-          "`glass` / `GalleryGlassOptions`",
-          "`distortion` [0,20] = 5; `smoothness` [1,15] = 3; `texture` (GalleryGlassTexture): `Frosted`, `Blocks`, `Canvas`, `TinyLens`; `scaling` [50,200] = 100; `invert` = false; `seed` = 0"
-        ],
-        [
-          "Distort",
-          "`oceanRipple` / `GalleryOceanRippleOptions`",
-          "`rippleSize` [1,15] = 9; `rippleMagnitude` [0,20] = 9; `seed` = 0"
-        ],
-        [
-          "Sketch",
-          "`basRelief` / `GalleryBasReliefOptions`",
-          "`detail` [1,15] = 13; `smoothness` [1,15] = 3; `light` (GalleryLightDirection): `Bottom`, `BottomLeft`, `Left`, `TopLeft`, `Top`, `TopRight`, `Right`, `BottomRight`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-        ],
-        [
-          "Sketch",
-          "`chalkCharcoal` / `GalleryChalkCharcoalOptions`",
-          "`charcoalArea` [0,20] = 6; `chalkArea` [0,20] = 6; `strokePressure` [0,5] = 1; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-        ],
-        [
-          "Sketch",
-          "`charcoal` / `GalleryCharcoalOptions`",
-          "`charcoalThickness` [1,7] = 1; `detail` [0,5] = 5; `lightDarkBalance` [0,100] = 50; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-        ],
-        [
-          "Sketch",
-          "`chrome` / `GalleryChromeOptions`",
-          "`detail` [0,10] = 4; `smoothness` [0,10] = 7"
-        ],
-        [
-          "Sketch",
-          "`conteCrayon` / `GalleryConteCrayonOptions`",
-          "`foregroundLevel` [1,15] = 11; `backgroundLevel` [1,15] = 7; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-        ],
-        [
-          "Sketch",
-          "`graphicPen` / `GalleryGraphicPenOptions`",
-          "`strokeLength` [1,15] = 15; `lightDarkBalance` [0,100] = 50; `strokeDirection` (GalleryStrokeDirection): `RightDiagonal`, `Horizontal`, `LeftDiagonal`, `Vertical`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-        ],
-        [
-          "Sketch",
-          "`halftonePattern` / `GalleryHalftonePatternOptions`",
-          "`size` [1,12] = 1; `contrast` [0,50] = 5; `patternType` (GalleryPatternType): `Dot`, `Circle`, `Line`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-        ],
-        [
-          "Sketch",
-          "`notePaper` / `GalleryNotePaperOptions`",
-          "`imageBalance` [0,50] = 25; `graininess` [0,20] = 10; `relief` [0,25] = 11; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-        ],
-        [
-          "Sketch",
-          "`photocopy` / `GalleryPhotocopyOptions`",
-          "`detail` [1,24] = 7; `darkness` [1,50] = 8; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-        ],
-        [
-          "Sketch",
-          "`plaster` / `GalleryPlasterOptions`",
-          "`imageBalance` [0,50] = 20; `smoothness` [1,15] = 2; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-        ],
-        [
-          "Sketch",
-          "`reticulation` / `GalleryReticulationOptions`",
-          "`density` [0,50] = 12; `foregroundLevel` [0,50] = 40; `backgroundLevel` [0,50] = 5; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-        ],
-        [
-          "Sketch",
-          "`stamp` / `GalleryStampOptions`",
-          "`lightDarkBalance` [0,50] = 25; `smoothness` [1,50] = 5; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-        ],
-        [
-          "Sketch",
-          "`tornEdges` / `GalleryTornEdgesOptions`",
-          "`imageBalance` [0,50] = 25; `smoothness` [1,15] = 11; `contrast` [1,25] = 17; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-        ],
-        [
-          "Sketch",
-          "`waterPaper` / `GalleryWaterPaperOptions`",
-          "`fiberLength` [3,50] = 15; `brightness` [0,100] = 60; `contrast` [0,100] = 80; `seed` = 0"
-        ],
-        [
-          "Stylize",
-          "`glowingEdges` / `GalleryGlowingEdgesOptions`",
-          "`edgeWidth` [1,14] = 2; `edgeBrightness` [0,20] = 6; `smoothness` [1,15] = 5"
-        ],
-        [
-          "Texture",
-          "`craquelure` / `GalleryCraquelureOptions`",
-          "`crackSpacing` [2,100] = 15; `crackDepth` [0,10] = 6; `crackBrightness` [0,10] = 9; `seed` = 0"
-        ],
-        [
-          "Texture",
-          "`grain` / `GalleryGrainOptions`",
-          "`intensity` [0,100] = 40; `contrast` [0,100] = 50; `grainType` (GalleryGrainType): `Regular`, `Soft`, `Sprinkles`, `Clumped`, `Contrasty`, `Enlarged`, `Stippled`, `Horizontal`, `Vertical`, `Speckle`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-        ],
-        [
-          "Texture",
-          "`mosaicTiles` / `GalleryMosaicTilesOptions`",
-          "`tileSize` [2,100] = 12; `groutWidth` [1,15] = 3; `lightenGrout` [0,10] = 9; `seed` = 0"
-        ],
-        [
-          "Texture",
-          "`patchwork` / `GalleryPatchworkOptions`",
-          "`squareSize` [0,10] = 4; `relief` [0,25] = 8; `seed` = 0"
-        ],
-        [
-          "Texture",
-          "`stainedGlass` / `GalleryStainedGlassOptions`",
-          "`cellSize` [2,50] = 10; `borderThickness` [1,20] = 4; `lightIntensity` [0,10] = 3; `foreground` RGB = `{0,0,0}`; `seed` = 0"
-        ],
-        [
-          "Texture",
-          "`texturizer` / `GalleryTexturizerOptions`",
-          "`texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `seed` = 0"
-        ]
+      "end_line": 85,
+      "raw": "- Category: Artistic; Function / option type: `coloredPencil` / `GalleryColoredPencilOptions`; Parameters: `pencilWidth` [1,24] = 4; `strokePressure` [0,15] = 8; `paperBrightness` [0,50] = 25; `background` RGB = `{1,1,1}`; `seed` = 0\n- Category: Artistic; Function / option type: `cutout` / `GalleryCutoutOptions`; Parameters: `numberOfLevels` [2,8] = 4; `edgeSimplicity` [0,10] = 4; `edgeFidelity` [1,3] = 2\n- Category: Artistic; Function / option type: `dryBrush` / `GalleryDryBrushOptions`; Parameters: `brushSize` [0,10] = 2; `brushDetail` [0,10] = 8; `texture` [1,3] = 1; `seed` = 0\n- Category: Artistic; Function / option type: `galleryFilmGrain` / `GalleryFilmGrainOptions`; Parameters: `grain` [0,20] = 4; `highlightArea` [0,20] = 0; `intensity` [0,10] = 10; `seed` = 0\n- Category: Artistic; Function / option type: `fresco` / `GalleryFrescoOptions`; Parameters: `brushSize` [0,10] = 2; `brushDetail` [0,10] = 8; `texture` [1,3] = 1; `seed` = 0\n- Category: Artistic; Function / option type: `neonGlow` / `GalleryNeonGlowOptions`; Parameters: `glowSize` [-24,24] = 5; `glowBrightness` [0,50] = 15; `glowColor` RGB = `{0,.62,1}`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`\n- Category: Artistic; Function / option type: `paintDaubs` / `GalleryPaintDaubsOptions`; Parameters: `brushSize` [1,50] = 8; `sharpness` [0,40] = 7; `brushType` (GalleryBrushType): `Simple`, `LightRough`, `DarkRough`, `WideSharp`, `WideBlurry`, `Sparkle`; `seed` = 0\n- Category: Artistic; Function / option type: `paletteKnife` / `GalleryPaletteKnifeOptions`; Parameters: `strokeSize` [1,50] = 25; `strokeDetail` [1,3] = 3; `softness` [0,10] = 0\n- Category: Artistic; Function / option type: `plasticWrap` / `GalleryPlasticWrapOptions`; Parameters: `highlightStrength` [0,20] = 15; `detail` [1,15] = 9; `smoothness` [1,15] = 7\n- Category: Artistic; Function / option type: `posterEdges` / `GalleryPosterEdgesOptions`; Parameters: `edgeThickness` [0,10] = 2; `edgeIntensity` [0,10] = 1; `posterization` [0,6] = 2\n- Category: Artistic; Function / option type: `roughPastels` / `GalleryRoughPastelsOptions`; Parameters: `strokeLength` [0,40] = 6; `strokeDetail` [1,20] = 4; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 20; `light` (GalleryLightDirection): `Bottom`, `BottomLeft`, `Left`, `TopLeft`, `Top`, `TopRight`, `Right`, `BottomRight`; `invert` = false; `seed` = 0\n- Category: Artistic; Function / option type: `smudgeStick` / `GallerySmudgeStickOptions`; Parameters: `strokeLength` [0,10] = 2; `highlightArea` [0,20] = 0; `intensity` [0,10] = 10\n- Category: Artistic; Function / option type: `sponge` / `GallerySpongeOptions`; Parameters: `brushSize` [0,10] = 2; `definition` [0,25] = 12; `smoothness` [1,15] = 5; `seed` = 0\n- Category: Artistic; Function / option type: `underpainting` / `GalleryUnderpaintingOptions`; Parameters: `brushSize` [0,40] = 6; `textureCoverage` [0,40] = 16; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `seed` = 0\n- Category: Artistic; Function / option type: `watercolor` / `GalleryWatercolorOptions`; Parameters: `brushDetail` [1,14] = 9; `shadowIntensity` [0,10] = 1; `texture` [1,3] = 1; `seed` = 0\n- Category: Brush Strokes; Function / option type: `accentedEdges` / `GalleryAccentedEdgesOptions`; Parameters: `edgeWidth` [1,14] = 2; `edgeBrightness` [0,50] = 38; `smoothness` [1,15] = 5\n- Category: Brush Strokes; Function / option type: `angledStrokes` / `GalleryAngledStrokesOptions`; Parameters: `directionBalance` [0,100] = 50; `strokeLength` [3,50] = 15; `sharpness` [0,10] = 3; `seed` = 0\n- Category: Brush Strokes; Function / option type: `crosshatch` / `GalleryCrosshatchOptions`; Parameters: `strokeLength` [3,50] = 9; `sharpness` [0,20] = 6; `strength` [1,3] = 1; `seed` = 0\n- Category: Brush Strokes; Function / option type: `darkStrokes` / `GalleryDarkStrokesOptions`; Parameters: `balance` [0,10] = 5; `blackIntensity` [0,10] = 6; `whiteIntensity` [0,10] = 2\n- Category: Brush Strokes; Function / option type: `inkOutlines` / `GalleryInkOutlinesOptions`; Parameters: `strokeLength` [1,50] = 4; `darkIntensity` [0,50] = 20; `lightIntensity` [0,50] = 10\n- Category: Brush Strokes; Function / option type: `spatter` / `GallerySpatterOptions`; Parameters: `sprayRadius` [0,25] = 10; `smoothness` [1,15] = 5; `seed` = 0\n- Category: Brush Strokes; Function / option type: `sprayedStrokes` / `GallerySprayedStrokesOptions`; Parameters: `strokeLength` [0,20] = 12; `sprayRadius` [0,25] = 7; `strokeDirection` (GalleryStrokeDirection): `RightDiagonal`, `Horizontal`, `LeftDiagonal`, `Vertical`; `seed` = 0\n- Category: Brush Strokes; Function / option type: `sumiE` / `GallerySumiEOptions`; Parameters: `strokeWidth` [3,15] = 10; `strokePressure` [0,15] = 2; `contrast` [0,40] = 16\n- Category: Distort; Function / option type: `diffuseGlow` / `GalleryDiffuseGlowOptions`; Parameters: `graininess` [0,10] = 6; `glowAmount` [0,20] = 10; `clearAmount` [0,20] = 15; `background` RGB = `{1,1,1}`; `seed` = 0\n- Category: Distort; Function / option type: `glass` / `GalleryGlassOptions`; Parameters: `distortion` [0,20] = 5; `smoothness` [1,15] = 3; `texture` (GalleryGlassTexture): `Frosted`, `Blocks`, `Canvas`, `TinyLens`; `scaling` [50,200] = 100; `invert` = false; `seed` = 0\n- Category: Distort; Function / option type: `oceanRipple` / `GalleryOceanRippleOptions`; Parameters: `rippleSize` [1,15] = 9; `rippleMagnitude` [0,20] = 9; `seed` = 0\n- Category: Sketch; Function / option type: `basRelief` / `GalleryBasReliefOptions`; Parameters: `detail` [1,15] = 13; `smoothness` [1,15] = 3; `light` (GalleryLightDirection): `Bottom`, `BottomLeft`, `Left`, `TopLeft`, `Top`, `TopRight`, `Right`, `BottomRight`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`\n- Category: Sketch; Function / option type: `chalkCharcoal` / `GalleryChalkCharcoalOptions`; Parameters: `charcoalArea` [0,20] = 6; `chalkArea` [0,20] = 6; `strokePressure` [0,5] = 1; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0\n- Category: Sketch; Function / option type: `charcoal` / `GalleryCharcoalOptions`; Parameters: `charcoalThickness` [1,7] = 1; `detail` [0,5] = 5; `lightDarkBalance` [0,100] = 50; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0\n- Category: Sketch; Function / option type: `chrome` / `GalleryChromeOptions`; Parameters: `detail` [0,10] = 4; `smoothness` [0,10] = 7\n- Category: Sketch; Function / option type: `conteCrayon` / `GalleryConteCrayonOptions`; Parameters: `foregroundLevel` [1,15] = 11; `backgroundLevel` [1,15] = 7; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0\n- Category: Sketch; Function / option type: `graphicPen` / `GalleryGraphicPenOptions`; Parameters: `strokeLength` [1,15] = 15; `lightDarkBalance` [0,100] = 50; `strokeDirection` (GalleryStrokeDirection): `RightDiagonal`, `Horizontal`, `LeftDiagonal`, `Vertical`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0\n- Category: Sketch; Function / option type: `halftonePattern` / `GalleryHalftonePatternOptions`; Parameters: `size` [1,12] = 1; `contrast` [0,50] = 5; `patternType` (GalleryPatternType): `Dot`, `Circle`, `Line`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`\n- Category: Sketch; Function / option type: `notePaper` / `GalleryNotePaperOptions`; Parameters: `imageBalance` [0,50] = 25; `graininess` [0,20] = 10; `relief` [0,25] = 11; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0\n- Category: Sketch; Function / option type: `photocopy` / `GalleryPhotocopyOptions`; Parameters: `detail` [1,24] = 7; `darkness` [1,50] = 8; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`\n- Category: Sketch; Function / option type: `plaster` / `GalleryPlasterOptions`; Parameters: `imageBalance` [0,50] = 20; `smoothness` [1,15] = 2; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`\n- Category: Sketch; Function / option type: `reticulation` / `GalleryReticulationOptions`; Parameters: `density` [0,50] = 12; `foregroundLevel` [0,50] = 40; `backgroundLevel` [0,50] = 5; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0\n- Category: Sketch; Function / option type: `stamp` / `GalleryStampOptions`; Parameters: `lightDarkBalance` [0,50] = 25; `smoothness` [1,50] = 5; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`\n- Category: Sketch; Function / option type: `tornEdges` / `GalleryTornEdgesOptions`; Parameters: `imageBalance` [0,50] = 25; `smoothness` [1,15] = 11; `contrast` [1,25] = 17; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0\n- Category: Sketch; Function / option type: `waterPaper` / `GalleryWaterPaperOptions`; Parameters: `fiberLength` [3,50] = 15; `brightness` [0,100] = 60; `contrast` [0,100] = 80; `seed` = 0\n- Category: Stylize; Function / option type: `glowingEdges` / `GalleryGlowingEdgesOptions`; Parameters: `edgeWidth` [1,14] = 2; `edgeBrightness` [0,20] = 6; `smoothness` [1,15] = 5\n- Category: Texture; Function / option type: `craquelure` / `GalleryCraquelureOptions`; Parameters: `crackSpacing` [2,100] = 15; `crackDepth` [0,10] = 6; `crackBrightness` [0,10] = 9; `seed` = 0\n- Category: Texture; Function / option type: `grain` / `GalleryGrainOptions`; Parameters: `intensity` [0,100] = 40; `contrast` [0,100] = 50; `grainType` (GalleryGrainType): `Regular`, `Soft`, `Sprinkles`, `Clumped`, `Contrasty`, `Enlarged`, `Stippled`, `Horizontal`, `Vertical`, `Speckle`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0\n- Category: Texture; Function / option type: `mosaicTiles` / `GalleryMosaicTilesOptions`; Parameters: `tileSize` [2,100] = 12; `groutWidth` [1,15] = 3; `lightenGrout` [0,10] = 9; `seed` = 0\n- Category: Texture; Function / option type: `patchwork` / `GalleryPatchworkOptions`; Parameters: `squareSize` [0,10] = 4; `relief` [0,25] = 8; `seed` = 0\n- Category: Texture; Function / option type: `stainedGlass` / `GalleryStainedGlassOptions`; Parameters: `cellSize` [2,50] = 10; `borderThickness` [1,20] = 4; `lightIntensity` [0,10] = 3; `foreground` RGB = `{0,0,0}`; `seed` = 0\n- Category: Texture; Function / option type: `texturizer` / `GalleryTexturizerOptions`; Parameters: `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `seed` = 0\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `coloredPencil` / `GalleryColoredPencilOptions`; Parameters: `pencilWidth` [1,24] = 4; `strokePressure` [0,15] = 8; `paperBrightness` [0,50] = 25; `background` RGB = `{1,1,1}`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `cutout` / `GalleryCutoutOptions`; Parameters: `numberOfLevels` [2,8] = 4; `edgeSimplicity` [0,10] = 4; `edgeFidelity` [1,3] = 2",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `dryBrush` / `GalleryDryBrushOptions`; Parameters: `brushSize` [0,10] = 2; `brushDetail` [0,10] = 8; `texture` [1,3] = 1; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `galleryFilmGrain` / `GalleryFilmGrainOptions`; Parameters: `grain` [0,20] = 4; `highlightArea` [0,20] = 0; `intensity` [0,10] = 10; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `fresco` / `GalleryFrescoOptions`; Parameters: `brushSize` [0,10] = 2; `brushDetail` [0,10] = 8; `texture` [1,3] = 1; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `neonGlow` / `GalleryNeonGlowOptions`; Parameters: `glowSize` [-24,24] = 5; `glowBrightness` [0,50] = 15; `glowColor` RGB = `{0,.62,1}`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `paintDaubs` / `GalleryPaintDaubsOptions`; Parameters: `brushSize` [1,50] = 8; `sharpness` [0,40] = 7; `brushType` (GalleryBrushType): `Simple`, `LightRough`, `DarkRough`, `WideSharp`, `WideBlurry`, `Sparkle`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `paletteKnife` / `GalleryPaletteKnifeOptions`; Parameters: `strokeSize` [1,50] = 25; `strokeDetail` [1,3] = 3; `softness` [0,10] = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `plasticWrap` / `GalleryPlasticWrapOptions`; Parameters: `highlightStrength` [0,20] = 15; `detail` [1,15] = 9; `smoothness` [1,15] = 7",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `posterEdges` / `GalleryPosterEdgesOptions`; Parameters: `edgeThickness` [0,10] = 2; `edgeIntensity` [0,10] = 1; `posterization` [0,6] = 2",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `roughPastels` / `GalleryRoughPastelsOptions`; Parameters: `strokeLength` [0,40] = 6; `strokeDetail` [1,20] = 4; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 20; `light` (GalleryLightDirection): `Bottom`, `BottomLeft`, `Left`, `TopLeft`, `Top`, `TopRight`, `Right`, `BottomRight`; `invert` = false; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `smudgeStick` / `GallerySmudgeStickOptions`; Parameters: `strokeLength` [0,10] = 2; `highlightArea` [0,20] = 0; `intensity` [0,10] = 10",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `sponge` / `GallerySpongeOptions`; Parameters: `brushSize` [0,10] = 2; `definition` [0,25] = 12; `smoothness` [1,15] = 5; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `underpainting` / `GalleryUnderpaintingOptions`; Parameters: `brushSize` [0,40] = 6; `textureCoverage` [0,40] = 16; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Artistic; Function / option type: `watercolor` / `GalleryWatercolorOptions`; Parameters: `brushDetail` [1,14] = 9; `shadowIntensity` [0,10] = 1; `texture` [1,3] = 1; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Brush Strokes; Function / option type: `accentedEdges` / `GalleryAccentedEdgesOptions`; Parameters: `edgeWidth` [1,14] = 2; `edgeBrightness` [0,50] = 38; `smoothness` [1,15] = 5",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Brush Strokes; Function / option type: `angledStrokes` / `GalleryAngledStrokesOptions`; Parameters: `directionBalance` [0,100] = 50; `strokeLength` [3,50] = 15; `sharpness` [0,10] = 3; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Brush Strokes; Function / option type: `crosshatch` / `GalleryCrosshatchOptions`; Parameters: `strokeLength` [3,50] = 9; `sharpness` [0,20] = 6; `strength` [1,3] = 1; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Brush Strokes; Function / option type: `darkStrokes` / `GalleryDarkStrokesOptions`; Parameters: `balance` [0,10] = 5; `blackIntensity` [0,10] = 6; `whiteIntensity` [0,10] = 2",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Brush Strokes; Function / option type: `inkOutlines` / `GalleryInkOutlinesOptions`; Parameters: `strokeLength` [1,50] = 4; `darkIntensity` [0,50] = 20; `lightIntensity` [0,50] = 10",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Brush Strokes; Function / option type: `spatter` / `GallerySpatterOptions`; Parameters: `sprayRadius` [0,25] = 10; `smoothness` [1,15] = 5; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Brush Strokes; Function / option type: `sprayedStrokes` / `GallerySprayedStrokesOptions`; Parameters: `strokeLength` [0,20] = 12; `sprayRadius` [0,25] = 7; `strokeDirection` (GalleryStrokeDirection): `RightDiagonal`, `Horizontal`, `LeftDiagonal`, `Vertical`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Brush Strokes; Function / option type: `sumiE` / `GallerySumiEOptions`; Parameters: `strokeWidth` [3,15] = 10; `strokePressure` [0,15] = 2; `contrast` [0,40] = 16",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Distort; Function / option type: `diffuseGlow` / `GalleryDiffuseGlowOptions`; Parameters: `graininess` [0,10] = 6; `glowAmount` [0,20] = 10; `clearAmount` [0,20] = 15; `background` RGB = `{1,1,1}`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Distort; Function / option type: `glass` / `GalleryGlassOptions`; Parameters: `distortion` [0,20] = 5; `smoothness` [1,15] = 3; `texture` (GalleryGlassTexture): `Frosted`, `Blocks`, `Canvas`, `TinyLens`; `scaling` [50,200] = 100; `invert` = false; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Distort; Function / option type: `oceanRipple` / `GalleryOceanRippleOptions`; Parameters: `rippleSize` [1,15] = 9; `rippleMagnitude` [0,20] = 9; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `basRelief` / `GalleryBasReliefOptions`; Parameters: `detail` [1,15] = 13; `smoothness` [1,15] = 3; `light` (GalleryLightDirection): `Bottom`, `BottomLeft`, `Left`, `TopLeft`, `Top`, `TopRight`, `Right`, `BottomRight`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `chalkCharcoal` / `GalleryChalkCharcoalOptions`; Parameters: `charcoalArea` [0,20] = 6; `chalkArea` [0,20] = 6; `strokePressure` [0,5] = 1; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `charcoal` / `GalleryCharcoalOptions`; Parameters: `charcoalThickness` [1,7] = 1; `detail` [0,5] = 5; `lightDarkBalance` [0,100] = 50; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `chrome` / `GalleryChromeOptions`; Parameters: `detail` [0,10] = 4; `smoothness` [0,10] = 7",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `conteCrayon` / `GalleryConteCrayonOptions`; Parameters: `foregroundLevel` [1,15] = 11; `backgroundLevel` [1,15] = 7; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `graphicPen` / `GalleryGraphicPenOptions`; Parameters: `strokeLength` [1,15] = 15; `lightDarkBalance` [0,100] = 50; `strokeDirection` (GalleryStrokeDirection): `RightDiagonal`, `Horizontal`, `LeftDiagonal`, `Vertical`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `halftonePattern` / `GalleryHalftonePatternOptions`; Parameters: `size` [1,12] = 1; `contrast` [0,50] = 5; `patternType` (GalleryPatternType): `Dot`, `Circle`, `Line`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `notePaper` / `GalleryNotePaperOptions`; Parameters: `imageBalance` [0,50] = 25; `graininess` [0,20] = 10; `relief` [0,25] = 11; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `photocopy` / `GalleryPhotocopyOptions`; Parameters: `detail` [1,24] = 7; `darkness` [1,50] = 8; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `plaster` / `GalleryPlasterOptions`; Parameters: `imageBalance` [0,50] = 20; `smoothness` [1,15] = 2; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `reticulation` / `GalleryReticulationOptions`; Parameters: `density` [0,50] = 12; `foregroundLevel` [0,50] = 40; `backgroundLevel` [0,50] = 5; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `stamp` / `GalleryStampOptions`; Parameters: `lightDarkBalance` [0,50] = 25; `smoothness` [1,50] = 5; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `tornEdges` / `GalleryTornEdgesOptions`; Parameters: `imageBalance` [0,50] = 25; `smoothness` [1,15] = 11; `contrast` [1,25] = 17; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Sketch; Function / option type: `waterPaper` / `GalleryWaterPaperOptions`; Parameters: `fiberLength` [3,50] = 15; `brightness` [0,100] = 60; `contrast` [0,100] = 80; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Stylize; Function / option type: `glowingEdges` / `GalleryGlowingEdgesOptions`; Parameters: `edgeWidth` [1,14] = 2; `edgeBrightness` [0,20] = 6; `smoothness` [1,15] = 5",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Texture; Function / option type: `craquelure` / `GalleryCraquelureOptions`; Parameters: `crackSpacing` [2,100] = 15; `crackDepth` [0,10] = 6; `crackBrightness` [0,10] = 9; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Texture; Function / option type: `grain` / `GalleryGrainOptions`; Parameters: `intensity` [0,100] = 40; `contrast` [0,100] = 50; `grainType` (GalleryGrainType): `Regular`, `Soft`, `Sprinkles`, `Clumped`, `Contrasty`, `Enlarged`, `Stippled`, `Horizontal`, `Vertical`, `Speckle`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Texture; Function / option type: `mosaicTiles` / `GalleryMosaicTilesOptions`; Parameters: `tileSize` [2,100] = 12; `groutWidth` [1,15] = 3; `lightenGrout` [0,10] = 9; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Texture; Function / option type: `patchwork` / `GalleryPatchworkOptions`; Parameters: `squareSize` [0,10] = 4; `relief` [0,25] = 8; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Texture; Function / option type: `stainedGlass` / `GalleryStainedGlassOptions`; Parameters: `cellSize` [2,50] = 10; `borderThickness` [1,20] = 4; `lightIntensity` [0,10] = 3; `foreground` RGB = `{0,0,0}`; `seed` = 0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Category: Texture; Function / option type: `texturizer` / `GalleryTexturizerOptions`; Parameters: `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `seed` = 0",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000018",
       "kind": "blank",
-      "start_line": 88,
-      "end_line": 88,
+      "start_line": 86,
+      "end_line": 86,
       "raw": "\n"
     },
     {
       "id": "b000019",
       "kind": "heading",
-      "start_line": 89,
-      "end_line": 89,
+      "start_line": 87,
+      "end_line": 87,
       "raw": "## Implemented mechanisms\n",
       "level": 2,
       "title": "Implemented mechanisms"
@@ -458,15 +453,15 @@
     {
       "id": "b000020",
       "kind": "blank",
-      "start_line": 90,
-      "end_line": 90,
+      "start_line": 88,
+      "end_line": 88,
       "raw": "\n"
     },
     {
       "id": "b000021",
       "kind": "list",
-      "start_line": 91,
-      "end_line": 97,
+      "start_line": 89,
+      "end_line": 95,
       "raw": "- Colored Pencil combines two elongated hatch directions, source luma/edges and tinted paper. Cutout smooths and quantizes luminance-scaled channels. Dry Brush and Fresco use minimum-variance quadrant means, unsharp detail and quantization; Fresco additionally darkens edges.\n- Film Grain adds luma-shaped deterministic monochrome grain with optional highlight lifting. Neon Glow creates a foreground/background luma base and screens a blurred positive or inverted mask with the glow color. Paint Daubs selects six real brush behaviors. Palette Knife uses Kuwahara color regions and quantization. Plastic Wrap uses blurred luma normals and a specular half-vector. Poster Edges combines quantization and gradient ink.\n- Rough Pastels and Angled Strokes sample the middle of staggered discrete strokes, rather than substituting a generic blur. Rough Pastels applies luminance-weighted procedural relief. Smudge Stick uses diagonal means and highlight lifting. Sponge uses fractal holes. Underpainting mixes softened colors and saturation with coverage-scaled texture relief. Watercolor darkens edges and applies texture-dependent pigment noise.\n- Accented Edges brightens or darkens blurred gradients. Crosshatch blends opposite diagonal stroke means and sharpening. Dark Strokes combines dark/light directional means. Ink Outlines combines source gradients and directional paint. Spatter and Sprayed Strokes use value-noise displacement, with an extra directional mean for Sprayed Strokes. Sumi-e combines blurred stroke ink and contrast.\n- Diffuse Glow selects luma highlights, sparse grain events and background-color glow. Glass uses a selected procedural texture gradient for displacement. Ocean Ripple uses two smooth value-noise displacement fields.\n- Sketch filters each implement their own threshold, tonal, noise, line, embossing or wave mechanism. Bas Relief, Note Paper and Plaster derive directional shading from luma/mask gradients. Chalk & Charcoal and Conté Crayon combine independent ink/paper coverage. Charcoal uses pressure-like strokes and edges. Chrome uses periodic grayscale tonal waves. Graphic Pen thresholds directional noise. Halftone Pattern supports Dot, Circle and Line geometry. Photocopy uses luma high-pass ink. Reticulation combines fine noise and ink/paper levels. Stamp thresholds smoothed luma. Torn Edges perturbs a threshold with fractal texture. Water Paper combines crossing fibers and directional color means.\n- Glowing Edges computes separate RGB gradient magnitudes and spreads them before brightness scaling. Craquelure uses the separation of nearest and second-nearest jittered Voronoi points for cracks and shading. Grain implements all ten named distributions. Mosaic Tiles uses jittered grout geometry and bevels. Patchwork samples square centers and shades independent cell heights. Stained Glass samples jittered cell colors with borders and centered light. Texturizer supplies canvas, brick, burlap and sandstone relief under eight light directions.\n",
       "items": [
         {
@@ -509,15 +504,15 @@
     {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 98,
-      "end_line": 98,
+      "start_line": 96,
+      "end_line": 96,
       "raw": "\n"
     },
     {
       "id": "b000023",
       "kind": "heading",
-      "start_line": 99,
-      "end_line": 99,
+      "start_line": 97,
+      "end_line": 97,
       "raw": "## Kernel behavior and parameter interactions\n",
       "level": 2,
       "title": "Kernel behavior and parameter interactions"
@@ -525,43 +520,43 @@
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 100,
-      "end_line": 100,
+      "start_line": 98,
+      "end_line": 98,
       "raw": "\n"
     },
     {
       "id": "b000025",
       "kind": "paragraph",
-      "start_line": 101,
-      "end_line": 101,
+      "start_line": 99,
+      "end_line": 99,
       "raw": "The gallery Gaussian approximation is the reference's three variance-matched box convolutions, including its smallest nonzero blur fallback below sigma about 0.577. Three horizontal passes precede three vertical passes. Running sums make box and directional means linear in the image size; Kuwahara also uses precomputed box moments instead of radius-squared scans. Derivatives use clamped image edges.\n"
     },
     {
       "id": "b000026",
+      "kind": "blank",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 101,
+      "end_line": 101,
+      "raw": "Some controls intentionally affect conditional mechanisms, as in the reference: Film Grain and Smudge Stick's Intensity controls highlight lifting and is inactive when Highlight Area is zero; Paint Daubs' Wide Blurry brush uses smoothing instead of its Sharpness mechanism; foreground/background colors in Grain matter for the named ink/paper distributions. Rough Pastels' Stroke Detail acts only when Stroke Length is at least one. Relief zero disables the texture and its Scaling/Light/Invert controls. The validation contract still checks every declared field when its mechanism is inactive.\n"
+    },
+    {
+      "id": "b000028",
       "kind": "blank",
       "start_line": 102,
       "end_line": 102,
       "raw": "\n"
     },
     {
-      "id": "b000027",
-      "kind": "paragraph",
-      "start_line": 103,
-      "end_line": 103,
-      "raw": "Some controls intentionally affect conditional mechanisms, as in the reference: Film Grain and Smudge Stick's Intensity controls highlight lifting and is inactive when Highlight Area is zero; Paint Daubs' Wide Blurry brush uses smoothing instead of its Sharpness mechanism; foreground/background colors in Grain matter for the named ink/paper distributions. Rough Pastels' Stroke Detail acts only when Stroke Length is at least one. Relief zero disables the texture and its Scaling/Light/Invert controls. The validation contract still checks every declared field when its mechanism is inactive.\n"
-    },
-    {
-      "id": "b000028",
-      "kind": "blank",
-      "start_line": 104,
-      "end_line": 104,
-      "raw": "\n"
-    },
-    {
       "id": "b000029",
       "kind": "heading",
-      "start_line": 105,
-      "end_line": 105,
+      "start_line": 103,
+      "end_line": 103,
       "raw": "## Verification\n",
       "level": 2,
       "title": "Verification"
@@ -569,29 +564,29 @@
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 106,
-      "end_line": 106,
+      "start_line": 104,
+      "end_line": 104,
       "raw": "\n"
     },
     {
       "id": "b000031",
       "kind": "paragraph",
-      "start_line": 107,
-      "end_line": 107,
+      "start_line": 105,
+      "end_line": 105,
       "raw": "`tests/gallery_filters.cpp` supports 47 function-name selections, `oracles`, `stack`, or `all`. Every effect checks default pixel change, normalized finite output, exact alpha and hidden-RGB retention, deterministic repeated execution, hidden-RGB isolation, thin and fully transparent images, invalid input, each slider's invalid bounds/NaN/Inf, enum/color rejection, and minimum/maximum numeric settings. Each numeric slider is exercised at both endpoints with its mechanism enabled; procedural seeds are checked in active noise configurations.\n"
     },
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 108,
-      "end_line": 108,
+      "start_line": 106,
+      "end_line": 106,
       "raw": "\n"
     },
     {
       "id": "b000033",
       "kind": "paragraph",
-      "start_line": 109,
-      "end_line": 109,
+      "start_line": 107,
+      "end_line": 107,
       "raw": "Independent one-pixel oracles cover Cutout's quantization, Film Grain's highlight blend, Neon Glow's color base, Chrome's sine-wave tonal mapping and Stamp's threshold. Zero-strength displacement/relief tests require exact identity. Stack tests compare sequential results, show observable ordering, check empty detached copies, invalid-effect failure and the 64-effect limit. These establish SDK contracts and formulas; they do not establish Adobe visual parity, document-coordinate tile equivalence or other-platform runtime proof.\n"
     }
   ],
@@ -626,7 +621,7 @@
       "level": 2,
       "title": "Implemented mechanisms",
       "anchor": "implemented-mechanisms",
-      "start_line": 89
+      "start_line": 87
     },
     {
       "block_id": "b000023",
@@ -634,7 +629,7 @@
       "level": 2,
       "title": "Kernel behavior and parameter interactions",
       "anchor": "kernel-behavior-and-parameter-interactions",
-      "start_line": 99
+      "start_line": 97
     },
     {
       "block_id": "b000029",
@@ -642,14 +637,14 @@
       "level": 2,
       "title": "Verification",
       "anchor": "verification",
-      "start_line": 105
+      "start_line": 103
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
         "block_id": "b000033",
-        "line": 109,
+        "line": 107,
         "text": "Independent one-pixel oracles cover Cutout's quantization, Film Grain's highlight blend, Neon Glow's color base, Chrome's sine-wave tonal mapping and Stamp's threshold. Zero-strength displacement/relief tests require exact identity. Stack tests compare sequential results, show observable ordering, check empty detached copies, invalid-effect failure and the 64-effect limit. These establish SDK contracts and formulas; they do not establish Adobe visual parity, document-coordinate tile equivalence or other-platform runtime proof.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -665,253 +660,7 @@
         "line": 3
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000017",
-        "columns": [
-          "Category",
-          "Function / option type",
-          "Parameters"
-        ],
-        "rows": [
-          [
-            "Artistic",
-            "`coloredPencil` / `GalleryColoredPencilOptions`",
-            "`pencilWidth` [1,24] = 4; `strokePressure` [0,15] = 8; `paperBrightness` [0,50] = 25; `background` RGB = `{1,1,1}`; `seed` = 0"
-          ],
-          [
-            "Artistic",
-            "`cutout` / `GalleryCutoutOptions`",
-            "`numberOfLevels` [2,8] = 4; `edgeSimplicity` [0,10] = 4; `edgeFidelity` [1,3] = 2"
-          ],
-          [
-            "Artistic",
-            "`dryBrush` / `GalleryDryBrushOptions`",
-            "`brushSize` [0,10] = 2; `brushDetail` [0,10] = 8; `texture` [1,3] = 1; `seed` = 0"
-          ],
-          [
-            "Artistic",
-            "`galleryFilmGrain` / `GalleryFilmGrainOptions`",
-            "`grain` [0,20] = 4; `highlightArea` [0,20] = 0; `intensity` [0,10] = 10; `seed` = 0"
-          ],
-          [
-            "Artistic",
-            "`fresco` / `GalleryFrescoOptions`",
-            "`brushSize` [0,10] = 2; `brushDetail` [0,10] = 8; `texture` [1,3] = 1; `seed` = 0"
-          ],
-          [
-            "Artistic",
-            "`neonGlow` / `GalleryNeonGlowOptions`",
-            "`glowSize` [-24,24] = 5; `glowBrightness` [0,50] = 15; `glowColor` RGB = `{0,.62,1}`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-          ],
-          [
-            "Artistic",
-            "`paintDaubs` / `GalleryPaintDaubsOptions`",
-            "`brushSize` [1,50] = 8; `sharpness` [0,40] = 7; `brushType` (GalleryBrushType): `Simple`, `LightRough`, `DarkRough`, `WideSharp`, `WideBlurry`, `Sparkle`; `seed` = 0"
-          ],
-          [
-            "Artistic",
-            "`paletteKnife` / `GalleryPaletteKnifeOptions`",
-            "`strokeSize` [1,50] = 25; `strokeDetail` [1,3] = 3; `softness` [0,10] = 0"
-          ],
-          [
-            "Artistic",
-            "`plasticWrap` / `GalleryPlasticWrapOptions`",
-            "`highlightStrength` [0,20] = 15; `detail` [1,15] = 9; `smoothness` [1,15] = 7"
-          ],
-          [
-            "Artistic",
-            "`posterEdges` / `GalleryPosterEdgesOptions`",
-            "`edgeThickness` [0,10] = 2; `edgeIntensity` [0,10] = 1; `posterization` [0,6] = 2"
-          ],
-          [
-            "Artistic",
-            "`roughPastels` / `GalleryRoughPastelsOptions`",
-            "`strokeLength` [0,40] = 6; `strokeDetail` [1,20] = 4; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 20; `light` (GalleryLightDirection): `Bottom`, `BottomLeft`, `Left`, `TopLeft`, `Top`, `TopRight`, `Right`, `BottomRight`; `invert` = false; `seed` = 0"
-          ],
-          [
-            "Artistic",
-            "`smudgeStick` / `GallerySmudgeStickOptions`",
-            "`strokeLength` [0,10] = 2; `highlightArea` [0,20] = 0; `intensity` [0,10] = 10"
-          ],
-          [
-            "Artistic",
-            "`sponge` / `GallerySpongeOptions`",
-            "`brushSize` [0,10] = 2; `definition` [0,25] = 12; `smoothness` [1,15] = 5; `seed` = 0"
-          ],
-          [
-            "Artistic",
-            "`underpainting` / `GalleryUnderpaintingOptions`",
-            "`brushSize` [0,40] = 6; `textureCoverage` [0,40] = 16; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `seed` = 0"
-          ],
-          [
-            "Artistic",
-            "`watercolor` / `GalleryWatercolorOptions`",
-            "`brushDetail` [1,14] = 9; `shadowIntensity` [0,10] = 1; `texture` [1,3] = 1; `seed` = 0"
-          ],
-          [
-            "Brush Strokes",
-            "`accentedEdges` / `GalleryAccentedEdgesOptions`",
-            "`edgeWidth` [1,14] = 2; `edgeBrightness` [0,50] = 38; `smoothness` [1,15] = 5"
-          ],
-          [
-            "Brush Strokes",
-            "`angledStrokes` / `GalleryAngledStrokesOptions`",
-            "`directionBalance` [0,100] = 50; `strokeLength` [3,50] = 15; `sharpness` [0,10] = 3; `seed` = 0"
-          ],
-          [
-            "Brush Strokes",
-            "`crosshatch` / `GalleryCrosshatchOptions`",
-            "`strokeLength` [3,50] = 9; `sharpness` [0,20] = 6; `strength` [1,3] = 1; `seed` = 0"
-          ],
-          [
-            "Brush Strokes",
-            "`darkStrokes` / `GalleryDarkStrokesOptions`",
-            "`balance` [0,10] = 5; `blackIntensity` [0,10] = 6; `whiteIntensity` [0,10] = 2"
-          ],
-          [
-            "Brush Strokes",
-            "`inkOutlines` / `GalleryInkOutlinesOptions`",
-            "`strokeLength` [1,50] = 4; `darkIntensity` [0,50] = 20; `lightIntensity` [0,50] = 10"
-          ],
-          [
-            "Brush Strokes",
-            "`spatter` / `GallerySpatterOptions`",
-            "`sprayRadius` [0,25] = 10; `smoothness` [1,15] = 5; `seed` = 0"
-          ],
-          [
-            "Brush Strokes",
-            "`sprayedStrokes` / `GallerySprayedStrokesOptions`",
-            "`strokeLength` [0,20] = 12; `sprayRadius` [0,25] = 7; `strokeDirection` (GalleryStrokeDirection): `RightDiagonal`, `Horizontal`, `LeftDiagonal`, `Vertical`; `seed` = 0"
-          ],
-          [
-            "Brush Strokes",
-            "`sumiE` / `GallerySumiEOptions`",
-            "`strokeWidth` [3,15] = 10; `strokePressure` [0,15] = 2; `contrast` [0,40] = 16"
-          ],
-          [
-            "Distort",
-            "`diffuseGlow` / `GalleryDiffuseGlowOptions`",
-            "`graininess` [0,10] = 6; `glowAmount` [0,20] = 10; `clearAmount` [0,20] = 15; `background` RGB = `{1,1,1}`; `seed` = 0"
-          ],
-          [
-            "Distort",
-            "`glass` / `GalleryGlassOptions`",
-            "`distortion` [0,20] = 5; `smoothness` [1,15] = 3; `texture` (GalleryGlassTexture): `Frosted`, `Blocks`, `Canvas`, `TinyLens`; `scaling` [50,200] = 100; `invert` = false; `seed` = 0"
-          ],
-          [
-            "Distort",
-            "`oceanRipple` / `GalleryOceanRippleOptions`",
-            "`rippleSize` [1,15] = 9; `rippleMagnitude` [0,20] = 9; `seed` = 0"
-          ],
-          [
-            "Sketch",
-            "`basRelief` / `GalleryBasReliefOptions`",
-            "`detail` [1,15] = 13; `smoothness` [1,15] = 3; `light` (GalleryLightDirection): `Bottom`, `BottomLeft`, `Left`, `TopLeft`, `Top`, `TopRight`, `Right`, `BottomRight`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-          ],
-          [
-            "Sketch",
-            "`chalkCharcoal` / `GalleryChalkCharcoalOptions`",
-            "`charcoalArea` [0,20] = 6; `chalkArea` [0,20] = 6; `strokePressure` [0,5] = 1; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-          ],
-          [
-            "Sketch",
-            "`charcoal` / `GalleryCharcoalOptions`",
-            "`charcoalThickness` [1,7] = 1; `detail` [0,5] = 5; `lightDarkBalance` [0,100] = 50; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-          ],
-          [
-            "Sketch",
-            "`chrome` / `GalleryChromeOptions`",
-            "`detail` [0,10] = 4; `smoothness` [0,10] = 7"
-          ],
-          [
-            "Sketch",
-            "`conteCrayon` / `GalleryConteCrayonOptions`",
-            "`foregroundLevel` [1,15] = 11; `backgroundLevel` [1,15] = 7; `texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-          ],
-          [
-            "Sketch",
-            "`graphicPen` / `GalleryGraphicPenOptions`",
-            "`strokeLength` [1,15] = 15; `lightDarkBalance` [0,100] = 50; `strokeDirection` (GalleryStrokeDirection): `RightDiagonal`, `Horizontal`, `LeftDiagonal`, `Vertical`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-          ],
-          [
-            "Sketch",
-            "`halftonePattern` / `GalleryHalftonePatternOptions`",
-            "`size` [1,12] = 1; `contrast` [0,50] = 5; `patternType` (GalleryPatternType): `Dot`, `Circle`, `Line`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-          ],
-          [
-            "Sketch",
-            "`notePaper` / `GalleryNotePaperOptions`",
-            "`imageBalance` [0,50] = 25; `graininess` [0,20] = 10; `relief` [0,25] = 11; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-          ],
-          [
-            "Sketch",
-            "`photocopy` / `GalleryPhotocopyOptions`",
-            "`detail` [1,24] = 7; `darkness` [1,50] = 8; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-          ],
-          [
-            "Sketch",
-            "`plaster` / `GalleryPlasterOptions`",
-            "`imageBalance` [0,50] = 20; `smoothness` [1,15] = 2; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-          ],
-          [
-            "Sketch",
-            "`reticulation` / `GalleryReticulationOptions`",
-            "`density` [0,50] = 12; `foregroundLevel` [0,50] = 40; `backgroundLevel` [0,50] = 5; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-          ],
-          [
-            "Sketch",
-            "`stamp` / `GalleryStampOptions`",
-            "`lightDarkBalance` [0,50] = 25; `smoothness` [1,50] = 5; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`"
-          ],
-          [
-            "Sketch",
-            "`tornEdges` / `GalleryTornEdgesOptions`",
-            "`imageBalance` [0,50] = 25; `smoothness` [1,15] = 11; `contrast` [1,25] = 17; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-          ],
-          [
-            "Sketch",
-            "`waterPaper` / `GalleryWaterPaperOptions`",
-            "`fiberLength` [3,50] = 15; `brightness` [0,100] = 60; `contrast` [0,100] = 80; `seed` = 0"
-          ],
-          [
-            "Stylize",
-            "`glowingEdges` / `GalleryGlowingEdgesOptions`",
-            "`edgeWidth` [1,14] = 2; `edgeBrightness` [0,20] = 6; `smoothness` [1,15] = 5"
-          ],
-          [
-            "Texture",
-            "`craquelure` / `GalleryCraquelureOptions`",
-            "`crackSpacing` [2,100] = 15; `crackDepth` [0,10] = 6; `crackBrightness` [0,10] = 9; `seed` = 0"
-          ],
-          [
-            "Texture",
-            "`grain` / `GalleryGrainOptions`",
-            "`intensity` [0,100] = 40; `contrast` [0,100] = 50; `grainType` (GalleryGrainType): `Regular`, `Soft`, `Sprinkles`, `Clumped`, `Contrasty`, `Enlarged`, `Stippled`, `Horizontal`, `Vertical`, `Speckle`; `foreground` RGB = `{0,0,0}`; `background` RGB = `{1,1,1}`; `seed` = 0"
-          ],
-          [
-            "Texture",
-            "`mosaicTiles` / `GalleryMosaicTilesOptions`",
-            "`tileSize` [2,100] = 12; `groutWidth` [1,15] = 3; `lightenGrout` [0,10] = 9; `seed` = 0"
-          ],
-          [
-            "Texture",
-            "`patchwork` / `GalleryPatchworkOptions`",
-            "`squareSize` [0,10] = 4; `relief` [0,25] = 8; `seed` = 0"
-          ],
-          [
-            "Texture",
-            "`stainedGlass` / `GalleryStainedGlassOptions`",
-            "`cellSize` [2,50] = 10; `borderThickness` [1,20] = 4; `lightIntensity` [0,10] = 3; `foreground` RGB = `{0,0,0}`; `seed` = 0"
-          ],
-          [
-            "Texture",
-            "`texturizer` / `GalleryTexturizerOptions`",
-            "`texture` (GalleryTexture): `Canvas`, `Brick`, `Burlap`, `Sandstone`; `scaling` [50,200] = 100; `relief` [0,50] = 4; `light` (GalleryLightDirection): `Top`, `TopRight`, `Right`, `BottomRight`, `Bottom`, `BottomLeft`, `Left`, `TopLeft`; `invert` = false; `seed` = 0"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

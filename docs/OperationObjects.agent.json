@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/OperationObjects.md",
-    "sha256": "dbecddd073d90c370031c4be1eb7f5f98f1756d200320ec5ffe99510c0b27ef9",
-    "bytes": 12821,
-    "line_count": 196,
+    "sha256": "7977e0fd72616173359b82f59a374caa43e0e8f8897a133b869851e3b317086b",
+    "bytes": 13248,
+    "line_count": 194,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -84,103 +84,114 @@
     },
     {
       "id": "b000009",
-      "kind": "table",
       "start_line": 19,
-      "end_line": 35,
-      "raw": "| Headers | State and responsibility |\n| --- | --- |\n| `ToneObjects.h`, `ColorObjects.h`, `AdjustmentsObjects.h` | Brightness/Contrast, Levels, Curves, Exposure, automatic tonal correction, hue/saturation, Vibrance, selective color, channel mixing, monochrome, color matching and replacement |\n| `MappingObjects.h`, `HdrObjects.h` | Gradient maps, owned 1D/3D LUTs, SDR or linear HDR tone mapping |\n| `DevelopToneObjects.h`, `DevelopColorObjects.h`, `DevelopEffectsObjects.h`, `DevelopObjects.h` | Kelvin WB, light, curves, perceptual color, calibration, detail/effects and explicit SDR development composition |\n| `DevelopFeatureObjects.h` | Independently usable Texture, Clarity, Dehaze, eight-band Color Mixer, Point Color, Color Grading, monochrome mixer, Vibrance, Sharpening, luminance/color NR and Defringe |\n| `BlurFiltersObjects.h`, `OwnedResourceObjects.h` | Blur/sharpen menu algorithms, blur pins/paths and owned depth-map Lens Blur |\n| `DistortionFiltersObjects.h`, `MeshFiltersObjects.h` | Owned displacement maps, shear points, Liquify strokes, wide-angle constraints, ARAP puppet pins and perspective planes |\n| `UtilityFiltersObjects.h`, `PixelFiltersObjects.h` | Noise, morphology, convolution, guided kernels, video helpers, pixelation and stylization |\n| `GalleryFiltersObjects.h`, `RenderFiltersObjects.h` | 47 separate Gallery effects, ordered Gallery settings, procedural textures/lights/flame/tree/frame |\n| `LensFilterObjects.h`, `OpticsObjects.h`, `CameraRawFilterObjects.h` | Supplied lens coefficients, CA/defringe, rendered Camera Raw controls |\n| `LightcraftFiltersObjects.h` | 22 named look recipes, 41 named presets, selected look/preset objects and four resamplers |\n| `RetouchFiltersObjects.h`, `DiagnosticFiltersObjects.h` | Clone/Heal/Remove spots, red/pet eye, spot inspection, owned mask previews and proof-space warnings |\n| `MaskObjects.h`, `AnalysisObjects.h` | Owned mask production/combination/refinement, WB/Light/monochrome estimation, histograms, CA/source/pupil/dust analysis and solved geometry |\n| `CorrectionExtensionsObjects.h`, `PhotoOperationsObjects.h`, `LocalCorrectionsObjects.h` | Flat-field correction, color unmixing, solid/gradient/pattern fill, orientation/crop and owned masked RGB correction |\n| `SampleFilterObjects.h` | Typed recovered Average/fill/Solarize over explicit sample-plane inputs and mutable outputs |\n| `RawObjects.h`, `ResourceBuilderObjects.h` | Unpacked Bayer development/rendering, owned Cube text, LUT construction, look/preset/lens recipes and plane analysis |\n",
-      "columns": [
-        "Headers",
-        "State and responsibility"
-      ],
-      "rows": [
-        [
-          "`ToneObjects.h`, `ColorObjects.h`, `AdjustmentsObjects.h`",
-          "Brightness/Contrast, Levels, Curves, Exposure, automatic tonal correction, hue/saturation, Vibrance, selective color, channel mixing, monochrome, color matching and replacement"
-        ],
-        [
-          "`MappingObjects.h`, `HdrObjects.h`",
-          "Gradient maps, owned 1D/3D LUTs, SDR or linear HDR tone mapping"
-        ],
-        [
-          "`DevelopToneObjects.h`, `DevelopColorObjects.h`, `DevelopEffectsObjects.h`, `DevelopObjects.h`",
-          "Kelvin WB, light, curves, perceptual color, calibration, detail/effects and explicit SDR development composition"
-        ],
-        [
-          "`DevelopFeatureObjects.h`",
-          "Independently usable Texture, Clarity, Dehaze, eight-band Color Mixer, Point Color, Color Grading, monochrome mixer, Vibrance, Sharpening, luminance/color NR and Defringe"
-        ],
-        [
-          "`BlurFiltersObjects.h`, `OwnedResourceObjects.h`",
-          "Blur/sharpen menu algorithms, blur pins/paths and owned depth-map Lens Blur"
-        ],
-        [
-          "`DistortionFiltersObjects.h`, `MeshFiltersObjects.h`",
-          "Owned displacement maps, shear points, Liquify strokes, wide-angle constraints, ARAP puppet pins and perspective planes"
-        ],
-        [
-          "`UtilityFiltersObjects.h`, `PixelFiltersObjects.h`",
-          "Noise, morphology, convolution, guided kernels, video helpers, pixelation and stylization"
-        ],
-        [
-          "`GalleryFiltersObjects.h`, `RenderFiltersObjects.h`",
-          "47 separate Gallery effects, ordered Gallery settings, procedural textures/lights/flame/tree/frame"
-        ],
-        [
-          "`LensFilterObjects.h`, `OpticsObjects.h`, `CameraRawFilterObjects.h`",
-          "Supplied lens coefficients, CA/defringe, rendered Camera Raw controls"
-        ],
-        [
-          "`LightcraftFiltersObjects.h`",
-          "22 named look recipes, 41 named presets, selected look/preset objects and four resamplers"
-        ],
-        [
-          "`RetouchFiltersObjects.h`, `DiagnosticFiltersObjects.h`",
-          "Clone/Heal/Remove spots, red/pet eye, spot inspection, owned mask previews and proof-space warnings"
-        ],
-        [
-          "`MaskObjects.h`, `AnalysisObjects.h`",
-          "Owned mask production/combination/refinement, WB/Light/monochrome estimation, histograms, CA/source/pupil/dust analysis and solved geometry"
-        ],
-        [
-          "`CorrectionExtensionsObjects.h`, `PhotoOperationsObjects.h`, `LocalCorrectionsObjects.h`",
-          "Flat-field correction, color unmixing, solid/gradient/pattern fill, orientation/crop and owned masked RGB correction"
-        ],
-        [
-          "`SampleFilterObjects.h`",
-          "Typed recovered Average/fill/Solarize over explicit sample-plane inputs and mutable outputs"
-        ],
-        [
-          "`RawObjects.h`, `ResourceBuilderObjects.h`",
-          "Unpacked Bayer development/rendering, owned Cube text, LUT construction, look/preset/lens recipes and plane analysis"
-        ]
+      "end_line": 33,
+      "raw": "- Headers: `ToneObjects.h`, `ColorObjects.h`, `AdjustmentsObjects.h`; State and responsibility: Brightness/Contrast, Levels, Curves, Exposure, automatic tonal correction, hue/saturation, Vibrance, selective color, channel mixing, monochrome, color matching and replacement\n- Headers: `MappingObjects.h`, `HdrObjects.h`; State and responsibility: Gradient maps, owned 1D/3D LUTs, SDR or linear HDR tone mapping\n- Headers: `DevelopToneObjects.h`, `DevelopColorObjects.h`, `DevelopEffectsObjects.h`, `DevelopObjects.h`; State and responsibility: Kelvin WB, light, curves, perceptual color, calibration, detail/effects and explicit SDR development composition\n- Headers: `DevelopFeatureObjects.h`; State and responsibility: Independently usable Texture, Clarity, Dehaze, eight-band Color Mixer, Point Color, Color Grading, monochrome mixer, Vibrance, Sharpening, luminance/color NR and Defringe\n- Headers: `BlurFiltersObjects.h`, `OwnedResourceObjects.h`; State and responsibility: Blur/sharpen menu algorithms, blur pins/paths and owned depth-map Lens Blur\n- Headers: `DistortionFiltersObjects.h`, `MeshFiltersObjects.h`; State and responsibility: Owned displacement maps, shear points, Liquify strokes, wide-angle constraints, ARAP puppet pins and perspective planes\n- Headers: `UtilityFiltersObjects.h`, `PixelFiltersObjects.h`; State and responsibility: Noise, morphology, convolution, guided kernels, video helpers, pixelation and stylization\n- Headers: `GalleryFiltersObjects.h`, `RenderFiltersObjects.h`; State and responsibility: 47 separate Gallery effects, ordered Gallery settings, procedural textures/lights/flame/tree/frame\n- Headers: `LensFilterObjects.h`, `OpticsObjects.h`, `CameraRawFilterObjects.h`; State and responsibility: Supplied lens coefficients, CA/defringe, rendered Camera Raw controls\n- Headers: `LightcraftFiltersObjects.h`; State and responsibility: 22 named look recipes, 41 named presets, selected look/preset objects and four resamplers\n- Headers: `RetouchFiltersObjects.h`, `DiagnosticFiltersObjects.h`; State and responsibility: Clone/Heal/Remove spots, red/pet eye, spot inspection, owned mask previews and proof-space warnings\n- Headers: `MaskObjects.h`, `AnalysisObjects.h`; State and responsibility: Owned mask production/combination/refinement, WB/Light/monochrome estimation, histograms, CA/source/pupil/dust analysis and solved geometry\n- Headers: `CorrectionExtensionsObjects.h`, `PhotoOperationsObjects.h`, `LocalCorrectionsObjects.h`; State and responsibility: Flat-field correction, color unmixing, solid/gradient/pattern fill, orientation/crop and owned masked RGB correction\n- Headers: `SampleFilterObjects.h`; State and responsibility: Typed recovered Average/fill/Solarize over explicit sample-plane inputs and mutable outputs\n- Headers: `RawObjects.h`, `ResourceBuilderObjects.h`; State and responsibility: Unpacked Bayer development/rendering, owned Cube text, LUT construction, look/preset/lens recipes and plane analysis\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Headers: `ToneObjects.h`, `ColorObjects.h`, `AdjustmentsObjects.h`; State and responsibility: Brightness/Contrast, Levels, Curves, Exposure, automatic tonal correction, hue/saturation, Vibrance, selective color, channel mixing, monochrome, color matching and replacement",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `MappingObjects.h`, `HdrObjects.h`; State and responsibility: Gradient maps, owned 1D/3D LUTs, SDR or linear HDR tone mapping",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `DevelopToneObjects.h`, `DevelopColorObjects.h`, `DevelopEffectsObjects.h`, `DevelopObjects.h`; State and responsibility: Kelvin WB, light, curves, perceptual color, calibration, detail/effects and explicit SDR development composition",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `DevelopFeatureObjects.h`; State and responsibility: Independently usable Texture, Clarity, Dehaze, eight-band Color Mixer, Point Color, Color Grading, monochrome mixer, Vibrance, Sharpening, luminance/color NR and Defringe",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `BlurFiltersObjects.h`, `OwnedResourceObjects.h`; State and responsibility: Blur/sharpen menu algorithms, blur pins/paths and owned depth-map Lens Blur",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `DistortionFiltersObjects.h`, `MeshFiltersObjects.h`; State and responsibility: Owned displacement maps, shear points, Liquify strokes, wide-angle constraints, ARAP puppet pins and perspective planes",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `UtilityFiltersObjects.h`, `PixelFiltersObjects.h`; State and responsibility: Noise, morphology, convolution, guided kernels, video helpers, pixelation and stylization",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `GalleryFiltersObjects.h`, `RenderFiltersObjects.h`; State and responsibility: 47 separate Gallery effects, ordered Gallery settings, procedural textures/lights/flame/tree/frame",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `LensFilterObjects.h`, `OpticsObjects.h`, `CameraRawFilterObjects.h`; State and responsibility: Supplied lens coefficients, CA/defringe, rendered Camera Raw controls",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `LightcraftFiltersObjects.h`; State and responsibility: 22 named look recipes, 41 named presets, selected look/preset objects and four resamplers",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `RetouchFiltersObjects.h`, `DiagnosticFiltersObjects.h`; State and responsibility: Clone/Heal/Remove spots, red/pet eye, spot inspection, owned mask previews and proof-space warnings",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `MaskObjects.h`, `AnalysisObjects.h`; State and responsibility: Owned mask production/combination/refinement, WB/Light/monochrome estimation, histograms, CA/source/pupil/dust analysis and solved geometry",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `CorrectionExtensionsObjects.h`, `PhotoOperationsObjects.h`, `LocalCorrectionsObjects.h`; State and responsibility: Flat-field correction, color unmixing, solid/gradient/pattern fill, orientation/crop and owned masked RGB correction",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `SampleFilterObjects.h`; State and responsibility: Typed recovered Average/fill/Solarize over explicit sample-plane inputs and mutable outputs",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Headers: `RawObjects.h`, `ResourceBuilderObjects.h`; State and responsibility: Unpacked Bayer development/rendering, owned Cube text, LUT construction, look/preset/lens recipes and plane analysis",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 36,
-      "end_line": 36,
+      "start_line": 34,
+      "end_line": 34,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 37,
-      "end_line": 45,
+      "start_line": 35,
+      "end_line": 43,
       "raw": "The complete type/function/header/ID mapping is installed as\n[`object-catalog.json`](object-catalog.json). `operationCatalog()` returns stable\nmetadata for the same 309 objects without a global mutable registry or a\nstring-to-algorithm dispatcher. Several feature objects intentionally select\ndifferent controls of one existing processing kernel. 309 objects do not mean\n309 newly recovered algorithms. Pixel converters retain their low-level free-function contracts. `SampleFilterObjects.h`\nadditionally objectifies all eight recovered Average/fill/Solarize sample-plane\noperations with explicit typed call-scoped input/output views; these retain the\noriginal mutable-buffer semantics and do not enter the normalized-image stack.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 46,
-      "end_line": 46,
+      "start_line": 44,
+      "end_line": 44,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "heading",
-      "start_line": 47,
-      "end_line": 47,
+      "start_line": 45,
+      "end_line": 45,
       "raw": "## Construction, editing and ownership\n",
       "level": 2,
       "title": "Construction, editing and ownership"
@@ -188,43 +199,43 @@
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 48,
-      "end_line": 48,
+      "start_line": 46,
+      "end_line": 46,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 49,
-      "end_line": 55,
+      "start_line": 47,
+      "end_line": 53,
       "raw": "Concrete objects are editable values with an `options` member or directly named\nfields. `apply(ImageView)` returns detached `Result<Image>` storage. Callers may\nreuse and edit an object between calls. Mask producers return `Result<Mask>` via\n`generate`; analysis objects return the actual typed estimate via `analyze`.\n`RawDevelopment` takes `BayerImageView`, not encoded pixels. `HdrToning` retains\nboth rendered and linear-HDR overloads. Resource objects use `build`, `resolve`,\n`sample` or `map` as appropriate; they are not artificial image filters.\n"
     },
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 56,
-      "end_line": 56,
+      "start_line": 54,
+      "end_line": 54,
       "raw": "\n"
     },
     {
       "id": "b000017",
       "kind": "paragraph",
-      "start_line": 57,
-      "end_line": 58,
+      "start_line": 55,
+      "end_line": 56,
       "raw": "Long-lived objects own their arrays, LUTs, masks and auxiliary images. In\nparticular:\n"
     },
     {
       "id": "b000018",
       "kind": "blank",
-      "start_line": 59,
-      "end_line": 59,
+      "start_line": 57,
+      "end_line": 57,
       "raw": "\n"
     },
     {
       "id": "b000019",
       "kind": "list",
-      "start_line": 60,
-      "end_line": 68,
+      "start_line": 58,
+      "end_line": 66,
       "raw": "- `MatchColor`, `Displace`, `CrossGuidedBlur`, `Blend`, `PatternFill` and\n  `FlatFieldCorrection` own their reference images.\n- `LensBlurParameters::depthMap` owns an optional `Image`; it does not retain\n  `LensBlurOptions::depthMap`'s borrowed view.\n- `VanishingPointParameters` owns every paste image, plane, tear-off and clone\n  stroke. Borrowed free-function views are reconstructed only during a call.\n- `GamutWarningParameters` owns the optional pre-gamut linear Rec.2020 triples.\n- `ApplyLocalAdjustments` owns its masks and slider settings.\n- `ApplyMaskedCorrection` owns both the rendered correction and its mask.\n",
       "items": [
         {
@@ -262,29 +273,29 @@
     {
       "id": "b000020",
       "kind": "blank",
-      "start_line": 69,
-      "end_line": 69,
+      "start_line": 67,
+      "end_line": 67,
       "raw": "\n"
     },
     {
       "id": "b000021",
       "kind": "paragraph",
-      "start_line": 70,
-      "end_line": 79,
+      "start_line": 68,
+      "end_line": 77,
       "raw": "`Operation{object}` captures an immutable value snapshot. Editing or destroying\nthe original object cannot change that snapshot. Copying an `Operation` shares\nthe immutable capture through `shared_ptr`; no buffer is copied per render.\nCreating/copying ordinary concrete values and capturing them follow normal C++\nallocation/exception rules. Processing allocations are returned as\n`AllocationFailure`. There is no thread, timer, GUI, Rust runtime or neural model.\nConcurrent reads of a capture are safe while caller-owned input pixels remain\nalive and immutable; concurrent edits to the same concrete value/stack are the\ncaller's responsibility. Custom objects may satisfy `ImageOperationObject` with\nstatic-lifetime `info` strings and an expected-returning const `apply` method.\n"
     },
     {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 80,
-      "end_line": 80,
+      "start_line": 78,
+      "end_line": 78,
       "raw": "\n"
     },
     {
       "id": "b000023",
       "kind": "heading",
-      "start_line": 81,
-      "end_line": 81,
+      "start_line": 79,
+      "end_line": 79,
       "raw": "## Ordered stack and local application\n",
       "level": 2,
       "title": "Ordered stack and local application"
@@ -292,15 +303,15 @@
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 82,
-      "end_line": 82,
+      "start_line": 80,
+      "end_line": 80,
       "raw": "\n"
     },
     {
       "id": "b000025",
       "kind": "fenced_code",
-      "start_line": 83,
-      "end_line": 106,
+      "start_line": 81,
+      "end_line": 104,
       "raw": "```cpp\n#include <iiGraphicAdjust/Objects.h>\nusing namespace iiGraphicAdjust;\nnamespace fx = iiGraphicAdjust::objects;\n\nfx::Exposure exposure;\nexposure.options.stops = 0.7;\nfx::ColorGrading grading;\ngrading.options.shadows = {215, 12, 0};\nfx::Sharpening detail;\ndetail.amount = 55;\ndetail.radius = 1.2;\n\nOperationStack edits{{\n    {Operation{exposure}},\n    {Operation{grading}},\n    {Operation{detail}}\n}};\nauto rendered = edits.evaluate(source.view());\nif (!rendered) {\n    // rendered.error(): stage, operation ID/name/family, and original SDK cause.\n    return;\n}\n```\n",
       "language": "cpp",
       "code": "#include <iiGraphicAdjust/Objects.h>\nusing namespace iiGraphicAdjust;\nnamespace fx = iiGraphicAdjust::objects;\n\nfx::Exposure exposure;\nexposure.options.stops = 0.7;\nfx::ColorGrading grading;\ngrading.options.shadows = {215, 12, 0};\nfx::Sharpening detail;\ndetail.amount = 55;\ndetail.radius = 1.2;\n\nOperationStack edits{{\n    {Operation{exposure}},\n    {Operation{grading}},\n    {Operation{detail}}\n}};\nauto rendered = edits.evaluate(source.view());\nif (!rendered) {\n    // rendered.error(): stage, operation ID/name/family, and original SDK cause.\n    return;\n}\n",
@@ -309,43 +320,43 @@
     {
       "id": "b000026",
       "kind": "blank",
-      "start_line": 107,
-      "end_line": 107,
+      "start_line": 105,
+      "end_line": 105,
       "raw": "\n"
     },
     {
       "id": "b000027",
       "kind": "paragraph",
-      "start_line": 108,
-      "end_line": 116,
+      "start_line": 106,
+      "end_line": 114,
       "raw": "Up to 256 stages execute in caller order. Full stages may change geometry;\nlater masks must match the image as it exists at that stage. A partial/masked\nstage must keep dimensions. Its weight is `amount * coverage`, where `amount`\nis `[0,1]`. `space` selects encoded sRGB or linear sRGB interpolation.\nThis is interpolation between two images: alpha and RGB are premultiplied while\nmixing. It is not source-over layering. A fully applied result is copied exactly;\nzero coverage preserves original bits. When both interpolated alphas are zero,\nthe input hidden RGB remains. Use the existing `ApplyMaskedCorrection` object\ninstead when original alpha must remain fixed independently of corrected alpha.\n"
     },
     {
       "id": "b000028",
       "kind": "blank",
-      "start_line": 117,
-      "end_line": 117,
+      "start_line": 115,
+      "end_line": 115,
       "raw": "\n"
     },
     {
       "id": "b000029",
       "kind": "paragraph",
-      "start_line": 118,
-      "end_line": 125,
+      "start_line": 116,
+      "end_line": 123,
       "raw": "`enabled=false` bypasses the kernel. Stage amount, space and mask are still\nvalidated. A zero-amount enabled stage still executes/validates its kernel and\ngeometry, then keeps the current pixels. Source input and every enabled\noperation output are validated. Failure returns no partially rendered result\nand never mutates source storage. `evaluate` reports stage index/metadata;\n`apply` returns the underlying `Error` for callers using the common result type.\nAn empty stack produces a detached copy. A moved-from handle is an explicit\ninvalid-parameter error.\n"
     },
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 126,
-      "end_line": 126,
+      "start_line": 124,
+      "end_line": 124,
       "raw": "\n"
     },
     {
       "id": "b000031",
       "kind": "heading",
-      "start_line": 127,
-      "end_line": 127,
+      "start_line": 125,
+      "end_line": 125,
       "raw": "## New correction kernels\n",
       "level": 2,
       "title": "New correction kernels"
@@ -353,57 +364,57 @@
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 128,
-      "end_line": 128,
+      "start_line": 126,
+      "end_line": 126,
       "raw": "\n"
     },
     {
       "id": "b000033",
       "kind": "paragraph",
-      "start_line": 129,
-      "end_line": 136,
+      "start_line": 127,
+      "end_line": 134,
       "raw": "`ColorToAlpha` independently implements minimum-opacity unmixing in encoded\nsRGB. For key `C`, source `P`, it chooses the smallest `a` with an in-range\n`Q = C + (P-C)/a`. Recomposition over the key recovers the source with neutral\nthresholds, including existing source alpha. Thresholds are independently in\n`[0,1]`; equal/crossed thresholds form a deterministic step and never divide by\nzero. Already invisible pixels retain their RGB. The current PhotoCraft tree\nhas this extra filter; its command source explicitly identifies it as an\nextension absent from Photoshop, not proof of an Adobe feature.\n"
     },
     {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 137,
-      "end_line": 137,
+      "start_line": 135,
+      "end_line": 135,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "paragraph",
-      "start_line": 138,
-      "end_line": 144,
+      "start_line": 136,
+      "end_line": 142,
       "raw": "`FlatFieldCorrection` accepts a same-sized decoded flat exposure. It estimates\nalpha-weighted per-channel reference means and divides scene-linear RGB by the\nreference response with a configurable positive floor. Luminance-only gain is\navailable. Strength interpolates correction gains in linear light. Reference\nholes over visible source pixels are errors. Source alpha/hidden RGB remain.\nOutput is normalized SDR; this is not Lightroom's RAW/DNG metadata workflow or\na mechanism for recovering clipped sensor values.\n"
     },
     {
       "id": "b000036",
       "kind": "blank",
-      "start_line": 145,
-      "end_line": 145,
+      "start_line": 143,
+      "end_line": 143,
       "raw": "\n"
     },
     {
       "id": "b000037",
       "kind": "paragraph",
-      "start_line": 146,
-      "end_line": 152,
+      "start_line": 144,
+      "end_line": 150,
       "raw": "`SolidFill`, `GradientFill` and `PatternFill` render real pixels. Gradients have\nLinear/Radial/Angle/Reflected/Diamond geometry, strictly ordered RGB stops,\ncenter/angle/scale/reverse and explicit transfer-space interpolation. Pattern\nfill owns a tile and wraps premultiplied bilinear samples after scale/rotation/\npixel-offset transforms. Fill `preserveAlpha=true` multiplies/retains source\ncoverage as documented by each option; false allows a fully independent fill.\nThese are pixel operations, not document-layer or Photoshop pattern-file readers.\n"
     },
     {
       "id": "b000038",
       "kind": "blank",
-      "start_line": 153,
-      "end_line": 153,
+      "start_line": 151,
+      "end_line": 151,
       "raw": "\n"
     },
     {
       "id": "b000039",
       "kind": "heading",
-      "start_line": 154,
-      "end_line": 154,
+      "start_line": 152,
+      "end_line": 152,
       "raw": "## Active detail controls and ABI\n",
       "level": 2,
       "title": "Active detail controls and ABI"
@@ -411,43 +422,43 @@
     {
       "id": "b000040",
       "kind": "blank",
-      "start_line": 155,
-      "end_line": 155,
+      "start_line": 153,
+      "end_line": 153,
       "raw": "\n"
     },
     {
       "id": "b000041",
       "kind": "paragraph",
-      "start_line": 156,
-      "end_line": 164,
+      "start_line": 154,
+      "end_line": 162,
       "raw": "`DevelopDetailOptions` now also reads `sharpenRadius` `[.5,3]`, `sharpenDetail`\n`[0,100]` and `luminanceContrast` `[0,100]`. Radius multiplies the existing\nimage-relative Gaussian detail scale; it is not a claim of Adobe pixel units.\nFine detail adds `(detail-25)/75 * .5` times a half-radius log-luminance band.\nLuminance NR contrast restores the difference between pre/post-NR broad Gaussian\nbases before blending the log-luminance correction. Default `1/25/0` retains\nthe preceding algorithm and existing numerical oracles. All controls are\nvalidated even when their correction amount is zero. `Sharpening`,\n`LuminanceNoiseReduction` and `ColorNoiseReduction` expose these independently.\n"
     },
     {
       "id": "b000042",
       "kind": "blank",
-      "start_line": 165,
-      "end_line": 165,
+      "start_line": 163,
+      "end_line": 163,
       "raw": "\n"
     },
     {
       "id": "b000043",
       "kind": "paragraph",
-      "start_line": 166,
-      "end_line": 170,
+      "start_line": 164,
+      "end_line": 168,
       "raw": "This changes public struct layouts, including embedded `DevelopOptions`.\nThe package and shared-library ABI series therefore move to **0.6**. Rebuild\nconsumers using `find_package(iiGraphicAdjust 0.6 CONFIG REQUIRED)`. No active\napplication or user's global installed SDK is replaced by this change. Package\nchecks install to isolated subdirectories under each `build/` tree.\n"
     },
     {
       "id": "b000044",
       "kind": "blank",
-      "start_line": 171,
-      "end_line": 171,
+      "start_line": 169,
+      "end_line": 169,
       "raw": "\n"
     },
     {
       "id": "b000045",
       "kind": "heading",
-      "start_line": 172,
-      "end_line": 172,
+      "start_line": 170,
+      "end_line": 170,
       "raw": "## Adobe coverage boundaries\n",
       "level": 2,
       "title": "Adobe coverage boundaries"
@@ -455,43 +466,43 @@
     {
       "id": "b000046",
       "kind": "blank",
-      "start_line": 173,
-      "end_line": 173,
+      "start_line": 171,
+      "end_line": 171,
       "raw": "\n"
     },
     {
       "id": "b000047",
       "kind": "paragraph",
-      "start_line": 174,
-      "end_line": 178,
+      "start_line": 172,
+      "end_line": 176,
       "raw": "[`adobe-feature-coverage.json`](adobe-feature-coverage.json) records current\ncategory mappings, caller-supplied-data requirements and unimplemented areas.\nThis is an explicit partial Adobe implementation, even though the pre-existing\nCPU processing API is fully objectified. There are no placeholder neural\nobjects that silently substitute ordinary blur/noise for a learned model.\n"
     },
     {
       "id": "b000048",
       "kind": "blank",
-      "start_line": 179,
-      "end_line": 179,
+      "start_line": 177,
+      "end_line": 177,
       "raw": "\n"
     },
     {
       "id": "b000049",
       "kind": "paragraph",
-      "start_line": 180,
-      "end_line": 187,
+      "start_line": 178,
+      "end_line": 185,
       "raw": "Remaining areas include neural portrait/semantic restoration/colorization/style\ntransfer, generative removal/fill, automatic subject/sky/people/depth estimation,\nAI RAW Denoise/Enhance/Super Resolution, reflection removal, complete HDR/wide-\ngamut managed development, Adobe camera/lens profile registries, proprietary\npreset/document interchange, panorama/HDR merge and original-application pixel\nequivalence. Supplied depth maps and masks work through the existing CPU\noperations; their semantic inference is not included. Classic statistical NR,\nresampling and patch-based spot repair are implemented under their own names.\n"
     },
     {
       "id": "b000050",
       "kind": "blank",
-      "start_line": 188,
-      "end_line": 188,
+      "start_line": 186,
+      "end_line": 186,
       "raw": "\n"
     },
     {
       "id": "b000051",
       "kind": "paragraph",
-      "start_line": 189,
-      "end_line": 196,
+      "start_line": 187,
+      "end_line": 194,
       "raw": "Feature categories were checked against Adobe's\n[adjustment reference](https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/adjustment-layers-options.html),\n[Neural Filters reference](https://helpx.adobe.com/photoshop/desktop/effects-filters/neural-filters/neural-filters-gallery.html),\n[Lightroom tone/color reference](https://helpx.adobe.com/lightroom-classic/desktop/process-and-develop-photos/image-tone-color.html)\nand [Lightroom development index](https://helpx.adobe.com/lightroom-classic/desktop.html)\non 2026-10-19. These establish categories rather than numerical compatibility.\nSee [OperationObjectsVerification.md](OperationObjectsVerification.md) for\nactual build, execution, sanitizer and isolated-consumer evidence.\n"
     }
   ],
@@ -518,7 +529,7 @@
       "level": 2,
       "title": "Construction, editing and ownership",
       "anchor": "construction-editing-and-ownership",
-      "start_line": 47
+      "start_line": 45
     },
     {
       "block_id": "b000023",
@@ -526,7 +537,7 @@
       "level": 2,
       "title": "Ordered stack and local application",
       "anchor": "ordered-stack-and-local-application",
-      "start_line": 81
+      "start_line": 79
     },
     {
       "block_id": "b000031",
@@ -534,7 +545,7 @@
       "level": 2,
       "title": "New correction kernels",
       "anchor": "new-correction-kernels",
-      "start_line": 127
+      "start_line": 125
     },
     {
       "block_id": "b000039",
@@ -542,7 +553,7 @@
       "level": 2,
       "title": "Active detail controls and ABI",
       "anchor": "active-detail-controls-and-abi",
-      "start_line": 154
+      "start_line": 152
     },
     {
       "block_id": "b000045",
@@ -550,63 +561,63 @@
       "level": 2,
       "title": "Adobe coverage boundaries",
       "anchor": "adobe-coverage-boundaries",
-      "start_line": 172
+      "start_line": 170
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
         "block_id": "b000011",
-        "line": 41,
+        "line": 39,
         "text": "different controls of one existing processing kernel. 309 objects do not mean",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000011",
-        "line": 45,
+        "line": 43,
         "text": "original mutable-buffer semantics and do not enter the normalized-image stack.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000027",
-        "line": 109,
+        "line": 107,
         "text": "later masks must match the image as it exists at that stage. A partial/masked",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000027",
-        "line": 110,
+        "line": 108,
         "text": "stage must keep dimensions. Its weight is `amount * coverage`, where `amount`",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000027",
-        "line": 116,
+        "line": 114,
         "text": "instead when original alpha must remain fixed independently of corrected alpha.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000029",
-        "line": 122,
+        "line": 120,
         "text": "and never mutates source storage. `evaluate` reports stage index/metadata;",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000033",
-        "line": 133,
+        "line": 131,
         "text": "`[0,1]`; equal/crossed thresholds form a deterministic step and never divide by",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000043",
-        "line": 168,
+        "line": 166,
         "text": "consumers using `find_package(iiGraphicAdjust 0.6 CONFIG REQUIRED)`. No active",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -619,122 +630,52 @@
         "label": "`object-catalog.json`",
         "target": "object-catalog.json",
         "kind": "relative",
-        "line": 38
+        "line": 36
       },
       {
         "block_id": "b000047",
         "label": "`adobe-feature-coverage.json`",
         "target": "adobe-feature-coverage.json",
         "kind": "relative",
-        "line": 174
+        "line": 172
       },
       {
         "block_id": "b000051",
         "label": "adjustment reference",
         "target": "https://helpx.adobe.com/photoshop/desktop/create-manage-layers/color-adjustment-fill-layers/adjustment-layers-options.html",
         "kind": "external",
-        "line": 190
+        "line": 188
       },
       {
         "block_id": "b000051",
         "label": "Neural Filters reference",
         "target": "https://helpx.adobe.com/photoshop/desktop/effects-filters/neural-filters/neural-filters-gallery.html",
         "kind": "external",
-        "line": 191
+        "line": 189
       },
       {
         "block_id": "b000051",
         "label": "Lightroom tone/color reference",
         "target": "https://helpx.adobe.com/lightroom-classic/desktop/process-and-develop-photos/image-tone-color.html",
         "kind": "external",
-        "line": 192
+        "line": 190
       },
       {
         "block_id": "b000051",
         "label": "Lightroom development index",
         "target": "https://helpx.adobe.com/lightroom-classic/desktop.html",
         "kind": "external",
-        "line": 193
+        "line": 191
       },
       {
         "block_id": "b000051",
         "label": "OperationObjectsVerification.md",
         "target": "OperationObjectsVerification.md",
         "kind": "relative",
-        "line": 195
+        "line": 193
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000009",
-        "columns": [
-          "Headers",
-          "State and responsibility"
-        ],
-        "rows": [
-          [
-            "`ToneObjects.h`, `ColorObjects.h`, `AdjustmentsObjects.h`",
-            "Brightness/Contrast, Levels, Curves, Exposure, automatic tonal correction, hue/saturation, Vibrance, selective color, channel mixing, monochrome, color matching and replacement"
-          ],
-          [
-            "`MappingObjects.h`, `HdrObjects.h`",
-            "Gradient maps, owned 1D/3D LUTs, SDR or linear HDR tone mapping"
-          ],
-          [
-            "`DevelopToneObjects.h`, `DevelopColorObjects.h`, `DevelopEffectsObjects.h`, `DevelopObjects.h`",
-            "Kelvin WB, light, curves, perceptual color, calibration, detail/effects and explicit SDR development composition"
-          ],
-          [
-            "`DevelopFeatureObjects.h`",
-            "Independently usable Texture, Clarity, Dehaze, eight-band Color Mixer, Point Color, Color Grading, monochrome mixer, Vibrance, Sharpening, luminance/color NR and Defringe"
-          ],
-          [
-            "`BlurFiltersObjects.h`, `OwnedResourceObjects.h`",
-            "Blur/sharpen menu algorithms, blur pins/paths and owned depth-map Lens Blur"
-          ],
-          [
-            "`DistortionFiltersObjects.h`, `MeshFiltersObjects.h`",
-            "Owned displacement maps, shear points, Liquify strokes, wide-angle constraints, ARAP puppet pins and perspective planes"
-          ],
-          [
-            "`UtilityFiltersObjects.h`, `PixelFiltersObjects.h`",
-            "Noise, morphology, convolution, guided kernels, video helpers, pixelation and stylization"
-          ],
-          [
-            "`GalleryFiltersObjects.h`, `RenderFiltersObjects.h`",
-            "47 separate Gallery effects, ordered Gallery settings, procedural textures/lights/flame/tree/frame"
-          ],
-          [
-            "`LensFilterObjects.h`, `OpticsObjects.h`, `CameraRawFilterObjects.h`",
-            "Supplied lens coefficients, CA/defringe, rendered Camera Raw controls"
-          ],
-          [
-            "`LightcraftFiltersObjects.h`",
-            "22 named look recipes, 41 named presets, selected look/preset objects and four resamplers"
-          ],
-          [
-            "`RetouchFiltersObjects.h`, `DiagnosticFiltersObjects.h`",
-            "Clone/Heal/Remove spots, red/pet eye, spot inspection, owned mask previews and proof-space warnings"
-          ],
-          [
-            "`MaskObjects.h`, `AnalysisObjects.h`",
-            "Owned mask production/combination/refinement, WB/Light/monochrome estimation, histograms, CA/source/pupil/dust analysis and solved geometry"
-          ],
-          [
-            "`CorrectionExtensionsObjects.h`, `PhotoOperationsObjects.h`, `LocalCorrectionsObjects.h`",
-            "Flat-field correction, color unmixing, solid/gradient/pattern fill, orientation/crop and owned masked RGB correction"
-          ],
-          [
-            "`SampleFilterObjects.h`",
-            "Typed recovered Average/fill/Solarize over explicit sample-plane inputs and mutable outputs"
-          ],
-          [
-            "`RawObjects.h`, `ResourceBuilderObjects.h`",
-            "Unpacked Bayer development/rendering, owned Cube text, LUT construction, look/preset/lens recipes and plane analysis"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

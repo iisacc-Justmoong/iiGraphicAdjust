@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/Verification.md",
-    "sha256": "1bfa8dd68685b056c82d430620b38d95fa6c7be2359caf54746b4f0c4c556895",
-    "bytes": 16586,
-    "line_count": 170,
+    "sha256": "2caa95b61f3bf3b3c73cc16a2bb209c1819279e4b210d59aead0a35339f3ee2d",
+    "bytes": 17594,
+    "line_count": 162,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -367,87 +367,94 @@
     },
     {
       "id": "b000047",
-      "kind": "table",
       "start_line": 74,
-      "end_line": 86,
-      "raw": "| Configuration/check | Result |\n| --- | --- |\n| Release shared library behavior | 8/8 passed |\n| Release static library behavior | 8/8 passed |\n| Debug AddressSanitizer + UndefinedBehaviorSanitizer | 8/8 passed, no sanitizer findings |\n| Shared staged-package consumer | 1/1 passed |\n| Static staged-package consumer | 1/1 passed |\n| Actual host-installed package consumer | 1/1 passed |\n| `otool -L` SDK and consumer | C++/system libraries, no Qt dependency |\n| `DYLD_PRINT_LIBRARIES=1` host consumer | Actual `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.1.0.dylib` loaded; no Qt |\n| Build vs host-installed SDK SHA-256 | Identical |\n| Parent SDK installer discovery | `iiGraphicAdjust: dependencies=-` |\n| Executed example output | Binary PPM, 256×128, 98,319 bytes |\n",
-      "columns": [
-        "Configuration/check",
-        "Result"
-      ],
-      "rows": [
-        [
-          "Release shared library behavior",
-          "8/8 passed"
-        ],
-        [
-          "Release static library behavior",
-          "8/8 passed"
-        ],
-        [
-          "Debug AddressSanitizer + UndefinedBehaviorSanitizer",
-          "8/8 passed, no sanitizer findings"
-        ],
-        [
-          "Shared staged-package consumer",
-          "1/1 passed"
-        ],
-        [
-          "Static staged-package consumer",
-          "1/1 passed"
-        ],
-        [
-          "Actual host-installed package consumer",
-          "1/1 passed"
-        ],
-        [
-          "`otool -L` SDK and consumer",
-          "C++/system libraries, no Qt dependency"
-        ],
-        [
-          "`DYLD_PRINT_LIBRARIES=1` host consumer",
-          "Actual `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.1.0.dylib` loaded; no Qt"
-        ],
-        [
-          "Build vs host-installed SDK SHA-256",
-          "Identical"
-        ],
-        [
-          "Parent SDK installer discovery",
-          "`iiGraphicAdjust: dependencies=-`"
-        ],
-        [
-          "Executed example output",
-          "Binary PPM, 256×128, 98,319 bytes"
-        ]
+      "end_line": 84,
+      "raw": "- Configuration/check: Release shared library behavior; Result: 8/8 passed\n- Configuration/check: Release static library behavior; Result: 8/8 passed\n- Configuration/check: Debug AddressSanitizer + UndefinedBehaviorSanitizer; Result: 8/8 passed, no sanitizer findings\n- Configuration/check: Shared staged-package consumer; Result: 1/1 passed\n- Configuration/check: Static staged-package consumer; Result: 1/1 passed\n- Configuration/check: Actual host-installed package consumer; Result: 1/1 passed\n- Configuration/check: `otool -L` SDK and consumer; Result: C++/system libraries, no Qt dependency\n- Configuration/check: `DYLD_PRINT_LIBRARIES=1` host consumer; Result: Actual `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.1.0.dylib` loaded; no Qt\n- Configuration/check: Build vs host-installed SDK SHA-256; Result: Identical\n- Configuration/check: Parent SDK installer discovery; Result: `iiGraphicAdjust: dependencies=-`\n- Configuration/check: Executed example output; Result: Binary PPM, 256×128, 98,319 bytes\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Configuration/check: Release shared library behavior; Result: 8/8 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Release static library behavior; Result: 8/8 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Debug AddressSanitizer + UndefinedBehaviorSanitizer; Result: 8/8 passed, no sanitizer findings",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Shared staged-package consumer; Result: 1/1 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Static staged-package consumer; Result: 1/1 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Actual host-installed package consumer; Result: 1/1 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: `otool -L` SDK and consumer; Result: C++/system libraries, no Qt dependency",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: `DYLD_PRINT_LIBRARIES=1` host consumer; Result: Actual `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.1.0.dylib` loaded; no Qt",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Build vs host-installed SDK SHA-256; Result: Identical",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Parent SDK installer discovery; Result: `iiGraphicAdjust: dependencies=-`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Executed example output; Result: Binary PPM, 256×128, 98,319 bytes",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000048",
+      "kind": "blank",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 86,
+      "end_line": 86,
+      "raw": "The 27 successful test executions above include repeated behavior coverage across three build configurations, not 27 unique algorithms. The original machine-readable report is retained as `build/verification-0.1.0.json`; current verification is recorded in `build/verification.json`. Windows, Linux, iOS, Android and integration into Dreamscapes/iiSharedCanvas remain unverified. No existing running product was restarted.\n"
+    },
+    {
+      "id": "b000050",
       "kind": "blank",
       "start_line": 87,
       "end_line": 87,
       "raw": "\n"
     },
     {
-      "id": "b000049",
-      "kind": "paragraph",
-      "start_line": 88,
-      "end_line": 88,
-      "raw": "The 27 successful test executions above include repeated behavior coverage across three build configurations, not 27 unique algorithms. The original machine-readable report is retained as `build/verification-0.1.0.json`; current verification is recorded in `build/verification.json`. Windows, Linux, iOS, Android and integration into Dreamscapes/iiSharedCanvas remain unverified. No existing running product was restarted.\n"
-    },
-    {
-      "id": "b000050",
-      "kind": "blank",
-      "start_line": 89,
-      "end_line": 89,
-      "raw": "\n"
-    },
-    {
       "id": "b000051",
       "kind": "heading",
-      "start_line": 90,
-      "end_line": 90,
+      "start_line": 88,
+      "end_line": 88,
       "raw": "## Recorded 0.2.0 adjustment result — 2026-10-08\n",
       "level": 2,
       "title": "Recorded 0.2.0 adjustment result — 2026-10-08"
@@ -455,117 +462,123 @@
     {
       "id": "b000052",
       "kind": "blank",
-      "start_line": 91,
-      "end_line": 91,
+      "start_line": 89,
+      "end_line": 89,
       "raw": "\n"
     },
     {
       "id": "b000053",
       "kind": "paragraph",
-      "start_line": 92,
-      "end_line": 92,
+      "start_line": 90,
+      "end_line": 90,
       "raw": "The final source was validated on the same macOS arm64/AppleClang 21.0.0 host:\n"
     },
     {
       "id": "b000054",
       "kind": "blank",
-      "start_line": 93,
-      "end_line": 93,
+      "start_line": 91,
+      "end_line": 91,
       "raw": "\n"
     },
     {
       "id": "b000055",
-      "kind": "table",
-      "start_line": 94,
-      "end_line": 105,
-      "raw": "| Configuration/check | Result |\n| --- | --- |\n| Release shared library | 33/33 passed |\n| Release static library | 33/33 passed |\n| Debug AddressSanitizer + UndefinedBehaviorSanitizer | 33/33 passed, no findings |\n| Shared and static staged-package consumers | 1/1 each passed |\n| Actual host-installed package consumer | 1/1 passed |\n| SDK and consumer linkage / actual loaded libraries | No Qt |\n| Loaded SDK dylib | `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.2.0.dylib`, no 0.1 SDK loaded |\n| SDK build/installed SHA-256 and new public headers | Identical |\n| Upstream MIT attribution | Installed with package |\n| Parent SDK discovery | No local dependency edges |\n",
-      "columns": [
-        "Configuration/check",
-        "Result"
-      ],
-      "rows": [
-        [
-          "Release shared library",
-          "33/33 passed"
-        ],
-        [
-          "Release static library",
-          "33/33 passed"
-        ],
-        [
-          "Debug AddressSanitizer + UndefinedBehaviorSanitizer",
-          "33/33 passed, no findings"
-        ],
-        [
-          "Shared and static staged-package consumers",
-          "1/1 each passed"
-        ],
-        [
-          "Actual host-installed package consumer",
-          "1/1 passed"
-        ],
-        [
-          "SDK and consumer linkage / actual loaded libraries",
-          "No Qt"
-        ],
-        [
-          "Loaded SDK dylib",
-          "`~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.2.0.dylib`, no 0.1 SDK loaded"
-        ],
-        [
-          "SDK build/installed SHA-256 and new public headers",
-          "Identical"
-        ],
-        [
-          "Upstream MIT attribution",
-          "Installed with package"
-        ],
-        [
-          "Parent SDK discovery",
-          "No local dependency edges"
-        ]
+      "start_line": 92,
+      "end_line": 101,
+      "raw": "- Configuration/check: Release shared library; Result: 33/33 passed\n- Configuration/check: Release static library; Result: 33/33 passed\n- Configuration/check: Debug AddressSanitizer + UndefinedBehaviorSanitizer; Result: 33/33 passed, no findings\n- Configuration/check: Shared and static staged-package consumers; Result: 1/1 each passed\n- Configuration/check: Actual host-installed package consumer; Result: 1/1 passed\n- Configuration/check: SDK and consumer linkage / actual loaded libraries; Result: No Qt\n- Configuration/check: Loaded SDK dylib; Result: `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.2.0.dylib`, no 0.1 SDK loaded\n- Configuration/check: SDK build/installed SHA-256 and new public headers; Result: Identical\n- Configuration/check: Upstream MIT attribution; Result: Installed with package\n- Configuration/check: Parent SDK discovery; Result: No local dependency edges\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Configuration/check: Release shared library; Result: 33/33 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Release static library; Result: 33/33 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Debug AddressSanitizer + UndefinedBehaviorSanitizer; Result: 33/33 passed, no findings",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Shared and static staged-package consumers; Result: 1/1 each passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Actual host-installed package consumer; Result: 1/1 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: SDK and consumer linkage / actual loaded libraries; Result: No Qt",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Loaded SDK dylib; Result: `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.2.0.dylib`, no 0.1 SDK loaded",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: SDK build/installed SHA-256 and new public headers; Result: Identical",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Upstream MIT attribution; Result: Installed with package",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Parent SDK discovery; Result: No local dependency edges",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000056",
+      "kind": "blank",
+      "start_line": 102,
+      "end_line": 102,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 103,
+      "end_line": 103,
+      "raw": "This is 33 suites exercised in three configurations plus three package consumers, totalling 102 successful final test executions. The installed consumer resolves every new operation, Cube parsing and the separate HDR input overload against the installed package. Numeric behavior is assessed by the unit suites, not by a Photoshop render.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 104,
+      "end_line": 104,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "paragraph",
+      "start_line": 105,
+      "end_line": 105,
+      "raw": "Independent static review identified an HSL cancellation at tiny lightness and malformed `+-1` Cube numbers. Regression tests reproduced the former before its fix (`build/hsl-regression-red.log`), and both cases now pass. Extremely narrow highlight masks and gray-preserving color replacement also have regression coverage. Source/build/test and actual installation proof are complete for this host; exact Photoshop rendering, upstream Rust tests, other platforms and product integration were not performed.\n"
+    },
+    {
+      "id": "b000060",
       "kind": "blank",
       "start_line": 106,
       "end_line": 106,
       "raw": "\n"
     },
     {
-      "id": "b000057",
-      "kind": "paragraph",
-      "start_line": 107,
-      "end_line": 107,
-      "raw": "This is 33 suites exercised in three configurations plus three package consumers, totalling 102 successful final test executions. The installed consumer resolves every new operation, Cube parsing and the separate HDR input overload against the installed package. Numeric behavior is assessed by the unit suites, not by a Photoshop render.\n"
-    },
-    {
-      "id": "b000058",
-      "kind": "blank",
-      "start_line": 108,
-      "end_line": 108,
-      "raw": "\n"
-    },
-    {
-      "id": "b000059",
-      "kind": "paragraph",
-      "start_line": 109,
-      "end_line": 109,
-      "raw": "Independent static review identified an HSL cancellation at tiny lightness and malformed `+-1` Cube numbers. Regression tests reproduced the former before its fix (`build/hsl-regression-red.log`), and both cases now pass. Extremely narrow highlight masks and gray-preserving color replacement also have regression coverage. Source/build/test and actual installation proof are complete for this host; exact Photoshop rendering, upstream Rust tests, other platforms and product integration were not performed.\n"
-    },
-    {
-      "id": "b000060",
-      "kind": "blank",
-      "start_line": 110,
-      "end_line": 110,
-      "raw": "\n"
-    },
-    {
       "id": "b000061",
       "kind": "heading",
-      "start_line": 111,
-      "end_line": 111,
+      "start_line": 107,
+      "end_line": 107,
       "raw": "## Recorded 0.3.0 development result — 2026-10-08\n",
       "level": 2,
       "title": "Recorded 0.3.0 development result — 2026-10-08"
@@ -573,163 +586,170 @@
     {
       "id": "b000062",
       "kind": "blank",
-      "start_line": 112,
-      "end_line": 112,
+      "start_line": 108,
+      "end_line": 108,
       "raw": "\n"
     },
     {
       "id": "b000063",
       "kind": "paragraph",
-      "start_line": 113,
-      "end_line": 113,
+      "start_line": 109,
+      "end_line": 109,
       "raw": "The final Lightroom-style source was validated on macOS arm64 with AppleClang 21.0.0 and CMake 4.4.3:\n"
     },
     {
       "id": "b000064",
       "kind": "blank",
-      "start_line": 114,
-      "end_line": 114,
+      "start_line": 110,
+      "end_line": 110,
       "raw": "\n"
     },
     {
       "id": "b000065",
-      "kind": "table",
-      "start_line": 115,
-      "end_line": 127,
-      "raw": "| Configuration/check | Result |\n| --- | --- |\n| Release shared library | 53/53 passed |\n| Release static library | 53/53 passed |\n| Debug AddressSanitizer + UndefinedBehaviorSanitizer | 53/53 passed, no findings |\n| Shared and static staged-package consumers | 1/1 each passed |\n| Actual host-installed package consumer | 1/1 passed |\n| Actual loaded SDK | `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.3.0.dylib` |\n| SDK and consumer linkage / loaded libraries | No Qt, no older iiGraphicAdjust loaded |\n| SDK build/installed SHA-256 and public headers | Identical |\n| Upstream attribution and updated documentation | Installed with package |\n| Parent SDK installer discovery | No dependency edges |\n| Development example | Binary PPM, 256×128, 98,319 bytes |\n",
-      "columns": [
-        "Configuration/check",
-        "Result"
-      ],
-      "rows": [
-        [
-          "Release shared library",
-          "53/53 passed"
-        ],
-        [
-          "Release static library",
-          "53/53 passed"
-        ],
-        [
-          "Debug AddressSanitizer + UndefinedBehaviorSanitizer",
-          "53/53 passed, no findings"
-        ],
-        [
-          "Shared and static staged-package consumers",
-          "1/1 each passed"
-        ],
-        [
-          "Actual host-installed package consumer",
-          "1/1 passed"
-        ],
-        [
-          "Actual loaded SDK",
-          "`~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.3.0.dylib`"
-        ],
-        [
-          "SDK and consumer linkage / loaded libraries",
-          "No Qt, no older iiGraphicAdjust loaded"
-        ],
-        [
-          "SDK build/installed SHA-256 and public headers",
-          "Identical"
-        ],
-        [
-          "Upstream attribution and updated documentation",
-          "Installed with package"
-        ],
-        [
-          "Parent SDK installer discovery",
-          "No dependency edges"
-        ],
-        [
-          "Development example",
-          "Binary PPM, 256×128, 98,319 bytes"
-        ]
+      "start_line": 111,
+      "end_line": 121,
+      "raw": "- Configuration/check: Release shared library; Result: 53/53 passed\n- Configuration/check: Release static library; Result: 53/53 passed\n- Configuration/check: Debug AddressSanitizer + UndefinedBehaviorSanitizer; Result: 53/53 passed, no findings\n- Configuration/check: Shared and static staged-package consumers; Result: 1/1 each passed\n- Configuration/check: Actual host-installed package consumer; Result: 1/1 passed\n- Configuration/check: Actual loaded SDK; Result: `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.3.0.dylib`\n- Configuration/check: SDK and consumer linkage / loaded libraries; Result: No Qt, no older iiGraphicAdjust loaded\n- Configuration/check: SDK build/installed SHA-256 and public headers; Result: Identical\n- Configuration/check: Upstream attribution and updated documentation; Result: Installed with package\n- Configuration/check: Parent SDK installer discovery; Result: No dependency edges\n- Configuration/check: Development example; Result: Binary PPM, 256×128, 98,319 bytes\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Configuration/check: Release shared library; Result: 53/53 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Release static library; Result: 53/53 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Debug AddressSanitizer + UndefinedBehaviorSanitizer; Result: 53/53 passed, no findings",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Shared and static staged-package consumers; Result: 1/1 each passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Actual host-installed package consumer; Result: 1/1 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Actual loaded SDK; Result: `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.3.0.dylib`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: SDK and consumer linkage / loaded libraries; Result: No Qt, no older iiGraphicAdjust loaded",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: SDK build/installed SHA-256 and public headers; Result: Identical",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Upstream attribution and updated documentation; Result: Installed with package",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Parent SDK installer discovery; Result: No dependency edges",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Development example; Result: Binary PPM, 256×128, 98,319 bytes",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000066",
+      "kind": "blank",
+      "start_line": 122,
+      "end_line": 122,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "There are 53 distinct CTest suites (33 retained and 20 new), exercised in three configurations plus three package consumers, totalling 162 final successful test executions. The installed consumer resolves all 27 new public operations through the installed CMake package. Tests include random slider combinations, 3600-hue mixer partition, independent radiometric Exposure oracles, normalized finite output, hidden-RGB isolation, exact zero-coverage/cancellation behavior, Auto Mask color/luminance boundary selection and thin-image optics/spatial cases. No sanitizer issue was reported.\n"
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 124,
+      "end_line": 124,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "paragraph",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "Independent review also checked separable lightness extrema against brute-force windows and verified CA border neutrality and shared vignetting gain: 725,866 checks, zero failures, under ASan/UBSan. A separate color/development audit exercised 2000 valid random settings with zero failures. These manual audits supplement, rather than increase, the CTest suite count.\n"
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 126,
+      "end_line": 126,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "paragraph",
+      "start_line": 127,
+      "end_line": 127,
+      "raw": "One 3840×2160 Light measurement (Highlights -60, Shadows +60) took 2.87315 seconds in the function and reached 1,262,780,416 bytes peak process resident memory. This is a single host/fixture measurement, not a latency guarantee or the composed-pipeline memory bound. Photo-size processing remains full-frame and allocation-heavy. Wider Gaussian windows use a documented box-filter approximation.\n"
+    },
+    {
+      "id": "b000072",
       "kind": "blank",
       "start_line": 128,
       "end_line": 128,
       "raw": "\n"
     },
     {
-      "id": "b000067",
+      "id": "b000073",
       "kind": "paragraph",
       "start_line": 129,
       "end_line": 129,
-      "raw": "There are 53 distinct CTest suites (33 retained and 20 new), exercised in three configurations plus three package consumers, totalling 162 final successful test executions. The installed consumer resolves all 27 new public operations through the installed CMake package. Tests include random slider combinations, 3600-hue mixer partition, independent radiometric Exposure oracles, normalized finite output, hidden-RGB isolation, exact zero-coverage/cancellation behavior, Auto Mask color/luminance boundary selection and thin-image optics/spatial cases. No sanitizer issue was reported.\n"
+      "raw": "Final logs are `build/lightroom-{shared,static,sanitized}-tests.log` and `build/lightroom-consumer-{shared,static,host}-tests.log`; the exact host loader evidence is `build/lightroom-host-loaded.log`. Machine-readable source fingerprints and package evidence are saved in `build/verification.json`; older reports are retained separately. LightCraft's inspected commit is `629e39380e296f588c64cd9c0053a8edc3528f36`; its Rust tests were not run.\n"
     },
     {
-      "id": "b000068",
+      "id": "b000074",
       "kind": "blank",
       "start_line": 130,
       "end_line": 130,
       "raw": "\n"
     },
     {
-      "id": "b000069",
+      "id": "b000075",
       "kind": "paragraph",
       "start_line": 131,
       "end_line": 131,
-      "raw": "Independent review also checked separable lightness extrema against brute-force windows and verified CA border neutrality and shared vignetting gain: 725,866 checks, zero failures, under ASan/UBSan. A separate color/development audit exercised 2000 valid random settings with zero failures. These manual audits supplement, rather than increase, the CTest suite count.\n"
+      "raw": "The new APIs are rendered-image operations on normalized sRGB. The convenience pipeline gamut-maps between stages and does not preserve the scene-linear Rec.2020 RAW headroom of LightCraft. Adobe pixel parity, RAW decoding, profile databases, AI tools, GUI/product integration and Windows/Linux/iOS/Android execution remain unverified or outside this module's implemented scope. No running product was restarted.\n"
     },
     {
-      "id": "b000070",
+      "id": "b000076",
       "kind": "blank",
       "start_line": 132,
       "end_line": 132,
       "raw": "\n"
     },
     {
-      "id": "b000071",
-      "kind": "paragraph",
-      "start_line": 133,
-      "end_line": 133,
-      "raw": "One 3840×2160 Light measurement (Highlights -60, Shadows +60) took 2.87315 seconds in the function and reached 1,262,780,416 bytes peak process resident memory. This is a single host/fixture measurement, not a latency guarantee or the composed-pipeline memory bound. Photo-size processing remains full-frame and allocation-heavy. Wider Gaussian windows use a documented box-filter approximation.\n"
-    },
-    {
-      "id": "b000072",
-      "kind": "blank",
-      "start_line": 134,
-      "end_line": 134,
-      "raw": "\n"
-    },
-    {
-      "id": "b000073",
-      "kind": "paragraph",
-      "start_line": 135,
-      "end_line": 135,
-      "raw": "Final logs are `build/lightroom-{shared,static,sanitized}-tests.log` and `build/lightroom-consumer-{shared,static,host}-tests.log`; the exact host loader evidence is `build/lightroom-host-loaded.log`. Machine-readable source fingerprints and package evidence are saved in `build/verification.json`; older reports are retained separately. LightCraft's inspected commit is `629e39380e296f588c64cd9c0053a8edc3528f36`; its Rust tests were not run.\n"
-    },
-    {
-      "id": "b000074",
-      "kind": "blank",
-      "start_line": 136,
-      "end_line": 136,
-      "raw": "\n"
-    },
-    {
-      "id": "b000075",
-      "kind": "paragraph",
-      "start_line": 137,
-      "end_line": 137,
-      "raw": "The new APIs are rendered-image operations on normalized sRGB. The convenience pipeline gamut-maps between stages and does not preserve the scene-linear Rec.2020 RAW headroom of LightCraft. Adobe pixel parity, RAW decoding, profile databases, AI tools, GUI/product integration and Windows/Linux/iOS/Android execution remain unverified or outside this module's implemented scope. No running product was restarted.\n"
-    },
-    {
-      "id": "b000076",
-      "kind": "blank",
-      "start_line": 138,
-      "end_line": 138,
-      "raw": "\n"
-    },
-    {
       "id": "b000077",
       "kind": "heading",
-      "start_line": 139,
-      "end_line": 139,
+      "start_line": 133,
+      "end_line": 133,
       "raw": "## Recorded 0.4.0 filtering result — 2026-10-08\n",
       "level": 2,
       "title": "Recorded 0.4.0 filtering result — 2026-10-08"
@@ -737,175 +757,185 @@
     {
       "id": "b000078",
       "kind": "blank",
-      "start_line": 140,
-      "end_line": 140,
+      "start_line": 134,
+      "end_line": 134,
       "raw": "\n"
     },
     {
       "id": "b000079",
       "kind": "paragraph",
-      "start_line": 141,
-      "end_line": 141,
+      "start_line": 135,
+      "end_line": 135,
       "raw": "The final filter source was validated on macOS arm64, AppleClang 21.0.0 and CMake 4.4.3:\n"
     },
     {
       "id": "b000080",
       "kind": "blank",
-      "start_line": 142,
-      "end_line": 142,
+      "start_line": 136,
+      "end_line": 136,
       "raw": "\n"
     },
     {
       "id": "b000081",
-      "kind": "table",
-      "start_line": 143,
-      "end_line": 158,
-      "raw": "| Configuration/check | Result |\n| --- | --- |\n| Release shared library | 140/140 passed, zero compiler warnings |\n| Release static library | 140/140 passed, zero compiler warnings |\n| Debug `-O1`, AddressSanitizer + UndefinedBehaviorSanitizer | 140/140 passed, no findings |\n| Shared staged-package consumer | 1/1 passed |\n| Static staged-package consumer | 1/1 passed |\n| Actual host-installed CMake package consumer | 1/1 passed |\n| New public filtering/helper exports | All 219 present in the shared library and called by the consumer |\n| Installed consumer image calls | 208 new image calls plus 11 new options/geometry/analysis helpers |\n| Actual loaded SDK | `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.4.0.dylib` |\n| SDK/consumer source, imported targets, linked and loaded libraries | No Qt or external processing dependencies; no older SDK loaded |\n| Build/installed dylib SHA-256 | Identical: `927a58fdeb2f9eb3b1695efa5c971f59d79ea39c3e3038b81a13a383720e7d71` |\n| Installed public headers | All 28 identical to source/generated headers |\n| Installed documentation and MIT attribution | Identical to source |\n| Parent SDK installer discovery | `iiGraphicAdjust: dependencies=-` |\n",
-      "columns": [
-        "Configuration/check",
-        "Result"
-      ],
-      "rows": [
-        [
-          "Release shared library",
-          "140/140 passed, zero compiler warnings"
-        ],
-        [
-          "Release static library",
-          "140/140 passed, zero compiler warnings"
-        ],
-        [
-          "Debug `-O1`, AddressSanitizer + UndefinedBehaviorSanitizer",
-          "140/140 passed, no findings"
-        ],
-        [
-          "Shared staged-package consumer",
-          "1/1 passed"
-        ],
-        [
-          "Static staged-package consumer",
-          "1/1 passed"
-        ],
-        [
-          "Actual host-installed CMake package consumer",
-          "1/1 passed"
-        ],
-        [
-          "New public filtering/helper exports",
-          "All 219 present in the shared library and called by the consumer"
-        ],
-        [
-          "Installed consumer image calls",
-          "208 new image calls plus 11 new options/geometry/analysis helpers"
-        ],
-        [
-          "Actual loaded SDK",
-          "`~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.4.0.dylib`"
-        ],
-        [
-          "SDK/consumer source, imported targets, linked and loaded libraries",
-          "No Qt or external processing dependencies; no older SDK loaded"
-        ],
-        [
-          "Build/installed dylib SHA-256",
-          "Identical: `927a58fdeb2f9eb3b1695efa5c971f59d79ea39c3e3038b81a13a383720e7d71`"
-        ],
-        [
-          "Installed public headers",
-          "All 28 identical to source/generated headers"
-        ],
-        [
-          "Installed documentation and MIT attribution",
-          "Identical to source"
-        ],
-        [
-          "Parent SDK installer discovery",
-          "`iiGraphicAdjust: dependencies=-`"
-        ]
+      "start_line": 137,
+      "end_line": 150,
+      "raw": "- Configuration/check: Release shared library; Result: 140/140 passed, zero compiler warnings\n- Configuration/check: Release static library; Result: 140/140 passed, zero compiler warnings\n- Configuration/check: Debug `-O1`, AddressSanitizer + UndefinedBehaviorSanitizer; Result: 140/140 passed, no findings\n- Configuration/check: Shared staged-package consumer; Result: 1/1 passed\n- Configuration/check: Static staged-package consumer; Result: 1/1 passed\n- Configuration/check: Actual host-installed CMake package consumer; Result: 1/1 passed\n- Configuration/check: New public filtering/helper exports; Result: All 219 present in the shared library and called by the consumer\n- Configuration/check: Installed consumer image calls; Result: 208 new image calls plus 11 new options/geometry/analysis helpers\n- Configuration/check: Actual loaded SDK; Result: `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.4.0.dylib`\n- Configuration/check: SDK/consumer source, imported targets, linked and loaded libraries; Result: No Qt or external processing dependencies; no older SDK loaded\n- Configuration/check: Build/installed dylib SHA-256; Result: Identical: `927a58fdeb2f9eb3b1695efa5c971f59d79ea39c3e3038b81a13a383720e7d71`\n- Configuration/check: Installed public headers; Result: All 28 identical to source/generated headers\n- Configuration/check: Installed documentation and MIT attribution; Result: Identical to source\n- Configuration/check: Parent SDK installer discovery; Result: `iiGraphicAdjust: dependencies=-`\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Configuration/check: Release shared library; Result: 140/140 passed, zero compiler warnings",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Release static library; Result: 140/140 passed, zero compiler warnings",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Debug `-O1`, AddressSanitizer + UndefinedBehaviorSanitizer; Result: 140/140 passed, no findings",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Shared staged-package consumer; Result: 1/1 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Static staged-package consumer; Result: 1/1 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Actual host-installed CMake package consumer; Result: 1/1 passed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: New public filtering/helper exports; Result: All 219 present in the shared library and called by the consumer",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Installed consumer image calls; Result: 208 new image calls plus 11 new options/geometry/analysis helpers",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Actual loaded SDK; Result: `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.4.0.dylib`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: SDK/consumer source, imported targets, linked and loaded libraries; Result: No Qt or external processing dependencies; no older SDK loaded",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Build/installed dylib SHA-256; Result: Identical: `927a58fdeb2f9eb3b1695efa5c971f59d79ea39c3e3038b81a13a383720e7d71`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Installed public headers; Result: All 28 identical to source/generated headers",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Installed documentation and MIT attribution; Result: Identical to source",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Configuration/check: Parent SDK installer discovery; Result: `iiGraphicAdjust: dependencies=-`",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000082",
+      "kind": "blank",
+      "start_line": 151,
+      "end_line": 151,
+      "raw": "\n"
+    },
+    {
+      "id": "b000083",
+      "kind": "paragraph",
+      "start_line": 152,
+      "end_line": 152,
+      "raw": "There are **140 distinct CTest suites: 53 retained and 87 added**. Three complete library configurations and three package consumers yield **423 final successful test executions**. The reference inventory audit independently confirms 120 Filter commands, two Edit operations and two duplicate Smart Object aliases; 47 Gallery effects; 22 looks, 41 presets and four resamplers; nine retouch/analysis and eight additional diagnostic APIs. `tools/audit_filter_coverage.py --references` checks the pinned Rust command strings and Gallery registrations against the catalog, then checks public installation, unit references and direct installed-consumer calls. Both reference checkouts still match their fetched origin/HEAD commits.\n"
+    },
+    {
+      "id": "b000084",
+      "kind": "blank",
+      "start_line": 153,
+      "end_line": 153,
+      "raw": "\n"
+    },
+    {
+      "id": "b000085",
+      "kind": "paragraph",
+      "start_line": 154,
+      "end_line": 154,
+      "raw": "Tests include independent weighted box/cell averages, exact offset permutations, fixed noise streams, HSB/HSL round trips, threshold/median/extrema behavior, all 47 Gallery effects and typed stack order, all LightCraft numeric preset fields, closed-form resampling kernels, all 34 Tree types/16 Frame styles/six Flame modes, Clone/Heal/eye/dust oracles, all five mask formulas and proof/display gamut classification. Mesh tests assess actual fisheye-line straightening, barycentric Puppet pin accuracy, rigid translation of every vertex, linked-plane homography continuity, 3D tear-off adjacency and metric paste/clone transfer. Camera Raw has 35 settings × five pixels from the extracted pinned Rust `camera_raw::develop` kernel, within a 5e-5 channel tolerance; this is a partial numerical oracle, not a full upstream project or Adobe test run.\n"
+    },
+    {
+      "id": "b000086",
+      "kind": "blank",
+      "start_line": 155,
+      "end_line": 155,
+      "raw": "\n"
+    },
+    {
+      "id": "b000087",
+      "kind": "paragraph",
+      "start_line": 156,
+      "end_line": 156,
+      "raw": "Independent reviews reproduced and fixed tiny-sigma Gaussian NaN, float-alpha underflow, tiny-alpha Oil Paint/Relight handling, hidden-center directional Diffuse decisions, neutral/transparent-map Lens Blur behavior and extreme Wide Angle NaN-to-integer undefined behavior. Picture Frame now rejects more than 500,000 predicted primitives before creating them. Wide Angle was additionally checked over 168 model/focal/crop/constraint combinations with ASan/UBSan/float-cast-overflow; 15 numerically unprojectable combinations return a structured error, and general settings retain success. These regressions are retained in the normal CTest suites. Manual numerical audits supplement the suite count rather than increasing it.\n"
+    },
+    {
+      "id": "b000088",
+      "kind": "blank",
+      "start_line": 157,
+      "end_line": 157,
+      "raw": "\n"
+    },
+    {
+      "id": "b000089",
+      "kind": "paragraph",
+      "start_line": 158,
+      "end_line": 158,
+      "raw": "An initial unoptimized Debug sanitizer Wide Angle test exceeded its 60-second CTest limit and subsequently passed in 133.30 seconds with a 180-second limit. The final sanitizer build uses `-O1` with debug information and the same complete assertions; the complete 140 suites passed in 13.33 seconds. This is a suite measurement, not a photo-size latency guarantee. LeakSanitizer is unavailable on the tested macOS toolchain; `ASAN_OPTIONS=detect_leaks=0` was used, and no leak-proof claim is made.\n"
+    },
+    {
+      "id": "b000090",
       "kind": "blank",
       "start_line": 159,
       "end_line": 159,
       "raw": "\n"
     },
     {
-      "id": "b000083",
+      "id": "b000091",
       "kind": "paragraph",
       "start_line": 160,
       "end_line": 160,
-      "raw": "There are **140 distinct CTest suites: 53 retained and 87 added**. Three complete library configurations and three package consumers yield **423 final successful test executions**. The reference inventory audit independently confirms 120 Filter commands, two Edit operations and two duplicate Smart Object aliases; 47 Gallery effects; 22 looks, 41 presets and four resamplers; nine retouch/analysis and eight additional diagnostic APIs. `tools/audit_filter_coverage.py --references` checks the pinned Rust command strings and Gallery registrations against the catalog, then checks public installation, unit references and direct installed-consumer calls. Both reference checkouts still match their fetched origin/HEAD commits.\n"
+      "raw": "Final logs are `build/filters-{shared,static,sanitized}-tests.log`, `build/filters-consumer-{shared,static,host}-tests.log`, `build/filters-host-loaded.log`, `build/filters-exported-symbols.log` and `build/filters-catalog-audit.log`. Machine-readable fingerprints, exact package evidence and the final commit are in `build/verification.json`; the 0.3 report is preserved as `build/verification-0.3.0.json`.\n"
     },
     {
-      "id": "b000084",
+      "id": "b000092",
       "kind": "blank",
       "start_line": 161,
       "end_line": 161,
       "raw": "\n"
     },
     {
-      "id": "b000085",
+      "id": "b000093",
       "kind": "paragraph",
       "start_line": 162,
       "end_line": 162,
-      "raw": "Tests include independent weighted box/cell averages, exact offset permutations, fixed noise streams, HSB/HSL round trips, threshold/median/extrema behavior, all 47 Gallery effects and typed stack order, all LightCraft numeric preset fields, closed-form resampling kernels, all 34 Tree types/16 Frame styles/six Flame modes, Clone/Heal/eye/dust oracles, all five mask formulas and proof/display gamut classification. Mesh tests assess actual fisheye-line straightening, barycentric Puppet pin accuracy, rigid translation of every vertex, linked-plane homography continuity, 3D tear-off adjacency and metric paste/clone transfer. Camera Raw has 35 settings × five pixels from the extracted pinned Rust `camera_raw::develop` kernel, within a 5e-5 channel tolerance; this is a partial numerical oracle, not a full upstream project or Adobe test run.\n"
-    },
-    {
-      "id": "b000086",
-      "kind": "blank",
-      "start_line": 163,
-      "end_line": 163,
-      "raw": "\n"
-    },
-    {
-      "id": "b000087",
-      "kind": "paragraph",
-      "start_line": 164,
-      "end_line": 164,
-      "raw": "Independent reviews reproduced and fixed tiny-sigma Gaussian NaN, float-alpha underflow, tiny-alpha Oil Paint/Relight handling, hidden-center directional Diffuse decisions, neutral/transparent-map Lens Blur behavior and extreme Wide Angle NaN-to-integer undefined behavior. Picture Frame now rejects more than 500,000 predicted primitives before creating them. Wide Angle was additionally checked over 168 model/focal/crop/constraint combinations with ASan/UBSan/float-cast-overflow; 15 numerically unprojectable combinations return a structured error, and general settings retain success. These regressions are retained in the normal CTest suites. Manual numerical audits supplement the suite count rather than increasing it.\n"
-    },
-    {
-      "id": "b000088",
-      "kind": "blank",
-      "start_line": 165,
-      "end_line": 165,
-      "raw": "\n"
-    },
-    {
-      "id": "b000089",
-      "kind": "paragraph",
-      "start_line": 166,
-      "end_line": 166,
-      "raw": "An initial unoptimized Debug sanitizer Wide Angle test exceeded its 60-second CTest limit and subsequently passed in 133.30 seconds with a 180-second limit. The final sanitizer build uses `-O1` with debug information and the same complete assertions; the complete 140 suites passed in 13.33 seconds. This is a suite measurement, not a photo-size latency guarantee. LeakSanitizer is unavailable on the tested macOS toolchain; `ASAN_OPTIONS=detect_leaks=0` was used, and no leak-proof claim is made.\n"
-    },
-    {
-      "id": "b000090",
-      "kind": "blank",
-      "start_line": 167,
-      "end_line": 167,
-      "raw": "\n"
-    },
-    {
-      "id": "b000091",
-      "kind": "paragraph",
-      "start_line": 168,
-      "end_line": 168,
-      "raw": "Final logs are `build/filters-{shared,static,sanitized}-tests.log`, `build/filters-consumer-{shared,static,host}-tests.log`, `build/filters-host-loaded.log`, `build/filters-exported-symbols.log` and `build/filters-catalog-audit.log`. Machine-readable fingerprints, exact package evidence and the final commit are in `build/verification.json`; the 0.3 report is preserved as `build/verification-0.3.0.json`.\n"
-    },
-    {
-      "id": "b000092",
-      "kind": "blank",
-      "start_line": 169,
-      "end_line": 169,
-      "raw": "\n"
-    },
-    {
-      "id": "b000093",
-      "kind": "paragraph",
-      "start_line": 170,
-      "end_line": 170,
       "raw": "Source, tests and actual host installation are verified. The SDK remains rendered-SDR CPU processing with documented source adaptations; arbitrary ICC profiles, RAW decoding/headroom, full Adobe/Rust renderer parity, GPU acceleration, Dreamscapes/product integration and Windows/Linux/iOS/Android execution are outside this proof. No running product was restarted.\n"
     }
   ],
@@ -964,7 +994,7 @@
       "level": 2,
       "title": "Recorded 0.2.0 adjustment result — 2026-10-08",
       "anchor": "recorded-020-adjustment-result--2026-10-08",
-      "start_line": 90
+      "start_line": 88
     },
     {
       "block_id": "b000061",
@@ -972,7 +1002,7 @@
       "level": 2,
       "title": "Recorded 0.3.0 development result — 2026-10-08",
       "anchor": "recorded-030-development-result--2026-10-08",
-      "start_line": 111
+      "start_line": 107
     },
     {
       "block_id": "b000077",
@@ -980,7 +1010,7 @@
       "level": 2,
       "title": "Recorded 0.4.0 filtering result — 2026-10-08",
       "anchor": "recorded-040-filtering-result--2026-10-08",
-      "start_line": 139
+      "start_line": 133
     }
   ],
   "indexes": {
@@ -1033,228 +1063,7 @@
         "line": 10
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000047",
-        "columns": [
-          "Configuration/check",
-          "Result"
-        ],
-        "rows": [
-          [
-            "Release shared library behavior",
-            "8/8 passed"
-          ],
-          [
-            "Release static library behavior",
-            "8/8 passed"
-          ],
-          [
-            "Debug AddressSanitizer + UndefinedBehaviorSanitizer",
-            "8/8 passed, no sanitizer findings"
-          ],
-          [
-            "Shared staged-package consumer",
-            "1/1 passed"
-          ],
-          [
-            "Static staged-package consumer",
-            "1/1 passed"
-          ],
-          [
-            "Actual host-installed package consumer",
-            "1/1 passed"
-          ],
-          [
-            "`otool -L` SDK and consumer",
-            "C++/system libraries, no Qt dependency"
-          ],
-          [
-            "`DYLD_PRINT_LIBRARIES=1` host consumer",
-            "Actual `~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.1.0.dylib` loaded; no Qt"
-          ],
-          [
-            "Build vs host-installed SDK SHA-256",
-            "Identical"
-          ],
-          [
-            "Parent SDK installer discovery",
-            "`iiGraphicAdjust: dependencies=-`"
-          ],
-          [
-            "Executed example output",
-            "Binary PPM, 256×128, 98,319 bytes"
-          ]
-        ]
-      },
-      {
-        "block_id": "b000055",
-        "columns": [
-          "Configuration/check",
-          "Result"
-        ],
-        "rows": [
-          [
-            "Release shared library",
-            "33/33 passed"
-          ],
-          [
-            "Release static library",
-            "33/33 passed"
-          ],
-          [
-            "Debug AddressSanitizer + UndefinedBehaviorSanitizer",
-            "33/33 passed, no findings"
-          ],
-          [
-            "Shared and static staged-package consumers",
-            "1/1 each passed"
-          ],
-          [
-            "Actual host-installed package consumer",
-            "1/1 passed"
-          ],
-          [
-            "SDK and consumer linkage / actual loaded libraries",
-            "No Qt"
-          ],
-          [
-            "Loaded SDK dylib",
-            "`~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.2.0.dylib`, no 0.1 SDK loaded"
-          ],
-          [
-            "SDK build/installed SHA-256 and new public headers",
-            "Identical"
-          ],
-          [
-            "Upstream MIT attribution",
-            "Installed with package"
-          ],
-          [
-            "Parent SDK discovery",
-            "No local dependency edges"
-          ]
-        ]
-      },
-      {
-        "block_id": "b000065",
-        "columns": [
-          "Configuration/check",
-          "Result"
-        ],
-        "rows": [
-          [
-            "Release shared library",
-            "53/53 passed"
-          ],
-          [
-            "Release static library",
-            "53/53 passed"
-          ],
-          [
-            "Debug AddressSanitizer + UndefinedBehaviorSanitizer",
-            "53/53 passed, no findings"
-          ],
-          [
-            "Shared and static staged-package consumers",
-            "1/1 each passed"
-          ],
-          [
-            "Actual host-installed package consumer",
-            "1/1 passed"
-          ],
-          [
-            "Actual loaded SDK",
-            "`~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.3.0.dylib`"
-          ],
-          [
-            "SDK and consumer linkage / loaded libraries",
-            "No Qt, no older iiGraphicAdjust loaded"
-          ],
-          [
-            "SDK build/installed SHA-256 and public headers",
-            "Identical"
-          ],
-          [
-            "Upstream attribution and updated documentation",
-            "Installed with package"
-          ],
-          [
-            "Parent SDK installer discovery",
-            "No dependency edges"
-          ],
-          [
-            "Development example",
-            "Binary PPM, 256×128, 98,319 bytes"
-          ]
-        ]
-      },
-      {
-        "block_id": "b000081",
-        "columns": [
-          "Configuration/check",
-          "Result"
-        ],
-        "rows": [
-          [
-            "Release shared library",
-            "140/140 passed, zero compiler warnings"
-          ],
-          [
-            "Release static library",
-            "140/140 passed, zero compiler warnings"
-          ],
-          [
-            "Debug `-O1`, AddressSanitizer + UndefinedBehaviorSanitizer",
-            "140/140 passed, no findings"
-          ],
-          [
-            "Shared staged-package consumer",
-            "1/1 passed"
-          ],
-          [
-            "Static staged-package consumer",
-            "1/1 passed"
-          ],
-          [
-            "Actual host-installed CMake package consumer",
-            "1/1 passed"
-          ],
-          [
-            "New public filtering/helper exports",
-            "All 219 present in the shared library and called by the consumer"
-          ],
-          [
-            "Installed consumer image calls",
-            "208 new image calls plus 11 new options/geometry/analysis helpers"
-          ],
-          [
-            "Actual loaded SDK",
-            "`~/.local/SDK/iiGraphicAdjust/lib/libiiGraphicAdjust.0.4.0.dylib`"
-          ],
-          [
-            "SDK/consumer source, imported targets, linked and loaded libraries",
-            "No Qt or external processing dependencies; no older SDK loaded"
-          ],
-          [
-            "Build/installed dylib SHA-256",
-            "Identical: `927a58fdeb2f9eb3b1695efa5c971f59d79ea39c3e3038b81a13a383720e7d71`"
-          ],
-          [
-            "Installed public headers",
-            "All 28 identical to source/generated headers"
-          ],
-          [
-            "Installed documentation and MIT attribution",
-            "Identical to source"
-          ],
-          [
-            "Parent SDK installer discovery",
-            "`iiGraphicAdjust: dependencies=-`"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

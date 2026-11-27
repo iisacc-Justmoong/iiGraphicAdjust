@@ -14,16 +14,14 @@ are copied exactly; there is no interpolation or quantization.
 
 For a stored image with rows `A B C / D E F`, the displayed result is:
 
-| Tag | Enum | Output rows | Size |
-| --- | --- | --- | --- |
-| 1 | `TopLeft` | `A B C / D E F` | 3 x 2 |
-| 2 | `TopRight` | `C B A / F E D` | 3 x 2 |
-| 3 | `BottomRight` | `F E D / C B A` | 3 x 2 |
-| 4 | `BottomLeft` | `D E F / A B C` | 3 x 2 |
-| 5 | `LeftTop` | `A D / B E / C F` | 2 x 3 |
-| 6 | `RightTop` | `D A / E B / F C` | 2 x 3 |
-| 7 | `RightBottom` | `F C / E B / D A` | 2 x 3 |
-| 8 | `LeftBottom` | `C F / B E / A D` | 2 x 3 |
+- Tag: 1; Enum: `TopLeft`; Output rows: `A B C / D E F`; Size: 3 x 2
+- Tag: 2; Enum: `TopRight`; Output rows: `C B A / F E D`; Size: 3 x 2
+- Tag: 3; Enum: `BottomRight`; Output rows: `F E D / C B A`; Size: 3 x 2
+- Tag: 4; Enum: `BottomLeft`; Output rows: `D E F / A B C`; Size: 3 x 2
+- Tag: 5; Enum: `LeftTop`; Output rows: `A D / B E / C F`; Size: 2 x 3
+- Tag: 6; Enum: `RightTop`; Output rows: `D A / E B / F C`; Size: 2 x 3
+- Tag: 7; Enum: `RightBottom`; Output rows: `F C / E B / D A`; Size: 2 x 3
+- Tag: 8; Enum: `LeftBottom`; Output rows: `C F / B E / A D`; Size: 2 x 3
 
 `Image` stores no EXIF metadata. A caller saving already transformed pixels must
 reset its separately managed orientation tag to one. Applying the same tag again
@@ -57,11 +55,9 @@ normalization is applied: summing any channel's bins gives `totalWeight`, apart
 from floating-point summation rounding. Endpoint occupancy is not proof that the
 original scene or sensor was clipped.
 
-| Alpha policy | Pixel weight | Zero-alpha RGB |
-| --- | --- | --- |
-| `CoverageWeighted` (default) | Alpha coverage | Excluded |
-| `VisiblePixels` | One for each positive-alpha pixel | Excluded |
-| `AllPixels` | One for every pixel | Included |
+- Alpha policy: `CoverageWeighted` (default); Pixel weight: Alpha coverage; Zero-alpha RGB: Excluded
+- Alpha policy: `VisiblePixels`; Pixel weight: One for each positive-alpha pixel; Zero-alpha RGB: Excluded
+- Alpha policy: `AllPixels`; Pixel weight: One for every pixel; Zero-alpha RGB: Included
 
 All four channels and their means use the same policy. Extrema are measured only
 over positive-weight samples. `pixelCount` is the validated input pixel count;

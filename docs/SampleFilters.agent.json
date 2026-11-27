@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/SampleFilters.md",
-    "sha256": "aeea66a4c9cdbb8cda87cf46129f2cb751df45eab39de273e560008792502eca",
-    "bytes": 6077,
-    "line_count": 103,
+    "sha256": "257e1cdaeda514b628e9676db6f1a59400a2e1beb7c10fd683757fcffb4a57fe",
+    "bytes": 6103,
+    "line_count": 99,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -170,51 +170,49 @@
     },
     {
       "id": "b000021",
-      "kind": "table",
       "start_line": 50,
-      "end_line": 53,
-      "raw": "| Input | Verified operation |\n|---|---|\n| byte | `x < 128 ? x : 255 - x` |\n| uint16 | `x < 16384 ? x : uint16_t(32768u - x)` |\n",
-      "columns": [
-        "Input",
-        "Verified operation"
-      ],
-      "rows": [
-        [
-          "byte",
-          "`x < 128 ? x : 255 - x`"
-        ],
-        [
-          "uint16",
-          "`x < 16384 ? x : uint16_t(32768u - x)`"
-        ]
+      "end_line": 51,
+      "raw": "- Input: byte; Verified operation: `x < 128 ? x : 255 - x`\n- Input: uint16; Verified operation: `x < 16384 ? x : uint16_t(32768u - x)`\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Input: byte; Verified operation: `x < 128 ? x : 255 - x`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Input: uint16; Verified operation: `x < 16384 ? x : uint16_t(32768u - x)`",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 54,
-      "end_line": 54,
+      "start_line": 52,
+      "end_line": 52,
       "raw": "\n"
     },
     {
       "id": "b000023",
       "kind": "paragraph",
-      "start_line": 55,
-      "end_line": 60,
+      "start_line": 53,
+      "end_line": 58,
       "raw": "The word scale is the observed Photoshop 0..32768 scale. Values above 32768\nretain the original 16-bit wrapping subtraction; they are not clamped or\nsilently rescaled from a 65535-based range. No float Solarize behavior is exposed.\nThe original worker truncates the active row sample count to signed 16; this\nsafe API rejects active widths above 32767 before writing. Callers may process\nsmaller row subviews when their images have wider rows.\n"
     },
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 61,
-      "end_line": 61,
+      "start_line": 59,
+      "end_line": 59,
       "raw": "\n"
     },
     {
       "id": "b000025",
       "kind": "heading",
-      "start_line": 62,
-      "end_line": 62,
+      "start_line": 60,
+      "end_line": 60,
       "raw": "## Validation\n",
       "level": 2,
       "title": "Validation"
@@ -222,29 +220,29 @@
     {
       "id": "b000026",
       "kind": "blank",
-      "start_line": 63,
-      "end_line": 63,
+      "start_line": 61,
+      "end_line": 61,
       "raw": "\n"
     },
     {
       "id": "b000027",
       "kind": "paragraph",
-      "start_line": 64,
-      "end_line": 69,
+      "start_line": 62,
+      "end_line": 67,
       "raw": "All functions return `std::expected<..., SampleFilterError>`. Dimensions must\nbe positive and at most `INT32_MAX`, stride must cover an active row, and\n`(height-1)*stride+width` must fit both `size_t` and the supplied span. Invalid\ngeometry, stride, storage, mask/output dimensions, and unsupported Solarize\nrow widths are reported before any output mutation. No allocation or image\ncontainer decoding occurs inside these sample kernels.\n"
     },
     {
       "id": "b000028",
       "kind": "blank",
-      "start_line": 70,
-      "end_line": 70,
+      "start_line": 68,
+      "end_line": 68,
       "raw": "\n"
     },
     {
       "id": "b000029",
       "kind": "heading",
-      "start_line": 71,
-      "end_line": 71,
+      "start_line": 69,
+      "end_line": 69,
       "raw": "## Provenance and verification\n",
       "level": 2,
       "title": "Provenance and verification"
@@ -252,74 +250,69 @@
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 72,
-      "end_line": 72,
+      "start_line": 70,
+      "end_line": 70,
       "raw": "\n"
     },
     {
       "id": "b000031",
       "kind": "paragraph",
-      "start_line": 73,
-      "end_line": 79,
+      "start_line": 71,
+      "end_line": 77,
       "raw": "The canonical workspace report is\n[Photoshop native filters](/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Photoshop/docs/Filters.md).\nThe corresponding prior\n[native replay record](/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Photoshop/evidence/native/filters/native-replay.json)\ncompared the reconstruction to original arm64 instructions in owned memory\nwith synthetic host callbacks: 78 Average cases, 26 Solarize cases, 1,730,775\nactive samples, and 1,291,286 assertions. Photoshop GUI was not executed.\n"
     },
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 80,
-      "end_line": 80,
+      "start_line": 78,
+      "end_line": 78,
       "raw": "\n"
     },
     {
       "id": "b000033",
-      "kind": "table",
-      "start_line": 81,
-      "end_line": 84,
-      "raw": "| Kernel | Original slice SHA-256 | REA evidence |\n|---|---|---|\n| Average `_DoStart` `0x34fc` | `1fc869369f41119f05e4125aaa65000a60aede8ea21a5ef527fb8b328883cac0` | pseudocode `ev_8da0d5c2ab74959c1bce22fd79151d5739b47e5600dbbccc03fd3c05822d1cb6`; assembly `ev_98e5c7c36ac748c0bea9bbfab1201e07d3f2e8c300decfd9221f657563506c58` |\n| Solarize worker `0x2800` | `491ef435586a6c94995eecdf9378878fe168a887032d4eee916b5a5f027f0550` | pseudocode `ev_6442587260ac96feab3b61a82ab904708052ad2b915ebc8fdbf899496bdf6210`; assembly `ev_581d5a58256253b626e530fbafeb6e5e307c73d21cd9ada4411cfdf2d1e44e6a` |\n",
-      "columns": [
-        "Kernel",
-        "Original slice SHA-256",
-        "REA evidence"
-      ],
-      "rows": [
-        [
-          "Average `_DoStart` `0x34fc`",
-          "`1fc869369f41119f05e4125aaa65000a60aede8ea21a5ef527fb8b328883cac0`",
-          "pseudocode `ev_8da0d5c2ab74959c1bce22fd79151d5739b47e5600dbbccc03fd3c05822d1cb6`; assembly `ev_98e5c7c36ac748c0bea9bbfab1201e07d3f2e8c300decfd9221f657563506c58`"
-        ],
-        [
-          "Solarize worker `0x2800`",
-          "`491ef435586a6c94995eecdf9378878fe168a887032d4eee916b5a5f027f0550`",
-          "pseudocode `ev_6442587260ac96feab3b61a82ab904708052ad2b915ebc8fdbf899496bdf6210`; assembly `ev_581d5a58256253b626e530fbafeb6e5e307c73d21cd9ada4411cfdf2d1e44e6a`"
-        ]
+      "start_line": 79,
+      "end_line": 80,
+      "raw": "- Kernel: Average `_DoStart` `0x34fc`; Original slice SHA-256: `1fc869369f41119f05e4125aaa65000a60aede8ea21a5ef527fb8b328883cac0`; REA evidence: pseudocode `ev_8da0d5c2ab74959c1bce22fd79151d5739b47e5600dbbccc03fd3c05822d1cb6`; assembly `ev_98e5c7c36ac748c0bea9bbfab1201e07d3f2e8c300decfd9221f657563506c58`\n- Kernel: Solarize worker `0x2800`; Original slice SHA-256: `491ef435586a6c94995eecdf9378878fe168a887032d4eee916b5a5f027f0550`; REA evidence: pseudocode `ev_6442587260ac96feab3b61a82ab904708052ad2b915ebc8fdbf899496bdf6210`; assembly `ev_581d5a58256253b626e530fbafeb6e5e307c73d21cd9ada4411cfdf2d1e44e6a`\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Kernel: Average `_DoStart` `0x34fc`; Original slice SHA-256: `1fc869369f41119f05e4125aaa65000a60aede8ea21a5ef527fb8b328883cac0`; REA evidence: pseudocode `ev_8da0d5c2ab74959c1bce22fd79151d5739b47e5600dbbccc03fd3c05822d1cb6`; assembly `ev_98e5c7c36ac748c0bea9bbfab1201e07d3f2e8c300decfd9221f657563506c58`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Kernel: Solarize worker `0x2800`; Original slice SHA-256: `491ef435586a6c94995eecdf9378878fe168a887032d4eee916b5a5f027f0550`; REA evidence: pseudocode `ev_6442587260ac96feab3b61a82ab904708052ad2b915ebc8fdbf899496bdf6210`; assembly `ev_581d5a58256253b626e530fbafeb6e5e307c73d21cd9ada4411cfdf2d1e44e6a`",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 85,
-      "end_line": 85,
+      "start_line": 81,
+      "end_line": 81,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "paragraph",
-      "start_line": 86,
-      "end_line": 90,
+      "start_line": 82,
+      "end_line": 86,
       "raw": "The SDK adds seven test cases covering integer tile bounds and rounding,\nfloat cancellation/HDR/NaN/signed zero, mask thresholds/empty selection,\nfill padding and aliasing, all 256 byte and all 65,536 word Solarize inputs, and\nfailure before mutation. The integration audit separately compares the SDK\nfunctions to the pinned workspace reconstruction in 170 cases.\n"
     },
     {
       "id": "b000036",
       "kind": "blank",
-      "start_line": 91,
-      "end_line": 91,
+      "start_line": 87,
+      "end_line": 87,
       "raw": "\n"
     },
     {
       "id": "b000037",
       "kind": "paragraph",
-      "start_line": 92,
-      "end_line": 103,
+      "start_line": 88,
+      "end_line": 99,
       "raw": "The new SDK library was also compared directly to the same SHA-bound original\narm64 instructions using the existing controlled replay harness. A names-only\ncompatibility header forwards the harness's C++ calls to the exported SDK APIs;\nthe workspace reconstruction is not linked into that replay executable. All\n78 Average and 26 Solarize cases passed, including 1,730,775 active samples and\n1,291,286 assertions. The original slices are copied into owned memory;\nsynthetic host records and callbacks replace application integration. Non-NaN\nfloat output is bit-compared; NaN classification is compared. Current library,\nwrapper, harness, and slice hashes are in\n[SampleFiltersVerification.json](SampleFiltersVerification.json). This is a\nbounded original-kernel comparison, not Photoshop GUI execution or complete\nfilter-host compatibility.\n"
     }
   ],
@@ -354,7 +347,7 @@
       "level": 2,
       "title": "Validation",
       "anchor": "validation",
-      "start_line": 62
+      "start_line": 60
     },
     {
       "block_id": "b000029",
@@ -362,7 +355,7 @@
       "level": 2,
       "title": "Provenance and verification",
       "anchor": "provenance-and-verification",
-      "start_line": 71
+      "start_line": 69
     }
   ],
   "indexes": {
@@ -397,21 +390,21 @@
       },
       {
         "block_id": "b000027",
-        "line": 64,
+        "line": 62,
         "text": "All functions return `std::expected<..., SampleFilterError>`. Dimensions must",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000027",
-        "line": 65,
+        "line": 63,
         "text": "be positive and at most `INT32_MAX`, stride must cover an active row, and",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000027",
-        "line": 66,
+        "line": 64,
         "text": "`(height-1)*stride+width` must fit both `size_t` and the supplied span. Invalid",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -424,62 +417,24 @@
         "label": "Photoshop native filters",
         "target": "/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Photoshop/docs/Filters.md",
         "kind": "relative",
-        "line": 74
+        "line": 72
       },
       {
         "block_id": "b000031",
         "label": "native replay record",
         "target": "/Volumes/Storage/Workspace/Engineering/Projects/Adobe/Photoshop/evidence/native/filters/native-replay.json",
         "kind": "relative",
-        "line": 76
+        "line": 74
       },
       {
         "block_id": "b000037",
         "label": "SampleFiltersVerification.json",
         "target": "SampleFiltersVerification.json",
         "kind": "relative",
-        "line": 101
+        "line": 97
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000021",
-        "columns": [
-          "Input",
-          "Verified operation"
-        ],
-        "rows": [
-          [
-            "byte",
-            "`x < 128 ? x : 255 - x`"
-          ],
-          [
-            "uint16",
-            "`x < 16384 ? x : uint16_t(32768u - x)`"
-          ]
-        ]
-      },
-      {
-        "block_id": "b000033",
-        "columns": [
-          "Kernel",
-          "Original slice SHA-256",
-          "REA evidence"
-        ],
-        "rows": [
-          [
-            "Average `_DoStart` `0x34fc`",
-            "`1fc869369f41119f05e4125aaa65000a60aede8ea21a5ef527fb8b328883cac0`",
-            "pseudocode `ev_8da0d5c2ab74959c1bce22fd79151d5739b47e5600dbbccc03fd3c05822d1cb6`; assembly `ev_98e5c7c36ac748c0bea9bbfab1201e07d3f2e8c300decfd9221f657563506c58`"
-          ],
-          [
-            "Solarize worker `0x2800`",
-            "`491ef435586a6c94995eecdf9378878fe168a887032d4eee916b5a5f027f0550`",
-            "pseudocode `ev_6442587260ac96feab3b61a82ab904708052ad2b915ebc8fdbf899496bdf6210`; assembly `ev_581d5a58256253b626e530fbafeb6e5e307c73d21cd9ada4411cfdf2d1e44e6a`"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

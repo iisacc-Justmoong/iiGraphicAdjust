@@ -13,29 +13,36 @@
     {
       "document_id": "urn:iisacc:document:eceba21bf8dda3d788a34109f00d0236cb2c3ff825292e6f5f414f26039ec097",
       "source": "AGENT.md",
-      "agent_json": "docs/entrypoints/AGENT.agent.json",
-      "source_sha256": "9c1d55a7256216389a8df9ffcc7b1b7320cd46cbabfaba839ba534e046294fb0",
+      "agent_json": "docs/Entrypoints/AGENT.agent.json",
+      "source_sha256": "68782d8387a754ac6b3a78e38711176c16fbdc0ff2efac109cb9c940127c5fd6",
       "role": "instructions"
     },
     {
       "document_id": "urn:iisacc:document:0b079fc9bae7645d722a81a3006638badfc25439fb8a916f75b6669470c2619d",
       "source": "README.md",
-      "agent_json": "docs/entrypoints/README.agent.json",
-      "source_sha256": "a48dc0a65e63610c55807827eec0ff0d7379f7b46e4b263f5689e3460eefcf2d",
+      "agent_json": "docs/Entrypoints/README.agent.json",
+      "source_sha256": "259939944712059fdfb523f4fe4fbb9341e94a37b189018f6b4f7e86dbf78aff",
       "role": "overview"
     },
     {
       "document_id": "urn:iisacc:document:99cbb1a27dcec2a4b0bd53aa998cbe1b2189c1771dcfce34790047e6cbdbb70f",
       "source": "docs/API.md",
       "agent_json": "docs/API.agent.json",
-      "source_sha256": "4af05d01bd125202d2b171496a2b76529b27c3d16c0b388bdc3800ec5b3c9795",
+      "source_sha256": "772441dd2a79525e7da1cb4b35dcd1add52a472d81bd5f321a04d07e850e0148",
       "role": "reference"
+    },
+    {
+      "document_id": "urn:iisacc:document:99e75f0fa8ae350127323abe8481b11178eeae6f60d1deb3f08f798520cd275b",
+      "source": "docs/AdvancedEditing.md",
+      "agent_json": "docs/AdvancedEditing.agent.json",
+      "source_sha256": "2b5808f66039af60ccbe5cf0cf72000c36d8321c706fcedb20bcd07efbbcfa0e",
+      "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:81f50297e9f8224d4bd7e1d1a198ba84d91a1877c8928cd69ca74f52e2a5f7f3",
       "source": "docs/Architecture.md",
       "agent_json": "docs/Architecture.agent.json",
-      "source_sha256": "a9e4cc21124c0b7491b8de83633e4365d400acffceba3a86d66338536d919366",
+      "source_sha256": "cc6a52ea12659a6bd1f081517d4d427296c1e74dbf7143ec3aab49c2fc440e0e",
       "role": "reference"
     },
     {
@@ -49,28 +56,28 @@
       "document_id": "urn:iisacc:document:e19c98dfd4d634afbcc85ba3bcc7700b8bfd3e885e0192a9dc61a978d985843c",
       "source": "docs/CameraRawFilter.md",
       "agent_json": "docs/CameraRawFilter.agent.json",
-      "source_sha256": "1b87768f3b55400398822b3bed8926b751670c951313305c2828b938d1e0eb28",
+      "source_sha256": "ae79c8728eede5137c47752acf165a2d6462fce30b68cb51a6f7ccd69cab2a99",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:4cea28ed6a8b01b65fd7959ac8ee7d2066d4fb1a4bd30ba59c8b3f573b0c271c",
       "source": "docs/Color.md",
       "agent_json": "docs/Color.agent.json",
-      "source_sha256": "e2d186bc94084f89a1d6f5b18dd4d586351c041b21785d08e612e17d3dbaf218",
+      "source_sha256": "05baa5e69591d20e492ee918fb0b70f8fd5a141c535426b7c58637ecb8da9d05",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:3e885d8dbd632a87c3e554ba7b0817b89223af9665d42daf28e8b64f0089bea4",
       "source": "docs/CoreFilters.md",
       "agent_json": "docs/CoreFilters.agent.json",
-      "source_sha256": "fc68b1d1fe5745b2fd7c4776e431e208c8d6bd010fe4127fc121d27871e1526a",
+      "source_sha256": "36967dbb02d39d444d17592364caa184a2d6b8b06dfe7cd731726c322ba1a971",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:d983960d1bcb15d135032752ffa4bca487e58d68987d99788cbd8ac05d079c5b",
       "source": "docs/DiagnosticFilters.md",
       "agent_json": "docs/DiagnosticFilters.agent.json",
-      "source_sha256": "dddc408485e5c63a4a8252229eae7628b4345c634082268b2938ce8612689859",
+      "source_sha256": "779e001527494f0198fbd91ab2a1a14ebe8dc558063b2321c1084418fbfe55f8",
       "role": "guide"
     },
     {
@@ -84,14 +91,14 @@
       "document_id": "urn:iisacc:document:1fbe74553b7004a7fd77bd810d8e0bc9543afc8dbb8485c54fabed843891e3e5",
       "source": "docs/Filters.md",
       "agent_json": "docs/Filters.agent.json",
-      "source_sha256": "25bbf65f6b7bbd1525569a8a72a8d5991916155fc1fb66671efcc5c96aa631d1",
+      "source_sha256": "3fd91b46fb6fcd58a987de048b765131e3a06f10d05c535ba5d6aa6cb3547ded",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:97b84fef0ea940144e10df2faf54df3c3c2da665be125ea819bfa433ad317af6",
       "source": "docs/GalleryFilters.md",
       "agent_json": "docs/GalleryFilters.agent.json",
-      "source_sha256": "67483fe03c20e3e623cebabe05fcf394592e2840a1040e03cae2736c69c134ff",
+      "source_sha256": "399577fe5e8e42f65bd4df0015a784b0be56f59f6c8c593daf2c5cc3b9f1b085",
       "role": "guide"
     },
     {
@@ -105,28 +112,28 @@
       "document_id": "urn:iisacc:document:67b3b8a3539e141699cdff00c0f13cc8ff0549fd0ddbd5a85fba43de2fd30947",
       "source": "docs/LightcraftFilters.md",
       "agent_json": "docs/LightcraftFilters.agent.json",
-      "source_sha256": "e9fcdb0a947247f69e67f919fad247d8d5e0db9e1f0a87d6821477d534c4c4c0",
+      "source_sha256": "9e1f382045c4b90b2e9ee158016d3114894a124a7eddec0511c08c8fffc573a2",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:5c72f3602653b438faae1f2fd12587277e5b7a86d21d1c4d0fa09ef8d5098ded",
       "source": "docs/Lightroom.md",
       "agent_json": "docs/Lightroom.agent.json",
-      "source_sha256": "60c47fdabc6bd0d668931c61a3221f69436a591e7b4785ac27f6042d5cf7616a",
+      "source_sha256": "895ab5d7e5118b185299e532526ed76ab6ec66636f17cb601b3af6c0223c0f2a",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:2272a109a84503f89a5cf076ef938fd4b41d343af43e950d842307acb95eb8c7",
       "source": "docs/LocalCorrections.md",
       "agent_json": "docs/LocalCorrections.agent.json",
-      "source_sha256": "14adbe7a920c3bcddb9f1db08d70e0b87765887695fa53f553230051c8013e83",
+      "source_sha256": "894cb23b87166f554653220008b4f248099a5b43f7598f09c5e43ded68c343d6",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:1876dbff752744c12a475b4cc690993bb902a19d9b85a9aa0eef931182490cdd",
       "source": "docs/LocalCorrectionsVerification.md",
       "agent_json": "docs/LocalCorrectionsVerification.agent.json",
-      "source_sha256": "1a558a1e61408132e7c8ce4ca787d365ee779eb554ba18f073228d41ed503deb",
+      "source_sha256": "cd00b60514a6f2cd9c42997e94955a7890a0f57b5437bc9270b6a62fc0d1ed4d",
       "role": "evidence"
     },
     {
@@ -140,21 +147,21 @@
       "document_id": "urn:iisacc:document:4f908d4a0d2be517618ee1351a595f77164ff420ed1053195d5a2bc998f61866",
       "source": "docs/MeshFilters.md",
       "agent_json": "docs/MeshFilters.agent.json",
-      "source_sha256": "a5507c95a9304db1417f3b124fe32cdfdf35ae3115b3d2fb3e1f1c1be9e8a053",
+      "source_sha256": "bb6007c7d5b093ed97c072c7b4addca7d069b6178d2213aae2dfcc7eca58a2f8",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:dd59fe326cde6a1b5ee6f4b9878df5e20a147031a87ec3fac349117491203934",
       "source": "docs/OperationObjects.md",
       "agent_json": "docs/OperationObjects.agent.json",
-      "source_sha256": "dbecddd073d90c370031c4be1eb7f5f98f1756d200320ec5ffe99510c0b27ef9",
+      "source_sha256": "7977e0fd72616173359b82f59a374caa43e0e8f8897a133b869851e3b317086b",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:5361f2d67c6a5b681af5a91b13cb5c088de380d986d12f56858bcb45c668ff35",
       "source": "docs/OperationObjectsVerification.md",
       "agent_json": "docs/OperationObjectsVerification.agent.json",
-      "source_sha256": "8ce7274689404d9cbf9b3245317d3f0091498f66c36505dc14bf1181368caf82",
+      "source_sha256": "7155c179951027c513e9173775a7a85090dc00c46fe31f4735870008cfce8b9d",
       "role": "evidence"
     },
     {
@@ -168,63 +175,63 @@
       "document_id": "urn:iisacc:document:7c49c8ae60a78daf1307b545a8ccd3ec0e21639e8e9b9cb7dc2cb60f5423411f",
       "source": "docs/PhotoOperations.md",
       "agent_json": "docs/PhotoOperations.agent.json",
-      "source_sha256": "64a5a1f248e54b756b69617a3827d1b92ba45062a1feee714ea9ff04859f4e49",
+      "source_sha256": "aaa2bb80ffca6bb402a25c95a59c578418f1847209da51292c6fe34c4df60cc9",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:22462b639e9e27819e8a9e02a602f1d455512cc2c149ca32e21378dafbd93d21",
       "source": "docs/PhotoProcessingVerification.md",
       "agent_json": "docs/PhotoProcessingVerification.agent.json",
-      "source_sha256": "abdc40099834e82cf15de0ef86fe4763f09257e77ff9325cde582b6023f4363e",
+      "source_sha256": "709cb515be217e8aa25e19305b2efa68a993ba0074c782c46fd0c94656805533",
       "role": "evidence"
     },
     {
       "document_id": "urn:iisacc:document:764d4ac22350451628e56a417127e08afd7c549523036c70fcde079ad6c0068c",
       "source": "docs/PixelFilters.md",
       "agent_json": "docs/PixelFilters.agent.json",
-      "source_sha256": "b948dffbe80cf1dae19913c6006242f6a2454b2d3c97cd8f2717ae883cd74bcb",
+      "source_sha256": "c4dbd3b3f79612a4c14429385c456a9d54b53c1f3191cb20b61a963fd9e4bdb3",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:1285fde61fbe7dae994eb1ec3fa6834b225034ca5cce54092e95ed37588be789",
       "source": "docs/README.md",
       "agent_json": "docs/README.agent.json",
-      "source_sha256": "ea5bf47842259082206af94388b0be41d02e3c6ed2d18a03313534e63918f8c1",
+      "source_sha256": "8e11587cbe3fdb96c18d1f6183a7d1f87c3e1ee6afa33a83c0f3d7a31b2a20cb",
       "role": "overview"
     },
     {
       "document_id": "urn:iisacc:document:766728a25ebb7733f81962fe36bc54497e5bc111e7f801ce77f21075375512a6",
       "source": "docs/RawProcessing.md",
       "agent_json": "docs/RawProcessing.agent.json",
-      "source_sha256": "f41713097e2d2c248c2830d2d2acae703c7a0184e2592430135fb75ced920dfb",
+      "source_sha256": "84a21caa2e36d3679a504d28a3c7323c6877e047d174139e2f4f520491ad527d",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:46ee578206ff9e1e34ea3155c79fb54054cac72a27b1597c6a720cf0f686f598",
       "source": "docs/References.md",
       "agent_json": "docs/References.agent.json",
-      "source_sha256": "b6bfc6caa8c72518870f469e2771650c7fe0c7e62e2c15840fcf2825f8ee5e05",
+      "source_sha256": "6252d606d8e8688c0a4e3e9d2666be601c1381bdeac1891ac1967999e1f44023",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:b1ccb8ce0c7c9f2871b25a3e228bf1efa090f1ede2e8564a7e4b05ffada3c439",
       "source": "docs/RenderFilters.md",
       "agent_json": "docs/RenderFilters.agent.json",
-      "source_sha256": "94fa455f60f423bbf2a3689f565367d25344056387171f8441e92e8cb94866c5",
+      "source_sha256": "c0c3b6662da1a46e97e5ec65993e1cfe788d4f2ac39bfcc76d946e7d49320fd7",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:4babc21a05a0cdf0f1c43c4ae1aec8a63f4e5aee3a5889a7d05fdf547a01d59d",
       "source": "docs/RetouchFilters.md",
       "agent_json": "docs/RetouchFilters.agent.json",
-      "source_sha256": "40c6ba5a3a598f011a8428b61634201cc409efa4f9913bb58e12e9fa039cb9e9",
+      "source_sha256": "21cb9b436e6bcba702990f74bd5e533247314694cd1ef2475bc03c755b61790c",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:9d220bf54ff70358c80e64a822523bd28860043595b6ea2cf18db19fe34fab6a",
       "source": "docs/SampleFilters.md",
       "agent_json": "docs/SampleFilters.agent.json",
-      "source_sha256": "aeea66a4c9cdbb8cda87cf46129f2cb751df45eab39de273e560008792502eca",
+      "source_sha256": "257e1cdaeda514b628e9676db6f1a59400a2e1beb7c10fd683757fcffb4a57fe",
       "role": "guide"
     },
     {
@@ -238,14 +245,14 @@
       "document_id": "urn:iisacc:document:829e79dbc07835f46540ebada736baefa7cbf56f06b9def71f89d7eedd1f68ae",
       "source": "docs/Tone.md",
       "agent_json": "docs/Tone.agent.json",
-      "source_sha256": "07cbd14e87948d095cb81783b15aab20269c6fc08c06894b1f91ee3b2fa9b3d4",
+      "source_sha256": "45e65688377560b810166ef0c0d4aa3357010e794b955e9b90ebd7b1f41d227d",
       "role": "guide"
     },
     {
       "document_id": "urn:iisacc:document:cc6d7722e52ae36b3c88d0b5f00cc225dcd3d287e62b1226586a4fce3564e5ba",
       "source": "docs/Verification.md",
       "agent_json": "docs/Verification.agent.json",
-      "source_sha256": "1bfa8dd68685b056c82d430620b38d95fa6c7be2359caf54746b4f0c4c556895",
+      "source_sha256": "2caa95b61f3bf3b3c73cc16a2bb209c1819279e4b210d59aead0a35339f3ee2d",
       "role": "evidence"
     },
     {
@@ -259,7 +266,7 @@
       "document_id": "urn:iisacc:document:47b5699506f809f523691edf92568613a4f9b20c4b992d490d0f7da7fce6ad78",
       "source": "docs/documentation-structure.md",
       "agent_json": "docs/documentation-structure.agent.json",
-      "source_sha256": "05fab3e12a44c017e1375a23f38d228dbf692f2afaa08c4676a49a171d664758",
+      "source_sha256": "68be6bf031d5ae93ac36c4b45fd6ec1932f9645653976065d6393851401f4d0e",
       "role": "guide"
     }
   ],

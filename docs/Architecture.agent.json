@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/Architecture.md",
-    "sha256": "a9e4cc21124c0b7491b8de83633e4365d400acffceba3a86d66338536d919366",
-    "bytes": 8832,
-    "line_count": 68,
+    "sha256": "cc6a52ea12659a6bd1f081517d4d427296c1e74dbf7143ec3aab49c2fc440e0e",
+    "bytes": 9470,
+    "line_count": 66,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 3,
-      "raw": "`iiGraphicAdjust` is an independent processing SDK. Kernels use C++23 and the standard library and receive caller-owned image data. Product state, GUI types, document persistence, font shaping and file decoding remain responsibilities of callers. Applications may combine image processing with iiFileProvider without linking one SDK into the other.\n"
+      "raw": "`iiGraphicAdjust` is a processing SDK built on iiSDKCore Contracts. Kernels use C++23 and the standard library and receive caller-owned image data. Product state, GUI types, document persistence, font shaping and file decoding remain responsibilities of callers. Applications may combine image processing with iiFileProvider without linking those two SDKs into each other.\n"
     },
     {
       "id": "b000004",
@@ -70,179 +70,209 @@
     },
     {
       "id": "b000007",
-      "kind": "table",
       "start_line": 7,
-      "end_line": 42,
-      "raw": "| File | Responsibility |\n| --- | --- |\n| `RawProcessing.h/.cpp` | Unpacked Bayer normalization, demosaicing and supplied sensor calibration |\n| `PhotoOperations.h/.cpp` | Integer orientation/crop and alpha-aware photo histograms |\n| `Image.h/.cpp` | Borrowed/owned pixel contract and byte/word conversion |\n| `Adjustments.h/.cpp` | Color and opacity adjustments |\n| `Effects.h/.cpp` | Blur, unsharp mask and deterministic noise |\n| `Blend.h/.cpp` | Blend modes, working space and alpha composition |\n| `Tone.h/.cpp` | Tonal, discrete and automatic corrections |\n| `Color.h/.cpp` | Color-range operations and reference statistics |\n| `Mapping.h/.cpp` | Gradient mapping, LUT tables and strict Cube parsing |\n| `Hdr.h/.cpp` | Separate linear HDR input and normalized tone-mapped output |\n| `BlurFilters.h/.cpp` | Menu blur/sharpen and typed Blur Gallery pins/paths |\n| `DistortionFilters.h/.cpp` | Inverse mapping, displacement maps and border handling |\n| `UtilityFilters.h/.cpp` | Menu noise, morphology, convolution, video and box-guided kernels |\n| `PixelFilters.h/.cpp` | Pixelate and Stylize algorithms |\n| `RenderFilters.h/.cpp` | Procedural noise/light/Flame/Tree/Frame raster processing |\n| `GalleryFilters.h/.cpp` | 47 named artistic effects and typed ordered Gallery stack |\n| `LensFilter.h/.cpp` | PhotoCraft encoded Lens Correction, profiles and auto scale |\n| `CameraRawFilter.h/.cpp` | Separate relative-WB rendered Camera Raw pipeline |\n| `MeshFilters.h/.cpp` | Liquify fields, constrained projections, ARAP and metric planes |\n| `LightcraftFilters.h/.cpp` | 22 look/41 preset recipes and four linear-premultiplied resamplers |\n| `RetouchFilters.h/.cpp` | Clone/Heal/Remove, eye repair, spot visualization and dust detection |\n| `DiagnosticFilters.h/.cpp` | Selection/mask previews and explicit proof-space gamut warning overlays |\n| `FilterInternal.h`, `PixelRenderInternal.h` | Private encoded-space sampling, windows and procedural helpers |\n| `Internal.h` | Private validation, allocation handling and transfer functions |\n| `DevelopTone.h/.cpp` | Rendered-image white balance, Light, auto estimation and cubic/parametric curves |\n| `DevelopColor.h/.cpp` | Perceptual eight-band color, grading, Point Color and calibration |\n| `DevelopEffects.h/.cpp` | Spatial detail, denoise, dehaze, vignette and grain |\n| `Optics.h/.cpp` | Alpha-aware lens resampling, CA estimation and defringe |\n| `Masks.h/.cpp` | Normalized coverage generation, combination, refinement and local adjustments |\n| `LocalCorrections.h/.cpp` | Caller-supplied corrected RGB composed through normalized coverage, without alpha composition or correction-kernel dependencies |\n| `MaskInternal.h` | Shared private mask storage/coverage validation used by actual mask and correction consumers |\n| `SampleFilters.h/.cpp` | Separately typed recovered sample-plane Average/Solarize kernels with explicit mutable outputs and strict accumulation order |\n| `Develop.h/.cpp` | Explicit composition of the existing public development stages |\n| `DevelopInternal.h` | Shared private linear/OkLab math and alpha-weighted spatial primitives |\n",
-      "columns": [
-        "File",
-        "Responsibility"
-      ],
-      "rows": [
-        [
-          "`RawProcessing.h/.cpp`",
-          "Unpacked Bayer normalization, demosaicing and supplied sensor calibration"
-        ],
-        [
-          "`PhotoOperations.h/.cpp`",
-          "Integer orientation/crop and alpha-aware photo histograms"
-        ],
-        [
-          "`Image.h/.cpp`",
-          "Borrowed/owned pixel contract and byte/word conversion"
-        ],
-        [
-          "`Adjustments.h/.cpp`",
-          "Color and opacity adjustments"
-        ],
-        [
-          "`Effects.h/.cpp`",
-          "Blur, unsharp mask and deterministic noise"
-        ],
-        [
-          "`Blend.h/.cpp`",
-          "Blend modes, working space and alpha composition"
-        ],
-        [
-          "`Tone.h/.cpp`",
-          "Tonal, discrete and automatic corrections"
-        ],
-        [
-          "`Color.h/.cpp`",
-          "Color-range operations and reference statistics"
-        ],
-        [
-          "`Mapping.h/.cpp`",
-          "Gradient mapping, LUT tables and strict Cube parsing"
-        ],
-        [
-          "`Hdr.h/.cpp`",
-          "Separate linear HDR input and normalized tone-mapped output"
-        ],
-        [
-          "`BlurFilters.h/.cpp`",
-          "Menu blur/sharpen and typed Blur Gallery pins/paths"
-        ],
-        [
-          "`DistortionFilters.h/.cpp`",
-          "Inverse mapping, displacement maps and border handling"
-        ],
-        [
-          "`UtilityFilters.h/.cpp`",
-          "Menu noise, morphology, convolution, video and box-guided kernels"
-        ],
-        [
-          "`PixelFilters.h/.cpp`",
-          "Pixelate and Stylize algorithms"
-        ],
-        [
-          "`RenderFilters.h/.cpp`",
-          "Procedural noise/light/Flame/Tree/Frame raster processing"
-        ],
-        [
-          "`GalleryFilters.h/.cpp`",
-          "47 named artistic effects and typed ordered Gallery stack"
-        ],
-        [
-          "`LensFilter.h/.cpp`",
-          "PhotoCraft encoded Lens Correction, profiles and auto scale"
-        ],
-        [
-          "`CameraRawFilter.h/.cpp`",
-          "Separate relative-WB rendered Camera Raw pipeline"
-        ],
-        [
-          "`MeshFilters.h/.cpp`",
-          "Liquify fields, constrained projections, ARAP and metric planes"
-        ],
-        [
-          "`LightcraftFilters.h/.cpp`",
-          "22 look/41 preset recipes and four linear-premultiplied resamplers"
-        ],
-        [
-          "`RetouchFilters.h/.cpp`",
-          "Clone/Heal/Remove, eye repair, spot visualization and dust detection"
-        ],
-        [
-          "`DiagnosticFilters.h/.cpp`",
-          "Selection/mask previews and explicit proof-space gamut warning overlays"
-        ],
-        [
-          "`FilterInternal.h`, `PixelRenderInternal.h`",
-          "Private encoded-space sampling, windows and procedural helpers"
-        ],
-        [
-          "`Internal.h`",
-          "Private validation, allocation handling and transfer functions"
-        ],
-        [
-          "`DevelopTone.h/.cpp`",
-          "Rendered-image white balance, Light, auto estimation and cubic/parametric curves"
-        ],
-        [
-          "`DevelopColor.h/.cpp`",
-          "Perceptual eight-band color, grading, Point Color and calibration"
-        ],
-        [
-          "`DevelopEffects.h/.cpp`",
-          "Spatial detail, denoise, dehaze, vignette and grain"
-        ],
-        [
-          "`Optics.h/.cpp`",
-          "Alpha-aware lens resampling, CA estimation and defringe"
-        ],
-        [
-          "`Masks.h/.cpp`",
-          "Normalized coverage generation, combination, refinement and local adjustments"
-        ],
-        [
-          "`LocalCorrections.h/.cpp`",
-          "Caller-supplied corrected RGB composed through normalized coverage, without alpha composition or correction-kernel dependencies"
-        ],
-        [
-          "`MaskInternal.h`",
-          "Shared private mask storage/coverage validation used by actual mask and correction consumers"
-        ],
-        [
-          "`SampleFilters.h/.cpp`",
-          "Separately typed recovered sample-plane Average/Solarize kernels with explicit mutable outputs and strict accumulation order"
-        ],
-        [
-          "`Develop.h/.cpp`",
-          "Explicit composition of the existing public development stages"
-        ],
-        [
-          "`DevelopInternal.h`",
-          "Shared private linear/OkLab math and alpha-weighted spatial primitives"
-        ]
+      "end_line": 40,
+      "raw": "- File: `RawProcessing.h/.cpp`; Responsibility: Unpacked Bayer normalization, demosaicing and supplied sensor calibration\n- File: `PhotoOperations.h/.cpp`; Responsibility: Integer orientation/crop and alpha-aware photo histograms\n- File: `Image.h/.cpp`; Responsibility: Borrowed/owned pixel contract and byte/word conversion\n- File: `Adjustments.h/.cpp`; Responsibility: Color and opacity adjustments\n- File: `Effects.h/.cpp`; Responsibility: Blur, unsharp mask and deterministic noise\n- File: `Blend.h/.cpp`; Responsibility: Blend modes, working space and alpha composition\n- File: `Tone.h/.cpp`; Responsibility: Tonal, discrete and automatic corrections\n- File: `Color.h/.cpp`; Responsibility: Color-range operations and reference statistics\n- File: `Mapping.h/.cpp`; Responsibility: Gradient mapping, LUT tables and strict Cube parsing\n- File: `Hdr.h/.cpp`; Responsibility: Separate linear HDR input and normalized tone-mapped output\n- File: `BlurFilters.h/.cpp`; Responsibility: Menu blur/sharpen and typed Blur Gallery pins/paths\n- File: `DistortionFilters.h/.cpp`; Responsibility: Inverse mapping, displacement maps and border handling\n- File: `UtilityFilters.h/.cpp`; Responsibility: Menu noise, morphology, convolution, video and box-guided kernels\n- File: `PixelFilters.h/.cpp`; Responsibility: Pixelate and Stylize algorithms\n- File: `RenderFilters.h/.cpp`; Responsibility: Procedural noise/light/Flame/Tree/Frame raster processing\n- File: `GalleryFilters.h/.cpp`; Responsibility: 47 named artistic effects and typed ordered Gallery stack\n- File: `LensFilter.h/.cpp`; Responsibility: PhotoCraft encoded Lens Correction, profiles and auto scale\n- File: `CameraRawFilter.h/.cpp`; Responsibility: Separate relative-WB rendered Camera Raw pipeline\n- File: `MeshFilters.h/.cpp`; Responsibility: Liquify fields, constrained projections, ARAP and metric planes\n- File: `LightcraftFilters.h/.cpp`; Responsibility: 22 look/41 preset recipes and four linear-premultiplied resamplers\n- File: `RetouchFilters.h/.cpp`; Responsibility: Clone/Heal/Remove, eye repair, spot visualization and dust detection\n- File: `DiagnosticFilters.h/.cpp`; Responsibility: Selection/mask previews and explicit proof-space gamut warning overlays\n- File: `FilterInternal.h`, `PixelRenderInternal.h`; Responsibility: Private encoded-space sampling, windows and procedural helpers\n- File: `Internal.h`; Responsibility: Private validation, allocation handling and transfer functions\n- File: `DevelopTone.h/.cpp`; Responsibility: Rendered-image white balance, Light, auto estimation and cubic/parametric curves\n- File: `DevelopColor.h/.cpp`; Responsibility: Perceptual eight-band color, grading, Point Color and calibration\n- File: `DevelopEffects.h/.cpp`; Responsibility: Spatial detail, denoise, dehaze, vignette and grain\n- File: `Optics.h/.cpp`; Responsibility: Alpha-aware lens resampling, CA estimation and defringe\n- File: `Masks.h/.cpp`; Responsibility: Normalized coverage generation, combination, refinement and local adjustments\n- File: `LocalCorrections.h/.cpp`; Responsibility: Caller-supplied corrected RGB composed through normalized coverage, without alpha composition or correction-kernel dependencies\n- File: `MaskInternal.h`; Responsibility: Shared private mask storage/coverage validation used by actual mask and correction consumers\n- File: `SampleFilters.h/.cpp`; Responsibility: Separately typed recovered sample-plane Average/Solarize kernels with explicit mutable outputs and strict accumulation order\n- File: `Develop.h/.cpp`; Responsibility: Explicit composition of the existing public development stages\n- File: `DevelopInternal.h`; Responsibility: Shared private linear/OkLab math and alpha-weighted spatial primitives\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "File: `RawProcessing.h/.cpp`; Responsibility: Unpacked Bayer normalization, demosaicing and supplied sensor calibration",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `PhotoOperations.h/.cpp`; Responsibility: Integer orientation/crop and alpha-aware photo histograms",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Image.h/.cpp`; Responsibility: Borrowed/owned pixel contract and byte/word conversion",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Adjustments.h/.cpp`; Responsibility: Color and opacity adjustments",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Effects.h/.cpp`; Responsibility: Blur, unsharp mask and deterministic noise",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Blend.h/.cpp`; Responsibility: Blend modes, working space and alpha composition",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Tone.h/.cpp`; Responsibility: Tonal, discrete and automatic corrections",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Color.h/.cpp`; Responsibility: Color-range operations and reference statistics",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Mapping.h/.cpp`; Responsibility: Gradient mapping, LUT tables and strict Cube parsing",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Hdr.h/.cpp`; Responsibility: Separate linear HDR input and normalized tone-mapped output",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `BlurFilters.h/.cpp`; Responsibility: Menu blur/sharpen and typed Blur Gallery pins/paths",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `DistortionFilters.h/.cpp`; Responsibility: Inverse mapping, displacement maps and border handling",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `UtilityFilters.h/.cpp`; Responsibility: Menu noise, morphology, convolution, video and box-guided kernels",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `PixelFilters.h/.cpp`; Responsibility: Pixelate and Stylize algorithms",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `RenderFilters.h/.cpp`; Responsibility: Procedural noise/light/Flame/Tree/Frame raster processing",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `GalleryFilters.h/.cpp`; Responsibility: 47 named artistic effects and typed ordered Gallery stack",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `LensFilter.h/.cpp`; Responsibility: PhotoCraft encoded Lens Correction, profiles and auto scale",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `CameraRawFilter.h/.cpp`; Responsibility: Separate relative-WB rendered Camera Raw pipeline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `MeshFilters.h/.cpp`; Responsibility: Liquify fields, constrained projections, ARAP and metric planes",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `LightcraftFilters.h/.cpp`; Responsibility: 22 look/41 preset recipes and four linear-premultiplied resamplers",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `RetouchFilters.h/.cpp`; Responsibility: Clone/Heal/Remove, eye repair, spot visualization and dust detection",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `DiagnosticFilters.h/.cpp`; Responsibility: Selection/mask previews and explicit proof-space gamut warning overlays",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `FilterInternal.h`, `PixelRenderInternal.h`; Responsibility: Private encoded-space sampling, windows and procedural helpers",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Internal.h`; Responsibility: Private validation, allocation handling and transfer functions",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `DevelopTone.h/.cpp`; Responsibility: Rendered-image white balance, Light, auto estimation and cubic/parametric curves",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `DevelopColor.h/.cpp`; Responsibility: Perceptual eight-band color, grading, Point Color and calibration",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `DevelopEffects.h/.cpp`; Responsibility: Spatial detail, denoise, dehaze, vignette and grain",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Optics.h/.cpp`; Responsibility: Alpha-aware lens resampling, CA estimation and defringe",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Masks.h/.cpp`; Responsibility: Normalized coverage generation, combination, refinement and local adjustments",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `LocalCorrections.h/.cpp`; Responsibility: Caller-supplied corrected RGB composed through normalized coverage, without alpha composition or correction-kernel dependencies",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `MaskInternal.h`; Responsibility: Shared private mask storage/coverage validation used by actual mask and correction consumers",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `SampleFilters.h/.cpp`; Responsibility: Separately typed recovered sample-plane Average/Solarize kernels with explicit mutable outputs and strict accumulation order",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `Develop.h/.cpp`; Responsibility: Explicit composition of the existing public development stages",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "File: `DevelopInternal.h`; Responsibility: Shared private linear/OkLab math and alpha-weighted spatial primitives",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000008",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "Synchronous free functions retain value settings and borrowed const spans. Version 0.6 additionally provides concrete final value objects under `objects/`, with owned arrays and auxiliary resources. `Operation` uses a small const type-erased capture for immutable snapshots; virtual dispatch occurs once per image operation, not per pixel. `OperationStack` composes those captures in caller-selected order and reports precise failures. There is no algorithm backend, plugin factory or application history dependency. New numerical behavior remains in the kernel family owning its change reason. See [OperationObjects.md](OperationObjects.md).\n"
+    },
+    {
+      "id": "b000010",
       "kind": "blank",
       "start_line": 43,
       "end_line": 43,
       "raw": "\n"
     },
     {
-      "id": "b000009",
-      "kind": "paragraph",
-      "start_line": 44,
-      "end_line": 44,
-      "raw": "Synchronous free functions retain value settings and borrowed const spans. Version 0.6 additionally provides concrete final value objects under `objects/`, with owned arrays and auxiliary resources. `Operation` uses a small const type-erased capture for immutable snapshots; virtual dispatch occurs once per image operation, not per pixel. `OperationStack` composes those captures in caller-selected order and reports precise failures. There is no algorithm backend, plugin factory or application history dependency. New numerical behavior remains in the kernel family owning its change reason. See [OperationObjects.md](OperationObjects.md).\n"
-    },
-    {
-      "id": "b000010",
-      "kind": "blank",
-      "start_line": 45,
-      "end_line": 45,
-      "raw": "\n"
-    },
-    {
       "id": "b000011",
       "kind": "heading",
-      "start_line": 46,
-      "end_line": 46,
+      "start_line": 44,
+      "end_line": 44,
       "raw": "## Storage and concurrency\n",
       "level": 2,
       "title": "Storage and concurrency"
@@ -250,43 +280,43 @@
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 47,
-      "end_line": 47,
+      "start_line": 45,
+      "end_line": 45,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "paragraph",
-      "start_line": 48,
-      "end_line": 48,
+      "start_line": 46,
+      "end_line": 46,
       "raw": "Normalized image and mask outputs are always detached. Allocation errors become expected errors; these outputs are never partially written into a caller buffer. Reads and settings are immutable during a call, and all temporary storage/random state is local. `SampleFilters` separately declares mutable fill/Solarize sample planes, validates geometry before writes, and documents aliasing and exceptional floating-point input behavior. Separate calls may run concurrently when borrowed source storage stays alive and immutable and mutable sample outputs do not overlap. There is no global cache, worker thread or GUI event loop.\n"
     },
     {
       "id": "b000014",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "Color adjustment, noise, composition and format conversion cost O(N) for N pixels. Separable blur and sharpening cost O(N * ceil(3*sigma)) and use O(N) temporary memory. Blur keeps two double-precision premultiplied sample buffers plus the float output, approximately 80 bytes per pixel at peak, excluding caller storage. Sharpening also retains its detached output, adding approximately 16 bytes per pixel during blur. This reference CPU implementation prioritizes explicit image semantics; no benchmark or real-time throughput guarantee is made.\n"
+    },
+    {
+      "id": "b000016",
       "kind": "blank",
       "start_line": 49,
       "end_line": 49,
       "raw": "\n"
     },
     {
-      "id": "b000015",
-      "kind": "paragraph",
-      "start_line": 50,
-      "end_line": 50,
-      "raw": "Color adjustment, noise, composition and format conversion cost O(N) for N pixels. Separable blur and sharpening cost O(N * ceil(3*sigma)) and use O(N) temporary memory. Blur keeps two double-precision premultiplied sample buffers plus the float output, approximately 80 bytes per pixel at peak, excluding caller storage. Sharpening also retains its detached output, adding approximately 16 bytes per pixel during blur. This reference CPU implementation prioritizes explicit image semantics; no benchmark or real-time throughput guarantee is made.\n"
-    },
-    {
-      "id": "b000016",
-      "kind": "blank",
-      "start_line": 51,
-      "end_line": 51,
-      "raw": "\n"
-    },
-    {
       "id": "b000017",
       "kind": "heading",
-      "start_line": 52,
-      "end_line": 52,
+      "start_line": 50,
+      "end_line": 50,
       "raw": "## Packaging\n",
       "level": 2,
       "title": "Packaging"
@@ -294,113 +324,113 @@
     {
       "id": "b000018",
       "kind": "blank",
-      "start_line": 53,
-      "end_line": 53,
+      "start_line": 51,
+      "end_line": 51,
       "raw": "\n"
     },
     {
       "id": "b000019",
       "kind": "paragraph",
-      "start_line": 54,
-      "end_line": 54,
+      "start_line": 52,
+      "end_line": 52,
       "raw": "The package target is `iiGraphicAdjust::iiGraphicAdjust`; CMake propagates C++23 and the installed public include path. `GenerateExportHeader` supports shared-library visibility and static definitions. ABI series 0.6 uses `SameMinorVersion` package compatibility. Consumers must use a compatible compiler/standard-library ABI when crossing a shared-library boundary with standard containers.\n"
     },
     {
       "id": "b000020",
+      "kind": "blank",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "The default install prefix is `~/.local/SDK/iiGraphicAdjust`. The parent `SDK/install_all.py` discovers this directory from `CMakeLists.txt`; no central module list or duplicated install script is needed. The exported package discovers iiSDKCore 0.20 Contracts as its common foundation. The processing library does not link iiFileProvider; installed consumers verify the package and foundation together.\n"
+    },
+    {
+      "id": "b000022",
       "kind": "blank",
       "start_line": 55,
       "end_line": 55,
       "raw": "\n"
     },
     {
-      "id": "b000021",
+      "id": "b000023",
       "kind": "paragraph",
       "start_line": 56,
       "end_line": 56,
-      "raw": "The default install prefix is `~/.local/SDK/iiGraphicAdjust`. The parent `SDK/install_all.py` discovers this directory from `CMakeLists.txt`; no central module list or duplicated install script is needed. The exported package does not discover or link another SDK. Independence must be verified from source, exported CMake targets, linked binaries and a separately configured installed consumer.\n"
+      "raw": "No existing product or SDK adapter is rewritten in this release. Integrating a host means adapting its actual pixel format and ownership contract to `ImageView` or the documented converters, then calling the desired operations explicitly.\n"
     },
     {
-      "id": "b000022",
+      "id": "b000024",
       "kind": "blank",
       "start_line": 57,
       "end_line": 57,
       "raw": "\n"
     },
     {
-      "id": "b000023",
+      "id": "b000025",
       "kind": "paragraph",
       "start_line": 58,
       "end_line": 58,
-      "raw": "No existing product or SDK adapter is rewritten in this release. Integrating a host means adapting its actual pixel format and ownership contract to `ImageView` or the documented converters, then calling the desired operations explicitly.\n"
+      "raw": "Automatic corrections sort visible samples and cost O(N log N); Equalize uses fixed-bin histograms. Match Color computes alpha-weighted statistics without storing borrowed views. LUT interpolation uses fixed per-pixel working arrays; 1D LUTs retain direct tables. Upstream reference attribution is installed with the package and adds no library dependency.\n"
     },
     {
-      "id": "b000024",
+      "id": "b000026",
       "kind": "blank",
       "start_line": 59,
       "end_line": 59,
       "raw": "\n"
     },
     {
-      "id": "b000025",
+      "id": "b000027",
       "kind": "paragraph",
       "start_line": 60,
       "end_line": 60,
-      "raw": "Automatic corrections sort visible samples and cost O(N log N); Equalize uses fixed-bin histograms. Match Color computes alpha-weighted statistics without storing borrowed views. LUT interpolation uses fixed per-pixel working arrays; 1D LUTs retain direct tables. Upstream reference attribution is installed with the package and adds no library dependency.\n"
+      "raw": "Development spatial windows use double precision and alpha-weighted statistics. Small Gaussian radii use exact separable convolution; sigma >= 3 uses three variance-matched box passes with O(N) work. Guided filters reuse these window primitives. Defringe uses O(N) sliding extrema. The measured 4K Light operation retained about 1.18 GiB peak resident memory; this CPU reference implementation has no low-memory or real-time guarantee. Local masks borrow coverage synchronously, accumulate settings without retaining pointers, and have explicit per-call bounds. Geometric operations document their separate alpha-resampling contract. `develop()` is explicit SDR stage composition, not a hidden RAW scene pipeline.\n"
     },
     {
-      "id": "b000026",
+      "id": "b000028",
       "kind": "blank",
       "start_line": 61,
       "end_line": 61,
       "raw": "\n"
     },
     {
-      "id": "b000027",
+      "id": "b000029",
       "kind": "paragraph",
       "start_line": 62,
       "end_line": 62,
-      "raw": "Development spatial windows use double precision and alpha-weighted statistics. Small Gaussian radii use exact separable convolution; sigma >= 3 uses three variance-matched box passes with O(N) work. Guided filters reuse these window primitives. Defringe uses O(N) sliding extrema. The measured 4K Light operation retained about 1.18 GiB peak resident memory; this CPU reference implementation has no low-memory or real-time guarantee. Local masks borrow coverage synchronously, accumulate settings without retaining pointers, and have explicit per-call bounds. Geometric operations document their separate alpha-resampling contract. `develop()` is explicit SDR stage composition, not a hidden RAW scene pipeline.\n"
+      "raw": "Masked correction composition uses O(N) work and one detached `Rgba` output, with no intermediate full-image RGB planes. Its amount scales mask coverage before pointwise RGB interpolation; it does not accumulate local slider parameters. The corrected image is supplied by the caller, so new correction kernels or brush producers require no delegation function or external SDK dependency here. Historical patch 0.5.1 did not change public struct layouts; 0.6 adds active detail fields and requires consumer rebuilding.\n"
     },
     {
-      "id": "b000028",
+      "id": "b000030",
       "kind": "blank",
       "start_line": 63,
       "end_line": 63,
       "raw": "\n"
     },
     {
-      "id": "b000029",
+      "id": "b000031",
       "kind": "paragraph",
       "start_line": 64,
       "end_line": 64,
-      "raw": "Masked correction composition uses O(N) work and one detached `Rgba` output, with no intermediate full-image RGB planes. Its amount scales mask coverage before pointwise RGB interpolation; it does not accumulate local slider parameters. The corrected image is supplied by the caller, so new correction kernels or brush producers require no delegation function or external SDK dependency here. Historical patch 0.5.1 did not change public struct layouts; 0.6 adds active detail fields and requires consumer rebuilding.\n"
+      "raw": "Filter families are split by their source algorithms and reasons to change, with explicit value options instead of command-name/string dispatch. Header-only private math is shared only where actual repeated sampling/alpha requirements exist. Geometry helper outputs let an editor inspect a real solved mesh without making the leaf SDK depend on a product. There is no plugin or application history abstraction in this SDK.\n"
     },
     {
-      "id": "b000030",
+      "id": "b000032",
       "kind": "blank",
       "start_line": 65,
       "end_line": 65,
       "raw": "\n"
     },
     {
-      "id": "b000031",
+      "id": "b000033",
       "kind": "paragraph",
       "start_line": 66,
       "end_line": 66,
-      "raw": "Filter families are split by their source algorithms and reasons to change, with explicit value options instead of command-name/string dispatch. Header-only private math is shared only where actual repeated sampling/alpha requirements exist. Geometry helper outputs let an editor inspect a real solved mesh without making the leaf SDK depend on a product. There is no plugin or application history abstraction in this SDK.\n"
-    },
-    {
-      "id": "b000032",
-      "kind": "blank",
-      "start_line": 67,
-      "end_line": 67,
-      "raw": "\n"
-    },
-    {
-      "id": "b000033",
-      "kind": "paragraph",
-      "start_line": 68,
-      "end_line": 68,
       "raw": "Filter inventories are pinned to actual upstream commits and are distributed as `docs/filter-catalog.json`. Smart-object aliases share an implementation; 47 Gallery functions are not collapsed into a single style switch. Resampling uses linear premultiplied RGB with antialiasing widened kernels, whereas PhotoCraft artistic/menu filters use encoded sRGB. Those working-space distinctions are explicit API contracts.\n"
     }
   ],
@@ -427,7 +457,7 @@
       "level": 2,
       "title": "Storage and concurrency",
       "anchor": "storage-and-concurrency",
-      "start_line": 46
+      "start_line": 44
     },
     {
       "block_id": "b000017",
@@ -435,29 +465,29 @@
       "level": 2,
       "title": "Packaging",
       "anchor": "packaging",
-      "start_line": 52
+      "start_line": 50
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
         "block_id": "b000013",
-        "line": 48,
+        "line": 46,
         "text": "Normalized image and mask outputs are always detached. Allocation errors become expected errors; these outputs are never partially written into a caller buffer. Reads and settings are immutable during a call, and all temporary storage/random state is local. `SampleFilters` separately declares mutable fill/Solarize sample planes, validates geometry before writes, and documents aliasing and exceptional floating-point input behavior. Separate calls may run concurrently when borrowed source storage stays alive and immutable and mutable sample outputs do not overlap. There is no global cache, worker thread or GUI event loop.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000019",
-        "line": 54,
+        "line": 52,
         "text": "The package target is `iiGraphicAdjust::iiGraphicAdjust`; CMake propagates C++23 and the installed public include path. `GenerateExportHeader` supports shared-library visibility and static definitions. ABI series 0.6 uses `SameMinorVersion` package compatibility. Consumers must use a compatible compiler/standard-library ABI when crossing a shared-library boundary with standard containers.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000021",
-        "line": 56,
-        "text": "The default install prefix is `~/.local/SDK/iiGraphicAdjust`. The parent `SDK/install_all.py` discovers this directory from `CMakeLists.txt`; no central module list or duplicated install script is needed. The exported package does not discover or link another SDK. Independence must be verified from source, exported CMake targets, linked binaries and a separately configured installed consumer.",
+        "line": 54,
+        "text": "The default install prefix is `~/.local/SDK/iiGraphicAdjust`. The parent `SDK/install_all.py` discovers this directory from `CMakeLists.txt`; no central module list or duplicated install script is needed. The exported package discovers iiSDKCore 0.20 Contracts as its common foundation. The processing library does not link iiFileProvider; installed consumers verify the package and foundation together.",
         "basis": "lexical_match",
         "context": "paragraph"
       }
@@ -469,156 +499,10 @@
         "label": "OperationObjects.md",
         "target": "OperationObjects.md",
         "kind": "relative",
-        "line": 44
+        "line": 42
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000007",
-        "columns": [
-          "File",
-          "Responsibility"
-        ],
-        "rows": [
-          [
-            "`RawProcessing.h/.cpp`",
-            "Unpacked Bayer normalization, demosaicing and supplied sensor calibration"
-          ],
-          [
-            "`PhotoOperations.h/.cpp`",
-            "Integer orientation/crop and alpha-aware photo histograms"
-          ],
-          [
-            "`Image.h/.cpp`",
-            "Borrowed/owned pixel contract and byte/word conversion"
-          ],
-          [
-            "`Adjustments.h/.cpp`",
-            "Color and opacity adjustments"
-          ],
-          [
-            "`Effects.h/.cpp`",
-            "Blur, unsharp mask and deterministic noise"
-          ],
-          [
-            "`Blend.h/.cpp`",
-            "Blend modes, working space and alpha composition"
-          ],
-          [
-            "`Tone.h/.cpp`",
-            "Tonal, discrete and automatic corrections"
-          ],
-          [
-            "`Color.h/.cpp`",
-            "Color-range operations and reference statistics"
-          ],
-          [
-            "`Mapping.h/.cpp`",
-            "Gradient mapping, LUT tables and strict Cube parsing"
-          ],
-          [
-            "`Hdr.h/.cpp`",
-            "Separate linear HDR input and normalized tone-mapped output"
-          ],
-          [
-            "`BlurFilters.h/.cpp`",
-            "Menu blur/sharpen and typed Blur Gallery pins/paths"
-          ],
-          [
-            "`DistortionFilters.h/.cpp`",
-            "Inverse mapping, displacement maps and border handling"
-          ],
-          [
-            "`UtilityFilters.h/.cpp`",
-            "Menu noise, morphology, convolution, video and box-guided kernels"
-          ],
-          [
-            "`PixelFilters.h/.cpp`",
-            "Pixelate and Stylize algorithms"
-          ],
-          [
-            "`RenderFilters.h/.cpp`",
-            "Procedural noise/light/Flame/Tree/Frame raster processing"
-          ],
-          [
-            "`GalleryFilters.h/.cpp`",
-            "47 named artistic effects and typed ordered Gallery stack"
-          ],
-          [
-            "`LensFilter.h/.cpp`",
-            "PhotoCraft encoded Lens Correction, profiles and auto scale"
-          ],
-          [
-            "`CameraRawFilter.h/.cpp`",
-            "Separate relative-WB rendered Camera Raw pipeline"
-          ],
-          [
-            "`MeshFilters.h/.cpp`",
-            "Liquify fields, constrained projections, ARAP and metric planes"
-          ],
-          [
-            "`LightcraftFilters.h/.cpp`",
-            "22 look/41 preset recipes and four linear-premultiplied resamplers"
-          ],
-          [
-            "`RetouchFilters.h/.cpp`",
-            "Clone/Heal/Remove, eye repair, spot visualization and dust detection"
-          ],
-          [
-            "`DiagnosticFilters.h/.cpp`",
-            "Selection/mask previews and explicit proof-space gamut warning overlays"
-          ],
-          [
-            "`FilterInternal.h`, `PixelRenderInternal.h`",
-            "Private encoded-space sampling, windows and procedural helpers"
-          ],
-          [
-            "`Internal.h`",
-            "Private validation, allocation handling and transfer functions"
-          ],
-          [
-            "`DevelopTone.h/.cpp`",
-            "Rendered-image white balance, Light, auto estimation and cubic/parametric curves"
-          ],
-          [
-            "`DevelopColor.h/.cpp`",
-            "Perceptual eight-band color, grading, Point Color and calibration"
-          ],
-          [
-            "`DevelopEffects.h/.cpp`",
-            "Spatial detail, denoise, dehaze, vignette and grain"
-          ],
-          [
-            "`Optics.h/.cpp`",
-            "Alpha-aware lens resampling, CA estimation and defringe"
-          ],
-          [
-            "`Masks.h/.cpp`",
-            "Normalized coverage generation, combination, refinement and local adjustments"
-          ],
-          [
-            "`LocalCorrections.h/.cpp`",
-            "Caller-supplied corrected RGB composed through normalized coverage, without alpha composition or correction-kernel dependencies"
-          ],
-          [
-            "`MaskInternal.h`",
-            "Shared private mask storage/coverage validation used by actual mask and correction consumers"
-          ],
-          [
-            "`SampleFilters.h/.cpp`",
-            "Separately typed recovered sample-plane Average/Solarize kernels with explicit mutable outputs and strict accumulation order"
-          ],
-          [
-            "`Develop.h/.cpp`",
-            "Explicit composition of the existing public development stages"
-          ],
-          [
-            "`DevelopInternal.h`",
-            "Shared private linear/OkLab math and alpha-weighted spatial primitives"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <array>
-#include <iiGraphicAdjust/iiGraphicAdjust.h>
+#include <iiGraphicAdjust>
 
 int runFilterConsumer();
 
@@ -10,6 +10,12 @@ int main() {
     const auto image = fromArgb32(2, 1, pixels);
     if (!image)
         return 1;
+    Mask emptyMask{2,1,{0,0}};
+    auto filled=objects::ContentAwareInpaintSolver{}.execute(image->view(),emptyMask.view());
+    objects::LensCorrectionPreviewState preview;
+    auto frame=preview.execute(image->view(),PreviewAction::Refresh);
+    if (!filled || !frame || filled->pixels!=image->pixels || frame->image.pixels!=image->pixels)
+        return 20;
     const auto neutral = toArgb32(image->view());
     if (!neutral || !std::equal(neutral->begin(), neutral->end(), pixels.begin(), pixels.end()))
         return 2;

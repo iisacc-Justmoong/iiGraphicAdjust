@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/PixelFilters.md",
-    "sha256": "b948dffbe80cf1dae19913c6006242f6a2454b2d3c97cd8f2717ae883cd74bcb",
-    "bytes": 8591,
-    "line_count": 59,
+    "sha256": "c4dbd3b3f79612a4c14429385c456a9d54b53c1f3191cb20b61a963fd9e4bdb3",
+    "bytes": 9132,
+    "line_count": 57,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -84,124 +84,119 @@
     },
     {
       "id": "b000009",
-      "kind": "table",
       "start_line": 9,
-      "end_line": 26,
-      "raw": "| API | Parameters and defaults | Pixel work |\n| --- | --- | --- |\n| `colorHalftone` | `maximumRadius` 8 px, [4,127]; three RGB `angles` {108,162,90}, each [-360,360] degrees | Three separately rotated screens; five alpha-weighted taps determine ink. Dot area follows ink until dots touch, then radius grows toward the cell corners; coverage uses antialiased disc edges. |\n| `crystallize` | `cellSize` 10 px, [3,300]; `seed` 0, uint32 | Jittered Voronoi cells, owner selected from a 3×3 lattice neighborhood; each cell becomes its premultiplied average. |\n| `facet` | None | Radius-two Kuwahara smoothing: choose the least-variable alpha-weighted luminance quadrant and its RGB mean. |\n| `fragment` | None | Premultiplied average of four copies displaced 4 px left, right, up and down. |\n| `mezzotint` | `pattern` FineDots; `seed` 0 | Each RGB channel becomes 0 or 1 according to a coordinate hash threshold. Patterns: FineDots, MediumDots, GrainyDots, CoarseDots, ShortLines, MediumLines, LongLines, ShortStrokes, MediumStrokes, LongStrokes. |\n| `pointillize` | `cellSize` 5 px, [3,300]; `seed` 0; normalized `background` opaque white | Jittered dots with random radius, sampled center color, small brightness jitter and antialiased coverage. The deepest overlapping dot wins. |\n| `mosaic` | Scalar `cellSize` 10 px, [2,200], rounded to integer pixels | Origin-anchored square cells replaced by their premultiplied average; partial edge cells use only their actual pixels. |\n| `emboss` | `angle` 135°, [-180,180]; `height` 3 px, [1,100]; `amount` 100%, [1,500] | Directional luminance difference around neutral gray 0.5. |\n| `findEdges` | None | Per-channel Sobel gradient magnitude, divided by four, inverted to dark edges on white. |\n| `solarize` | None | Encoded channels greater than 0.5 become `1-v`; all other channels remain unchanged. |\n| `diffuse` | `mode` Normal; `seed` 0 | Normal shuffles one random neighbor; DarkenOnly/LightenOnly accept only the corresponding luminance direction. Anisotropic finds the most similar of eight neighbors, then moves halfway toward it. |\n| `extrude` | `shape` Blocks or Pyramids; `size` 30 px, [2,255]; `depth` 30, [1,255]; `levelBased`, `solidFrontFaces`, `maskIncompleteBlocks` false; `seed` 0 | Cells raise shaded pyramids or swept square blocks. The highest candidate block wins; front faces may retain shifted source texture or use the cell mean. Depth controls displacement or pyramid slope; level-based height uses the cell's luminance. |\n| `oilPaint` | `stylization` 4, [0.1,10]; `cleanliness` 5, [0,10]; `scale` 1, [0.1,10]; `bristleDetail` 5, [0,10]; `lighting` true; `angle` -60°, [-180,180]; `shine` 1, [0,10] | Clean premultiplied color, Gaussian structure tensor, minor-eigenvector stroke field, bidirectional line integral convolution, convolved bristle noise, then optional directional diffuse/specular relief. |\n| `tiles` | `count` 10, [1,99] along the shorter side; `maximumOffset` 10%, [0,99]; `fill` Background; normalized foreground black/background white; `seed` 0 | Randomly shifted cells, highest row-major tile on top. Gaps use Background, Foreground, Inverse, or Unaltered. Zero displacement is an identity for visible input. |\n| `traceContour` | `level` 128, [0,255]; `upper` false | Per-channel four-neighbor threshold crossing, traced on the selected lower or upper side. |\n| `wind` | `method` Wind, Blast, or Stagger; `fromRight` true; `seed` 0 | Edge-launched random streaks with 16 px/40 px maximum reach; Stagger displaces random row segments up to 12 px. |\n",
-      "columns": [
-        "API",
-        "Parameters and defaults",
-        "Pixel work"
-      ],
-      "rows": [
-        [
-          "`colorHalftone`",
-          "`maximumRadius` 8 px, [4,127]; three RGB `angles` {108,162,90}, each [-360,360] degrees",
-          "Three separately rotated screens; five alpha-weighted taps determine ink. Dot area follows ink until dots touch, then radius grows toward the cell corners; coverage uses antialiased disc edges."
-        ],
-        [
-          "`crystallize`",
-          "`cellSize` 10 px, [3,300]; `seed` 0, uint32",
-          "Jittered Voronoi cells, owner selected from a 3×3 lattice neighborhood; each cell becomes its premultiplied average."
-        ],
-        [
-          "`facet`",
-          "None",
-          "Radius-two Kuwahara smoothing: choose the least-variable alpha-weighted luminance quadrant and its RGB mean."
-        ],
-        [
-          "`fragment`",
-          "None",
-          "Premultiplied average of four copies displaced 4 px left, right, up and down."
-        ],
-        [
-          "`mezzotint`",
-          "`pattern` FineDots; `seed` 0",
-          "Each RGB channel becomes 0 or 1 according to a coordinate hash threshold. Patterns: FineDots, MediumDots, GrainyDots, CoarseDots, ShortLines, MediumLines, LongLines, ShortStrokes, MediumStrokes, LongStrokes."
-        ],
-        [
-          "`pointillize`",
-          "`cellSize` 5 px, [3,300]; `seed` 0; normalized `background` opaque white",
-          "Jittered dots with random radius, sampled center color, small brightness jitter and antialiased coverage. The deepest overlapping dot wins."
-        ],
-        [
-          "`mosaic`",
-          "Scalar `cellSize` 10 px, [2,200], rounded to integer pixels",
-          "Origin-anchored square cells replaced by their premultiplied average; partial edge cells use only their actual pixels."
-        ],
-        [
-          "`emboss`",
-          "`angle` 135°, [-180,180]; `height` 3 px, [1,100]; `amount` 100%, [1,500]",
-          "Directional luminance difference around neutral gray 0.5."
-        ],
-        [
-          "`findEdges`",
-          "None",
-          "Per-channel Sobel gradient magnitude, divided by four, inverted to dark edges on white."
-        ],
-        [
-          "`solarize`",
-          "None",
-          "Encoded channels greater than 0.5 become `1-v`; all other channels remain unchanged."
-        ],
-        [
-          "`diffuse`",
-          "`mode` Normal; `seed` 0",
-          "Normal shuffles one random neighbor; DarkenOnly/LightenOnly accept only the corresponding luminance direction. Anisotropic finds the most similar of eight neighbors, then moves halfway toward it."
-        ],
-        [
-          "`extrude`",
-          "`shape` Blocks or Pyramids; `size` 30 px, [2,255]; `depth` 30, [1,255]; `levelBased`, `solidFrontFaces`, `maskIncompleteBlocks` false; `seed` 0",
-          "Cells raise shaded pyramids or swept square blocks. The highest candidate block wins; front faces may retain shifted source texture or use the cell mean. Depth controls displacement or pyramid slope; level-based height uses the cell's luminance."
-        ],
-        [
-          "`oilPaint`",
-          "`stylization` 4, [0.1,10]; `cleanliness` 5, [0,10]; `scale` 1, [0.1,10]; `bristleDetail` 5, [0,10]; `lighting` true; `angle` -60°, [-180,180]; `shine` 1, [0,10]",
-          "Clean premultiplied color, Gaussian structure tensor, minor-eigenvector stroke field, bidirectional line integral convolution, convolved bristle noise, then optional directional diffuse/specular relief."
-        ],
-        [
-          "`tiles`",
-          "`count` 10, [1,99] along the shorter side; `maximumOffset` 10%, [0,99]; `fill` Background; normalized foreground black/background white; `seed` 0",
-          "Randomly shifted cells, highest row-major tile on top. Gaps use Background, Foreground, Inverse, or Unaltered. Zero displacement is an identity for visible input."
-        ],
-        [
-          "`traceContour`",
-          "`level` 128, [0,255]; `upper` false",
-          "Per-channel four-neighbor threshold crossing, traced on the selected lower or upper side."
-        ],
-        [
-          "`wind`",
-          "`method` Wind, Blast, or Stagger; `fromRight` true; `seed` 0",
-          "Edge-launched random streaks with 16 px/40 px maximum reach; Stagger displaces random row segments up to 12 px."
-        ]
+      "end_line": 24,
+      "raw": "- API: `colorHalftone`; Parameters and defaults: `maximumRadius` 8 px, [4,127]; three RGB `angles` {108,162,90}, each [-360,360] degrees; Pixel work: Three separately rotated screens; five alpha-weighted taps determine ink. Dot area follows ink until dots touch, then radius grows toward the cell corners; coverage uses antialiased disc edges.\n- API: `crystallize`; Parameters and defaults: `cellSize` 10 px, [3,300]; `seed` 0, uint32; Pixel work: Jittered Voronoi cells, owner selected from a 3×3 lattice neighborhood; each cell becomes its premultiplied average.\n- API: `facet`; Parameters and defaults: None; Pixel work: Radius-two Kuwahara smoothing: choose the least-variable alpha-weighted luminance quadrant and its RGB mean.\n- API: `fragment`; Parameters and defaults: None; Pixel work: Premultiplied average of four copies displaced 4 px left, right, up and down.\n- API: `mezzotint`; Parameters and defaults: `pattern` FineDots; `seed` 0; Pixel work: Each RGB channel becomes 0 or 1 according to a coordinate hash threshold. Patterns: FineDots, MediumDots, GrainyDots, CoarseDots, ShortLines, MediumLines, LongLines, ShortStrokes, MediumStrokes, LongStrokes.\n- API: `pointillize`; Parameters and defaults: `cellSize` 5 px, [3,300]; `seed` 0; normalized `background` opaque white; Pixel work: Jittered dots with random radius, sampled center color, small brightness jitter and antialiased coverage. The deepest overlapping dot wins.\n- API: `mosaic`; Parameters and defaults: Scalar `cellSize` 10 px, [2,200], rounded to integer pixels; Pixel work: Origin-anchored square cells replaced by their premultiplied average; partial edge cells use only their actual pixels.\n- API: `emboss`; Parameters and defaults: `angle` 135°, [-180,180]; `height` 3 px, [1,100]; `amount` 100%, [1,500]; Pixel work: Directional luminance difference around neutral gray 0.5.\n- API: `findEdges`; Parameters and defaults: None; Pixel work: Per-channel Sobel gradient magnitude, divided by four, inverted to dark edges on white.\n- API: `solarize`; Parameters and defaults: None; Pixel work: Encoded channels greater than 0.5 become `1-v`; all other channels remain unchanged.\n- API: `diffuse`; Parameters and defaults: `mode` Normal; `seed` 0; Pixel work: Normal shuffles one random neighbor; DarkenOnly/LightenOnly accept only the corresponding luminance direction. Anisotropic finds the most similar of eight neighbors, then moves halfway toward it.\n- API: `extrude`; Parameters and defaults: `shape` Blocks or Pyramids; `size` 30 px, [2,255]; `depth` 30, [1,255]; `levelBased`, `solidFrontFaces`, `maskIncompleteBlocks` false; `seed` 0; Pixel work: Cells raise shaded pyramids or swept square blocks. The highest candidate block wins; front faces may retain shifted source texture or use the cell mean. Depth controls displacement or pyramid slope; level-based height uses the cell's luminance.\n- API: `oilPaint`; Parameters and defaults: `stylization` 4, [0.1,10]; `cleanliness` 5, [0,10]; `scale` 1, [0.1,10]; `bristleDetail` 5, [0,10]; `lighting` true; `angle` -60°, [-180,180]; `shine` 1, [0,10]; Pixel work: Clean premultiplied color, Gaussian structure tensor, minor-eigenvector stroke field, bidirectional line integral convolution, convolved bristle noise, then optional directional diffuse/specular relief.\n- API: `tiles`; Parameters and defaults: `count` 10, [1,99] along the shorter side; `maximumOffset` 10%, [0,99]; `fill` Background; normalized foreground black/background white; `seed` 0; Pixel work: Randomly shifted cells, highest row-major tile on top. Gaps use Background, Foreground, Inverse, or Unaltered. Zero displacement is an identity for visible input.\n- API: `traceContour`; Parameters and defaults: `level` 128, [0,255]; `upper` false; Pixel work: Per-channel four-neighbor threshold crossing, traced on the selected lower or upper side.\n- API: `wind`; Parameters and defaults: `method` Wind, Blast, or Stagger; `fromRight` true; `seed` 0; Pixel work: Edge-launched random streaks with 16 px/40 px maximum reach; Stagger displaces random row segments up to 12 px.\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "API: `colorHalftone`; Parameters and defaults: `maximumRadius` 8 px, [4,127]; three RGB `angles` {108,162,90}, each [-360,360] degrees; Pixel work: Three separately rotated screens; five alpha-weighted taps determine ink. Dot area follows ink until dots touch, then radius grows toward the cell corners; coverage uses antialiased disc edges.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `crystallize`; Parameters and defaults: `cellSize` 10 px, [3,300]; `seed` 0, uint32; Pixel work: Jittered Voronoi cells, owner selected from a 3×3 lattice neighborhood; each cell becomes its premultiplied average.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `facet`; Parameters and defaults: None; Pixel work: Radius-two Kuwahara smoothing: choose the least-variable alpha-weighted luminance quadrant and its RGB mean.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `fragment`; Parameters and defaults: None; Pixel work: Premultiplied average of four copies displaced 4 px left, right, up and down.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `mezzotint`; Parameters and defaults: `pattern` FineDots; `seed` 0; Pixel work: Each RGB channel becomes 0 or 1 according to a coordinate hash threshold. Patterns: FineDots, MediumDots, GrainyDots, CoarseDots, ShortLines, MediumLines, LongLines, ShortStrokes, MediumStrokes, LongStrokes.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `pointillize`; Parameters and defaults: `cellSize` 5 px, [3,300]; `seed` 0; normalized `background` opaque white; Pixel work: Jittered dots with random radius, sampled center color, small brightness jitter and antialiased coverage. The deepest overlapping dot wins.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `mosaic`; Parameters and defaults: Scalar `cellSize` 10 px, [2,200], rounded to integer pixels; Pixel work: Origin-anchored square cells replaced by their premultiplied average; partial edge cells use only their actual pixels.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `emboss`; Parameters and defaults: `angle` 135°, [-180,180]; `height` 3 px, [1,100]; `amount` 100%, [1,500]; Pixel work: Directional luminance difference around neutral gray 0.5.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `findEdges`; Parameters and defaults: None; Pixel work: Per-channel Sobel gradient magnitude, divided by four, inverted to dark edges on white.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `solarize`; Parameters and defaults: None; Pixel work: Encoded channels greater than 0.5 become `1-v`; all other channels remain unchanged.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `diffuse`; Parameters and defaults: `mode` Normal; `seed` 0; Pixel work: Normal shuffles one random neighbor; DarkenOnly/LightenOnly accept only the corresponding luminance direction. Anisotropic finds the most similar of eight neighbors, then moves halfway toward it.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `extrude`; Parameters and defaults: `shape` Blocks or Pyramids; `size` 30 px, [2,255]; `depth` 30, [1,255]; `levelBased`, `solidFrontFaces`, `maskIncompleteBlocks` false; `seed` 0; Pixel work: Cells raise shaded pyramids or swept square blocks. The highest candidate block wins; front faces may retain shifted source texture or use the cell mean. Depth controls displacement or pyramid slope; level-based height uses the cell's luminance.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `oilPaint`; Parameters and defaults: `stylization` 4, [0.1,10]; `cleanliness` 5, [0,10]; `scale` 1, [0.1,10]; `bristleDetail` 5, [0,10]; `lighting` true; `angle` -60°, [-180,180]; `shine` 1, [0,10]; Pixel work: Clean premultiplied color, Gaussian structure tensor, minor-eigenvector stroke field, bidirectional line integral convolution, convolved bristle noise, then optional directional diffuse/specular relief.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `tiles`; Parameters and defaults: `count` 10, [1,99] along the shorter side; `maximumOffset` 10%, [0,99]; `fill` Background; normalized foreground black/background white; `seed` 0; Pixel work: Randomly shifted cells, highest row-major tile on top. Gaps use Background, Foreground, Inverse, or Unaltered. Zero displacement is an identity for visible input.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `traceContour`; Parameters and defaults: `level` 128, [0,255]; `upper` false; Pixel work: Per-channel four-neighbor threshold crossing, traced on the selected lower or upper side.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "API: `wind`; Parameters and defaults: `method` Wind, Blast, or Stagger; `fromRight` true; `seed` 0; Pixel work: Edge-launched random streaks with 16 px/40 px maximum reach; Stagger displaces random row segments up to 12 px.",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000010",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "All numeric and enum fields are checked, including fields whose branch is inactive. Unknown enum values, NaN/Infinity, malformed colors, empty/overflowed dimensions and mismatched buffers produce explicit errors. No SDK function silently substitutes a default for invalid parameters.\n"
+    },
+    {
+      "id": "b000012",
       "kind": "blank",
       "start_line": 27,
       "end_line": 27,
       "raw": "\n"
     },
     {
-      "id": "b000011",
-      "kind": "paragraph",
-      "start_line": 28,
-      "end_line": 28,
-      "raw": "All numeric and enum fields are checked, including fields whose branch is inactive. Unknown enum values, NaN/Infinity, malformed colors, empty/overflowed dimensions and mismatched buffers produce explicit errors. No SDK function silently substitutes a default for invalid parameters.\n"
-    },
-    {
-      "id": "b000012",
-      "kind": "blank",
-      "start_line": 29,
-      "end_line": 29,
-      "raw": "\n"
-    },
-    {
       "id": "b000013",
       "kind": "heading",
-      "start_line": 30,
-      "end_line": 30,
+      "start_line": 28,
+      "end_line": 28,
       "raw": "## Alpha and source differences\n",
       "level": 2,
       "title": "Alpha and source differences"
@@ -209,85 +204,85 @@
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 31,
-      "end_line": 31,
+      "start_line": 29,
+      "end_line": 29,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 32,
-      "end_line": 32,
+      "start_line": 30,
+      "end_line": 30,
       "raw": "Spatial averages and bilinear samples operate on premultiplied encoded RGB, so hidden RGB never becomes a visible neighbor color. Crystallize, Mosaic and Fragment also average coverage. Normal Diffuse, Wind, Tiles and Extrude may move or blend coverage with their colors. Pointillize first establishes its background coverage and then premultiplied blends its dot; this corrects the reference's straight-color interpolation of partially transparent samples. Newly transparent spatial pixels use canonical black RGB, including when a positive double-precision average rounds down to zero float alpha.\n"
     },
     {
       "id": "b000016",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "Facet, Emboss, Find Edges, Anisotropic Diffuse, Oil Paint, Mezzotint, Solarize, Color Halftone and Trace Contour keep source coverage and retain the exact source value when alpha is zero. Their weighted color ratios use double precision before restoring the source alpha, so representable tiny coverage still receives the filter. Derivative filters use the center's visible color when a neighbor is fully transparent; partial-alpha averaging operations weight its RGB by alpha. Directional Diffuse compares a fully hidden center as black, keeping its acceptance decision independent of that center's hidden RGB. The reference reads hidden RGB in some of these paths; this SDK deliberately excludes it.\n"
+    },
+    {
+      "id": "b000018",
       "kind": "blank",
       "start_line": 33,
       "end_line": 33,
       "raw": "\n"
     },
     {
-      "id": "b000017",
+      "id": "b000019",
       "kind": "paragraph",
       "start_line": 34,
       "end_line": 34,
-      "raw": "Facet, Emboss, Find Edges, Anisotropic Diffuse, Oil Paint, Mezzotint, Solarize, Color Halftone and Trace Contour keep source coverage and retain the exact source value when alpha is zero. Their weighted color ratios use double precision before restoring the source alpha, so representable tiny coverage still receives the filter. Derivative filters use the center's visible color when a neighbor is fully transparent; partial-alpha averaging operations weight its RGB by alpha. Directional Diffuse compares a fully hidden center as black, keeping its acceptance decision independent of that center's hidden RGB. The reference reads hidden RGB in some of these paths; this SDK deliberately excludes it.\n"
+      "raw": "Oil Paint's private Gaussian helper uses exact truncated kernels for sigma below three and three variance-matched box passes for larger sigma. Both the reference and SDK use box approximations for broad smoothing, but floating precision, boundary treatment and pass selection can differ. Tree/texture appearance is not involved in Oil Paint's structure-tensor/LIC model.\n"
     },
     {
-      "id": "b000018",
+      "id": "b000020",
       "kind": "blank",
       "start_line": 35,
       "end_line": 35,
       "raw": "\n"
     },
     {
-      "id": "b000019",
+      "id": "b000021",
       "kind": "paragraph",
       "start_line": 36,
       "end_line": 36,
-      "raw": "Oil Paint's private Gaussian helper uses exact truncated kernels for sigma below three and three variance-matched box passes for larger sigma. Both the reference and SDK use box approximations for broad smoothing, but floating precision, boundary treatment and pass selection can differ. Tree/texture appearance is not involved in Oil Paint's structure-tensor/LIC model.\n"
+      "raw": "Color Halftone retains the reference's maximum-of-disc-coverage approximation; antialiasing at full-ink intersections can leave small light seams. It is an RGB screen effect, not CMYK separation or a print raster engine. Its three angles correspond to the three channels supported by this SDK; the reference's fourth angle belongs to CMYK. Mezzotint, Voronoi and tile random streams use the reference's uint32 hash and are deterministic for the same input, size and seed.\n"
     },
     {
-      "id": "b000020",
+      "id": "b000022",
       "kind": "blank",
       "start_line": 37,
       "end_line": 37,
       "raw": "\n"
     },
     {
-      "id": "b000021",
+      "id": "b000023",
       "kind": "paragraph",
       "start_line": 38,
       "end_line": 38,
-      "raw": "Color Halftone retains the reference's maximum-of-disc-coverage approximation; antialiasing at full-ink intersections can leave small light seams. It is an RGB screen effect, not CMYK separation or a print raster engine. Its three angles correspond to the three channels supported by this SDK; the reference's fourth angle belongs to CMYK. Mezzotint, Voronoi and tile random streams use the reference's uint32 hash and are deterministic for the same input, size and seed.\n"
+      "raw": "Extrude currently tests nearby cells for every output pixel. Small blocks at maximum depth can be expensive because candidate reach grows relative to block size. Oil Paint and the other spatial kernels retain whole-image working arrays; no streaming, GPU, selection, document history or smart-object storage is introduced by these APIs.\n"
     },
     {
-      "id": "b000022",
+      "id": "b000024",
       "kind": "blank",
       "start_line": 39,
       "end_line": 39,
       "raw": "\n"
     },
     {
-      "id": "b000023",
-      "kind": "paragraph",
-      "start_line": 40,
-      "end_line": 40,
-      "raw": "Extrude currently tests nearby cells for every output pixel. Small blocks at maximum depth can be expensive because candidate reach grows relative to block size. Oil Paint and the other spatial kernels retain whole-image working arrays; no streaming, GPU, selection, document history or smart-object storage is introduced by these APIs.\n"
-    },
-    {
-      "id": "b000024",
-      "kind": "blank",
-      "start_line": 41,
-      "end_line": 41,
-      "raw": "\n"
-    },
-    {
       "id": "b000025",
       "kind": "heading",
-      "start_line": 42,
-      "end_line": 42,
+      "start_line": 40,
+      "end_line": 40,
       "raw": "## Usage and tests\n",
       "level": 2,
       "title": "Usage and tests"
@@ -295,15 +290,15 @@
     {
       "id": "b000026",
       "kind": "blank",
-      "start_line": 43,
-      "end_line": 43,
+      "start_line": 41,
+      "end_line": 41,
       "raw": "\n"
     },
     {
       "id": "b000027",
       "kind": "fenced_code",
-      "start_line": 44,
-      "end_line": 57,
+      "start_line": 42,
+      "end_line": 55,
       "raw": "```cpp\n#include <iiGraphicAdjust/PixelFilters.h>\n\niiGraphicAdjust::CrystallizeOptions cells;\ncells.cellSize = 14;\ncells.seed = 42;\nauto crystal = iiGraphicAdjust::crystallize(source.view(), cells);\nif (!crystal) return crystal.error();\n\niiGraphicAdjust::OilPaintOptions paint;\npaint.stylization = 6;\npaint.lighting = false;\nauto result = iiGraphicAdjust::oilPaint(crystal->view(), paint);\n```\n",
       "language": "cpp",
       "code": "#include <iiGraphicAdjust/PixelFilters.h>\n\niiGraphicAdjust::CrystallizeOptions cells;\ncells.cellSize = 14;\ncells.seed = 42;\nauto crystal = iiGraphicAdjust::crystallize(source.view(), cells);\nif (!crystal) return crystal.error();\n\niiGraphicAdjust::OilPaintOptions paint;\npaint.stylization = 6;\npaint.lighting = false;\nauto result = iiGraphicAdjust::oilPaint(crystal->view(), paint);\n",
@@ -312,15 +307,15 @@
     {
       "id": "b000028",
       "kind": "blank",
-      "start_line": 58,
-      "end_line": 58,
+      "start_line": 56,
+      "end_line": 56,
       "raw": "\n"
     },
     {
       "id": "b000029",
       "kind": "paragraph",
-      "start_line": 59,
-      "end_line": 59,
+      "start_line": 57,
+      "end_line": 57,
       "raw": "`tests/pixel_filters.cpp` has `pixelate`, `stylize`, and `validation` modes. Numeric checks include an independent premultiplied cell mean, four-offset Fragment oracle, integrated Voronoi RGB conservation, binary Mezzotint output, Sobel step edges, lower/upper threshold contours, flat-field Oil Paint, directional diffuse acceptance, and seeded layout changes. Every operation is checked against hidden-RGB substitution, 1×1/1×N/N×1 input, malformed dimensions and invalid parameters. Regression checks cover subnormal alpha rounding, tiny-alpha Oil Paint smoothing, source-alpha-preserving averages, and both directional Diffuse modes with hidden center substitution. Reference Rust tests and an Adobe application have not been executed as an oracle.\n"
     }
   ],
@@ -347,7 +342,7 @@
       "level": 2,
       "title": "Alpha and source differences",
       "anchor": "alpha-and-source-differences",
-      "start_line": 30
+      "start_line": 28
     },
     {
       "block_id": "b000025",
@@ -355,14 +350,14 @@
       "level": 2,
       "title": "Usage and tests",
       "anchor": "usage-and-tests",
-      "start_line": 42
+      "start_line": 40
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
         "block_id": "b000015",
-        "line": 32,
+        "line": 30,
         "text": "Spatial averages and bilinear samples operate on premultiplied encoded RGB, so hidden RGB never becomes a visible neighbor color. Crystallize, Mosaic and Fragment also average coverage. Normal Diffuse, Wind, Tiles and Extrude may move or blend coverage with their colors. Pointillize first establishes its background coverage and then premultiplied blends its dot; this corrects the reference's straight-color interpolation of partially transparent samples. Newly transparent spatial pixels use canonical black RGB, including when a positive double-precision average rounds down to zero float alpha.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -370,98 +365,7 @@
     ],
     "commands": [],
     "links": [],
-    "tables": [
-      {
-        "block_id": "b000009",
-        "columns": [
-          "API",
-          "Parameters and defaults",
-          "Pixel work"
-        ],
-        "rows": [
-          [
-            "`colorHalftone`",
-            "`maximumRadius` 8 px, [4,127]; three RGB `angles` {108,162,90}, each [-360,360] degrees",
-            "Three separately rotated screens; five alpha-weighted taps determine ink. Dot area follows ink until dots touch, then radius grows toward the cell corners; coverage uses antialiased disc edges."
-          ],
-          [
-            "`crystallize`",
-            "`cellSize` 10 px, [3,300]; `seed` 0, uint32",
-            "Jittered Voronoi cells, owner selected from a 3×3 lattice neighborhood; each cell becomes its premultiplied average."
-          ],
-          [
-            "`facet`",
-            "None",
-            "Radius-two Kuwahara smoothing: choose the least-variable alpha-weighted luminance quadrant and its RGB mean."
-          ],
-          [
-            "`fragment`",
-            "None",
-            "Premultiplied average of four copies displaced 4 px left, right, up and down."
-          ],
-          [
-            "`mezzotint`",
-            "`pattern` FineDots; `seed` 0",
-            "Each RGB channel becomes 0 or 1 according to a coordinate hash threshold. Patterns: FineDots, MediumDots, GrainyDots, CoarseDots, ShortLines, MediumLines, LongLines, ShortStrokes, MediumStrokes, LongStrokes."
-          ],
-          [
-            "`pointillize`",
-            "`cellSize` 5 px, [3,300]; `seed` 0; normalized `background` opaque white",
-            "Jittered dots with random radius, sampled center color, small brightness jitter and antialiased coverage. The deepest overlapping dot wins."
-          ],
-          [
-            "`mosaic`",
-            "Scalar `cellSize` 10 px, [2,200], rounded to integer pixels",
-            "Origin-anchored square cells replaced by their premultiplied average; partial edge cells use only their actual pixels."
-          ],
-          [
-            "`emboss`",
-            "`angle` 135°, [-180,180]; `height` 3 px, [1,100]; `amount` 100%, [1,500]",
-            "Directional luminance difference around neutral gray 0.5."
-          ],
-          [
-            "`findEdges`",
-            "None",
-            "Per-channel Sobel gradient magnitude, divided by four, inverted to dark edges on white."
-          ],
-          [
-            "`solarize`",
-            "None",
-            "Encoded channels greater than 0.5 become `1-v`; all other channels remain unchanged."
-          ],
-          [
-            "`diffuse`",
-            "`mode` Normal; `seed` 0",
-            "Normal shuffles one random neighbor; DarkenOnly/LightenOnly accept only the corresponding luminance direction. Anisotropic finds the most similar of eight neighbors, then moves halfway toward it."
-          ],
-          [
-            "`extrude`",
-            "`shape` Blocks or Pyramids; `size` 30 px, [2,255]; `depth` 30, [1,255]; `levelBased`, `solidFrontFaces`, `maskIncompleteBlocks` false; `seed` 0",
-            "Cells raise shaded pyramids or swept square blocks. The highest candidate block wins; front faces may retain shifted source texture or use the cell mean. Depth controls displacement or pyramid slope; level-based height uses the cell's luminance."
-          ],
-          [
-            "`oilPaint`",
-            "`stylization` 4, [0.1,10]; `cleanliness` 5, [0,10]; `scale` 1, [0.1,10]; `bristleDetail` 5, [0,10]; `lighting` true; `angle` -60°, [-180,180]; `shine` 1, [0,10]",
-            "Clean premultiplied color, Gaussian structure tensor, minor-eigenvector stroke field, bidirectional line integral convolution, convolved bristle noise, then optional directional diffuse/specular relief."
-          ],
-          [
-            "`tiles`",
-            "`count` 10, [1,99] along the shorter side; `maximumOffset` 10%, [0,99]; `fill` Background; normalized foreground black/background white; `seed` 0",
-            "Randomly shifted cells, highest row-major tile on top. Gaps use Background, Foreground, Inverse, or Unaltered. Zero displacement is an identity for visible input."
-          ],
-          [
-            "`traceContour`",
-            "`level` 128, [0,255]; `upper` false",
-            "Per-channel four-neighbor threshold crossing, traced on the selected lower or upper side."
-          ],
-          [
-            "`wind`",
-            "`method` Wind, Blast, or Stagger; `fromRight` true; `seed` 0",
-            "Edge-launched random streaks with 16 px/40 px maximum reach; Stagger displaces random row segments up to 12 px."
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

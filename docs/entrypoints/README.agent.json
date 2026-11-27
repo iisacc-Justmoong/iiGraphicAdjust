@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "README.md",
-    "sha256": "a48dc0a65e63610c55807827eec0ff0d7379f7b46e4b263f5689e3460eefcf2d",
-    "bytes": 15109,
-    "line_count": 185,
+    "sha256": "259939944712059fdfb523f4fe4fbb9341e94a37b189018f6b4f7e86dbf78aff",
+    "bytes": 16626,
+    "line_count": 212,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -85,7 +85,7 @@
       "kind": "paragraph",
       "start_line": 12,
       "end_line": 12,
-      "raw": "Independent C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.6.1**. Processing uses the C++ standard library and caller-provided image data; the library neither creates files nor depends on other SDK modules. Applications provide file loading and publishing separately, for example through iiFileProvider. There is no Qt dependency.\n"
+      "raw": "C++23 CPU SDK for raster color adjustment, image effects and alpha compositing. Version **0.6.1**. Processing uses caller-provided image data and the standard-only iiSDKCore Contracts foundation. The library does not create files; applications provide file loading and publishing separately, for example through iiFileProvider. There is no Qt dependency.\n"
     },
     {
       "id": "b000010",
@@ -114,49 +114,63 @@
       "id": "b000013",
       "kind": "paragraph",
       "start_line": 16,
-      "end_line": 22,
-      "raw": "Version **0.6.0** adds **309 typed value objects** for the full existing processing\nsurface, owned resources, automatic analysis, masks, RAW and LUT/profile recipes.\n`Operation` captures an immutable object snapshot and `OperationStack` applies\nup to 256 ordered stages with owned masks, transfer-space-aware premultiplied\ninterpolation and precise failure locations. Five new kernels add flat-field\ncorrection, color-to-alpha unmixing and solid/gradient/pattern fills. Sharpen\nRadius/Detail and Luminance NR Contrast now perform real processing.\n"
+      "end_line": 20,
+      "raw": "The advanced editing objects provide exemplar-based inpainting, seam-aware\nresizing, translation registration, layer compositing, mask refinement and color\ndecontamination. Transform and Filter Gallery previews retain undo/redo history;\nthe host controls scheduling and cache identities. An optional native Python API\nexposes these objects. See [advanced editing contracts](docs/AdvancedEditing.md).\n"
     },
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 23,
-      "end_line": 23,
+      "start_line": 21,
+      "end_line": 21,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 24,
-      "end_line": 31,
-      "raw": "See [object API and contracts](docs/OperationObjects.md), the\n[complete object inventory](docs/object-catalog.json) and\n[Adobe coverage and remaining features](docs/adobe-feature-coverage.json).\nAll existing CPU operations are objectified; Adobe neural/generative functions,\nfull RAW/HDR color workflows and Adobe rendering equivalence remain incomplete.\nThis is not a recovery of Adobe's original source. Public detail settings changed\nlayout, so **0.6 consumers must rebuild**. Package validation uses an isolated\nresource workspace described in [Build layout](docs/BuildLayout.md).\n"
+      "start_line": 22,
+      "end_line": 28,
+      "raw": "Version **0.6.0** adds **309 typed value objects** for the full existing processing\nsurface, owned resources, automatic analysis, masks, RAW and LUT/profile recipes.\n`Operation` captures an immutable object snapshot and `OperationStack` applies\nup to 256 ordered stages with owned masks, transfer-space-aware premultiplied\ninterpolation and precise failure locations. Five new kernels add flat-field\ncorrection, color-to-alpha unmixing and solid/gradient/pattern fills. Sharpen\nRadius/Detail and Luminance NR Contrast now perform real processing.\n"
     },
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 32,
-      "end_line": 32,
+      "start_line": 29,
+      "end_line": 29,
       "raw": "\n"
     },
     {
       "id": "b000017",
       "kind": "paragraph",
-      "start_line": 33,
-      "end_line": 33,
-      "raw": "Version 0.5.1 adds two explicitly separate processing contracts without changing existing correction models or the ABI series:\n"
+      "start_line": 30,
+      "end_line": 37,
+      "raw": "See [object API and contracts](docs/OperationObjects.md), the\n[complete object inventory](docs/object-catalog.json) and\n[Adobe coverage and remaining features](docs/adobe-feature-coverage.json).\nAll existing CPU operations are objectified; Adobe neural/generative functions,\nfull RAW/HDR color workflows and Adobe rendering equivalence remain incomplete.\nThis is not a recovery of Adobe's original source. Public detail settings changed\nlayout, so **0.6 consumers must rebuild**. Package validation uses an isolated\nresource workspace described in [Build layout](docs/BuildLayout.md).\n"
     },
     {
       "id": "b000018",
       "kind": "blank",
-      "start_line": 34,
-      "end_line": 34,
+      "start_line": 38,
+      "end_line": 38,
       "raw": "\n"
     },
     {
       "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "Version 0.5.1 adds two explicitly separate processing contracts without changing existing correction models or the ABI series:\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
       "kind": "list",
-      "start_line": 35,
-      "end_line": 36,
+      "start_line": 41,
+      "end_line": 42,
       "raw": "- `applyMaskedCorrection()` applies the RGB of any same-sized correction result through caller-supplied float coverage, with amount `[0,100]`, optional inversion and encoded/linear sRGB interpolation. It preserves base alpha and hidden RGB, validates inactive inputs too, and returns detached storage. Existing Levels, Curves, Kelvin WB, HSL, Detail and Camera Raw results can be localized without importing a brush SDK. This composition is an independent implementation; recovered Lightroom local-curve/control declarations establish the functional gap, not an Adobe pixel oracle.\n- `SampleFilters.h` separately exposes the evidence-bound Photoshop Average kernels for 8-bit, 16-bit and float32 sample planes and Solarize for 8/16-bit rows. Average preserves the recovered tile/mask/rounding and float accumulation behavior; Solarize retains the observed integer scales and 16-bit wrapping. These mutable sample-plane contracts differ from normalized `ImageView`, and the existing independent `average(ImageView)`/`solarize(ImageView)` APIs retain their previous behavior. Strict floating-point source flags preserve the measured accumulation order.\n",
       "items": [
         {
@@ -172,45 +186,45 @@
       ]
     },
     {
-      "id": "b000020",
-      "kind": "blank",
-      "start_line": 37,
-      "end_line": 37,
-      "raw": "\n"
-    },
-    {
-      "id": "b000021",
-      "kind": "paragraph",
-      "start_line": 38,
-      "end_line": 38,
-      "raw": "See [masked correction composition](docs/LocalCorrections.md), [recovered sample-plane kernels](docs/SampleFilters.md) and [local correction verification](docs/LocalCorrectionsVerification.md). Native sample-kernel replay evidence is bounded to those kernels; the SDK does not claim to reconstruct Adobe's complete rendering engine.\n"
-    },
-    {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 39,
-      "end_line": 39,
+      "start_line": 43,
+      "end_line": 43,
       "raw": "\n"
     },
     {
       "id": "b000023",
       "kind": "paragraph",
-      "start_line": 40,
-      "end_line": 40,
-      "raw": "Version 0.5.0 adds a sensor and photograph processing foundation without changing the existing rendered-image filters:\n"
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "See [masked correction composition](docs/LocalCorrections.md), [recovered sample-plane kernels](docs/SampleFilters.md) and [local correction verification](docs/LocalCorrectionsVerification.md). Native sample-kernel replay evidence is bounded to those kernels; the SDK does not claim to reconstruct Adobe's complete rendering engine.\n"
     },
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 41,
-      "end_line": 41,
+      "start_line": 45,
+      "end_line": 45,
       "raw": "\n"
     },
     {
       "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "Version 0.5.0 adds a sensor and photograph processing foundation without changing the existing rendered-image filters:\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
       "kind": "list",
-      "start_line": 42,
-      "end_line": 45,
+      "start_line": 48,
+      "end_line": 51,
       "raw": "- `developRaw()` accepts caller-decoded 16-bit Bayer samples with row stride, four CFA patterns and crop phase. It subtracts per-tile black levels, normalizes by white level, bilinearly demosaics, applies supplied white balance and a camera-to-linear-sRGB matrix, and preserves highlight headroom above one.\n- `renderRaw()` composes the new linear output with the existing HDR toning function. RAW container decoding and physical camera calibration remain the caller's responsibility.\n- `applyOrientation()` handles all eight EXIF orientations; `crop()` performs exact bounded integer cropping.\n- `imageHistogram()` reports encoded RGB and linear-luminance bins/statistics with explicit alpha weighting.\n",
       "items": [
         {
@@ -236,45 +250,45 @@
       ]
     },
     {
-      "id": "b000026",
-      "kind": "blank",
-      "start_line": 46,
-      "end_line": 46,
-      "raw": "\n"
-    },
-    {
-      "id": "b000027",
-      "kind": "paragraph",
-      "start_line": 47,
-      "end_line": 47,
-      "raw": "See [RAW processing](docs/RawProcessing.md) and [photographic operations](docs/PhotoOperations.md). These leaf APIs introduce no dependency on a camera SDK. An optional upper layer in iiCameraIntegration composes captured frames with these functions and the existing development/resampling stages.\n"
-    },
-    {
       "id": "b000028",
       "kind": "blank",
-      "start_line": 48,
-      "end_line": 48,
+      "start_line": 52,
+      "end_line": 52,
       "raw": "\n"
     },
     {
       "id": "b000029",
       "kind": "paragraph",
-      "start_line": 49,
-      "end_line": 49,
-      "raw": "Version 0.4.0 adds individual filtering APIs selected by re-inspecting both supplied repositories. [The complete filter inventory](docs/Filters.md) and [machine-readable catalog](docs/filter-catalog.json) map every executable command to a public function and pinned source.\n"
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "See [RAW processing](docs/RawProcessing.md) and [photographic operations](docs/PhotoOperations.md). These leaf APIs introduce no dependency on a camera SDK. An optional upper layer in iiCameraIntegration composes captured frames with these functions and the existing development/resampling stages.\n"
     },
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 50,
-      "end_line": 50,
+      "start_line": 54,
+      "end_line": 54,
       "raw": "\n"
     },
     {
       "id": "b000031",
-      "kind": "list",
-      "start_line": 51,
+      "kind": "paragraph",
+      "start_line": 55,
       "end_line": 55,
+      "raw": "Version 0.4.0 adds individual filtering APIs selected by re-inspecting both supplied repositories. [The complete filter inventory](docs/Filters.md) and [machine-readable catalog](docs/filter-catalog.json) map every executable command to a public function and pinned source.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "list",
+      "start_line": 57,
+      "end_line": 61,
       "raw": "- PhotoCraft: all 120 executable Filter-menu operations, including 47 individual Gallery effects, plus the two Edit transforms that can be recorded as smart filters. Blur/Blur Gallery, Sharpen, Noise, Distort, Pixelate, Stylize, Render, Video and Other families have separate typed APIs.\n- Special filters: relative-temperature Camera Raw, encoded Lens Correction, dense-field Liquify, spherical/constraint-based Adaptive Wide Angle, metric-plane Vanishing Point, cotangent-ARAP Puppet Warp and linked-plane Perspective Warp. Geometry helpers expose mesh/pin/constraint results to hosts.\n- Gallery: the 47 effects retain individual functions/options; a typed `GalleryEffect` stack applies them in order.\n- LightCraft: 22 named looks, 41 named built-in presets, Box/Bilinear/Mitchell/Lanczos3 resampling, and actual Clone/Heal/Remove, Red Eye/Pet Eye, spot visualization and dust detection kernels. Point Color range preview, five mask composites and destination/display gamut warnings are separate diagnostic APIs.\n- Reusable alpha-weighted box-guided and cross-guided filtering. Original linear-light `gaussianBlur`, `sharpen` and normalized `addNoise` behavior is preserved alongside the new encoded-space menu functions.\n",
       "items": [
         {
@@ -305,31 +319,31 @@
       ]
     },
     {
-      "id": "b000032",
+      "id": "b000034",
       "kind": "blank",
-      "start_line": 56,
-      "end_line": 57,
+      "start_line": 62,
+      "end_line": 63,
       "raw": "\n\n"
     },
     {
-      "id": "b000033",
+      "id": "b000035",
       "kind": "paragraph",
-      "start_line": 58,
-      "end_line": 58,
+      "start_line": 64,
+      "end_line": 64,
       "raw": "Version 0.3.0 adds 27 public Lightroom-style development and masking operations, selected from the actual LightCraft processing code. Details, source mapping and intentional differences are in [Lightroom development](docs/Lightroom.md).\n"
     },
     {
-      "id": "b000034",
+      "id": "b000036",
       "kind": "blank",
-      "start_line": 59,
-      "end_line": 59,
+      "start_line": 65,
+      "end_line": 65,
       "raw": "\n"
     },
     {
-      "id": "b000035",
+      "id": "b000037",
       "kind": "list",
-      "start_line": 60,
-      "end_line": 66,
+      "start_line": 66,
+      "end_line": 72,
       "raw": "- White balance: Kelvin/tint Bradford adaptation, six presets, Auto and sampled neutralization.\n- Light: Exposure, Contrast, Highlights, Shadows, Whites, Blacks, Auto Light; parametric and cubic RGB/master curves with Refine Saturation.\n- Color: skin-protected Vibrance/Saturation, eight-band Mixer/B&W/Auto B&W, Point Color, four-wheel grading and Calibration.\n- Effects/detail: Texture, Clarity, Dehaze, three vignette styles, seeded film grain, masked detail sharpening and luminance/color noise reduction.\n- Optics: distortion, lens vignette compensation, manual/automatic lateral CA, purple/green defringe and host-supplied embedded lens coefficients.\n- Local adjustments: linear/radial/brush/luminance/color masks, combine/invert/edge refinement, 17 accumulated local sliders and color tint.\n- `develop()` composes the standalone SDR stages. Each stage normalizes to sRGB; this is not LightCraft's full scene-linear RAW pipeline.\n",
       "items": [
         {
@@ -370,31 +384,31 @@
       ]
     },
     {
-      "id": "b000036",
-      "kind": "blank",
-      "start_line": 67,
-      "end_line": 67,
-      "raw": "\n"
-    },
-    {
-      "id": "b000037",
-      "kind": "paragraph",
-      "start_line": 68,
-      "end_line": 68,
-      "raw": "Version 0.2.0 adds APIs corresponding to the 22 classic Photoshop/PhotoCraft adjustment categories and three automatic corrections. This is independent processing with documented numeric contracts, not Photoshop binary or pixel compatibility.\n"
-    },
-    {
       "id": "b000038",
       "kind": "blank",
-      "start_line": 69,
-      "end_line": 69,
+      "start_line": 73,
+      "end_line": 73,
       "raw": "\n"
     },
     {
       "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 74,
+      "end_line": 74,
+      "raw": "Version 0.2.0 adds APIs corresponding to the 22 classic Photoshop/PhotoCraft adjustment categories and three automatic corrections. This is independent processing with documented numeric contracts, not Photoshop binary or pixel compatibility.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 75,
+      "end_line": 75,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
       "kind": "list",
-      "start_line": 70,
-      "end_line": 73,
+      "start_line": 76,
+      "end_line": 79,
       "raw": "- Tone: Brightness/Contrast, per-channel Levels and Curves, Exposure with offset/gamma, Shadows/Highlights, Invert, Posterize, Threshold, Equalize, Auto Levels/Auto Tone, Auto Contrast and Auto Color.\n- Color: targeted Hue/Saturation and colorize, Vibrance, tone-range Color Balance, six-color Black & White, Photo Filter, Channel Mixer, nine-range Selective Color, Desaturate, Replace Color and reference-image Match Color.\n- Mapping: Gradient Map and Color Lookup with 1D/3D `.cube` parsing, trilinear/tetrahedral interpolation and optional ordered dither.\n- HDR Toning: linear HDR input above one, ExposureGamma and HighlightCompression, normalized sRGB output.\n",
       "items": [
         {
@@ -420,31 +434,31 @@
       ]
     },
     {
-      "id": "b000040",
-      "kind": "blank",
-      "start_line": 74,
-      "end_line": 74,
-      "raw": "\n"
-    },
-    {
-      "id": "b000041",
-      "kind": "paragraph",
-      "start_line": 75,
-      "end_line": 75,
-      "raw": "The original operations remain available with their 0.1 semantics:\n"
-    },
-    {
       "id": "b000042",
       "kind": "blank",
-      "start_line": 76,
-      "end_line": 76,
+      "start_line": 80,
+      "end_line": 80,
       "raw": "\n"
     },
     {
       "id": "b000043",
-      "kind": "list",
-      "start_line": 77,
+      "kind": "paragraph",
+      "start_line": 81,
       "end_line": 81,
+      "raw": "The original operations remain available with their 0.1 semantics:\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "list",
+      "start_line": 83,
+      "end_line": 87,
       "raw": "- Color adjustment: linear-light exposure, relative temperature/tint, brightness, contrast, saturation, gamma and opacity.\n- Gaussian blur with linear-light premultiplied-alpha filtering, and unsharp-mask sharpening.\n- Seeded uniform or Gaussian noise, monochromatic or independent RGB.\n- Source-over compositing in sRGB or linear sRGB with Normal, Multiply, Screen, Overlay, Darken, Lighten, SoftLight and Difference blend modes.\n- Conversion between normalized straight-alpha RGBA floats, RGBA8 bytes and numeric `0xAARRGGBB` words.\n",
       "items": [
         {
@@ -475,432 +489,491 @@
       ]
     },
     {
-      "id": "b000044",
-      "kind": "blank",
-      "start_line": 82,
-      "end_line": 82,
-      "raw": "\n"
-    },
-    {
-      "id": "b000045",
-      "kind": "paragraph",
-      "start_line": 83,
-      "end_line": 83,
-      "raw": "Normalized image and mask processing returns new storage and leaves inputs unchanged. Public results use `std::expected`; image/mask operations retain `Result<T>` and the existing `Error` type. `SampleFilters` fill/Solarize operations explicitly write caller-owned mutable sample planes after validation and use their separate `SampleFilterError`. There are no placeholder processing functions or implicit product/document writes.\n"
-    },
-    {
       "id": "b000046",
-      "kind": "blank",
-      "start_line": 84,
-      "end_line": 84,
-      "raw": "\n"
-    },
-    {
-      "id": "b000047",
-      "kind": "heading",
-      "start_line": 85,
-      "end_line": 85,
-      "raw": "## Build and test\n",
-      "level": 2,
-      "title": "Build and test"
-    },
-    {
-      "id": "b000048",
-      "kind": "blank",
-      "start_line": 86,
-      "end_line": 86,
-      "raw": "\n"
-    },
-    {
-      "id": "b000049",
-      "kind": "paragraph",
-      "start_line": 87,
-      "end_line": 87,
-      "raw": "CMake 3.24 or later and a C++23 compiler/standard library with `std::expected` are required. No third-party packages are discovered or linked.\n"
-    },
-    {
-      "id": "b000050",
       "kind": "blank",
       "start_line": 88,
       "end_line": 88,
       "raw": "\n"
     },
     {
-      "id": "b000051",
-      "kind": "fenced_code",
+      "id": "b000047",
+      "kind": "paragraph",
       "start_line": 89,
-      "end_line": 94,
-      "raw": "```sh\ncmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON\ncmake --build build --config Release --parallel 2\nctest --test-dir build -C Release --output-on-failure\ncmake --install build --config Release\n```\n",
-      "language": "sh",
-      "code": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON\ncmake --build build --config Release --parallel 2\nctest --test-dir build -C Release --output-on-failure\ncmake --install build --config Release\n",
-      "closed": true
+      "end_line": 89,
+      "raw": "Normalized image and mask processing returns new storage and leaves inputs unchanged. Public results use `std::expected`; image/mask operations retain `Result<T>` and the existing `Error` type. `SampleFilters` fill/Solarize operations explicitly write caller-owned mutable sample planes after validation and use their separate `SampleFilterError`. There are no placeholder processing functions or implicit product/document writes.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 90,
+      "end_line": 90,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "heading",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "## Build and test\n",
+      "level": 2,
+      "title": "Build and test"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 92,
+      "end_line": 92,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 93,
+      "end_line": 93,
+      "raw": "CMake 3.24 or later, iiSDKCore 0.20 Contracts, and a C++23 compiler/standard library with `std::expected` are required. No additional third-party packages are discovered or linked.\n"
     },
     {
       "id": "b000052",
       "kind": "blank",
-      "start_line": 95,
-      "end_line": 95,
+      "start_line": 94,
+      "end_line": 94,
       "raw": "\n"
     },
     {
       "id": "b000053",
       "kind": "paragraph",
-      "start_line": 96,
-      "end_line": 96,
-      "raw": "The standalone default installation prefix is `~/.local/SDK/iiGraphicAdjust`. Set `-DCMAKE_INSTALL_PREFIX=/your/prefix` to override it. Shared libraries are enabled by default; `-DBUILD_SHARED_LIBS=OFF` builds a static library. Set `-DBUILD_TESTING=OFF` for a library-only build. The examples are separately configured applications rather than targets in the SDK build.\n"
+      "start_line": 95,
+      "end_line": 103,
+      "raw": "The Python API is built by default on native hosts using the Python interpreter\nand development module plus the bundled BSD-3-Clause pybind11 3.1.0 headers. Set\n`-DIIGRAPHICADJUST_BUILD_PYTHON=OFF` to omit it; cross-compilation defaults to\noff until a matching target Python development environment is supplied. The\ninstalled module lives in `<prefix>/lib/iiGraphicAdjust/python` and can be\nimported as `iigraphicadjust` when that directory is on `PYTHONPATH`; Windows\nuses `<prefix>/bin/iiGraphicAdjust/python`. On Windows, explicitly add\n`<prefix>/bin` to Python's DLL search path with `os.add_dll_directory()` before\nimporting the module.\n"
     },
     {
       "id": "b000054",
-      "kind": "blank",
-      "start_line": 97,
-      "end_line": 97,
-      "raw": "\n"
-    },
-    {
-      "id": "b000055",
-      "kind": "paragraph",
-      "start_line": 98,
-      "end_line": 98,
-      "raw": "This module is automatically discovered by the existing parent SDK installer:\n"
-    },
-    {
-      "id": "b000056",
-      "kind": "blank",
-      "start_line": 99,
-      "end_line": 99,
-      "raw": "\n"
-    },
-    {
-      "id": "b000057",
-      "kind": "fenced_code",
-      "start_line": 100,
-      "end_line": 103,
-      "raw": "```sh\npython3 -B ../install_all.py --only iiGraphicAdjust --dry-run\npython3 -B ../install_all.py --only iiGraphicAdjust\n```\n",
-      "language": "sh",
-      "code": "python3 -B ../install_all.py --only iiGraphicAdjust --dry-run\npython3 -B ../install_all.py --only iiGraphicAdjust\n",
-      "closed": true
-    },
-    {
-      "id": "b000058",
       "kind": "blank",
       "start_line": 104,
       "end_line": 104,
       "raw": "\n"
     },
     {
-      "id": "b000059",
-      "kind": "paragraph",
+      "id": "b000055",
+      "kind": "fenced_code",
       "start_line": 105,
-      "end_line": 106,
-      "raw": "Module and test compilation stays in `build/`. Package checks stage their\ntemporary installations in `resources/` and remove them after completion.\n"
+      "end_line": 107,
+      "raw": "```sh\niisdk-builder build --mode library --project . --platform host\n```\n",
+      "language": "sh",
+      "code": "iisdk-builder build --mode library --project . --platform host\n",
+      "closed": true
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 109,
+      "end_line": 109,
+      "raw": "To run the complete automated test suite in the project build directory:\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 110,
+      "end_line": 110,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "fenced_code",
+      "start_line": 111,
+      "end_line": 116,
+      "raw": "```sh\ncmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON\ncmake --build build --config Release --parallel 2\nctest --test-dir build -C Release --output-on-failure\ncmake --install build --config Release\n```\n",
+      "language": "sh",
+      "code": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON\ncmake --build build --config Release --parallel 2\nctest --test-dir build -C Release --output-on-failure\ncmake --install build --config Release\n",
+      "closed": true
     },
     {
       "id": "b000060",
       "kind": "blank",
-      "start_line": 107,
-      "end_line": 107,
+      "start_line": 117,
+      "end_line": 117,
       "raw": "\n"
     },
     {
       "id": "b000061",
+      "kind": "paragraph",
+      "start_line": 118,
+      "end_line": 121,
+      "raw": "Native builds search the standard per-user iiSDKCore prefix; alternatively pass\n`-DiiSDKCore_DIR=\"$HOME/.local/SDK/iiSDKCore/lib/cmake/iiSDKCore\"` when\nconfiguring. Cross builds must supply the matching target prefix through the\niiSDKBuilder kit. Installed consumers also need iiSDKCore available to CMake.\n"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 122,
+      "end_line": 122,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "The standalone default installation prefix is `~/.local/SDK/iiGraphicAdjust`. Set `-DCMAKE_INSTALL_PREFIX=/your/prefix` to override it. Shared libraries are enabled by default; `-DBUILD_SHARED_LIBS=OFF` builds a static library. Set `-DBUILD_TESTING=OFF` for a library-only build. The examples are separately configured applications rather than targets in the SDK build.\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 124,
+      "end_line": 124,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "paragraph",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "This module is automatically discovered by the existing parent SDK installer:\n"
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 126,
+      "end_line": 126,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "fenced_code",
+      "start_line": 127,
+      "end_line": 130,
+      "raw": "```sh\npython3 -B ../install_all.py --only iiGraphicAdjust --dry-run\npython3 -B ../install_all.py --only iiGraphicAdjust\n```\n",
+      "language": "sh",
+      "code": "python3 -B ../install_all.py --only iiGraphicAdjust --dry-run\npython3 -B ../install_all.py --only iiGraphicAdjust\n",
+      "closed": true
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 131,
+      "end_line": 131,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "paragraph",
+      "start_line": 132,
+      "end_line": 133,
+      "raw": "Module and test compilation stays in `build/`. Package checks stage their\ntemporary installations in `resources/` and remove them after completion.\n"
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 134,
+      "end_line": 134,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
       "kind": "heading",
-      "start_line": 108,
-      "end_line": 108,
+      "start_line": 135,
+      "end_line": 135,
       "raw": "## Consume the installed package\n",
       "level": 2,
       "title": "Consume the installed package"
     },
     {
-      "id": "b000062",
+      "id": "b000072",
       "kind": "blank",
-      "start_line": 109,
-      "end_line": 109,
+      "start_line": 136,
+      "end_line": 136,
       "raw": "\n"
     },
     {
-      "id": "b000063",
+      "id": "b000073",
       "kind": "fenced_code",
-      "start_line": 110,
-      "end_line": 113,
+      "start_line": 137,
+      "end_line": 140,
       "raw": "```cmake\nfind_package(iiGraphicAdjust 0.6 CONFIG REQUIRED)\ntarget_link_libraries(my_app PRIVATE iiGraphicAdjust::iiGraphicAdjust)\n```\n",
       "language": "cmake",
       "code": "find_package(iiGraphicAdjust 0.6 CONFIG REQUIRED)\ntarget_link_libraries(my_app PRIVATE iiGraphicAdjust::iiGraphicAdjust)\n",
       "closed": true
     },
     {
-      "id": "b000064",
+      "id": "b000074",
       "kind": "blank",
-      "start_line": 114,
-      "end_line": 114,
+      "start_line": 141,
+      "end_line": 141,
       "raw": "\n"
     },
     {
-      "id": "b000065",
+      "id": "b000075",
       "kind": "paragraph",
-      "start_line": 115,
-      "end_line": 115,
+      "start_line": 142,
+      "end_line": 142,
       "raw": "Configure the consumer with `-DiiGraphicAdjust_DIR=\"$HOME/.local/SDK/iiGraphicAdjust/lib/cmake/iiGraphicAdjust\"` or add that SDK prefix to `CMAKE_PREFIX_PATH`. The target exports the C++23 requirement, include directories and static/shared export definitions.\n"
     },
     {
-      "id": "b000066",
+      "id": "b000076",
       "kind": "blank",
-      "start_line": 116,
-      "end_line": 116,
+      "start_line": 143,
+      "end_line": 143,
       "raw": "\n"
     },
     {
-      "id": "b000067",
+      "id": "b000077",
       "kind": "fenced_code",
-      "start_line": 117,
-      "end_line": 139,
+      "start_line": 144,
+      "end_line": 166,
       "raw": "```cpp\n#include <iiGraphicAdjust/iiGraphicAdjust.h>\n#include <array>\n\nstd::array<std::uint32_t, 2> source{0xff808080, 0x804080c0};\nauto image = iiGraphicAdjust::fromArgb32(2, 1, source);\nif (!image) {\n    // Handle image.error().code and image.error().message.\n    return;\n}\n\niiGraphicAdjust::ColorAdjustment adjustment;\nadjustment.exposure = 1.0;\nadjustment.saturation = 0.15;\nauto adjusted = iiGraphicAdjust::adjust(image->view(), adjustment);\nif (!adjusted) return;\n\nauto blurred = iiGraphicAdjust::gaussianBlur(adjusted->view(), 1.5);\nif (!blurred) return;\nauto words = iiGraphicAdjust::toArgb32(blurred->view());\nif (!words) return;\n// Consume *words; the original source has not been modified.\n```\n",
       "language": "cpp",
       "code": "#include <iiGraphicAdjust/iiGraphicAdjust.h>\n#include <array>\n\nstd::array<std::uint32_t, 2> source{0xff808080, 0x804080c0};\nauto image = iiGraphicAdjust::fromArgb32(2, 1, source);\nif (!image) {\n    // Handle image.error().code and image.error().message.\n    return;\n}\n\niiGraphicAdjust::ColorAdjustment adjustment;\nadjustment.exposure = 1.0;\nadjustment.saturation = 0.15;\nauto adjusted = iiGraphicAdjust::adjust(image->view(), adjustment);\nif (!adjusted) return;\n\nauto blurred = iiGraphicAdjust::gaussianBlur(adjusted->view(), 1.5);\nif (!blurred) return;\nauto words = iiGraphicAdjust::toArgb32(blurred->view());\nif (!words) return;\n// Consume *words; the original source has not been modified.\n",
       "closed": true
     },
     {
-      "id": "b000068",
-      "kind": "blank",
-      "start_line": 140,
-      "end_line": 140,
-      "raw": "\n"
-    },
-    {
-      "id": "b000069",
-      "kind": "paragraph",
-      "start_line": 141,
-      "end_line": 141,
-      "raw": "`ImageView` borrows the caller's packed row-major pixels. Keep that storage alive for the complete call and avoid mutating it concurrently. `Image` owns the returned pixels. Public structs are value types without inheritance or GUI objects.\n"
-    },
-    {
-      "id": "b000070",
-      "kind": "blank",
-      "start_line": 142,
-      "end_line": 142,
-      "raw": "\n"
-    },
-    {
-      "id": "b000071",
-      "kind": "heading",
-      "start_line": 143,
-      "end_line": 143,
-      "raw": "## Example\n",
-      "level": 2,
-      "title": "Example"
-    },
-    {
-      "id": "b000072",
-      "kind": "blank",
-      "start_line": 144,
-      "end_line": 144,
-      "raw": "\n"
-    },
-    {
-      "id": "b000073",
-      "kind": "fenced_code",
-      "start_line": 145,
-      "end_line": 150,
-      "raw": "```sh\ncmake -S examples -B build/examples \\\n  -DCMAKE_PREFIX_PATH=\"$HOME/.local/SDK/iiGraphicAdjust;$HOME/.local/SDK/iiFileProvider\"\ncmake --build build/examples\nbuild/examples/iiGraphicAdjustExample resources/adjusted.ppm\n```\n",
-      "language": "sh",
-      "code": "cmake -S examples -B build/examples \\\n  -DCMAKE_PREFIX_PATH=\"$HOME/.local/SDK/iiGraphicAdjust;$HOME/.local/SDK/iiFileProvider\"\ncmake --build build/examples\nbuild/examples/iiGraphicAdjustExample resources/adjusted.ppm\n",
-      "closed": true
-    },
-    {
-      "id": "b000074",
-      "kind": "blank",
-      "start_line": 151,
-      "end_line": 151,
-      "raw": "\n"
-    },
-    {
-      "id": "b000075",
-      "kind": "paragraph",
-      "start_line": 152,
-      "end_line": 152,
-      "raw": "The original example and `iiGraphicAdjustDevelopExample` write real 256×128 adjusted RGB gradients as binary PPM through iiFileProvider. The application links the two independent SDKs explicitly. The development example also applies a radial local adjustment. File encoding is confined to examples; the library processes caller-provided pixels.\n"
-    },
-    {
-      "id": "b000076",
-      "kind": "blank",
-      "start_line": 153,
-      "end_line": 153,
-      "raw": "\n"
-    },
-    {
-      "id": "b000077",
-      "kind": "paragraph",
-      "start_line": 154,
-      "end_line": 154,
-      "raw": "`iiGraphicAdjustLocalCorrectionsExample` computes Kelvin white balance first, then applies that result only through a feathered radial mask with 85% amount:\n"
-    },
-    {
       "id": "b000078",
-      "kind": "blank",
-      "start_line": 155,
-      "end_line": 155,
-      "raw": "\n"
-    },
-    {
-      "id": "b000079",
-      "kind": "fenced_code",
-      "start_line": 156,
-      "end_line": 158,
-      "raw": "```sh\nbuild/examples/iiGraphicAdjustLocalCorrectionsExample resources/local-correction.ppm\n```\n",
-      "language": "sh",
-      "code": "build/examples/iiGraphicAdjustLocalCorrectionsExample resources/local-correction.ppm\n",
-      "closed": true
-    },
-    {
-      "id": "b000080",
-      "kind": "blank",
-      "start_line": 159,
-      "end_line": 159,
-      "raw": "\n"
-    },
-    {
-      "id": "b000081",
-      "kind": "heading",
-      "start_line": 160,
-      "end_line": 160,
-      "raw": "## Scope\n",
-      "level": 2,
-      "title": "Scope"
-    },
-    {
-      "id": "b000082",
-      "kind": "blank",
-      "start_line": 161,
-      "end_line": 161,
-      "raw": "\n"
-    },
-    {
-      "id": "b000083",
-      "kind": "paragraph",
-      "start_line": 162,
-      "end_line": 162,
-      "raw": "Rendered-image functions process normalized sRGB on the CPU. `developRaw()` separately processes unpacked Bayer sensor samples and produces linear sRGB with HDR headroom; a separate `HdrImageView` accepts linear HDR radiance for tone mapping. Premultiplied input, wide-gamut/ICC conversion, encoded RAW/image-file decoding, GPU execution, general vector drawing and text shaping remain outside the contract. Legacy `ColorAdjustment` temperature/tint retain their relative channel-gain semantics; the new `whiteBalance()` uses Kelvin/tint chromatic adaptation. Legacy noise modes are Uniform and Gaussian; `filmGrain()` adds a distinct correlated procedural model. No blue-noise claim is made. `develop()` normalizes between SDR stages and does not retain the reference's RAW scene headroom.\n"
-    },
-    {
-      "id": "b000084",
-      "kind": "blank",
-      "start_line": 163,
-      "end_line": 163,
-      "raw": "\n"
-    },
-    {
-      "id": "b000085",
-      "kind": "paragraph",
-      "start_line": 164,
-      "end_line": 164,
-      "raw": "The module is ready for a caller to use through its installed CMake package. Dreamscapes and existing SDK processing paths are not migrated by creating this package. Cross-platform source portability does not imply a verified Windows, Linux, iOS or Android build.\n"
-    },
-    {
-      "id": "b000086",
-      "kind": "blank",
-      "start_line": 165,
-      "end_line": 165,
-      "raw": "\n"
-    },
-    {
-      "id": "b000087",
-      "kind": "paragraph",
-      "start_line": 166,
-      "end_line": 166,
-      "raw": "See the [filter catalog and contracts](docs/Filters.md), original [API contract](docs/API.md), [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md), [Lightroom development](docs/Lightroom.md), [masked corrections](docs/LocalCorrections.md), [sample-plane kernels](docs/SampleFilters.md), [Photoshop reference coverage](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).\n"
-    },
-    {
-      "id": "b000088",
       "kind": "blank",
       "start_line": 167,
       "end_line": 167,
       "raw": "\n"
     },
     {
-      "id": "b000089",
+      "id": "b000079",
       "kind": "paragraph",
       "start_line": 168,
       "end_line": 168,
-      "raw": "Version 0.6 uses shared-library ABI series 0.6 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.6 for the current public APIs; existing 0.1, 0.2 and 0.3 function behavior is preserved. The current sensor/photo verification is recorded in [PhotoProcessingVerification](docs/PhotoProcessingVerification.md).\n"
+      "raw": "`ImageView` borrows the caller's packed row-major pixels. Keep that storage alive for the complete call and avoid mutating it concurrently. `Image` owns the returned pixels. Public structs are value types without inheritance or GUI objects.\n"
     },
     {
-      "id": "b000090",
+      "id": "b000080",
       "kind": "blank",
       "start_line": 169,
       "end_line": 169,
       "raw": "\n"
     },
     {
-      "id": "b000091",
+      "id": "b000081",
       "kind": "heading",
       "start_line": 170,
       "end_line": 170,
-      "raw": "## License\n",
+      "raw": "## Example\n",
       "level": 2,
-      "title": "License"
+      "title": "Example"
     },
     {
-      "id": "b000092",
+      "id": "b000082",
       "kind": "blank",
       "start_line": 171,
       "end_line": 171,
       "raw": "\n"
     },
     {
-      "id": "b000093",
-      "kind": "paragraph",
+      "id": "b000083",
+      "kind": "fenced_code",
       "start_line": 172,
-      "end_line": 172,
-      "raw": "SPDX-License-Identifier: Apache-2.0\n"
-    },
-    {
-      "id": "b000094",
-      "kind": "blank",
-      "start_line": 173,
-      "end_line": 173,
-      "raw": "\n"
-    },
-    {
-      "id": "b000095",
-      "kind": "paragraph",
-      "start_line": 174,
-      "end_line": 176,
-      "raw": "The original code and documentation in this repository are licensed under the\n[Apache License 2.0](LICENSE). Third-party code, libraries, fonts, tools, and model\nweights retain their respective licenses.\n"
-    },
-    {
-      "id": "b000096",
-      "kind": "blank",
-      "start_line": 177,
       "end_line": 177,
-      "raw": "\n"
+      "raw": "```sh\ncmake -S examples -B build/examples \\\n  -DCMAKE_PREFIX_PATH=\"$HOME/.local/SDK/iiGraphicAdjust;$HOME/.local/SDK/iiFileProvider\"\ncmake --build build/examples\nbuild/examples/iiGraphicAdjustExample resources/adjusted.ppm\n```\n",
+      "language": "sh",
+      "code": "cmake -S examples -B build/examples \\\n  -DCMAKE_PREFIX_PATH=\"$HOME/.local/SDK/iiGraphicAdjust;$HOME/.local/SDK/iiFileProvider\"\ncmake --build build/examples\nbuild/examples/iiGraphicAdjustExample resources/adjusted.ppm\n",
+      "closed": true
     },
     {
-      "id": "b000097",
-      "kind": "html",
+      "id": "b000084",
+      "kind": "blank",
       "start_line": 178,
       "end_line": 178,
-      "raw": "<!-- workspace-docs:readme:start -->\n"
+      "raw": "\n"
     },
     {
-      "id": "b000098",
-      "kind": "heading",
+      "id": "b000085",
+      "kind": "paragraph",
       "start_line": 179,
       "end_line": 179,
-      "raw": "## Documentation entry points\n",
-      "level": 2,
-      "title": "Documentation entry points"
+      "raw": "The original example and `iiGraphicAdjustDevelopExample` write real 256×128 adjusted RGB gradients as binary PPM through iiFileProvider. The application links the two independent SDKs explicitly. The development example also applies a radial local adjustment. File encoding is confined to examples; the library processes caller-provided pixels.\n"
     },
     {
-      "id": "b000099",
+      "id": "b000086",
       "kind": "blank",
       "start_line": 180,
       "end_line": 180,
       "raw": "\n"
     },
     {
-      "id": "b000100",
-      "kind": "list",
+      "id": "b000087",
+      "kind": "paragraph",
       "start_line": 181,
-      "end_line": 184,
+      "end_line": 181,
+      "raw": "`iiGraphicAdjustLocalCorrectionsExample` computes Kelvin white balance first, then applies that result only through a feathered radial mask with 85% amount:\n"
+    },
+    {
+      "id": "b000088",
+      "kind": "blank",
+      "start_line": 182,
+      "end_line": 182,
+      "raw": "\n"
+    },
+    {
+      "id": "b000089",
+      "kind": "fenced_code",
+      "start_line": 183,
+      "end_line": 185,
+      "raw": "```sh\nbuild/examples/iiGraphicAdjustLocalCorrectionsExample resources/local-correction.ppm\n```\n",
+      "language": "sh",
+      "code": "build/examples/iiGraphicAdjustLocalCorrectionsExample resources/local-correction.ppm\n",
+      "closed": true
+    },
+    {
+      "id": "b000090",
+      "kind": "blank",
+      "start_line": 186,
+      "end_line": 186,
+      "raw": "\n"
+    },
+    {
+      "id": "b000091",
+      "kind": "heading",
+      "start_line": 187,
+      "end_line": 187,
+      "raw": "## Scope\n",
+      "level": 2,
+      "title": "Scope"
+    },
+    {
+      "id": "b000092",
+      "kind": "blank",
+      "start_line": 188,
+      "end_line": 188,
+      "raw": "\n"
+    },
+    {
+      "id": "b000093",
+      "kind": "paragraph",
+      "start_line": 189,
+      "end_line": 189,
+      "raw": "Rendered-image functions process normalized sRGB on the CPU. `developRaw()` separately processes unpacked Bayer sensor samples and produces linear sRGB with HDR headroom; a separate `HdrImageView` accepts linear HDR radiance for tone mapping. Premultiplied input, wide-gamut/ICC conversion, encoded RAW/image-file decoding, GPU execution, general vector drawing and text shaping remain outside the contract. Legacy `ColorAdjustment` temperature/tint retain their relative channel-gain semantics; the new `whiteBalance()` uses Kelvin/tint chromatic adaptation. Legacy noise modes are Uniform and Gaussian; `filmGrain()` adds a distinct correlated procedural model. No blue-noise claim is made. `develop()` normalizes between SDR stages and does not retain the reference's RAW scene headroom.\n"
+    },
+    {
+      "id": "b000094",
+      "kind": "blank",
+      "start_line": 190,
+      "end_line": 190,
+      "raw": "\n"
+    },
+    {
+      "id": "b000095",
+      "kind": "paragraph",
+      "start_line": 191,
+      "end_line": 191,
+      "raw": "The module is ready for a caller to use through its installed CMake package. Dreamscapes and existing SDK processing paths are not migrated by creating this package. Cross-platform source portability does not imply a verified Windows, Linux, iOS or Android build.\n"
+    },
+    {
+      "id": "b000096",
+      "kind": "blank",
+      "start_line": 192,
+      "end_line": 192,
+      "raw": "\n"
+    },
+    {
+      "id": "b000097",
+      "kind": "paragraph",
+      "start_line": 193,
+      "end_line": 193,
+      "raw": "See the [filter catalog and contracts](docs/Filters.md), original [API contract](docs/API.md), [tone](docs/Tone.md), [color](docs/Color.md), [mapping/HDR](docs/Mapping.md), [Lightroom development](docs/Lightroom.md), [masked corrections](docs/LocalCorrections.md), [sample-plane kernels](docs/SampleFilters.md), [Photoshop reference coverage](docs/References.md), [architecture](docs/Architecture.md) and [verification](docs/Verification.md).\n"
+    },
+    {
+      "id": "b000098",
+      "kind": "blank",
+      "start_line": 194,
+      "end_line": 194,
+      "raw": "\n"
+    },
+    {
+      "id": "b000099",
+      "kind": "paragraph",
+      "start_line": 195,
+      "end_line": 195,
+      "raw": "Version 0.6 uses shared-library ABI series 0.6 and `SameMinorVersion` CMake compatibility. Rebuild consumers and request package version 0.6 for the current public APIs; existing 0.1, 0.2 and 0.3 function behavior is preserved. The current sensor/photo verification is recorded in [PhotoProcessingVerification](docs/PhotoProcessingVerification.md).\n"
+    },
+    {
+      "id": "b000100",
+      "kind": "blank",
+      "start_line": 196,
+      "end_line": 196,
+      "raw": "\n"
+    },
+    {
+      "id": "b000101",
+      "kind": "heading",
+      "start_line": 197,
+      "end_line": 197,
+      "raw": "## License\n",
+      "level": 2,
+      "title": "License"
+    },
+    {
+      "id": "b000102",
+      "kind": "blank",
+      "start_line": 198,
+      "end_line": 198,
+      "raw": "\n"
+    },
+    {
+      "id": "b000103",
+      "kind": "paragraph",
+      "start_line": 199,
+      "end_line": 199,
+      "raw": "SPDX-License-Identifier: Apache-2.0\n"
+    },
+    {
+      "id": "b000104",
+      "kind": "blank",
+      "start_line": 200,
+      "end_line": 200,
+      "raw": "\n"
+    },
+    {
+      "id": "b000105",
+      "kind": "paragraph",
+      "start_line": 201,
+      "end_line": 203,
+      "raw": "The original code and documentation in this repository are licensed under the\n[Apache License 2.0](LICENSE). Third-party code, libraries, fonts, tools, and model\nweights retain their respective licenses.\n"
+    },
+    {
+      "id": "b000106",
+      "kind": "blank",
+      "start_line": 204,
+      "end_line": 204,
+      "raw": "\n"
+    },
+    {
+      "id": "b000107",
+      "kind": "html",
+      "start_line": 205,
+      "end_line": 205,
+      "raw": "<!-- workspace-docs:readme:start -->\n"
+    },
+    {
+      "id": "b000108",
+      "kind": "heading",
+      "start_line": 206,
+      "end_line": 206,
+      "raw": "## Documentation entry points\n",
+      "level": 2,
+      "title": "Documentation entry points"
+    },
+    {
+      "id": "b000109",
+      "kind": "blank",
+      "start_line": 207,
+      "end_line": 207,
+      "raw": "\n"
+    },
+    {
+      "id": "b000110",
+      "kind": "list",
+      "start_line": 208,
+      "end_line": 211,
       "raw": "- Human overview: this English `README.md`.\n- Agent instructions: [AGENT.md](AGENT.md).\n- Human documentation: [documentation index](docs/README.md).\n- Structured agent documentation: [agent index](docs/agent-index.json).\n",
       "items": [
         {
@@ -926,10 +999,10 @@
       ]
     },
     {
-      "id": "b000101",
+      "id": "b000111",
       "kind": "html",
-      "start_line": 185,
-      "end_line": 185,
+      "start_line": 212,
+      "end_line": 212,
       "raw": "<!-- workspace-docs:readme:end -->\n"
     }
   ],
@@ -951,89 +1024,101 @@
       "start_line": 14
     },
     {
-      "block_id": "b000047",
+      "block_id": "b000049",
       "parent_id": "b000001",
       "level": 2,
       "title": "Build and test",
       "anchor": "build-and-test",
-      "start_line": 85
-    },
-    {
-      "block_id": "b000061",
-      "parent_id": "b000001",
-      "level": 2,
-      "title": "Consume the installed package",
-      "anchor": "consume-the-installed-package",
-      "start_line": 108
+      "start_line": 91
     },
     {
       "block_id": "b000071",
       "parent_id": "b000001",
       "level": 2,
-      "title": "Example",
-      "anchor": "example",
-      "start_line": 143
+      "title": "Consume the installed package",
+      "anchor": "consume-the-installed-package",
+      "start_line": 135
     },
     {
       "block_id": "b000081",
       "parent_id": "b000001",
       "level": 2,
-      "title": "Scope",
-      "anchor": "scope",
-      "start_line": 160
+      "title": "Example",
+      "anchor": "example",
+      "start_line": 170
     },
     {
       "block_id": "b000091",
       "parent_id": "b000001",
       "level": 2,
-      "title": "License",
-      "anchor": "license",
-      "start_line": 170
+      "title": "Scope",
+      "anchor": "scope",
+      "start_line": 187
     },
     {
-      "block_id": "b000098",
+      "block_id": "b000101",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "License",
+      "anchor": "license",
+      "start_line": 197
+    },
+    {
+      "block_id": "b000108",
       "parent_id": "b000001",
       "level": 2,
       "title": "Documentation entry points",
       "anchor": "documentation-entry-points",
-      "start_line": 179
+      "start_line": 206
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
-        "block_id": "b000015",
-        "line": 30,
+        "block_id": "b000017",
+        "line": 36,
         "text": "layout, so **0.6 consumers must rebuild**. Package validation uses an isolated",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000049",
-        "line": 87,
-        "text": "CMake 3.24 or later and a C++23 compiler/standard library with `std::expected` are required. No third-party packages are discovered or linked.",
+        "block_id": "b000051",
+        "line": 93,
+        "text": "CMake 3.24 or later, iiSDKCore 0.20 Contracts, and a C++23 compiler/standard library with `std::expected` are required. No additional third-party packages are discovered or linked.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000061",
+        "line": 120,
+        "text": "configuring. Cross builds must supply the matching target prefix through the",
         "basis": "lexical_match",
         "context": "paragraph"
       }
     ],
     "commands": [
       {
-        "block_id": "b000051",
+        "block_id": "b000055",
+        "language": "sh",
+        "code": "iisdk-builder build --mode library --project . --platform host\n"
+      },
+      {
+        "block_id": "b000059",
         "language": "sh",
         "code": "cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=ON\ncmake --build build --config Release --parallel 2\nctest --test-dir build -C Release --output-on-failure\ncmake --install build --config Release\n"
       },
       {
-        "block_id": "b000057",
+        "block_id": "b000067",
         "language": "sh",
         "code": "python3 -B ../install_all.py --only iiGraphicAdjust --dry-run\npython3 -B ../install_all.py --only iiGraphicAdjust\n"
       },
       {
-        "block_id": "b000073",
+        "block_id": "b000083",
         "language": "sh",
         "code": "cmake -S examples -B build/examples \\\n  -DCMAKE_PREFIX_PATH=\"$HOME/.local/SDK/iiGraphicAdjust;$HOME/.local/SDK/iiFileProvider\"\ncmake --build build/examples\nbuild/examples/iiGraphicAdjustExample resources/adjusted.ppm\n"
       },
       {
-        "block_id": "b000079",
+        "block_id": "b000089",
         "language": "sh",
         "code": "build/examples/iiGraphicAdjustLocalCorrectionsExample resources/local-correction.ppm\n"
       }
@@ -1054,207 +1139,214 @@
         "line": 5
       },
       {
-        "block_id": "b000015",
+        "block_id": "b000013",
+        "label": "advanced editing contracts",
+        "target": "docs/AdvancedEditing.md",
+        "kind": "relative",
+        "line": 20
+      },
+      {
+        "block_id": "b000017",
         "label": "object API and contracts",
         "target": "docs/OperationObjects.md",
         "kind": "relative",
-        "line": 24
+        "line": 30
       },
       {
-        "block_id": "b000015",
+        "block_id": "b000017",
         "label": "complete object inventory",
         "target": "docs/object-catalog.json",
-        "kind": "relative",
-        "line": 25
-      },
-      {
-        "block_id": "b000015",
-        "label": "Adobe coverage and remaining features",
-        "target": "docs/adobe-feature-coverage.json",
-        "kind": "relative",
-        "line": 26
-      },
-      {
-        "block_id": "b000015",
-        "label": "Build layout",
-        "target": "docs/BuildLayout.md",
         "kind": "relative",
         "line": 31
       },
       {
-        "block_id": "b000021",
+        "block_id": "b000017",
+        "label": "Adobe coverage and remaining features",
+        "target": "docs/adobe-feature-coverage.json",
+        "kind": "relative",
+        "line": 32
+      },
+      {
+        "block_id": "b000017",
+        "label": "Build layout",
+        "target": "docs/BuildLayout.md",
+        "kind": "relative",
+        "line": 37
+      },
+      {
+        "block_id": "b000023",
         "label": "masked correction composition",
         "target": "docs/LocalCorrections.md",
         "kind": "relative",
-        "line": 38
+        "line": 44
       },
       {
-        "block_id": "b000021",
+        "block_id": "b000023",
         "label": "recovered sample-plane kernels",
         "target": "docs/SampleFilters.md",
         "kind": "relative",
-        "line": 38
+        "line": 44
       },
       {
-        "block_id": "b000021",
+        "block_id": "b000023",
         "label": "local correction verification",
         "target": "docs/LocalCorrectionsVerification.md",
         "kind": "relative",
-        "line": 38
+        "line": 44
       },
       {
-        "block_id": "b000027",
+        "block_id": "b000029",
         "label": "RAW processing",
         "target": "docs/RawProcessing.md",
         "kind": "relative",
-        "line": 47
+        "line": 53
       },
       {
-        "block_id": "b000027",
+        "block_id": "b000029",
         "label": "photographic operations",
         "target": "docs/PhotoOperations.md",
         "kind": "relative",
-        "line": 47
+        "line": 53
       },
       {
-        "block_id": "b000029",
+        "block_id": "b000031",
         "label": "The complete filter inventory",
         "target": "docs/Filters.md",
         "kind": "relative",
-        "line": 49
+        "line": 55
       },
       {
-        "block_id": "b000029",
+        "block_id": "b000031",
         "label": "machine-readable catalog",
         "target": "docs/filter-catalog.json",
         "kind": "relative",
-        "line": 49
+        "line": 55
       },
       {
-        "block_id": "b000033",
+        "block_id": "b000035",
         "label": "Lightroom development",
         "target": "docs/Lightroom.md",
         "kind": "relative",
-        "line": 58
+        "line": 64
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000097",
         "label": "filter catalog and contracts",
         "target": "docs/Filters.md",
         "kind": "relative",
-        "line": 166
+        "line": 193
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000097",
         "label": "API contract",
         "target": "docs/API.md",
         "kind": "relative",
-        "line": 166
+        "line": 193
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000097",
         "label": "tone",
         "target": "docs/Tone.md",
         "kind": "relative",
-        "line": 166
+        "line": 193
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000097",
         "label": "color",
         "target": "docs/Color.md",
         "kind": "relative",
-        "line": 166
+        "line": 193
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000097",
         "label": "mapping/HDR",
         "target": "docs/Mapping.md",
         "kind": "relative",
-        "line": 166
+        "line": 193
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000097",
         "label": "Lightroom development",
         "target": "docs/Lightroom.md",
         "kind": "relative",
-        "line": 166
+        "line": 193
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000097",
         "label": "masked corrections",
         "target": "docs/LocalCorrections.md",
         "kind": "relative",
-        "line": 166
+        "line": 193
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000097",
         "label": "sample-plane kernels",
         "target": "docs/SampleFilters.md",
         "kind": "relative",
-        "line": 166
+        "line": 193
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000097",
         "label": "Photoshop reference coverage",
         "target": "docs/References.md",
         "kind": "relative",
-        "line": 166
+        "line": 193
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000097",
         "label": "architecture",
         "target": "docs/Architecture.md",
         "kind": "relative",
-        "line": 166
+        "line": 193
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000097",
         "label": "verification",
         "target": "docs/Verification.md",
         "kind": "relative",
-        "line": 166
+        "line": 193
       },
       {
-        "block_id": "b000089",
+        "block_id": "b000099",
         "label": "PhotoProcessingVerification",
         "target": "docs/PhotoProcessingVerification.md",
         "kind": "relative",
-        "line": 168
+        "line": 195
       },
       {
-        "block_id": "b000095",
+        "block_id": "b000105",
         "label": "Apache License 2.0",
         "target": "LICENSE",
         "kind": "relative",
-        "line": 175
+        "line": 202
       },
       {
-        "block_id": "b000100",
+        "block_id": "b000110",
         "label": "AGENT.md",
         "target": "AGENT.md",
         "kind": "relative",
-        "line": 182
+        "line": 209
       },
       {
-        "block_id": "b000100",
+        "block_id": "b000110",
         "label": "documentation index",
         "target": "docs/README.md",
         "kind": "relative",
-        "line": 183
+        "line": 210
       },
       {
-        "block_id": "b000100",
+        "block_id": "b000110",
         "label": "agent index",
         "target": "docs/agent-index.json",
         "kind": "relative",
-        "line": 184
+        "line": 211
       }
     ],
     "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",
-    "version": "1.0.0",
+    "version": "compat-fallback-1",
     "profile": "lossless-blocks-v1",
     "derived": true
   }

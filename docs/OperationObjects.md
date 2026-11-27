@@ -16,23 +16,21 @@ linear-light Lightroom operation.
 
 ## Object families
 
-| Headers | State and responsibility |
-| --- | --- |
-| `ToneObjects.h`, `ColorObjects.h`, `AdjustmentsObjects.h` | Brightness/Contrast, Levels, Curves, Exposure, automatic tonal correction, hue/saturation, Vibrance, selective color, channel mixing, monochrome, color matching and replacement |
-| `MappingObjects.h`, `HdrObjects.h` | Gradient maps, owned 1D/3D LUTs, SDR or linear HDR tone mapping |
-| `DevelopToneObjects.h`, `DevelopColorObjects.h`, `DevelopEffectsObjects.h`, `DevelopObjects.h` | Kelvin WB, light, curves, perceptual color, calibration, detail/effects and explicit SDR development composition |
-| `DevelopFeatureObjects.h` | Independently usable Texture, Clarity, Dehaze, eight-band Color Mixer, Point Color, Color Grading, monochrome mixer, Vibrance, Sharpening, luminance/color NR and Defringe |
-| `BlurFiltersObjects.h`, `OwnedResourceObjects.h` | Blur/sharpen menu algorithms, blur pins/paths and owned depth-map Lens Blur |
-| `DistortionFiltersObjects.h`, `MeshFiltersObjects.h` | Owned displacement maps, shear points, Liquify strokes, wide-angle constraints, ARAP puppet pins and perspective planes |
-| `UtilityFiltersObjects.h`, `PixelFiltersObjects.h` | Noise, morphology, convolution, guided kernels, video helpers, pixelation and stylization |
-| `GalleryFiltersObjects.h`, `RenderFiltersObjects.h` | 47 separate Gallery effects, ordered Gallery settings, procedural textures/lights/flame/tree/frame |
-| `LensFilterObjects.h`, `OpticsObjects.h`, `CameraRawFilterObjects.h` | Supplied lens coefficients, CA/defringe, rendered Camera Raw controls |
-| `LightcraftFiltersObjects.h` | 22 named look recipes, 41 named presets, selected look/preset objects and four resamplers |
-| `RetouchFiltersObjects.h`, `DiagnosticFiltersObjects.h` | Clone/Heal/Remove spots, red/pet eye, spot inspection, owned mask previews and proof-space warnings |
-| `MaskObjects.h`, `AnalysisObjects.h` | Owned mask production/combination/refinement, WB/Light/monochrome estimation, histograms, CA/source/pupil/dust analysis and solved geometry |
-| `CorrectionExtensionsObjects.h`, `PhotoOperationsObjects.h`, `LocalCorrectionsObjects.h` | Flat-field correction, color unmixing, solid/gradient/pattern fill, orientation/crop and owned masked RGB correction |
-| `SampleFilterObjects.h` | Typed recovered Average/fill/Solarize over explicit sample-plane inputs and mutable outputs |
-| `RawObjects.h`, `ResourceBuilderObjects.h` | Unpacked Bayer development/rendering, owned Cube text, LUT construction, look/preset/lens recipes and plane analysis |
+- Headers: `ToneObjects.h`, `ColorObjects.h`, `AdjustmentsObjects.h`; State and responsibility: Brightness/Contrast, Levels, Curves, Exposure, automatic tonal correction, hue/saturation, Vibrance, selective color, channel mixing, monochrome, color matching and replacement
+- Headers: `MappingObjects.h`, `HdrObjects.h`; State and responsibility: Gradient maps, owned 1D/3D LUTs, SDR or linear HDR tone mapping
+- Headers: `DevelopToneObjects.h`, `DevelopColorObjects.h`, `DevelopEffectsObjects.h`, `DevelopObjects.h`; State and responsibility: Kelvin WB, light, curves, perceptual color, calibration, detail/effects and explicit SDR development composition
+- Headers: `DevelopFeatureObjects.h`; State and responsibility: Independently usable Texture, Clarity, Dehaze, eight-band Color Mixer, Point Color, Color Grading, monochrome mixer, Vibrance, Sharpening, luminance/color NR and Defringe
+- Headers: `BlurFiltersObjects.h`, `OwnedResourceObjects.h`; State and responsibility: Blur/sharpen menu algorithms, blur pins/paths and owned depth-map Lens Blur
+- Headers: `DistortionFiltersObjects.h`, `MeshFiltersObjects.h`; State and responsibility: Owned displacement maps, shear points, Liquify strokes, wide-angle constraints, ARAP puppet pins and perspective planes
+- Headers: `UtilityFiltersObjects.h`, `PixelFiltersObjects.h`; State and responsibility: Noise, morphology, convolution, guided kernels, video helpers, pixelation and stylization
+- Headers: `GalleryFiltersObjects.h`, `RenderFiltersObjects.h`; State and responsibility: 47 separate Gallery effects, ordered Gallery settings, procedural textures/lights/flame/tree/frame
+- Headers: `LensFilterObjects.h`, `OpticsObjects.h`, `CameraRawFilterObjects.h`; State and responsibility: Supplied lens coefficients, CA/defringe, rendered Camera Raw controls
+- Headers: `LightcraftFiltersObjects.h`; State and responsibility: 22 named look recipes, 41 named presets, selected look/preset objects and four resamplers
+- Headers: `RetouchFiltersObjects.h`, `DiagnosticFiltersObjects.h`; State and responsibility: Clone/Heal/Remove spots, red/pet eye, spot inspection, owned mask previews and proof-space warnings
+- Headers: `MaskObjects.h`, `AnalysisObjects.h`; State and responsibility: Owned mask production/combination/refinement, WB/Light/monochrome estimation, histograms, CA/source/pupil/dust analysis and solved geometry
+- Headers: `CorrectionExtensionsObjects.h`, `PhotoOperationsObjects.h`, `LocalCorrectionsObjects.h`; State and responsibility: Flat-field correction, color unmixing, solid/gradient/pattern fill, orientation/crop and owned masked RGB correction
+- Headers: `SampleFilterObjects.h`; State and responsibility: Typed recovered Average/fill/Solarize over explicit sample-plane inputs and mutable outputs
+- Headers: `RawObjects.h`, `ResourceBuilderObjects.h`; State and responsibility: Unpacked Bayer development/rendering, owned Cube text, LUT construction, look/preset/lens recipes and plane analysis
 
 The complete type/function/header/ID mapping is installed as
 [`object-catalog.json`](object-catalog.json). `operationCatalog()` returns stable

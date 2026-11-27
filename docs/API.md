@@ -8,14 +8,12 @@ Include `<iiGraphicAdjust/iiGraphicAdjust.h>` for the complete API, or the indep
 
 Every operation validates dimensions, multiplication/container capacity, exact input length and finite `[0,1]` channels before processing. Every numeric setting must be finite and within its documented range. Invalid enumeration values are rejected, including on neutral calls. All operations return `Result<T>`, an alias for `std::expected<T, Error>`; error messages have static lifetime.
 
-| Error code | Meaning |
-| --- | --- |
-| `InvalidDimensions` | Empty dimensions or overflow/container capacity violation |
-| `InvalidBuffer` | Pixel/byte count differs from the dimensions |
-| `InvalidPixel` | Nonfinite or non-normalized RGBA input |
-| `InvalidParameter` | Nonfinite/out-of-range settings or unknown enum |
-| `SizeMismatch` | Both blend inputs are valid but have different dimensions |
-| `AllocationFailure` | Temporary/output allocation failed or exceeded container limits |
+- Error code: `InvalidDimensions`; Meaning: Empty dimensions or overflow/container capacity violation
+- Error code: `InvalidBuffer`; Meaning: Pixel/byte count differs from the dimensions
+- Error code: `InvalidPixel`; Meaning: Nonfinite or non-normalized RGBA input
+- Error code: `InvalidParameter`; Meaning: Nonfinite/out-of-range settings or unknown enum
+- Error code: `SizeMismatch`; Meaning: Both blend inputs are valid but have different dimensions
+- Error code: `AllocationFailure`; Meaning: Temporary/output allocation failed or exceeded container limits
 
 Invalid spans that do not refer to live readable storage cannot be detected by the SDK; maintaining the span's lifetime is the caller's responsibility. Exceptions from storage allocation are translated to `AllocationFailure`. The SDK never mutates inputs or keeps a view beyond the synchronous call.
 
@@ -31,16 +29,14 @@ Invalid spans that do not refer to live readable storage cannot be detected by t
 4. Apply encoded RGB power `1 / gamma`.
 5. Multiply the original alpha by opacity.
 
-| Field | Default | Valid range |
-| --- | --- | --- |
-| exposure (stops) | 0 | `[-16,16]` |
-| brightness | 0 | `[-1,1]` |
-| contrast | 0 | `[-1,1]` |
-| saturation | 0 | `[-1,1]` |
-| gamma | 1 | `[0.01,100]` |
-| temperature | 0 | `[-1,1]` |
-| tint | 0 | `[-1,1]` |
-| opacity | 1 | `[0,1]` |
+- Field: exposure (stops); Default: 0; Valid range: `[-16,16]`
+- Field: brightness; Default: 0; Valid range: `[-1,1]`
+- Field: contrast; Default: 0; Valid range: `[-1,1]`
+- Field: saturation; Default: 0; Valid range: `[-1,1]`
+- Field: gamma; Default: 1; Valid range: `[0.01,100]`
+- Field: temperature; Default: 0; Valid range: `[-1,1]`
+- Field: tint; Default: 0; Valid range: `[-1,1]`
+- Field: opacity; Default: 1; Valid range: `[0,1]`
 
 Positive temperature increases red gain to `1+0.25*temperature` and decreases blue gain to `1-0.25*temperature`. Positive tint increases green gain to `1+0.25*tint`. These values are relative effects rather than Kelvin or a color-profile white-balance model. Zero-alpha RGB is kept unchanged. Default settings produce an exact detached copy.
 

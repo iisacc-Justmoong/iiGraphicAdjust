@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/CameraRawFilter.md",
-    "sha256": "1b87768f3b55400398822b3bed8926b751670c951313305c2828b938d1e0eb28",
-    "bytes": 9708,
-    "line_count": 77,
+    "sha256": "ae79c8728eede5137c47752acf165a2d6462fce30b68cb51a6f7ccd69cab2a99",
+    "bytes": 10499,
+    "line_count": 75,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -217,177 +217,172 @@
     },
     {
       "id": "b000021",
-      "kind": "table",
       "start_line": 29,
-      "end_line": 51,
-      "raw": "| Fields | Defaults | Accepted range or meaning |\n| --- | --- | --- |\n| `temperature`, `tint` | 0, 0 | Relative sliders, `[-100,100]` |\n| `exposure` | 0 | `[-5,5]` stops |\n| `contrast`, `highlights`, `shadows`, `whites`, `blacks` | 0 | `[-100,100]` |\n| `texture`, `clarity`, `dehaze`, `vibrance`, `saturation` | 0 | `[-100,100]` |\n| `curveHighlights`, `curveLights`, `curveDarks`, `curveShadows` | 0 | `[-100,100]` |\n| `curveSplits` | `{25,50,75}` | Each `[5,95]`, strictly increasing |\n| `pointCurve`, `pointCurveRed`, `pointCurveGreen`, `pointCurveBlue` | Empty | Empty or 2–16 `[input,output]` pairs, each `[0,255]`, input gap at least 1 |\n| `hslHue`, `hslSaturation`, `hslLuminance` | Eight zeroes each | `[-100,100]`, in red/orange/yellow/green/aqua/blue/purple/magenta order |\n| `gradeShadows`, `gradeMidtones`, `gradeHighlights`, `gradeGlobal` | Neutral wheels | Hue `[0,360]`, saturation `[0,100]`, luminance `[-100,100]` |\n| `gradeBlending`, `gradeBalance` | 50, 0 | `[0,100]`, `[-100,100]` |\n| `sharpenAmount` | 0 | `[0,150]` |\n| `sharpenRadius` | 1 | `[.5,3]` pixels before Pixel Scale |\n| `sharpenDetail`, `sharpenMasking` | 25, 0 | `[0,100]` |\n| `noiseLuminance`, `noiseLuminanceDetail` | 0, 50 | `[0,100]` |\n| `noiseColor`, `noiseColorDetail` | 0, 50 | `[0,100]` |\n| `grainAmount`, `grainSize`, `grainRoughness` | 0, 25, 50 | `[0,100]` |\n| `vignetteAmount`, `vignetteRoundness` | 0, 0 | `[-100,100]` |\n| `vignetteMidpoint`, `vignetteFeather`, `vignetteHighlights` | 50, 50, 0 | `[0,100]` |\n| `vignetteStyle` | `HighlightPriority` | One of the three enum values |\n| `seed` | 0 | Unsigned 32-bit grain seed |\n| `pixelScale` | 1 | `[.01,1]`, scales detail radii and preview grain coordinates |\n",
-      "columns": [
-        "Fields",
-        "Defaults",
-        "Accepted range or meaning"
-      ],
-      "rows": [
-        [
-          "`temperature`, `tint`",
-          "0, 0",
-          "Relative sliders, `[-100,100]`"
-        ],
-        [
-          "`exposure`",
-          "0",
-          "`[-5,5]` stops"
-        ],
-        [
-          "`contrast`, `highlights`, `shadows`, `whites`, `blacks`",
-          "0",
-          "`[-100,100]`"
-        ],
-        [
-          "`texture`, `clarity`, `dehaze`, `vibrance`, `saturation`",
-          "0",
-          "`[-100,100]`"
-        ],
-        [
-          "`curveHighlights`, `curveLights`, `curveDarks`, `curveShadows`",
-          "0",
-          "`[-100,100]`"
-        ],
-        [
-          "`curveSplits`",
-          "`{25,50,75}`",
-          "Each `[5,95]`, strictly increasing"
-        ],
-        [
-          "`pointCurve`, `pointCurveRed`, `pointCurveGreen`, `pointCurveBlue`",
-          "Empty",
-          "Empty or 2–16 `[input,output]` pairs, each `[0,255]`, input gap at least 1"
-        ],
-        [
-          "`hslHue`, `hslSaturation`, `hslLuminance`",
-          "Eight zeroes each",
-          "`[-100,100]`, in red/orange/yellow/green/aqua/blue/purple/magenta order"
-        ],
-        [
-          "`gradeShadows`, `gradeMidtones`, `gradeHighlights`, `gradeGlobal`",
-          "Neutral wheels",
-          "Hue `[0,360]`, saturation `[0,100]`, luminance `[-100,100]`"
-        ],
-        [
-          "`gradeBlending`, `gradeBalance`",
-          "50, 0",
-          "`[0,100]`, `[-100,100]`"
-        ],
-        [
-          "`sharpenAmount`",
-          "0",
-          "`[0,150]`"
-        ],
-        [
-          "`sharpenRadius`",
-          "1",
-          "`[.5,3]` pixels before Pixel Scale"
-        ],
-        [
-          "`sharpenDetail`, `sharpenMasking`",
-          "25, 0",
-          "`[0,100]`"
-        ],
-        [
-          "`noiseLuminance`, `noiseLuminanceDetail`",
-          "0, 50",
-          "`[0,100]`"
-        ],
-        [
-          "`noiseColor`, `noiseColorDetail`",
-          "0, 50",
-          "`[0,100]`"
-        ],
-        [
-          "`grainAmount`, `grainSize`, `grainRoughness`",
-          "0, 25, 50",
-          "`[0,100]`"
-        ],
-        [
-          "`vignetteAmount`, `vignetteRoundness`",
-          "0, 0",
-          "`[-100,100]`"
-        ],
-        [
-          "`vignetteMidpoint`, `vignetteFeather`, `vignetteHighlights`",
-          "50, 50, 0",
-          "`[0,100]`"
-        ],
-        [
-          "`vignetteStyle`",
-          "`HighlightPriority`",
-          "One of the three enum values"
-        ],
-        [
-          "`seed`",
-          "0",
-          "Unsigned 32-bit grain seed"
-        ],
-        [
-          "`pixelScale`",
-          "1",
-          "`[.01,1]`, scales detail radii and preview grain coordinates"
-        ]
+      "end_line": 49,
+      "raw": "- Fields: `temperature`, `tint`; Defaults: 0, 0; Accepted range or meaning: Relative sliders, `[-100,100]`\n- Fields: `exposure`; Defaults: 0; Accepted range or meaning: `[-5,5]` stops\n- Fields: `contrast`, `highlights`, `shadows`, `whites`, `blacks`; Defaults: 0; Accepted range or meaning: `[-100,100]`\n- Fields: `texture`, `clarity`, `dehaze`, `vibrance`, `saturation`; Defaults: 0; Accepted range or meaning: `[-100,100]`\n- Fields: `curveHighlights`, `curveLights`, `curveDarks`, `curveShadows`; Defaults: 0; Accepted range or meaning: `[-100,100]`\n- Fields: `curveSplits`; Defaults: `{25,50,75}`; Accepted range or meaning: Each `[5,95]`, strictly increasing\n- Fields: `pointCurve`, `pointCurveRed`, `pointCurveGreen`, `pointCurveBlue`; Defaults: Empty; Accepted range or meaning: Empty or 2–16 `[input,output]` pairs, each `[0,255]`, input gap at least 1\n- Fields: `hslHue`, `hslSaturation`, `hslLuminance`; Defaults: Eight zeroes each; Accepted range or meaning: `[-100,100]`, in red/orange/yellow/green/aqua/blue/purple/magenta order\n- Fields: `gradeShadows`, `gradeMidtones`, `gradeHighlights`, `gradeGlobal`; Defaults: Neutral wheels; Accepted range or meaning: Hue `[0,360]`, saturation `[0,100]`, luminance `[-100,100]`\n- Fields: `gradeBlending`, `gradeBalance`; Defaults: 50, 0; Accepted range or meaning: `[0,100]`, `[-100,100]`\n- Fields: `sharpenAmount`; Defaults: 0; Accepted range or meaning: `[0,150]`\n- Fields: `sharpenRadius`; Defaults: 1; Accepted range or meaning: `[.5,3]` pixels before Pixel Scale\n- Fields: `sharpenDetail`, `sharpenMasking`; Defaults: 25, 0; Accepted range or meaning: `[0,100]`\n- Fields: `noiseLuminance`, `noiseLuminanceDetail`; Defaults: 0, 50; Accepted range or meaning: `[0,100]`\n- Fields: `noiseColor`, `noiseColorDetail`; Defaults: 0, 50; Accepted range or meaning: `[0,100]`\n- Fields: `grainAmount`, `grainSize`, `grainRoughness`; Defaults: 0, 25, 50; Accepted range or meaning: `[0,100]`\n- Fields: `vignetteAmount`, `vignetteRoundness`; Defaults: 0, 0; Accepted range or meaning: `[-100,100]`\n- Fields: `vignetteMidpoint`, `vignetteFeather`, `vignetteHighlights`; Defaults: 50, 50, 0; Accepted range or meaning: `[0,100]`\n- Fields: `vignetteStyle`; Defaults: `HighlightPriority`; Accepted range or meaning: One of the three enum values\n- Fields: `seed`; Defaults: 0; Accepted range or meaning: Unsigned 32-bit grain seed\n- Fields: `pixelScale`; Defaults: 1; Accepted range or meaning: `[.01,1]`, scales detail radii and preview grain coordinates\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Fields: `temperature`, `tint`; Defaults: 0, 0; Accepted range or meaning: Relative sliders, `[-100,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `exposure`; Defaults: 0; Accepted range or meaning: `[-5,5]` stops",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `contrast`, `highlights`, `shadows`, `whites`, `blacks`; Defaults: 0; Accepted range or meaning: `[-100,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `texture`, `clarity`, `dehaze`, `vibrance`, `saturation`; Defaults: 0; Accepted range or meaning: `[-100,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `curveHighlights`, `curveLights`, `curveDarks`, `curveShadows`; Defaults: 0; Accepted range or meaning: `[-100,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `curveSplits`; Defaults: `{25,50,75}`; Accepted range or meaning: Each `[5,95]`, strictly increasing",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `pointCurve`, `pointCurveRed`, `pointCurveGreen`, `pointCurveBlue`; Defaults: Empty; Accepted range or meaning: Empty or 2–16 `[input,output]` pairs, each `[0,255]`, input gap at least 1",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `hslHue`, `hslSaturation`, `hslLuminance`; Defaults: Eight zeroes each; Accepted range or meaning: `[-100,100]`, in red/orange/yellow/green/aqua/blue/purple/magenta order",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `gradeShadows`, `gradeMidtones`, `gradeHighlights`, `gradeGlobal`; Defaults: Neutral wheels; Accepted range or meaning: Hue `[0,360]`, saturation `[0,100]`, luminance `[-100,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `gradeBlending`, `gradeBalance`; Defaults: 50, 0; Accepted range or meaning: `[0,100]`, `[-100,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `sharpenAmount`; Defaults: 0; Accepted range or meaning: `[0,150]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `sharpenRadius`; Defaults: 1; Accepted range or meaning: `[.5,3]` pixels before Pixel Scale",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `sharpenDetail`, `sharpenMasking`; Defaults: 25, 0; Accepted range or meaning: `[0,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `noiseLuminance`, `noiseLuminanceDetail`; Defaults: 0, 50; Accepted range or meaning: `[0,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `noiseColor`, `noiseColorDetail`; Defaults: 0, 50; Accepted range or meaning: `[0,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `grainAmount`, `grainSize`, `grainRoughness`; Defaults: 0, 25, 50; Accepted range or meaning: `[0,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `vignetteAmount`, `vignetteRoundness`; Defaults: 0, 0; Accepted range or meaning: `[-100,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `vignetteMidpoint`, `vignetteFeather`, `vignetteHighlights`; Defaults: 50, 50, 0; Accepted range or meaning: `[0,100]`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `vignetteStyle`; Defaults: `HighlightPriority`; Accepted range or meaning: One of the three enum values",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `seed`; Defaults: 0; Accepted range or meaning: Unsigned 32-bit grain seed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Fields: `pixelScale`; Defaults: 1; Accepted range or meaning: `[.01,1]`, scales detail radii and preview grain coordinates",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000022",
+      "kind": "blank",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "Every floating parameter must be finite, including inactive dependent controls. Curves require ascending input coordinates; this public API does not accept malformed legacy saved curves. Y coordinates may descend, as the reference's validator allows. Empty curves and points that lie entirely on the identity diagonal are treated as linear, matching the reference's stage-neutral rule. Unknown style enums and values outside the ranges are rejected with `InvalidParameter` rather than clamped silently.\n"
+    },
+    {
+      "id": "b000024",
       "kind": "blank",
       "start_line": 52,
       "end_line": 52,
       "raw": "\n"
     },
     {
-      "id": "b000023",
+      "id": "b000025",
       "kind": "paragraph",
       "start_line": 53,
       "end_line": 53,
-      "raw": "Every floating parameter must be finite, including inactive dependent controls. Curves require ascending input coordinates; this public API does not accept malformed legacy saved curves. Y coordinates may descend, as the reference's validator allows. Empty curves and points that lie entirely on the identity diagonal are treated as linear, matching the reference's stage-neutral rule. Unknown style enums and values outside the ranges are rejected with `InvalidParameter` rather than clamped silently.\n"
+      "raw": "The reference CameraRaw settings contain no Luminance NR Contrast or Color Smoothness field. Those controls are not exposed here. They also do not contain a RAW decoder, camera-profile/LUT setting, B&W treatment, optics stage, masks or retouch strokes. Other SDK modules provide those separate operations where implemented.\n"
     },
     {
-      "id": "b000024",
+      "id": "b000026",
       "kind": "blank",
       "start_line": 54,
       "end_line": 54,
       "raw": "\n"
     },
     {
-      "id": "b000025",
+      "id": "b000027",
       "kind": "paragraph",
       "start_line": 55,
       "end_line": 55,
-      "raw": "The reference CameraRaw settings contain no Luminance NR Contrast or Color Smoothness field. Those controls are not exposed here. They also do not contain a RAW decoder, camera-profile/LUT setting, B&W treatment, optics stage, masks or retouch strokes. Other SDK modules provide those separate operations where implemented.\n"
+      "raw": "Input dimensions must be nonzero, each axis at most 65536 and total pixels at most `64*1024*1024`. The image buffer must have exactly `width*height` normalized finite RGBA pixels. Dimensions and multiplication overflow are checked before allocation. Allocation failures return `AllocationFailure`. Neutral settings return an exact detached copy after validation.\n"
     },
     {
-      "id": "b000026",
+      "id": "b000028",
       "kind": "blank",
       "start_line": 56,
       "end_line": 56,
       "raw": "\n"
     },
     {
-      "id": "b000027",
-      "kind": "paragraph",
-      "start_line": 57,
-      "end_line": 57,
-      "raw": "Input dimensions must be nonzero, each axis at most 65536 and total pixels at most `64*1024*1024`. The image buffer must have exactly `width*height` normalized finite RGBA pixels. Dimensions and multiplication overflow are checked before allocation. Allocation failures return `AllocationFailure`. Neutral settings return an exact detached copy after validation.\n"
-    },
-    {
-      "id": "b000028",
-      "kind": "blank",
-      "start_line": 58,
-      "end_line": 58,
-      "raw": "\n"
-    },
-    {
       "id": "b000029",
       "kind": "fenced_code",
-      "start_line": 59,
-      "end_line": 71,
+      "start_line": 57,
+      "end_line": 69,
       "raw": "```cpp\n#include <iiGraphicAdjust/CameraRawFilter.h>\nusing namespace iiGraphicAdjust;\nCameraRawOptions settings;\nsettings.temperature = 20; // Relative warmth, not 20 K.\nsettings.exposure = .5;\nsettings.sharpenAmount = 35;\nsettings.sharpenRadius = .5;\nsettings.sharpenDetail = 60;\nsettings.noiseLuminance = 20;\nsettings.pointCurve = {{0,10},{64,55},{192,205},{255,255}};\nauto result = cameraRawFilter(source.view(), settings);\n```\n",
       "language": "cpp",
       "code": "#include <iiGraphicAdjust/CameraRawFilter.h>\nusing namespace iiGraphicAdjust;\nCameraRawOptions settings;\nsettings.temperature = 20; // Relative warmth, not 20 K.\nsettings.exposure = .5;\nsettings.sharpenAmount = 35;\nsettings.sharpenRadius = .5;\nsettings.sharpenDetail = 60;\nsettings.noiseLuminance = 20;\nsettings.pointCurve = {{0,10},{64,55},{192,205},{255,255}};\nauto result = cameraRawFilter(source.view(), settings);\n",
@@ -396,15 +391,15 @@
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 72,
-      "end_line": 72,
+      "start_line": 70,
+      "end_line": 70,
       "raw": "\n"
     },
     {
       "id": "b000031",
       "kind": "heading",
-      "start_line": 73,
-      "end_line": 73,
+      "start_line": 71,
+      "end_line": 71,
       "raw": "## Verification\n",
       "level": 2,
       "title": "Verification"
@@ -412,29 +407,29 @@
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 74,
-      "end_line": 74,
+      "start_line": 72,
+      "end_line": 72,
       "raw": "\n"
     },
     {
       "id": "b000033",
       "kind": "paragraph",
-      "start_line": 75,
-      "end_line": 75,
+      "start_line": 73,
+      "end_line": 73,
       "raw": "`tests/camera_raw_filter.cpp` supports `oracle`, `basic`, `color`, `detail`, `effects`, `validation`, `invariants` and `all` groups. It contains 35 numeric cases produced by the pinned Rust `camera_raw::develop` on an opaque 17×11 fixture, with five sampled pixels per case. The standalone Rust oracle only substitutes sequential workers and removes serialization attributes; its processing formulas are the upstream implementation. The source and execution log are retained under `build/camera-raw-upstream-oracle.rs` and `build/camera-raw-upstream-oracle.log` for reproduction. The test embeds fixed values and does not depend on a Rust compiler at test time.\n"
     },
     {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 76,
-      "end_line": 76,
+      "start_line": 74,
+      "end_line": 74,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "paragraph",
-      "start_line": 77,
-      "end_line": 77,
+      "start_line": 75,
+      "end_line": 75,
       "raw": "Additional checks cover neutral identity, one-stop exposure, relative WB, intermediate over-range preservation, all four point curves and all eight HSL bands, curve splits, grading blending/balance, real Radius `.5` sharpening, active Detail/Masking and both NR Detail controls, every vignette style/control, grain parameters and seed, every scalar's NaN validation, all curve channels' malformed inputs, invalid dimensions/buffers, preserved alpha, hidden-RGB independence for all reference cases and deterministic combined-parameter finite-output trials.\n"
     }
   ],
@@ -469,28 +464,28 @@
       "level": 2,
       "title": "Verification",
       "anchor": "verification",
-      "start_line": 73
+      "start_line": 71
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
         "block_id": "b000023",
-        "line": 53,
+        "line": 51,
         "text": "Every floating parameter must be finite, including inactive dependent controls. Curves require ascending input coordinates; this public API does not accept malformed legacy saved curves. Y coordinates may descend, as the reference's validator allows. Empty curves and points that lie entirely on the identity diagonal are treated as linear, matching the reference's stage-neutral rule. Unknown style enums and values outside the ranges are rejected with `InvalidParameter` rather than clamped silently.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000025",
-        "line": 55,
+        "line": 53,
         "text": "The reference CameraRaw settings contain no Luminance NR Contrast or Color Smoothness field. Those controls are not exposed here. They also do not contain a RAW decoder, camera-profile/LUT setting, B&W treatment, optics stage, masks or retouch strokes. Other SDK modules provide those separate operations where implemented.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000027",
-        "line": 57,
+        "line": 55,
         "text": "Input dimensions must be nonzero, each axis at most 65536 and total pixels at most `64*1024*1024`. The image buffer must have exactly `width*height` normalized finite RGBA pixels. Dimensions and multiplication overflow are checked before allocation. Allocation failures return `AllocationFailure`. Neutral settings return an exact detached copy after validation.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -513,123 +508,7 @@
         "line": 23
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000021",
-        "columns": [
-          "Fields",
-          "Defaults",
-          "Accepted range or meaning"
-        ],
-        "rows": [
-          [
-            "`temperature`, `tint`",
-            "0, 0",
-            "Relative sliders, `[-100,100]`"
-          ],
-          [
-            "`exposure`",
-            "0",
-            "`[-5,5]` stops"
-          ],
-          [
-            "`contrast`, `highlights`, `shadows`, `whites`, `blacks`",
-            "0",
-            "`[-100,100]`"
-          ],
-          [
-            "`texture`, `clarity`, `dehaze`, `vibrance`, `saturation`",
-            "0",
-            "`[-100,100]`"
-          ],
-          [
-            "`curveHighlights`, `curveLights`, `curveDarks`, `curveShadows`",
-            "0",
-            "`[-100,100]`"
-          ],
-          [
-            "`curveSplits`",
-            "`{25,50,75}`",
-            "Each `[5,95]`, strictly increasing"
-          ],
-          [
-            "`pointCurve`, `pointCurveRed`, `pointCurveGreen`, `pointCurveBlue`",
-            "Empty",
-            "Empty or 2–16 `[input,output]` pairs, each `[0,255]`, input gap at least 1"
-          ],
-          [
-            "`hslHue`, `hslSaturation`, `hslLuminance`",
-            "Eight zeroes each",
-            "`[-100,100]`, in red/orange/yellow/green/aqua/blue/purple/magenta order"
-          ],
-          [
-            "`gradeShadows`, `gradeMidtones`, `gradeHighlights`, `gradeGlobal`",
-            "Neutral wheels",
-            "Hue `[0,360]`, saturation `[0,100]`, luminance `[-100,100]`"
-          ],
-          [
-            "`gradeBlending`, `gradeBalance`",
-            "50, 0",
-            "`[0,100]`, `[-100,100]`"
-          ],
-          [
-            "`sharpenAmount`",
-            "0",
-            "`[0,150]`"
-          ],
-          [
-            "`sharpenRadius`",
-            "1",
-            "`[.5,3]` pixels before Pixel Scale"
-          ],
-          [
-            "`sharpenDetail`, `sharpenMasking`",
-            "25, 0",
-            "`[0,100]`"
-          ],
-          [
-            "`noiseLuminance`, `noiseLuminanceDetail`",
-            "0, 50",
-            "`[0,100]`"
-          ],
-          [
-            "`noiseColor`, `noiseColorDetail`",
-            "0, 50",
-            "`[0,100]`"
-          ],
-          [
-            "`grainAmount`, `grainSize`, `grainRoughness`",
-            "0, 25, 50",
-            "`[0,100]`"
-          ],
-          [
-            "`vignetteAmount`, `vignetteRoundness`",
-            "0, 0",
-            "`[-100,100]`"
-          ],
-          [
-            "`vignetteMidpoint`, `vignetteFeather`, `vignetteHighlights`",
-            "50, 50, 0",
-            "`[0,100]`"
-          ],
-          [
-            "`vignetteStyle`",
-            "`HighlightPriority`",
-            "One of the three enum values"
-          ],
-          [
-            "`seed`",
-            "0",
-            "Unsigned 32-bit grain seed"
-          ],
-          [
-            "`pixelScale`",
-            "1",
-            "`[.01,1]`, scales detail radii and preview grain coordinates"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

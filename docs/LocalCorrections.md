@@ -6,11 +6,9 @@ Version 0.5.1 adds `applyMaskedCorrection()` in the public `LocalCorrections.h` 
 
 Both images contain tightly packed normalized encoded sRGB and straight alpha, following `ImageView`. The mask contains exactly `width * height` finite floats in `[0,1]`. All three geometries must match. The call validates every image channel, every coverage value, dimensions, exact storage lengths, amount and interpolation enum before returning even a no-op result. Inputs must refer to live, immutable storage for the synchronous call; the SDK cannot validate dangling or otherwise invalid spans.
 
-| Setting | Default | Contract |
-| --- | --- | --- |
-| `MaskedCorrectionOptions::amount` | `100` | Finite percentage `[0,100]`; this is a blend fraction, distinct from `LocalAdjustmentOptions::amount` `[0,200]` slider overdrive |
-| `space` | `CorrectionSpace::LinearSrgb` | `Srgb` interpolates encoded channels; `LinearSrgb` decodes, interpolates linear channels, then encodes to sRGB |
-| `invert` | `false` | Invert coverage before scaling by amount |
+- Setting: `MaskedCorrectionOptions::amount`; Default: `100`; Contract: Finite percentage `[0,100]`; this is a blend fraction, distinct from `LocalAdjustmentOptions::amount` `[0,200]` slider overdrive
+- Setting: `space`; Default: `CorrectionSpace::LinearSrgb`; Contract: `Srgb` interpolates encoded channels; `LinearSrgb` decodes, interpolates linear channels, then encodes to sRGB
+- Setting: `invert`; Default: `false`; Contract: Invert coverage before scaling by amount
 
 For a visible base pixel, the effective weight is `(invert ? 1-coverage : coverage) * amount/100`. Weight zero leaves the base pixel bit-for-bit unchanged. Weight one directly copies corrected RGB, bypassing transfer functions. Fractional weight uses RGB interpolation in the selected space. A component whose two endpoint values are equal keeps the base component, avoiding an unnecessary round trip at the sRGB transfer knee. The original base alpha is always preserved. A base pixel with alpha zero, including negative zero, retains all its hidden RGB even under full coverage.
 

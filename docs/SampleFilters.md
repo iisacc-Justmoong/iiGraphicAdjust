@@ -47,10 +47,8 @@ in place. Interleaved channels are supported by passing `pixelWidth * channels`
 as the active sample width; alpha is also transformed if included, so hosts
 must exclude or separately preserve alpha when appropriate.
 
-| Input | Verified operation |
-|---|---|
-| byte | `x < 128 ? x : 255 - x` |
-| uint16 | `x < 16384 ? x : uint16_t(32768u - x)` |
+- Input: byte; Verified operation: `x < 128 ? x : 255 - x`
+- Input: uint16; Verified operation: `x < 16384 ? x : uint16_t(32768u - x)`
 
 The word scale is the observed Photoshop 0..32768 scale. Values above 32768
 retain the original 16-bit wrapping subtraction; they are not clamped or
@@ -78,10 +76,8 @@ compared the reconstruction to original arm64 instructions in owned memory
 with synthetic host callbacks: 78 Average cases, 26 Solarize cases, 1,730,775
 active samples, and 1,291,286 assertions. Photoshop GUI was not executed.
 
-| Kernel | Original slice SHA-256 | REA evidence |
-|---|---|---|
-| Average `_DoStart` `0x34fc` | `1fc869369f41119f05e4125aaa65000a60aede8ea21a5ef527fb8b328883cac0` | pseudocode `ev_8da0d5c2ab74959c1bce22fd79151d5739b47e5600dbbccc03fd3c05822d1cb6`; assembly `ev_98e5c7c36ac748c0bea9bbfab1201e07d3f2e8c300decfd9221f657563506c58` |
-| Solarize worker `0x2800` | `491ef435586a6c94995eecdf9378878fe168a887032d4eee916b5a5f027f0550` | pseudocode `ev_6442587260ac96feab3b61a82ab904708052ad2b915ebc8fdbf899496bdf6210`; assembly `ev_581d5a58256253b626e530fbafeb6e5e307c73d21cd9ada4411cfdf2d1e44e6a` |
+- Kernel: Average `_DoStart` `0x34fc`; Original slice SHA-256: `1fc869369f41119f05e4125aaa65000a60aede8ea21a5ef527fb8b328883cac0`; REA evidence: pseudocode `ev_8da0d5c2ab74959c1bce22fd79151d5739b47e5600dbbccc03fd3c05822d1cb6`; assembly `ev_98e5c7c36ac748c0bea9bbfab1201e07d3f2e8c300decfd9221f657563506c58`
+- Kernel: Solarize worker `0x2800`; Original slice SHA-256: `491ef435586a6c94995eecdf9378878fe168a887032d4eee916b5a5f027f0550`; REA evidence: pseudocode `ev_6442587260ac96feab3b61a82ab904708052ad2b915ebc8fdbf899496bdf6210`; assembly `ev_581d5a58256253b626e530fbafeb6e5e307c73d21cd9ada4411cfdf2d1e44e6a`
 
 The SDK adds seven test cases covering integer tile bounds and rounding,
 float cancellation/HDR/NaN/signed zero, mask thresholds/empty selection,
